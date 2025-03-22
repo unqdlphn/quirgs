@@ -1,0 +1,381 @@
+<!--
+   Title: GitHub Copilot Quick Reference Guide
+   Description: A quick reference guide for GitHub Copilot commands, including slash commands, context commands, intent commands, best practices, advanced usage, interface-specific commands, and troubleshooting. -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>GitHub Copilot Quick Reference Guide</title>
+   <style>
+      * {
+         box-sizing: border-box;
+      }
+      body {
+         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+         line-height: 1.6;
+         background-color: darkslategray;
+         margin: 0;
+         padding: 0;
+         color: #24292e;
+         max-width: 1200px;
+         margin: 0 auto;
+         padding: 20px;
+      }
+      header {
+         background-color: #24292e;
+         color: #fff;
+         padding: 20px;
+         border-radius: 5px;
+         margin-bottom: 20px;
+      }
+      h1, h2, h3 {
+         margin-top: 16px;
+         margin-bottom: 16px;
+      }
+      h1 {
+         font-size: 32px;
+      }
+      h2 {
+         font-size: 24px;
+         padding-bottom: 8px;
+         border-bottom: 1px solid #eaecef;
+      }
+      nav {
+         background-color: #f6f8fa;
+         padding: 15px;
+         border-radius: 5px;
+         margin-bottom: 20px;
+         position: sticky;
+         top: 10px;
+      }
+      nav ul {
+         list-style-type: none;
+         padding: 0;
+         display: flex;
+         flex-wrap: wrap;
+         gap: 10px;
+         margin: 0;
+      }
+      nav li {
+         margin-right: 15px;
+      }
+      nav a {
+         color: #0366d6;
+         text-decoration: none;
+         font-weight: 500;
+      }
+      nav a:hover {
+         text-decoration: underline;
+      }
+      table {
+         border-collapse: collapse;
+         width: 100%;
+         margin: 20px 0;
+         border: 1px solid #dfe2e5;
+      }
+      th, td {
+         padding: 12px 15px;
+         border: 1px solid #dfe2e5;
+         text-align: left;
+      }
+      th {
+         background-color: #f6f8fa;
+         font-weight: 600;
+      }
+      tr:nth-child(even) {
+         background-color: #f8f8f8;
+      }
+      section {
+         margin-bottom: 40px;
+         padding: 20px;
+         border: 1px solid #e1e4e8;
+         border-radius: 5px;
+         background-color: #fff;
+      }
+      code {
+         background-color: #f6f8fa;
+         padding: 3px 6px;
+         border-radius: 3px;
+         font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+         font-size: 85%;
+      }
+      .example {
+         background-color: #f8f9fa;
+         padding: 15px;
+         border-left: 4px solid #0366d6;
+         margin: 10px 0;
+      }
+      footer {
+         text-align: center;
+         margin-top: 50px;
+         color: #fff;
+         font-size: 14px;
+         padding: 20px 0;
+      }
+      .back-to-top {
+         position: fixed;
+         bottom: 20px;
+         right: 20px;
+         background-color: #0366d6;
+         color: white;
+         padding: 10px 15px;
+         border-radius: 5px;
+         text-decoration: none;
+         opacity: 0.8;
+      }
+      .back-to-top:hover {
+         opacity: 1;
+      }
+      @media (max-width: 768px) {
+         body {
+            padding: 10px;
+         }
+         table {
+            display: block;
+            overflow-x: auto;
+         }
+      }
+   </style>
+</head>
+<body>
+   <header>
+        <h3>Quick Reference Guide #1</h3>
+        <h1>GitHub Copilot commands</h1>
+        <p>qrg-01</p>
+    </header>
+   
+   <nav>
+      <ul>
+         <li><a href="index.html">Home</a></li>
+         <li><a href="#slash-commands">Slash Commands</a></li>
+         <li><a href="#context-commands">Context & Workspace</a></li>
+         <li><a href="#intent-commands">Intent Commands</a></li>
+         <li><a href="#best-practices">Best Practices</a></li>
+         <li><a href="#advanced">Advanced Usage</a></li>
+         <li><a href="#interfaces">Interface Commands</a></li>
+         <li><a href="#troubleshooting">Troubleshooting</a></li>
+      </ul>
+   </nav>
+
+   <section id="slash-commands">
+      <h2>Slash Commands</h2>
+      <table>
+         <thead>
+            <tr>
+               <th>Command</th>
+               <th>Description</th>
+               <th>Example</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><code>/fix</code></td>
+               <td>Ask Copilot to fix issues in your code</td>
+               <td><code>/fix This code has a bug where it doesn't handle empty arrays</code></td>
+            </tr>
+            <tr>
+               <td><code>/explain</code></td>
+               <td>Request an explanation of selected code</td>
+               <td><code>/explain What does this regex pattern do?</code></td>
+            </tr>
+            <tr>
+               <td><code>/tests</code></td>
+               <td>Generate tests for selected code</td>
+               <td><code>/tests Generate unit tests for this function</code></td>
+            </tr>
+            <tr>
+               <td><code>/doc</code></td>
+               <td>Generate documentation for selected code</td>
+               <td><code>/doc Create JSDoc for this function</code></td>
+            </tr>
+            <tr>
+               <td><code>/optimize</code></td>
+               <td>Suggest optimizations for your code</td>
+               <td><code>/optimize This function is slow with large inputs</code></td>
+            </tr>
+            <tr>
+               <td><code>/clear</code></td>
+               <td>Clear the current conversation</td>
+               <td><code>/clear</code></td>
+            </tr>
+         </tbody>
+      </table>
+   </section>
+
+   <section id="context-commands">
+      <h2>Context & Workspace Commands</h2>
+      <table>
+         <thead>
+            <tr>
+               <th>Command</th>
+               <th>Description</th>
+               <th>Example</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td><code>@workspace</code></td>
+               <td>Reference your entire workspace</td>
+               <td><code>How do I use the User class from @workspace?</code></td>
+            </tr>
+            <tr>
+               <td><code>@file:&lt;path&gt;</code></td>
+               <td>Reference a specific file</td>
+               <td><code>Help me understand @file:src/utils/helpers.js</code></td>
+            </tr>
+            <tr>
+               <td><code>@selection</code></td>
+               <td>Reference currently selected code</td>
+               <td><code>Refactor @selection to use async/await</code></td>
+            </tr>
+            <tr>
+               <td><code>@clipboard</code></td>
+               <td>Reference content in clipboard</td>
+               <td><code>Create tests for @clipboard</code></td>
+            </tr>
+            <tr>
+               <td><code>#&lt;n&gt;</code></td>
+               <td>Reference a specific message</td>
+               <td><code>Can you elaborate on what you meant in #2?</code></td>
+            </tr>
+         </tbody>
+      </table>
+   </section>
+
+   <section id="intent-commands">
+      <h2>Intent Commands</h2>
+      <table>
+         <thead>
+            <tr>
+               <th>Intent</th>
+               <th>Description</th>
+               <th>Example Prompt</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr>
+               <td>Generate</td>
+               <td>Create new code from scratch</td>
+               <td><code>Generate a React component for a navigation bar</code></td>
+            </tr>
+            <tr>
+               <td>Complete</td>
+               <td>Finish partially written code</td>
+               <td><code>Complete this function to parse CSV data</code></td>
+            </tr>
+            <tr>
+               <td>Transform</td>
+               <td>Convert code from one form to another</td>
+               <td><code>Convert this JavaScript function to TypeScript</code></td>
+            </tr>
+            <tr>
+               <td>Refactor</td>
+               <td>Restructure existing code</td>
+               <td><code>Refactor this to use the strategy pattern</code></td>
+            </tr>
+            <tr>
+               <td>Debug</td>
+               <td>Find and fix issues in code</td>
+               <td><code>Debug why this function throws on empty input</code></td>
+            </tr>
+            <tr>
+               <td>Explain</td>
+               <td>Understand what code does</td>
+               <td><code>Explain this recursive algorithm</code></td>
+            </tr>
+         </tbody>
+      </table>
+   </section>
+
+   <section id="best-practices">
+      <h2>Best Practices for Prompts</h2>
+      <ol>
+         <li>
+            <strong>Be specific</strong> - Include language, framework, and expected behavior
+            <div class="example">
+               <p><strong>Good:</strong> <code>Generate a Python function using pandas that cleans CSV data by removing duplicates</code></p>
+               <p><strong>Bad:</strong> <code>Write a function to process data</code></p>
+            </div>
+         </li>
+         <li>
+            <strong>Provide context</strong> - Mention relevant information about your codebase
+            <div class="example">
+               <p><strong>Good:</strong> <code>Our app uses Express for routing. Add an endpoint to handle user registration</code></p>
+               <p><strong>Bad:</strong> <code>Add a signup endpoint</code></p>
+            </div>
+         </li>
+         <li>
+            <strong>Use formatting</strong> in prompts for clarity:
+            <ul>
+               <li>Backticks for code: <code>`variable_name`</code></li>
+               <li>Triple backticks for code blocks: <code>```code here```</code></li>
+               <li>Bullets/numbers for lists of requirements</li>
+            </ul>
+         </li>
+         <li>
+            <strong>Include examples</strong> of expected inputs/outputs:
+            <div class="example">
+               <code>The function should convert "2023-01-15" to "Jan 15, 2023"</code>
+            </div>
+         </li>
+         <li>
+            <strong>Request iterations</strong> if needed:
+            <div class="example">
+               <code>Let's refine this further by adding error handling</code>
+            </div>
+         </li>
+         <li>
+            <strong>Specify constraints</strong>:
+            <div class="example">
+               <code>Generate a solution that doesn't use external libraries</code><br>
+               <code>This needs to be compatible with Python 3.8+</code>
+            </div>
+         </li>
+      </ol>
+   </section>
+
+   <section id="advanced">
+      <h2>Command Combinations & Advanced Usage</h2>
+      <ul>
+         <li>Chain intents: <code>Refactor this function to use async/await, then optimize it for performance</code></li>
+         <li>Mix commands: <code>/explain this code, then @workspace how it integrates with our authentication system</code></li>
+         <li>Specify output format: <code>Generate a function and provide example usage as comments</code></li>
+      </ul>
+   </section>
+
+   <section id="interfaces">
+      <h2>Interface-Specific Commands</h2>
+      
+      <h3>VS Code</h3>
+      <ul>
+         <li><strong>Inline Suggestions:</strong> Press <code>Tab</code> to accept suggestions</li>
+         <li><strong>Chat Panel:</strong> <code>Ctrl+I</code> (Windows/Linux) or <code>Cmd+I</code> (Mac)</li>
+         <li><strong>Quick Chat:</strong> <code>Alt+/</code> (Windows/Linux) or <code>Option+/</code> (Mac)</li>
+      </ul>
+
+      <h3>GitHub.com</h3>
+      <ul>
+         <li><strong>Copilot in Pull Requests:</strong> <code>@github-copilot</code> in PR comments</li>
+         <li><strong>Explain tab:</strong> Use in code view to explain code sections</li>
+      </ul>
+   </section>
+
+   <section id="troubleshooting">
+      <h2>Troubleshooting</h2>
+      <ul>
+         <li>If Copilot seems confused, try <code>/clear</code> to start fresh</li>
+         <li>For large codebase questions, be specific about which parts you need help with</li>
+         <li>If complex suggestions are cut off, ask Copilot to continue or break the solution into steps</li>
+      </ul>
+   </section>
+
+   <footer>
+      <p><em>Remember: GitHub Copilot works best when you provide clear context and specific requirements. Refine your prompts based on the responses you receive.</em></p>
+   </footer>
+   
+   <a href="#" class="back-to-top">Back to Top</a>
+</body>
+</html>
