@@ -9,8 +9,8 @@
    <meta name="keywords" content="Quick Reference, Guides, Technology, Programming, AI, Ollama, LLM, Technical Guides">
    <link rel="icon" href="assets/favicon.png" type="image/x-icon">
    <title>Quirgs - Quick Reference Guides</title>
-   <!-- External CSS -->
-   <link rel="stylesheet" href="../css/styles.css">
+   <!-- External CSS - Fixed path -->
+   <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <!-- Google tag (gtag.js) -->
@@ -22,20 +22,31 @@
 
   gtag('config', 'G-3V21VKRR7E');
 </script>
+<!-- End of Google tag (gtag.js) -->
 
 <body>
    <header style="padding: 30px;">
-      <h1><img src="../assets/logo.png" width="200" alt="Quirgs Logo"></h1>
-      <p class="tagline">Quick Reference Guides</p>
+      <!-- Fixed logo path -->
+    <div style="text-align: center; width: 100%;">
+       <h1 style="margin: 0;"><img src="assets/logo.png" width="200" alt="Quirgs Logo"></h1>
+       <p class="tagline">Quick Reference Guides</p>
+    </div>
+      <div class="hamburger" id="hamburger-menu">
+         <span></span>
+         <span></span>
+         <span></span>
+      </div>
    </header>
    
-	<nav>
-		<ul>
-			<li><a href="#about">About</a></li>
-			<li><a href="#guides">Available Guides</a></li>
-			<li><a href="#coming-soon">Coming Soon</a></li>
-		</ul>
-	</nav>
+   <div class="overlay" id="menu-overlay"></div>
+   
+   <nav id="main-nav">
+      <ul>
+         <li><a href="#about">About</a></li>
+         <li><a href="#guides">Available Guides</a></li>
+         <li><a href="#coming-soon">Coming Soon</a></li>
+      </ul>
+   </nav>
 
     <section id="about">
         <h2>About Quirgs</h2>
@@ -127,13 +138,45 @@
         <p>Have questions? Contact us at <a href="https://github.com/unqdlphn/quirgs/issues" style="color: #fff;">Quirgs Support</a></p>
     </footer>
 
-    <!--<script>
-        document.getElementById('guideRequestForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            // In a real implementation, this would send the form data to a server
-            alert('Thanks for your guide request! We\'ll consider it for an upcoming daily guide.');
-            this.reset();
-        });
-    </script> -->
+    <script>
+      // Mobile navigation functionality
+      document.addEventListener('DOMContentLoaded', function() {
+         const hamburger = document.getElementById('hamburger-menu');
+         const nav = document.getElementById('main-nav');
+         const overlay = document.getElementById('menu-overlay');
+         
+         // Function to close the menu
+         function closeMenu() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+         }
+         
+         // Toggle menu when hamburger is clicked
+         hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+         });
+         
+         // Close menu when overlay is clicked
+         overlay.addEventListener('click', closeMenu);
+         
+         // Close menu when nav link is clicked
+         const navLinks = nav.querySelectorAll('a');
+         navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+         });
+         
+         // Close menu on window resize if viewport becomes desktop size
+         window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+               closeMenu();
+            }
+         });
+      });
+   </script>
 </body>
 </html>

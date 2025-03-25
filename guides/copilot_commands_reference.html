@@ -7,9 +7,9 @@
     <meta name="author" content="Quirgs">
     <meta name="robots" content="index, follow">
     <meta name="keywords" content="GitHub Copilot Commands, Quick Reference Guide, Programming, AI, Technology, Commands, Best Practices">
-    <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
     <title>GitHub Copilot Quick Reference Guide</title>
-    <!-- External CSS -->
+    <!-- External CSS - Fixed path -->
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
@@ -17,18 +17,23 @@
     <header>
         <div style="display: flex; justify-content: space-between; align-items: top;">
             <div>
-                <a href="../index.html">Home</a>
-                <h3>Quick Reference Guide #1</h3>
-                <h1>GitHub Copilot commands</h1>
-            </div>
-            <div>
                 <img src="../assets/logo.png" alt="Quirgs Logo" class="logo">
+                <h1>GitHub Copilot commands</h1>
+                <p>qrg-01</p>
+            </div>
+            <div class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
             </div>
         </div>
     </header>
    
-    <nav>
+    <div class="overlay" id="menu-overlay"></div>
+   
+    <nav id="main-nav">
         <ul>
+            <li><a href="../index.html">Home</a></li>
             <li><a href="#slash-commands">Slash Commands</a></li>
             <li><a href="#context-commands">Context & Workspace</a></li>
             <li><a href="#intent-commands">Intent Commands</a></li>
@@ -256,5 +261,46 @@
     </footer>
    
     <a href="#" class="back-to-top">Back to Top</a>
+
+    <script>
+      // Mobile navigation functionality
+      document.addEventListener('DOMContentLoaded', function() {
+         const hamburger = document.getElementById('hamburger-menu');
+         const nav = document.getElementById('main-nav');
+         const overlay = document.getElementById('menu-overlay');
+         
+         // Function to close the menu
+         function closeMenu() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+         }
+         
+         // Toggle menu when hamburger is clicked
+         hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+         });
+         
+         // Close menu when overlay is clicked
+         overlay.addEventListener('click', closeMenu);
+         
+         // Close menu when nav link is clicked
+         const navLinks = nav.querySelectorAll('a');
+         navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+         });
+         
+         // Close menu on window resize if viewport becomes desktop size
+         window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+               closeMenu();
+            }
+         });
+      });
+    </script>
 </body>
 </html>
