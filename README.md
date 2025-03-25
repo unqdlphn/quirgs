@@ -54,7 +54,3 @@ We're constantly expanding our collection. Upcoming reference guides include:
 Have suggestions for new guides or improvements to existing ones? We'd love to hear from you!
 
 - **Issues & Suggestions**: [GitHub Issues](https://github.com/unqdlphn/quirgs/issues)
-
-## License
-
-© 2025 Quirgs - All guides are generated with care and attention to detail.
