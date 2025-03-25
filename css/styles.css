@@ -315,7 +315,7 @@ button:hover {
     background-color: #0255b3;
 }
 
-/* Hamburger Menu Styles */
+/* Hamburger Menu Styles - Simplified */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -327,7 +327,6 @@ button:hover {
     top: 30px;
     right: 30px;
     z-index: 1000;
-    transition: all 0.3s ease;
 }
 
 .hamburger span {
@@ -336,32 +335,10 @@ button:hover {
     width: 100%;
     background-color: #ffffff;
     border-radius: 3px;
-    transition: all 0.3s ease;
 }
 
-.hamburger:hover span:nth-child(1) {
-    transform: translateY(8px) rotate(45deg);
-}
-
-.hamburger:hover span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger:hover span:nth-child(3) {
-    transform: translateY(-8px) rotate(-45deg);
-}
-
-.hamburger.active span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
-}
-
-.hamburger.active span:nth-child(2) {
-    opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
-}
+/* Remove all hover transformations */
+/* Remove all active state transformations */
 
 .overlay {
     display: none;
