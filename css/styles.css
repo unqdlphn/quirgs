@@ -186,6 +186,125 @@ footer {
    height: auto;
 }
 
+/* Additional classes for ollama_anythingllm_guide.html */
+.command {
+   background-color: var(--color-code-bg);
+   padding: 3px 6px;
+   border-radius: 3px;
+   font-family: var(--font-family-code);
+   font-size: var(--font-size-code);
+}
+
+.note {
+   background-color: var(--color-example-bg);
+   padding: var(--spacing-md);
+   border-left: 4px solid var(--color-example-border);
+   margin: var(--spacing-sm) 0;
+}
+
+.box {
+   margin-bottom: var(--spacing-md);
+}
+
+/* Additional classes for index.html */
+.tagline {
+   font-size: 18px;
+   margin-top: -10px;
+   opacity: 0.8;
+}
+
+.guide-card {
+   border: 1px solid var(--color-border);
+   border-radius: var(--border-radius);
+   padding: var(--spacing-md);
+   margin-bottom: var(--spacing-lg);
+   background-color: var(--color-nav);
+}
+
+.guide-card:hover {
+   transform: translateY(-5px);
+}
+
+.guide-card h3 {
+   margin-top: 0;
+   color: var(--color-primary);
+}
+
+.guide-card p {
+   margin-bottom: var(--spacing-md);
+}
+
+.guide-card a {
+   display: inline-block;
+   background-color: var(--color-primary);
+   color: white;
+   padding: 8px 16px;
+   border-radius: 4px;
+   text-decoration: none;
+   font-weight: 500;
+}
+
+.guide-card a:hover {
+   background-color: #0255b3;
+}
+
+.guides-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+   gap: var(--spacing-lg);
+}
+
+.intro {
+   font-size: 18px;
+   margin-bottom: var(--spacing-xl);
+}
+
+.highlight {
+   background-color: #ffea9a;
+   padding: 0 3px;
+   border-radius: 3px;
+}
+
+/* Forms styling */
+form {
+   display: grid;
+   gap: var(--spacing-md);
+}
+
+label {
+   font-weight: 500;
+}
+
+input, textarea {
+   width: 100%;
+   padding: var(--spacing-sm);
+   border: 1px solid var(--color-border-table);
+   border-radius: var(--border-radius);
+   font-family: inherit;
+   font-size: var(--font-size-base);
+}
+
+textarea {
+   min-height: 150px;
+   resize: vertical;
+}
+
+button {
+   background-color: var(--color-primary);
+   color: white;
+   border: none;
+   padding: 12px 20px;
+   border-radius: var(--border-radius);
+   cursor: pointer;
+   font-size: var(--font-size-base);
+   font-weight: 500;
+   transition: background-color 0.3s ease;
+}
+
+button:hover {
+   background-color: #0255b3;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
    body {
@@ -195,5 +314,9 @@ footer {
    table {
       display: block;
       overflow-x: auto;
+   }
+   
+   .guides-container {
+      grid-template-columns: 1fr;
    }
 }
