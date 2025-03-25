@@ -18,7 +18,7 @@
     --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
     --font-size-base: 16px;
-    --font-size-h1: 32px;
+    --font-size-h1: 36px;
     --font-size-h2: 24px;
     --font-size-code: 85%;
     --font-size-footer: 14px;
@@ -38,14 +38,13 @@
    
     /* Layout */
     --max-width: 1200px;
-    --logo-width: 100px;
+    --logo-width: 125px;
+    --index-logo-width: 200px;
 }
 
 * {
     box-sizing: border-box;
 }
-
-
 
 body {
     font-family: var(--font-family);
@@ -67,15 +66,7 @@ header {
     margin-bottom: var(--spacing-lg);
 }
 
-a {
-    color: var(--color-primary);
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-
-h1, h2, h3 {
+h2, h3 {
     margin-top: var(--spacing-md);
     margin-bottom: var(--spacing-md);
 }
@@ -191,11 +182,19 @@ footer {
     opacity: 1;
 }
 
+.index-logo {
+    width: var(--index-logo-width);
+    height: auto;
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+}
+
 .logo {
     width: var(--logo-width);
     height: auto;
     padding-top: var(--spacing-sm);
 }
+
 
 /* Additional classes for ollama_anythingllm_guide.html */
 .command {
@@ -384,6 +383,87 @@ button:hover {
 
 body.menu-open {
     overflow: hidden;
+}
+
+/* Expandable content styling */
+.expandable-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+.expandable-content.expanded {
+    max-height: 1000px; /* Arbitrary large value */
+}
+
+/* Modified read-more button styles to remove hover effects */
+.read-more-btn {
+    background: none;
+    border: none;
+    color: var(--color-primary); /* Ensure good contrast */
+    cursor: pointer;
+    font-weight: 600; /* Slightly bolder for better readability */
+    padding: 8px 0;
+    margin-top: 10px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Remove hover effects */
+.read-more-btn:hover {
+    /* Remove color change and underline */
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.read-more-btn .read-less-text {
+    display: none;
+}
+
+.read-more-btn.expanded .read-more-text {
+    display: none;
+}
+
+.read-more-btn.expanded .read-less-text {
+    display: inline;
+}
+
+.read-more-btn::after {
+    content: '▼';
+    font-size: 10px;
+    margin-left: 5px;
+    transition: none; /* Remove transition effect */
+}
+
+.read-more-btn.expanded::after {
+    content: '▲';
+}
+
+/* Also override the general button hover effect for this specific button */
+button.read-more-btn:hover {
+    background-color: transparent;
+}
+
+/* Accessibility enhancements */
+:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Skip to content - hidden link that appears on focus for keyboard users */
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-primary);
+    color: white;
+    padding: 8px;
+    z-index: 1001;
+    transition: top 0.3s;
+}
+
+.skip-to-content:focus {
+    top: 0;
 }
 
 /* Media Queries */

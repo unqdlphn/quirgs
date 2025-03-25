@@ -285,8 +285,11 @@
             document.body.classList.toggle('menu-open');
          });
          
-         // Close menu when overlay is clicked
-         overlay.addEventListener('click', closeMenu);
+         // Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
+         overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+         });
          
          // Close menu when nav link is clicked
          const navLinks = nav.querySelectorAll('a');
@@ -299,6 +302,12 @@
             if (window.innerWidth > 768) {
                closeMenu();
             }
+         });
+         
+         // Additional event listener for touchstart on mobile to ensure overlay clicks work properly
+         overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
          });
       });
     </script>

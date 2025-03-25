@@ -37,6 +37,7 @@ Each Quirgs guide follows these principles:
 2. **Consistent Structure** - Predictable organization makes navigation intuitive
 3. **Practical Examples** - Real-world usage examples, not just syntax
 4. **Mobile-Friendly** - Accessible on any device, when you need it
+5. **Color Scheme** - A soothing palette that enhances readability. https://coolors.co/2f4f4f-fb3640-79addc-fde74c
 
 ## Future Guides
 

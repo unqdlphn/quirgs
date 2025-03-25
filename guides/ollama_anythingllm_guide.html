@@ -72,7 +72,7 @@
 
 		<div class="box">
 			<h3>Finding the Official Ollama Website and Download Link</h3>
-			<p>Go to <a href="https://ollama.com" target="_blank">https://ollama.com</a>.  Look for the "Download" button and specifically the Windows download link. The main download page will usually have clear options for macOS, Linux, and Windows.</p>
+			<p>Go to <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">https://ollama.com</a>.  Look for the "Download" button and specifically the Windows download link. The main download page will usually have clear options for macOS, Linux, and Windows.</p>
 		</div>
 
 		<div class="box">
@@ -102,7 +102,7 @@
 
 		<div class="box">
 			<h3>Finding the Official AnythingLLM Website and Download Link</h3>
-			<p>Go to <a href="https://anythingllm.com" target="_blank">https://anythingllm.com</a>.  Look for the "Download for desktop" button.</p>
+			<p>Go to <a href="https://anythingllm.com" target="_blank" rel="noopener noreferrer">https://anythingllm.com</a>.  Look for the "Download for desktop" button.</p>
 		</div>
 
 		<div class="box">
@@ -527,8 +527,11 @@
             document.body.classList.toggle('menu-open');
          });
          
-         // Close menu when overlay is clicked
-         overlay.addEventListener('click', closeMenu);
+         // Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
+         overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+         });
          
          // Close menu when nav link is clicked
          const navLinks = nav.querySelectorAll('a');
@@ -541,6 +544,12 @@
             if (window.innerWidth > 768) {
                closeMenu();
             }
+         });
+         
+         // Additional event listener for touchstart on mobile to ensure overlay clicks work properly
+         overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
          });
       });
     </script>

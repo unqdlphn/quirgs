@@ -27,10 +27,10 @@
 <body>
    <header>
     <div>
-       <img src="assets/logo.png" width="200" alt="Quirgs Logo">
+       <img src="assets/logo.png" width="200" alt="Quirgs Logo" class="index-logo">
        <p class="tagline">Quick Reference Guides</p>
     </div>
-      <div class="hamburger" id="hamburger-menu">
+      <div class="hamburger" id="hamburger-menu" aria-label="Menu" role="button" tabindex="0" aria-expanded="false" aria-controls="main-nav">
          <span></span>
          <span></span>
          <span></span>
@@ -52,9 +52,17 @@
         <h4>[In Development]</h4>
         <div class="intro">
             <p>Welcome to <strong>Quirgs!</strong> Your new open-source hub for concise, practical quick reference guides on technical topics, including AI workflows, SOPs, flowcharts and more. No ads, no spam, just guides.</p>
-            <p>Each one is carefully crafted to provide essential information in an easily digestible format, helping you learn and implement new technologies faster. The information is gathered by humans and LLMs, and then distilled into a quick reference format. Some of the guides are based on community requests, ensuring they stay relevant to your needs. </p>
-            <p>We aim to provide a new guide every day, covering a wide range of topics. Whether you're a developer, data scientist, or just someone interested in technology, we have something for you.</p>
-            <p>Stay tuned for more guides!</p>
+            
+            <div class="expandable-content" id="about-expandable">
+                <p>Each one is carefully crafted to provide essential information in an easily digestible format, helping you learn and implement new technologies faster. The information is gathered by humans and LLMs, and then distilled into a quick reference format. Some of the guides are based on community requests, ensuring they stay relevant to your needs.</p>
+                <p>We aim to provide a new guide every day, covering a wide range of topics. Whether you're a developer, data scientist, or just someone interested in technology, we have something for you.</p>
+                <p>Stay tuned for more guides!</p>
+            </div>
+            
+            <button class="read-more-btn" id="read-more-btn" aria-expanded="false" aria-controls="about-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
         </div>
     </section>
 
@@ -148,20 +156,35 @@
          function closeMenu() {
             nav.classList.remove('active');
             hamburger.classList.remove('active');
+            hamburger.setAttribute('aria-expanded', 'false');
             overlay.classList.remove('active');
             document.body.classList.remove('menu-open');
          }
          
-         // Toggle menu when hamburger is clicked
-         hamburger.addEventListener('click', function() {
-            this.classList.toggle('active');
+         // Toggle menu when hamburger is clicked or when Enter/Space is pressed
+         hamburger.addEventListener('click', toggleMenu);
+         hamburger.addEventListener('keydown', function(e) {
+            // 13 is Enter, 32 is Space
+            if (e.keyCode === 13 || e.keyCode === 32) {
+               e.preventDefault();
+               toggleMenu();
+            }
+         });
+         
+         function toggleMenu() {
+            const isExpanded = hamburger.classList.contains('active');
+            hamburger.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', !isExpanded);
             nav.classList.toggle('active');
             overlay.classList.toggle('active');
             document.body.classList.toggle('menu-open');
-         });
+         }
          
-         // Close menu when overlay is clicked
-         overlay.addEventListener('click', closeMenu);
+         // Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
+         overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+         });
          
          // Close menu when nav link is clicked
          const navLinks = nav.querySelectorAll('a');
@@ -175,6 +198,27 @@
                closeMenu();
             }
          });
+         
+         // Additional event listener for touchstart on mobile to ensure overlay clicks work properly
+         overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
+         });
+         
+         // Read More functionality for About section
+         const readMoreBtn = document.getElementById('read-more-btn');
+         const expandableContent = document.getElementById('about-expandable');
+         
+         if (readMoreBtn && expandableContent) {
+            readMoreBtn.addEventListener('click', function() {
+               expandableContent.classList.toggle('expanded');
+               readMoreBtn.classList.toggle('expanded');
+               
+               // Update ARIA attributes for accessibility
+               const isExpanded = expandableContent.classList.contains('expanded');
+               readMoreBtn.setAttribute('aria-expanded', isExpanded);
+            });
+         }
       });
    </script>
 </body>
