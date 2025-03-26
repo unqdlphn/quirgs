@@ -262,63 +262,63 @@
     <a href="#" class="back-to-top">Back to Top</a>
 
     <script>
-      // Mobile navigation functionality
-      document.addEventListener('DOMContentLoaded', function() {
-         const hamburger = document.getElementById('hamburger-menu');
-         const nav = document.getElementById('main-nav');
-         const overlay = document.getElementById('menu-overlay');
-         
-         // Function to close the menu
-         function closeMenu() {
-            nav.classList.remove('active');
-            hamburger.classList.remove('active');
-            overlay.classList.remove('active');
-            document.body.classList.remove('menu-open');
-         }
-         
-         // Toggle menu when hamburger is clicked
-         hamburger.addEventListener('click', function() {
-            this.classList.toggle('active');
-            nav.classList.toggle('active');
-            overlay.classList.toggle('active');
-            document.body.classList.toggle('menu-open');
-         });
-         
-         // Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
-         overlay.addEventListener('click', function(e) {
-            e.stopPropagation();
-            closeMenu();
-         });
-         
-         // Close menu when nav link is clicked
-         const navLinks = nav.querySelectorAll('a');
-         navLinks.forEach(link => {
-            link.addEventListener('click', closeMenu);
-         });
-         
-         // Close menu on window resize if viewport becomes desktop size
-         window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-               closeMenu();
-            }
-         });
-         
-         // Additional event listener for touchstart on mobile to ensure overlay clicks work properly
-         overlay.addEventListener('touchstart', function(e) {
-            e.stopPropagation();
-            closeMenu();
-         }, { passive: true }); // Added passive: true for better performance
-         
-         // Back to top button scroll functionality
-         const backToTopBtn = document.querySelector('.back-to-top');
-         window.addEventListener('scroll', function() {
-            if (window.scrollY > 300) { // Show after scrolling down 300px
-               backToTopBtn.classList.add('visible');
-            } else {
-               backToTopBtn.classList.remove('visible');
-            }
-         });
-      });
+		// Mobile navigation functionality
+		document.addEventListener('DOMContentLoaded', function() {
+			const hamburger = document.getElementById('hamburger-menu');
+			const nav = document.getElementById('main-nav');
+			const overlay = document.getElementById('menu-overlay');
+			
+			// Function to close the menu
+			function closeMenu() {
+				nav.classList.remove('active');
+				hamburger.classList.remove('active');
+				overlay.classList.remove('active');
+				document.body.classList.remove('menu-open');
+			}
+			
+			// Toggle menu when hamburger is clicked
+			hamburger.addEventListener('click', function() {
+				this.classList.toggle('active');
+				nav.classList.toggle('active');
+				overlay.classList.toggle('active');
+				document.body.classList.toggle('menu-open');
+			});
+			
+			// Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
+			overlay.addEventListener('click', function(e) {
+				e.stopPropagation();
+				closeMenu();
+			});
+			
+			// Close menu when nav link is clicked
+			const navLinks = nav.querySelectorAll('a');
+			navLinks.forEach(link => {
+				link.addEventListener('click', closeMenu);
+			});
+			
+			// Close menu on window resize if viewport becomes desktop size
+			window.addEventListener('resize', function() {
+				if (window.innerWidth > 768) {
+				closeMenu();
+				}
+			});
+			
+			// Additional event listener for touchstart on mobile to ensure overlay clicks work properly
+			overlay.addEventListener('touchstart', function(e) {
+				e.stopPropagation();
+				closeMenu();
+			}, { passive: true }); // Added passive: true for better performance
+			
+			// Back to top button scroll functionality
+			const backToTopBtn = document.querySelector('.back-to-top');
+			window.addEventListener('scroll', function() {
+				if (window.scrollY > 300) { // Show after scrolling down 300px
+				backToTopBtn.classList.add('visible');
+				} else {
+				backToTopBtn.classList.remove('visible');
+				}
+			});
+		});
     </script>
 </body>
 </html>
