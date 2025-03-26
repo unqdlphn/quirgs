@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<header>
+	<header class="guide-header">
 		<div style="display: flex; justify-content: space-between; align-items: top;">
 			<div>
 				<img src="../assets/logo.png" alt="Quirgs Logo" class="logo">
@@ -550,6 +550,16 @@
          overlay.addEventListener('touchstart', function(e) {
             e.stopPropagation();
             closeMenu();
+         }, { passive: true }); // Added passive: true for better performance
+         
+         // Back to top button scroll functionality
+         const backToTopBtn = document.querySelector('.back-to-top');
+         window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+               backToTopBtn.classList.add('visible');
+            } else {
+               backToTopBtn.classList.remove('visible');
+            }
          });
       });
     </script>
