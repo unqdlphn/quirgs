@@ -2,7 +2,7 @@
     /* Color scheme */
     --color-background: darkslategray;
     --color-text: #24292e;
-    --color-primary: #0366d6;
+    --color-primary: #0164d6;
     --color-header: #24292e;
     --color-header-text: #fff;
     --color-nav: #f6f8fa;
@@ -35,6 +35,7 @@
     /* Borders and radius */
     --border-radius: 5px;
     --border-width: 1px;
+    --border-btn-pill: 50px;
    
     /* Layout */
     --max-width: 1200px;
@@ -63,7 +64,7 @@ header {
     color: var(--color-header-text);
     padding: var(--spacing-lg);
     border-radius: var(--border-radius);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
 }
 
 h2, h3 {
@@ -83,7 +84,7 @@ h2 {
 
 nav {
     background-color: var(--color-nav);
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg);
     border-radius: var(--border-radius);
     margin-bottom: var(--spacing-lg);
     position: sticky;
@@ -136,7 +137,7 @@ tr:nth-child(even) {
 }
 
 section {
-    margin-bottom: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
     padding: var(--spacing-lg);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
@@ -173,9 +174,17 @@ footer {
     background-color: var(--color-primary);
     color: white;
     padding: var(--spacing-sm) var(--spacing-md);
-    border-radius: var(--border-radius);
+    border-radius: var(--border-btn-pill);
     text-decoration: none;
+    /* Hide by default and add transition */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.back-to-top.visible {
     opacity: 0.8;
+    visibility: visible;
 }
 
 .back-to-top:hover {
@@ -227,8 +236,11 @@ footer {
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     padding: var(--spacing-md);
+    padding-bottom: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     background-color: var(--color-nav);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth transition */
+    
 }
 
 .guide-card:hover {
@@ -249,9 +261,11 @@ footer {
     background-color: var(--color-primary);
     color: white;
     padding: 8px 16px;
-    border-radius: 4px;
+    border-radius: var(--border-btn-pill);
+    text-align: center;
     text-decoration: none;
     font-weight: 500;
+    transition: background-color 0.3s ease; /* Smooth button color transition */
 }
 
 .guide-card a:hover {
@@ -266,13 +280,7 @@ footer {
 
 .intro {
     font-size: 18px;
-    margin-bottom: var(--spacing-xl);
-}
-
-.highlight {
-    background-color: #ffea9a;
-    padding: 0 3px;
-    border-radius: 3px;
+    margin-bottom: var(--spacing-sm);
 }
 
 /* Forms styling */
@@ -366,6 +374,8 @@ body.menu-open {
 .expandable-content {
     max-height: 0;
     overflow: hidden;
+    margin-top: -17px;
+    margin-bottom: 0px;
     transition: max-height 0.5s ease;
 }
 
@@ -391,6 +401,12 @@ body.menu-open {
     /* Remove color change and underline */
     color: var(--color-primary);
     text-decoration: none;
+}
+
+/* Remove focus outline when clicked */
+.read-more-btn:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .read-more-btn .read-less-text {
@@ -490,3 +506,20 @@ button.read-more-btn:hover {
         text-align: center;
     }
 }
+
+/* Additional styling for guide page headers */
+.guide-header {
+    padding: var(--spacing-lg);
+}
+
+.guide-header .logo {
+    margin-bottom: var(--spacing-xs);
+    
+}
+
+.guide-header h1 {
+    margin-top: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+   
+}
+
