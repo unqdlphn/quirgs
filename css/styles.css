@@ -257,7 +257,10 @@ footer {
     margin-bottom: var(--spacing-lg);
     background-color: var(--color-nav);
     transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth transition */
-    
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    position: relative; /* For button positioning */
 }
 
 .guide-card:hover {
@@ -270,7 +273,8 @@ footer {
 }
 
 .guide-card p {
-    margin-bottom: var(--spacing-md);
+    margin-top: 0px; /* Reduce top margin for better spacing */
+    margin-bottom: 60px; /* Increase bottom margin to make room for button */
 }
 
 .guide-card a {
@@ -283,6 +287,9 @@ footer {
     text-decoration: none;
     font-weight: 500;
     transition: background-color 0.3s ease; /* Smooth button color transition */
+    position: absolute; /* Position at bottom left */
+    bottom: var(--spacing-lg);
+    left: var(--spacing-md);
 }
 
 .guide-card a:hover {
@@ -489,6 +496,12 @@ button.read-more-btn:hover {
    
     .guides-container {
         grid-template-columns: 1fr;
+    }
+
+    .guide-card p {
+        margin-top: 0px; /* Reduce top margin for better spacing */
+        margin-bottom: 60px; /* Increase bottom margin to make room for button */
+
     }
     
     .hamburger {
