@@ -36,17 +36,26 @@
             <li><a href="#prerequisites">Prerequisites</a></li>
             <li><a href="#installing-ollama">Installing Ollama</a></li>
             <li><a href="#installing-anythingllm">Installing AnythingLLM</a></li>
-            <li><a href="#downloading-llms">Downloading LLMs</a></li>
-            <li><a href="#basic-functionalities">Basic Functionalities</a></li>
+            <li><a href="#downloading-llms">Download LLMs</a></li>
+            <li><a href="#basic-functionalities">Basic Functions</a></li>
             <li><a href="#system-requirements">System Requirements</a></li>
         </ul>
     </nav>
 
     <section id="introduction" class="box">
         <h2>Introduction</h2>
-        <p>Large Language Models (LLMs) have revolutionized the way we interact with artificial intelligence, offering capabilities ranging from text generation and translation to complex reasoning. Traditionally, accessing these powerful models required connecting to cloud-based services. However, advancements in software like Ollama now allow users to run these sophisticated AI models directly on their local computers, providing a private, offline, and secure alternative. This local operation eliminates the need for constant internet access and protects sensitive data by ensuring it never leaves the user's machine. Furthermore, unlike many online AI services that impose usage limits, running LLMs locally with Ollama often comes without such restrictions.</p>
-        <p>To effectively interact with these locally hosted LLMs, applications like AnythingLLM provide a user-friendly interface. AnythingLLM is designed to leverage the power of LLMs in conjunction with local documents and knowledge bases, essentially creating a private, personalized AI assistant. It enables users to turn any document, resource, or piece of content into context that an LLM can reference during conversations, making it particularly useful for tasks like summarizing research papers, answering questions based on specific documents, or generating content informed by local data.</p>
-        <p>This guide aims to provide a comprehensive, step-by-step process for Windows 10 users to download, install, and configure both Ollama and AnythingLLM to work together seamlessly. By following these instructions, individuals with varying levels of technical expertise can set up their own local AI environment, unlocking the potential of LLMs for a multitude of applications while maintaining privacy and control over their data. This guide will cover everything from the initial software installation to downloading and utilizing various LLMs, troubleshooting common issues, and exploring the basic functionalities of this powerful local AI setup.</p>
+        <div>
+            <p>Large Language Models (LLMs) have revolutionized the way we interact with artificial intelligence, offering capabilities ranging from text generation and translation to complex reasoning. Traditionally, accessing these powerful models required connecting to cloud-based services. However, advancements in software like Ollama now allow users to run these sophisticated AI models directly on their local computers, providing a private, offline, and secure alternative. This local operation eliminates the need for constant internet access and protects sensitive data by ensuring it never leaves the user's machine. Furthermore, unlike many online AI services that impose usage limits, running LLMs locally with Ollama often comes without such restrictions.</p>
+            
+            <div class="expandable-content" id="intro-expandable">
+                <p>To effectively interact with these locally hosted LLMs, applications like AnythingLLM provide a user-friendly interface. AnythingLLM is designed to leverage the power of LLMs in conjunction with local documents and knowledge bases, essentially creating a private, personalized AI assistant. It enables users to turn any document, resource, or piece of content into context that an LLM can reference during conversations, making it particularly useful for tasks like summarizing research papers, answering questions based on specific documents, or generating content informed by local data.</p>
+                <p>This guide aims to provide a comprehensive, step-by-step process for Windows 10 users to download, install, and configure both Ollama and AnythingLLM to work together seamlessly. By following these instructions, individuals with varying levels of technical expertise can set up their own local AI environment, unlocking the potential of LLMs for a multitude of applications while maintaining privacy and control over their data. This guide will cover everything from the initial software installation to downloading and utilizing various LLMs, troubleshooting common issues, and exploring the basic functionalities of this powerful local AI setup.</p>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="intro-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
     </section>
 
     <section id="prerequisites" class="box">
@@ -63,58 +72,73 @@
     </section>
 
     <section id="installing-ollama" class="box">
-        <h2>Step 1: Installing Ollama on Windows 10</h2>
-        <p>Ollama is the foundational piece that allows you to run Large Language Models locally.</p>
+        <div>
+            <h2>Step 1: Installing Ollama on Windows 10</h2>
+            <p>Ollama provides a simplified interface for downloading, managing, and running open-source LLMs on your local machine. Unlike cloud-based solutions, Ollama ensures your data never leaves your computer, offering enhanced privacy and security while eliminating subscription costs.</p>
+            
+            <div class="expandable-content" id="ollama-expandable">
+                <div class="box">
+                    <h3>Finding the Official Ollama Website and Download Link</h3>
+                    <p>Go to <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">https://ollama.com</a>.  Look for the "Download" button and specifically the Windows download link. The main download page will usually have clear options for macOS, Linux, and Windows.</p>
+                </div>
 
-        <div class="box">
-            <h3>Finding the Official Ollama Website and Download Link</h3>
-            <p>Go to <a href="https://ollama.com" target="_blank" rel="noopener noreferrer">https://ollama.com</a>.  Look for the "Download" button and specifically the Windows download link. The main download page will usually have clear options for macOS, Linux, and Windows.</p>
-        </div>
+                <div class="box">
+                    <h3>Downloading the Ollama Installer</h3>
+                    <p>Click the Windows download link to download the installer (typically `OllamaSetup.exe`).  Ensure you are downloading from the official `ollama.com` domain.</p>
+                </div>
 
-        <div class="box">
-            <h3>Downloading the Ollama Installer</h3>
-            <p>Click the Windows download link to download the installer (typically `OllamaSetup.exe`).  Ensure you are downloading from the official `ollama.com` domain.</p>
-        </div>
+                <div class="box">
+                    <h3>Running the Installer</h3>
+                    <p>Navigate to your Downloads folder, right-click `OllamaSetup.exe`, and select "Run as administrator". Follow the on-screen instructions.  Ollama runs as a background process, indicated by an icon in the system tray (bottom right corner of your desktop).</p>
+                </div>
 
-        <div class="box">
-            <h3>Running the Installer</h3>
-            <p>Navigate to your Downloads folder, right-click `OllamaSetup.exe`, and select "Run as administrator". Follow the on-screen instructions.  Ollama runs as a background process, indicated by an icon in the system tray (bottom right corner of your desktop).</p>
-        
-
-        <div class="box">
-            <h3>Verifying the Installation</h3>
-            <p>Open the command prompt (type "cmd" in the Windows search bar).  Run these commands:</p>
-            <p class="command">ollama --version</p>
-            <p>This should display the Ollama version number.</p>
-            <p>And:</p>
-            <p class="command">curl http://localhost:11434</p>
-            <p>If Ollama is running, the response will be "Ollama is running".</p>
+                <div class="box">
+                    <h3>Verifying the Installation</h3>
+                    <p>Open the command prompt (type "cmd" in the Windows search bar).  Run these commands:</p>
+                    <p class="command">ollama --version</p>
+                    <p>This should display the Ollama version number.</p>
+                    <p>And:</p>
+                    <p class="command">curl http://localhost:11434</p>
+                    <p>If Ollama is running, the response will be "Ollama is running".</p>
+                </div>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="ollama-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
         </div>
     </section>
 
     <section id="installing-anythingllm" class="box">
-        <h2>Step 2: Installing AnythingLLM on Windows 10</h2>
-        <p>AnythingLLM provides the user interface to interact with the LLMs managed by Ollama.</p>
+        <div>
+            <h2>Step 2: Installing AnythingLLM on Windows 10</h2>
+            <p>AnythingLLM provides the user interface to interact with the LLMs managed by Ollama. You can create complex AI workflows with various ways to configure the models. It is available as a desktop application or a Docker container. This guide focuses on the desktop version, which is easier for most users.</p>
+            <div class="expandable-content" id="anythingllm-expandable">
+                <div class="box">
+                    <h3>Finding the Official AnythingLLM Website and Download Link</h3>
+                    <p>Go to <a href="https://anythingllm.com" target="_blank" rel="noopener noreferrer">https://anythingllm.com</a>.  Look for the "Download for desktop" button.</p>
+                </div>
 
-        <div class="box">
-            <h3>Finding the Official AnythingLLM Website and Download Link</h3>
-            <p>Go to <a href="https://anythingllm.com" target="_blank" rel="noopener noreferrer">https://anythingllm.com</a>.  Look for the "Download for desktop" button.</p>
-        </div>
+                <div class="box">
+                    <h3>Downloading the AnythingLLM Desktop Installer</h3>
+                    <p>Click "Download for desktop" to get the installer (e.g., `AnythingLLMDesktop.exe`). Ensure you are downloading from the official `anythingllm.com` domain.</p>
+                </div>
 
-        <div class="box">
-            <h3>Downloading the AnythingLLM Desktop Installer</h3>
-            <p>Click "Download for desktop" to get the installer (e.g., `AnythingLLMDesktop.exe`). Ensure you are downloading from the official `anythingllm.com` domain.</p>
-        </div>
+                <div class="box">
+                    <h3>Running the Installer</h3>
+                     <p>Double-click the downloaded `AnythingLLMDesktop.exe` file. You may encounter a warning from Windows Defender because the application is unsigned. If so, click "More details" and then "Run anyway".  Follow the on-screen instructions.</p>
+                    <p class="note">The installer might also install extra dependencies for GPU or NPU usage.  If not, you might see a warning in the AnythingLLM UI about reduced performance.</p>
+                </div>
 
-        <div class="box">
-            <h3>Running the Installer</h3>
-             <p>Double-click the downloaded `AnythingLLMDesktop.exe` file. You may encounter a warning from Windows Defender because the application is unsigned. If so, click "More details" and then "Run anyway".  Follow the on-screen instructions.</p>
-            <p class="note">The installer might also install extra dependencies for GPU or NPU usage.  If not, you might see a warning in the AnythingLLM UI about reduced performance.</p>
-        </div>
-
-        <div class="box">
-            <h3>Launching AnythingLLM</h3>
-            <p>After installation, find the AnythingLLM icon on your desktop or in the Start Menu and launch it. You might be prompted to select an LLM model to download on the first launch. You can skip this since we'll connect to your existing Ollama installation.</p>
+                <div class="box">
+                    <h3>Launching AnythingLLM</h3>
+                    <p>After installation, find the AnythingLLM icon on your desktop or in the Start Menu and launch it. You might be prompted to select an LLM model to download on the first launch. You can skip this since we'll connect to your existing Ollama installation.</p>
+                </div>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="anythingllm-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
         </div>
     </section>
 
@@ -150,58 +174,66 @@
     </section>
 
     <section id="downloading-llms" class="box">
-        <h2>Step 4: Downloading Large Language Models with Ollama</h2>
-        <p>Ollama uses a command-line interface (CLI) to manage models.</p>
+        <div>
+            <h2>Step 4: Downloading Large Language Models with Ollama</h2>
+            <p>Ollama uses a command-line interface (CLI) to manage models.</p>
+            
+            <div class="expandable-content" id="downloading-expandable">
+                <div class="box">
+                    <h3>Opening the Command Prompt</h3>
+                    <p>Open the command prompt (type "cmd" in the Windows search bar).</p>
+                </div>
 
-        <div class="box">
-            <h3>Opening the Command Prompt</h3>
-            <p>Open the command prompt (type "cmd" in the Windows search bar).</p>
-        </div>
+                <div class="box">
+                    <h3>Using the ollama run Command</h3>
+                    <p>The main command is: <span class="command">ollama run <model_name></span></p>
+                    <p>Replace  `<model_name>` with the name of the model (e.g., `llama3.2`, `mistral`, `codellama`).</p>
+                    <p>Example:</p>
+                    <p class="command">ollama run llama3.2</p>
+                    <p>Ollama will download the model (if it's the first time) and then run it. You can then interact with it directly in the command prompt. Model names are case-sensitive.</p>
+                     <p>Other examples:<br>
+                      <span class="command">ollama run mistral</span> <br>
+                     <span class="command">ollama run codellama</span><br>
+                    <span class="command">ollama run gemma3.2</span>
+                    </p>
+                </div>
 
-        <div class="box">
-            <h3>Using the ollama run Command</h3>
-            <p>The main command is: <span class="command">ollama run <model_name></span></p>
-            <p>Replace  `<model_name>` with the name of the model (e.g., `llama3.2`, `mistral`, `codellama`).</p>
-            <p>Example:</p>
-            <p class="command">ollama run llama3.2</p>
-            <p>Ollama will download the model (if it's the first time) and then run it. You can then interact with it directly in the command prompt. Model names are case-sensitive.</p>
-             <p>Other examples:<br>
-              <span class="command">ollama run mistral</span> <br>
-             <span class="command">ollama run codellama</span><br>
-            <span class="command">ollama run gemma3.2</span>
-            </p>
-        </div>
+                <div class="box">
+                    <h3>Using the ollama pull Command (Optional)</h3>
+                    <p>To download a model *without* running it immediately, use:</p>
+                     <p class="command">ollama pull <model_name></p>
+                    <p>Example:</p>
+                    <p class="command">ollama pull deepseek-r1</p>
 
-        <div class="box">
-            <h3>Using the ollama pull Command (Optional)</h3>
-            <p>To download a model *without* running it immediately, use:</p>
-             <p class="command">ollama pull <model_name></p>
-            <p>Example:</p>
-            <p class="command">ollama pull deepseek-r1</p>
+                </div>
 
-        </div>
+                <div class="box">
+                    <h3>Listing Downloaded Models</h3>
+                    <p>To see a list of downloaded models:</p>
+                    <p class="command">ollama list</p>
+                </div>
 
-        <div class="box">
-            <h3>Listing Downloaded Models</h3>
-            <p>To see a list of downloaded models:</p>
-            <p class="command">ollama list</p>
-        </div>
+                <div class="box">
+                    <h3>Exploring the Ollama Model Library</h3>
+                    <p>Visit <a href="https://ollama.com/library" target="_blank">https://ollama.com/library</a> to explore available models. Models come in different sizes (e.g., 1B, 3B, 7B, 13B, 70B). Larger models are generally more capable but require more resources.</p>
+                </div>
 
-        <div class="box">
-            <h3>Exploring the Ollama Model Library</h3>
-            <p>Visit <a href="https://ollama.com/library" target="_blank">https://ollama.com/library</a> to explore available models. Models come in different sizes (e.g., 1B, 3B, 7B, 13B, 70B). Larger models are generally more capable but require more resources.</p>
-        </div>
-
-        <div class="box">
-            <h3>Model Size and RAM Considerations</h3>
-            <p>Be mindful of your system's RAM.  Running a model that exceeds your RAM can cause slow performance or crashes.  General guidelines:</p>
-            <ul>
-                <li>1B - 3B models: at least 8 GB of RAM.</li>
-                <li>3B - 13B models: 8 - 16 GB of RAM or more.</li>
-                <li>13B+ models: 16 GB of RAM or more.</li>
-                <li>30B+ models: 32 GB or more, and often benefit from a GPU.</li>
-            </ul>
-            <p>Start with smaller models if unsure.</p>
+                <div class="box">
+                    <h3>Model Size and RAM Considerations</h3>
+                    <p>Be mindful of your system's RAM.  Running a model that exceeds your RAM can cause slow performance or crashes.  General guidelines:</p>
+                    <ul>
+                        <li>1B - 3B models: at least 8 GB of RAM.</li>
+                        <li>3B - 13B models: 8 - 16 GB of RAM or more.</li>
+                        <li>13B+ models: 16 GB of RAM or more.</li>
+                        <li>30B+ models: 32 GB or more, and often benefit from a GPU.</li>
+                    </ul>
+                    <p>Start with smaller models if unsure.</p>
+                </div>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="downloading-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
         </div>
     </section>
 
@@ -501,63 +533,100 @@
     <a href="#" class="back-to-top">Back to Top</a>
 
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
         // Mobile navigation functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const hamburger = document.getElementById('hamburger-menu');
-            const nav = document.getElementById('main-nav');
-            const overlay = document.getElementById('menu-overlay');
-            
-            // Function to close the menu
-            function closeMenu() {
-                nav.classList.remove('active');
-                hamburger.classList.remove('active');
-                overlay.classList.remove('active');
-                document.body.classList.remove('menu-open');
+        const hamburger = document.getElementById('hamburger-menu');
+        const nav = document.getElementById('main-nav');
+        const overlay = document.getElementById('menu-overlay');
+        
+        function closeMenu() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        });
+        
+        const navLinks = nav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMenu();
             }
-            
-            // Toggle menu when hamburger is clicked
-            hamburger.addEventListener('click', function() {
-                this.classList.toggle('active');
-                nav.classList.toggle('active');
-                overlay.classList.toggle('active');
-                document.body.classList.toggle('menu-open');
-            });
-            
-            // Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
-            overlay.addEventListener('click', function(e) {
-                e.stopPropagation();
-                closeMenu();
-            });
-            
-            // Close menu when nav link is clicked
-            const navLinks = nav.querySelectorAll('a');
-            navLinks.forEach(link => {
-                link.addEventListener('click', closeMenu);
-            });
-            
-            // Close menu on window resize if viewport becomes desktop size
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768) {
-                    closeMenu();
-                }
-            });
-            
-            // Additional event listener for touchstart on mobile to ensure overlay clicks work properly
-            overlay.addEventListener('touchstart', function(e) {
-                e.stopPropagation();
-                closeMenu();
-            }, { passive: true }); // Added passive: true for better performance
-            
-            // Back to top button scroll functionality
-            const backToTopBtn = document.querySelector('.back-to-top');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 300) { // Show after scrolling down 300px
-                    backToTopBtn.classList.add('visible');
-                } else {
-                    backToTopBtn.classList.remove('visible');
+        });
+        
+        overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        }, { passive: true });
+        
+        // FIXED: Read More functionality
+        const readMoreBtns = document.querySelectorAll('.read-more-btn');
+        
+        // Hide all "Close" text initially
+        readMoreBtns.forEach(btn => {
+            const closeTxt = btn.querySelector('.read-less-text');
+            if (closeTxt) {
+                closeTxt.style.display = 'none';
+            }
+        });
+        
+        // Simple click handler for each button
+        readMoreBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Get element ID from aria-controls
+                const contentId = this.getAttribute('aria-controls');
+                // Find the element directly by ID
+                const content = document.getElementById(contentId);
+                
+                if (content) {
+                    // Toggle expanded class
+                    content.classList.toggle('expanded');
+                    // Toggle button expanded state
+                    this.classList.toggle('expanded');
+                    
+                    // Set aria state
+                    const isExpanded = content.classList.contains('expanded');
+                    this.setAttribute('aria-expanded', isExpanded);
+                    
+                    // Toggle text visibility
+                    const readMoreText = btn.querySelector('.read-more-text');
+                    const readLessText = btn.querySelector('.read-less-text');
+                    
+                    if (readMoreText) {
+                        readMoreText.style.display = isExpanded ? 'none' : 'inline';
+                    }
+                    if (readLessText) {
+                        readLessText.style.display = isExpanded ? 'inline' : 'none';
+                    }
                 }
             });
         });
-    </script>
+        
+        // Back to top button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+    });
+</script>
 </body>
 </html>
