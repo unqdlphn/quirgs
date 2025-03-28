@@ -38,7 +38,7 @@
     --border-btn-pill: 50px;
    
     /* Layout */
-    --max-width: 1200px;
+    --max-width: 1080px;
     --logo-width: 125px;
     --index-logo-width: 200px;
 }
@@ -142,6 +142,21 @@ section {
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background-color: #fff;
+    scroll-margin-top: 80px; /* Adds margin only when scrolling to this element via anchor */
+}
+
+/* Specific adjustment for section headings that are targets of anchor links */
+section h2 {
+    scroll-margin-top: 80px;
+}
+
+/* Update section targeting to be more comprehensive */
+section, 
+section > div,
+section > div > h2,
+section > h2,
+[id] {
+    scroll-margin-top: 80px; /* Ensure consistent scroll margin for all potential anchor targets */
 }
 
 code {
@@ -215,6 +230,8 @@ footer {
 }
 
 .note {
+    font-size: 13px;
+    font-weight: 500;
     background-color: var(--color-example-bg);
     padding: var(--spacing-md);
     border-left: 4px solid var(--color-example-border);
@@ -380,7 +397,7 @@ body.menu-open {
 }
 
 .expandable-content.expanded {
-    max-height: 1000px; /* Arbitrary large value */
+    max-height: 3000px; /* Increased value for longer content sections */
 }
 
 /* Modified read-more button styles to remove hover effects */
