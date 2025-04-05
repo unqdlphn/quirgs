@@ -86,7 +86,7 @@ nav {
     background-color: var(--color-nav);
     padding: var(--spacing-lg);
     border-radius: var(--border-radius);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
     position: sticky;
     top: 0px;
 }
@@ -137,7 +137,7 @@ tr:nth-child(even) {
 }
 
 section {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
     padding: var(--spacing-lg);
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
