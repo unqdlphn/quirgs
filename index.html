@@ -352,16 +352,20 @@
                 if (prevButton) prevButton.disabled = currentPage === 1;
                 if (nextButton) nextButton.disabled = currentPage === totalPages;
                 
-                // Scroll to top of guides section for better UX
-                const guidesSection = document.getElementById('guides');
-                if (guidesSection) {
-                    guidesSection.scrollIntoView({ behavior: 'smooth' });
+                // Only scroll to guides section when pagination buttons are clicked, not on initial load
+                if (window.initialLoadComplete) {
+                    const guidesSection = document.getElementById('guides');
+                    if (guidesSection) {
+                        guidesSection.scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             }
             
             // Initialize pagination
+            window.initialLoadComplete = false;
             setupPagination();
             updateGuideDisplay();
+            window.initialLoadComplete = true;
 
             // Coming Soon expander functionality
             const comingSoonBtn = document.getElementById('coming-soon-btn');
