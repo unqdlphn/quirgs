@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quirgs - A comprehensive comparison between Google's AI models Gemma and Gemini, their strengths, limitations, and best use cases.">
+    <meta name="author" content="Quirgs">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="Gemma, Gemini, Google AI, Large Language Models, LLM, AI Models, Open Source AI, Multimodal AI, Model Comparison">
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+    <title>Google's AI Models Compared: Gemma vs Gemini</title>
+    <!-- External CSS - Fixed path -->
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header class="guide-header">
+        <div style="display: flex; justify-content: space-between; align-items: top;">
+            <div>
+                <img src="../assets/logo.png" alt="Quirgs Logo" class="logo">
+                <h1>Google's AI Models Compared: Gemma vs Gemini</h1>            
+            </div>
+        </div>
+        <div class="hamburger" id="hamburger-menu">
+            <span></span>                                                                                                              
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    
+    <div class="overlay" id="menu-overlay"></div>
+    
+    <nav id="main-nav">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#gemma">Gemma</a></li>
+            <li><a href="#gemini">Gemini</a></li>
+            <li><a href="#comparison-table">Comparison Table</a></li>
+            <li><a href="#summary">Summary</a></li>
+        </ul>
+    </nav>
+
+    <section id="introduction" class="box">
+        <h2>Introduction</h2>
+        <div>
+            <p>Google has developed several powerful AI models that serve different purposes in the artificial intelligence landscape. Two of their notable models are Gemma and Gemini. While both are created by Google, they have distinct characteristics, capabilities, and use cases. This guide provides a comprehensive comparison between these two AI models to help you understand which one might be most suitable for your specific needs.</p>
+        </div>
+    </section>
+
+    <section id="gemma" class="box">
+        <h2>1. Gemma - Developed by Google</h2>
+        <div>
+            <p><strong>Focus</strong>: Open-source and accessible research model designed for versatile language tasks.</p>
+            
+            <p><strong>Availability</strong>: Openly available for both research and commercial use with downloadable model weights.</p>
+            
+            <p><strong>Training Data</strong>: Trained on extensive text and code datasets with emphasis on transparency.</p>
+            
+            <div class="expandable-content" id="gemma-expandable">
+                <h3>Strengths:</h3>
+                <ul>
+                    <li><strong>Research & Experimentation</strong>: Ideal for studying LLM behavior, fine-tuning, and exploring applications</li>
+                    <li><strong>Customization</strong>: Greater control over model adaptation due to open-source nature</li>
+                    <li><strong>Cost-Effective</strong>: Potentially lower costs for implementation</li>
+                    <li><strong>Community Driven</strong>: Benefits from developer contributions for continuous improvement</li>
+                </ul>
+
+                <h3>Limitations:</h3>
+                <ul>
+                    <li><strong>Performance</strong>: May not match Gemini's capabilities in some complex tasks</li>
+                    <li><strong>Ease of Use</strong>: Requires more technical expertise than API-based solutions</li>
+                </ul>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="gemma-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="gemini" class="box">
+        <h2>2. Gemini – Developed by Google</h2>
+        <div>
+            <p><strong>Focus</strong>: Multimodal model capable of understanding and generating text, images, audio, and video.</p>
+            
+            <p><strong>Availability</strong>: Accessible through Google's products and services (Search, Bard, Workspace).</p>
+            
+            <p><strong>Architecture</strong>: Built on advanced "Mixture of Experts" approach using specialized models for different tasks.</p>
+            
+            <div class="expandable-content" id="gemini-expandable">
+                <h3>Strengths:</h3>
+                <ul>
+                    <li><strong>Multimodal Capabilities</strong>: Excels at cross-modal content understanding and generation</li>
+                    <li><strong>Reasoning & Problem-Solving</strong>: Improved capabilities compared to previous models</li>
+                    <li><strong>Integration</strong>: Seamlessly works within Google's ecosystem</li>
+                </ul>
+
+                <h3>Limitations:</h3>
+                <ul>
+                    <li><strong>Limited Access</strong>: Google-controlled access restricts experimentation and customization</li>
+                    <li><strong>Potential for Bias</strong>: Susceptible to biases present in training data</li>
+                </ul>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="gemini-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="comparison-table" class="box">
+        <h2>Comparison Table</h2>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Gemma</th>
+                        <th>Gemini</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Developer</td>
+                        <td>Google</td>
+                        <td>Google</td>
+                    </tr>
+                    <tr>
+                        <td>Availability</td>
+                        <td>Open Source (Research & Commercial)</td>
+                        <td>Primarily Google Products/Services</td>
+                    </tr>
+                    <tr>
+                        <td>Focus</td>
+                        <td>General-purpose LLM</td>
+                        <td>Multimodal AI Assistant</td>
+                    </tr>
+                    <tr>
+                        <td>Modality</td>
+                        <td>Primarily Text</td>
+                        <td>Text, Images, Audio, Video</td>
+                    </tr>
+                    <tr>
+                        <td>Customization</td>
+                        <td>High</td>
+                        <td>Moderate</td>
+                    </tr>
+                    <tr>
+                        <td>Ease of Use</td>
+                        <td>Moderate to High (requires technical skills)</td>
+                        <td>High (easy to integrate)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section id="summary" class="box">
+        <h2>Summary</h2>
+        <div>
+            <ul>
+                <li><strong>Choose Gemma if</strong>: You need an open-source model for research, experimentation, or custom applications with available technical expertise.</li>
+                <li><strong>Choose Gemini if</strong>: You need a powerful, multimodal AI assistant within Google's ecosystem with advanced reasoning and multimedia understanding.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="use-cases" class="box">
+        <h2>Common Use Cases</h2>
+        <div>
+            <div class="box">
+                <h3>Gemma Use Cases</h3>
+                <ul>
+                    <li>Academic research on language model behavior and limitations</li>
+                    <li>Building custom AI applications with specific domain adaptation</li>
+                    <li>Education and learning about LLM architecture and fine-tuning</li>
+                    <li>Cost-sensitive deployments where open-source solutions are preferred</li>
+                    <li>Projects requiring full control over the model's behavior</li>
+                </ul>
+            </div>
+
+            <div class="box">
+                <h3>Gemini Use Cases</h3>
+                <ul>
+                    <li>Content generation across multiple modalities (text, images, etc.)</li>
+                    <li>Complex reasoning and problem-solving tasks</li>
+                    <li>Integration with existing Google products and services</li>
+                    <li>Enterprise solutions requiring advanced capabilities</li>
+                    <li>Applications needing sophisticated understanding of multimedia content</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="technical-details" class="box">
+        <h2>Technical Implementation Details</h2>
+        <div>
+            <div class="box">
+                <h3>Working with Gemma</h3>
+                <p>As an open-source model, Gemma can be deployed in various environments:</p>
+                <ul>
+                    <li>Available through platforms like Hugging Face, Kaggle, and Colab</li>
+                    <li>Can be fine-tuned using standard approaches (LoRA, QLoRA, etc.)</li>
+                    <li>Deployable on local hardware with appropriate resources</li>
+                    <li>Compatible with frameworks like PyTorch, JAX, and TensorFlow</li>
+                    <li>Available in various sizes (from 2B to 7B parameters)</li>
+                </ul>
+            </div>
+
+            <div class="box">
+                <h3>Working with Gemini</h3>
+                <p>Accessing Gemini's capabilities primarily through Google's ecosystem:</p>
+                <ul>
+                    <li>Available through Google AI Studio and Google Cloud Vertex AI</li>
+                    <li>Accessible via API with appropriate permissions</li>
+                    <li>Different versions available (Ultra, Pro, Nano) with varying capabilities</li>
+                    <li>Integration options with Google Workspace and other Google products</li>
+                    <li>Offered in multiple languages with global availability</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Quirgs - All guides are generated with care and attention to detail.</p>
+        <p>Have questions? Contact us at <a href="https://github.com/unqdlphn/quirgs/issues" style="color: #fff;">Quirgs Support</a></p>
+    </footer>
+    
+    <a href="#" class="back-to-top">Back to Top</a>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile navigation functionality
+        const hamburger = document.getElementById('hamburger-menu');
+        const nav = document.getElementById('main-nav');
+        const overlay = document.getElementById('menu-overlay');
+        
+        function closeMenu() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        });
+        
+        const navLinks = nav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMenu();
+            }
+        });
+        
+        overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        }, { passive: true });
+        
+        // Read More functionality
+        const readMoreBtns = document.querySelectorAll('.read-more-btn');
+        
+        // Hide all "Close" text initially
+        readMoreBtns.forEach(btn => {
+            const closeTxt = btn.querySelector('.read-less-text');
+            if (closeTxt) {
+                closeTxt.style.display = 'none';
+            }
+        });
+        
+        // Simple click handler for each button
+        readMoreBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Get element ID from aria-controls
+                const contentId = this.getAttribute('aria-controls');
+                // Find the element directly by ID
+                const content = document.getElementById(contentId);
+                
+                if (content) {
+                    // Toggle expanded class
+                    content.classList.toggle('expanded');
+                    // Toggle button expanded state
+                    this.classList.toggle('expanded');
+                    
+                    // Set aria state
+                    const isExpanded = content.classList.contains('expanded');
+                    this.setAttribute('aria-expanded', isExpanded);
+                    
+                    // Toggle text visibility
+                    const readMoreText = btn.querySelector('.read-more-text');
+                    const readLessText = btn.querySelector('.read-less-text');
+                    
+                    if (readMoreText) {
+                        readMoreText.style.display = isExpanded ? 'none' : 'inline';
+                    }
+                    if (readLessText) {
+                        readLessText.style.display = isExpanded ? 'inline' : 'none';
+                    }
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+    });
+</script>
+</body>
+</html>
