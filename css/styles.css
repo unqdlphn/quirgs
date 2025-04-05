@@ -239,7 +239,7 @@ footer {
 }
 
 .box {
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
 }
 
 /* Additional classes for index.html */
@@ -551,5 +551,54 @@ button.read-more-btn:hover {
     margin-top: var(--spacing-xs);
     margin-bottom: var(--spacing-md);
    
+}
+
+/* Pagination styles */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 0.5rem;
+}
+
+.pagination-button {
+    background-color: var(--accent-color);
+    color: var(--color-primary);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+}
+
+.pagination-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.pagination-button.active {
+    background-color: var(--secondary-color);
+    pointer-events: none;
+}
+
+.pagination-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Hide guides that are not on the current page */
+.guide-card {
+    display: block; /* Changed from 'none' to ensure cards are visible by default */
+}
+
+.guide-card.hidden {
+    display: none;
 }
 
