@@ -1,6 +1,6 @@
 # Quirgs - Quick Reference Guides
 
-![Quirgs Logo](assets/logo.png)
+![Quirgs Logo](assets/quirgs.png)
 
 ## About Quirgs
 
@@ -14,8 +14,19 @@ Every developer knows the frustration of digging through lengthy documentation t
 - **Comprehensive** - Cover all the essential information
 - **Beautiful** - Designed with care and attention to detail
 - **Accessible** - Available wherever you need them
+- **Interactive** - Engage with the content in a meaningful way
+- **Mobile-Friendly** - Optimized for all devices
+- **Searchable** - Quickly locate specific commands or topics
 
 ## Current Features
+### Site Features
+
+- **Guide Search**: Search for guides from the home page. 
+- **In-Page Content Search**: Robust search functionality for quick navigation within guides.
+- **Expandable Sections**: Collapsible content for a cleaner interface.
+- **Mobile-Friendly Navigation**: Responsive design with a hamburger menu for mobile users.
+- **Back-to-Top Button**: Quick navigation for long pages.
+
 
 ### GitHub Copilot Commands Reference
 
@@ -29,28 +40,48 @@ Our flagship reference guide covers everything you need to know about interactin
 - **Interface-Specific Commands** - Shortcuts and features for VS Code and GitHub.com
 - **Troubleshooting** - Solutions to common issues
 
-## Design Philosophy
+### Guide Search
+The home page features a **search bar** for quick access to guides. Users can:
+- Type keywords to filter guides.
+- Click on a guide to view its content.
+- Use the **search bar** to find specific commands or topics within the guide.  
 
-Each Quirgs guide follows these principles:
+### In-Page Content Search
 
-1. **Clear Visual Hierarchy** - The most important information stands out
-2. **Consistent Structure** - Predictable organization makes navigation intuitive
-3. **Practical Examples** - Real-world usage examples, not just syntax
-4. **Mobile-Friendly** - Accessible on any device, when you need it
-5. **Color Scheme** - A soothing palette that enhances readability. https://coolors.co/2f4f4f-fb3640-79addc-fde74c
+Our guides now include a robust **in-page content search** feature, allowing users to:
 
-## Future Guides
+- Search for keywords within the guide.
+- Navigate between matches using **Next** and **Previous** buttons.
+- Highlight all matches for better visibility.
+- Clear search results with a single click.
 
-We're constantly expanding our collection. Upcoming reference guides include:
+### Expandable Sections
 
-- Git Command Line Reference
-- JavaScript Array Methods
-- React Hooks Guide
-- CSS Flexbox & Grid
-- VS Code Shortcuts
+To improve readability, guides now feature **expandable sections** for detailed content. Users can:
 
-## Contact & Feedback
+- Expand or collapse sections for a cleaner interface.
+- Automatically expand sections containing search matches.
+- Use a **clear all** button to reset the search and collapse all sections.
+- The expandable sections are designed to be intuitive and user-friendly, ensuring that users can easily navigate through the content.
 
-Have suggestions for new guides or improvements to existing ones? We'd love to hear from you!
+### Mobile-Friendly Navigation
 
-- **Issues & Suggestions**: [GitHub Issues](https://github.com/unqdlphn/quirgs/issues)
+The site includes a **responsive navigation menu** with:
+
+- A hamburger menu for mobile devices.
+- Smooth transitions and overlay effects.
+- Automatic closing of the menu on link selection or screen resizing.
+
+
+### Bug Fixes
+
+- Fixed issues with the **in-page search navigation** buttons (`Next`, `Previous`, `Clear`) to ensure proper functionality.
+- Improved scroll offset calculations to account for sticky headers and search bars.
+- Enhanced the **expandable sections** to automatically open when search matches are found within them.
+- Resolved minor UI glitches in the **mobile navigation menu** for smoother transitions.
+
+### New Features
+
+- **Advanced Search Enhancements**: Improved the in-page content search functionality with better match highlighting and navigation.
+- **Expandable Content Improvements**: Enhanced readability by ensuring expandable sections dynamically adjust based on user interactions.
+
