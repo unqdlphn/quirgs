@@ -9,7 +9,6 @@
     <meta name="keywords" content="GitHub Copilot Commands, Quick Reference Guide, Programming, AI, Technology, Commands, Best Practices">
     <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
     <title>GitHub Copilot Quick Reference Guide</title>
-    <!-- External CSS - Fixed path -->
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 
@@ -41,6 +40,25 @@
             <li><a href="#interfaces">Interface</a></li>
         </ul>
     </nav>
+     
+    <!-- In-page content search -->
+    <div class="content-search-container">
+        <div class="search-wrapper">
+            <input type="text" id="content-search-input" placeholder="Search within this guide..." aria-label="Search within guide content">
+            <div class="content-search-info" id="content-search-info"></div>
+            <div class="content-search-nav" id="content-search-nav">
+                <button id="prev-match" aria-label="Previous match" disabled>↑</button>
+                <button id="next-match" aria-label="Next match" disabled>↓</button>
+                <button id="clear-search" aria-label="Clear search" disabled>✕</button>
+            </div>
+            <button id="content-search-button" aria-label="Search Content">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
 
     <section id="slash-commands">
         <h2>Slash Commands</h2>
@@ -263,63 +281,351 @@
     <a href="#" class="back-to-top">Back to Top</a>
 
     <script>
-		// Mobile navigation functionality
-		document.addEventListener('DOMContentLoaded', function() {
-			const hamburger = document.getElementById('hamburger-menu');
-			const nav = document.getElementById('main-nav');
-			const overlay = document.getElementById('menu-overlay');
-			
-			// Function to close the menu
-			function closeMenu() {
-				nav.classList.remove('active');
-				hamburger.classList.remove('active');
-				overlay.classList.remove('active');
-				document.body.classList.remove('menu-open');
-			}
-			
-			// Toggle menu when hamburger is clicked
-			hamburger.addEventListener('click', function() {
-				this.classList.toggle('active');
-				nav.classList.toggle('active');
-				overlay.classList.toggle('active');
-				document.body.classList.toggle('menu-open');
-			});
-			
-			// Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
-			overlay.addEventListener('click', function(e) {
-				e.stopPropagation();
-				closeMenu();
-			});
-			
-			// Close menu when nav link is clicked
-			const navLinks = nav.querySelectorAll('a');
-			navLinks.forEach(link => {
-				link.addEventListener('click', closeMenu);
-			});
-			
-			// Close menu on window resize if viewport becomes desktop size
-			window.addEventListener('resize', function() {
-				if (window.innerWidth > 768) {
-				closeMenu();
-				}
-			});
-			
-			// Additional event listener for touchstart on mobile to ensure overlay clicks work properly
-			overlay.addEventListener('touchstart', function(e) {
-				e.stopPropagation();
-				closeMenu();
-			}, { passive: true }); // Added passive: true for better performance
-			
-			// Back to top button scroll functionality
-			const backToTopBtn = document.querySelector('.back-to-top');
-			window.addEventListener('scroll', function() {
-				if (window.scrollY > 300) { // Show after scrolling down 300px
-				backToTopBtn.classList.add('visible');
-				} else {
-				backToTopBtn.classList.remove('visible');
-				}
-			});
-		});
+    // Mobile navigation functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger-menu');
+        const nav = document.getElementById('main-nav');
+        const overlay = document.getElementById('menu-overlay');
+        
+        // Function to close the menu
+        function closeMenu() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+        
+        // Toggle menu when hamburger is clicked
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        
+        // Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        });
+        
+        // Close menu when nav link is clicked
+        const navLinks = nav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        // Close menu on window resize if viewport becomes desktop size
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+            closeMenu();
+            }
+        });
+        
+        // Additional event listener for touchstart on mobile to ensure overlay clicks work properly
+        overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        }, { passive: true }); // Added passive: true for better performance
+        
+        // Back to top button scroll functionality
+        const backToTopBtn = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) { // Show after scrolling down 300px
+            backToTopBtn.classList.add('visible');
+            } else {
+            backToTopBtn.classList.remove('visible');
+            }
+            });
+        
+        // In-page content search functionality
+        const contentSearchInput = document.getElementById('content-search-input');
+        const contentSearchButton = document.getElementById('content-search-button');
+        const contentSearchInfo = document.getElementById('content-search-info');
+        const prevMatchButton = document.getElementById('prev-match');
+        const nextMatchButton = document.getElementById('next-match');
+        const clearSearchButton = document.getElementById('clear-search');
+        
+        let currentMatchIndex = 0;
+        let totalMatches = 0;
+        let matches = [];
+        
+        function performContentSearch() {
+            // Clear previous highlights
+            clearHighlights();
+            
+            const searchTerm = contentSearchInput.value.trim().toLowerCase();
+            if (searchTerm.length < 2) {
+                updateMatchInfo('');
+                resetNavButtons();
+                return;
+            }
+            
+            // Get all text nodes in the document body that are not in scripts or styles
+            const textNodes = [];
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        // Skip script and style elements
+                        const parent = node.parentNode;
+                        if (parent && (parent.nodeName === 'SCRIPT' || parent.nodeName === 'STYLE' || 
+                                       parent.classList.contains('search-container') || 
+                                       parent.id === 'content-search-info')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        // Skip empty text nodes or nodes with only whitespace
+                        if (node.nodeValue.trim() === '') {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                },
+                false
+            );
+            
+            while(walker.nextNode()) {
+                textNodes.push(walker.currentNode);
+            }
+            
+            // Process each text node
+            matches = [];
+            textNodes.forEach(textNode => {
+                const text = textNode.nodeValue.toLowerCase();
+                const parent = textNode.parentNode;
+                let startIndex = 0;
+                let index;
+                
+                // Find all instances of the search term
+                while((index = text.indexOf(searchTerm, startIndex)) > -1) {
+                    // Store the match details for later navigation
+                    matches.push({
+                        node: textNode,
+                        parent: parent,
+                        startIndex: index,
+                        endIndex: index + searchTerm.length
+                    });
+                    
+                    startIndex = index + searchTerm.length;
+                }
+            });
+            
+            totalMatches = matches.length;
+            currentMatchIndex = totalMatches > 0 ? 0 : -1;
+            
+            // Highlight all matches
+            highlightMatches();
+            
+            // Update match info and buttons
+            updateMatchInfo(totalMatches > 0 ? 
+                `${currentMatchIndex + 1} of ${totalMatches} matches` : 
+                'No matches found');
+            
+            updateNavButtons();
+            
+            // Scroll to first match
+            if (totalMatches > 0) {
+                scrollToCurrentMatch();
+            }
+        }
+        
+        function highlightMatches() {
+            if (matches.length === 0) return;
+            
+            // Track which expandable sections need to be opened
+            const expandableSectionsToOpen = new Set();
+            
+            // First pass to identify expandable sections containing matches
+            matches.forEach(match => {
+                // Find if this match is within an expandable section
+                let parentElement = match.node.parentNode;
+                while (parentElement && parentElement !== document.body) {
+                    if (parentElement.classList && parentElement.classList.contains('expandable-content')) {
+                        // Found an expandable section containing a match
+                        expandableSectionsToOpen.add(parentElement.id);
+                        break;
+                    }
+                    parentElement = parentElement.parentNode;
+                }
+            });
+            
+            // Open expandable sections that contain matches
+            expandableSectionsToOpen.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section && !section.classList.contains('expanded')) {
+                    // Find the button that controls this section
+                    const button = document.querySelector(`[aria-controls="${sectionId}"]`);
+                    if (button) {
+                        // Add expanded class to section
+                        section.classList.add('expanded');
+                        
+                        // Update button state
+                        button.classList.add('expanded');
+                        button.setAttribute('aria-expanded', 'true');
+                        
+                        // Toggle text visibility
+                        const readMoreText = button.querySelector('.read-more-text');
+                        const readLessText = button.querySelector('.read-less-text');
+                        
+                        if (readMoreText) {
+                            readMoreText.style.display = 'none';
+                        }
+                        if (readLessText) {
+                            readLessText.style.display = 'inline';
+                        }
+                    }
+                }
+            });
+            
+            // Proceed with highlighting matches
+            matches.forEach((match, index) => {
+                const { node, startIndex, endIndex } = match;
+                const text = node.nodeValue;
+                
+                // Split the text node into parts
+                const before = text.substring(0, startIndex);
+                const found = text.substring(startIndex, endIndex);
+                const after = text.substring(endIndex);
+                
+                // Create elements
+                const parentNode = node.parentNode;
+                const fragment = document.createDocumentFragment();
+                
+                // Before text
+                if (before) {
+                    fragment.appendChild(document.createTextNode(before));
+                }
+                
+                // Highlighted text
+                const highlight = document.createElement('span');
+                highlight.className = 'highlight-search';
+                highlight.setAttribute('data-match-index', index);
+                highlight.textContent = found;
+                if (index === currentMatchIndex) {
+                    highlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    highlight.style.backgroundColor = '#ffcc00'; // Current match highlight
+                }
+                fragment.appendChild(highlight);
+                
+                // After text
+                if (after) {
+                    fragment.appendChild(document.createTextNode(after));
+                }
+                
+                // Replace the original text node
+                parentNode.replaceChild(fragment, node);
+            });
+        }
+        
+        function clearHighlights() {
+            const highlights = document.querySelectorAll('.highlight-search');
+            
+            highlights.forEach(highlight => {
+                const parent = highlight.parentNode;
+                // Get the text content and replace the highlight element with a text node
+                const textNode = document.createTextNode(highlight.textContent);
+                parent.replaceChild(textNode, highlight);
+                
+                // Normalize to merge adjacent text nodes
+                parent.normalize();
+            });
+            
+            // Reset match tracking
+            matches = [];
+            totalMatches = 0;
+            currentMatchIndex = -1;
+        }
+        
+        function updateMatchInfo(text) {
+            contentSearchInfo.textContent = text;
+        }
+        
+        function resetNavButtons() {
+            prevMatchButton.disabled = true;
+            nextMatchButton.disabled = true;
+            clearSearchButton.disabled = true;
+        }
+        
+        function updateNavButtons() {
+            prevMatchButton.disabled = totalMatches === 0 || currentMatchIndex === 0;
+            nextMatchButton.disabled = totalMatches === 0 || currentMatchIndex === totalMatches - 1;
+            clearSearchButton.disabled = totalMatches === 0;
+        }
+        
+        function scrollToCurrentMatch() {
+            if (currentMatchIndex >= 0 && currentMatchIndex < totalMatches) {
+                // Find the current highlight
+                const currentHighlight = document.querySelector(`.highlight-search[data-match-index="${currentMatchIndex}"]`);
+                
+                if (currentHighlight) {
+                    // Reset all highlights to the standard color
+                    document.querySelectorAll('.highlight-search').forEach(h => {
+                        h.style.backgroundColor = '#ffffa0'; // Default highlight color
+                    });
+                    
+                    // Highlight the current match with a different color
+                    currentHighlight.style.backgroundColor = '#ffcc00'; // Current match highlight
+                    
+                    // Calculate offset to account for sticky header and search bar
+                    const searchBarHeight = document.querySelector('.content-search-container').offsetHeight;
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const scrollOffset = navHeight + searchBarHeight + 20; // added extra padding
+                    
+                    // Scroll to the current match with offset
+                    const elementTop = currentHighlight.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({
+                        top: elementTop - scrollOffset,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+        
+        function navigateToNextMatch() {
+            if (totalMatches === 0) return;
+            currentMatchIndex = (currentMatchIndex + 1) % totalMatches;
+            scrollToCurrentMatch();
+            updateMatchInfo(`${currentMatchIndex + 1} of ${totalMatches} matches`);
+            updateNavButtons();
+        }
+        
+        function navigateToPrevMatch() {
+            if (totalMatches === 0) return;
+            currentMatchIndex = (currentMatchIndex - 1 + totalMatches) % totalMatches;
+            scrollToCurrentMatch();
+            updateMatchInfo(`${currentMatchIndex + 1} of ${totalMatches} matches`);
+            updateNavButtons();
+        }
+        
+        // Event listeners for content search
+        contentSearchInput.addEventListener('input', performContentSearch);
+        contentSearchButton.addEventListener('click', performContentSearch);
+        prevMatchButton.addEventListener('click', navigateToPrevMatch);
+        nextMatchButton.addEventListener('click', navigateToNextMatch);
+        clearSearchButton.addEventListener('click', function() {
+            contentSearchInput.value = '';
+            clearHighlights();
+            updateMatchInfo('');
+            resetNavButtons();
+        });
+        
+        contentSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (e.shiftKey) {
+                    navigateToPrevMatch();
+                } else {
+                    navigateToNextMatch();
+                }
+            } else if (e.key === 'Escape') {
+                contentSearchInput.value = '';
+                clearHighlights();
+                updateMatchInfo('');
+                resetNavButtons();
+            }
+        });
+    });
     </script>
 </body>
 </html>
