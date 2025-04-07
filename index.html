@@ -48,19 +48,36 @@
         </ul>
     </nav>
 
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input type="text" id="search-input" placeholder="Search for guides..." aria-label="Search for guides">
+            <button id="search-button" aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
     <section id="about">
         <h2>About Quirgs</h2>
         <p><strong>[In Development]</strong></p>
         <div class="intro">
-            <p>Welcome to <strong>Quirgs!</strong> Your new open-source hub for concise, practical <strong>Qui</strong>ck <strong>r</strong>eference <strong>g</strong>uide<strong>s</strong> on technical topics, including AI workflows, SOPs, flowcharts and more. No ads, no spam, just guides.</p>
+            <p>Welcome to <strong>Quirgs!</strong> Your new open-source hub for concise, practical <strong>Qui</strong>ck<strong>r</strong>eference <strong>g</strong>uide<strong>s</strong> on technical topics, including AI workflows, SOPs, flowcharts and more. No ads, no spam, just guides.</p>
             
             <div class="expandable-content" id="about-expandable">
                 <p>Every developer knows the frustration of digging through lengthy documentation to find that one command or parameter they need. Quirgs was born from this shared experience - the belief that reference materials should be:</p>
                 <ul>
-                    <li><strong>Scannable</strong>- Find what you need in seconds</li> 
-                    <li><strong>Comprehensive</strong>- Cover all the essential information</li>
-                    <li><strong>Beautiful</strong>- Designed with care and attention to detail</li>
+                    <li><strong>Scannable</strong> - Find what you need in seconds</li> 
+                    <li><strong>Comprehensive</strong> - Cover all the essential information</li>
+                    <li><strong>Beautiful</strong> - Designed with care and attention to detail</li>
                     <li><strong>Accessible</strong> - Available wherever you need them</li>
+                    <li><strong>Interactive</strong> - Engage with the content in a meaningful way</li>
+                    <li><strong>Mobile-Friendly</strong> - Optimized for all devices</li>
+                    <li><strong>Searchable</strong> - Quickly locate guides or keywords</li>
                 </ul>
                 <p>Each one is carefully crafted to provide essential information in an easily digestible format, helping you learn and implement new technologies faster. The information is gathered by humans and LLMs, and then distilled into a quick reference format. Some of the guides are based on community requests, ensuring they stay relevant to your needs.</p>
                 <p>We aim to cover a wide range of topics. Whether you're a developer, data scientist, or just someone interested in technology, we have something for you. <i>Quirgs!</i></p>
@@ -381,6 +398,129 @@
                     comingSoonBtn.setAttribute('aria-expanded', isExpanded);
                 });
             }
+
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const searchResults = document.getElementById('search-results');
+            
+            // Guide data for search functionality
+            const guidesData = [
+                {
+                    title: "GitHub Copilot Commands",
+                    description: "A comprehensive reference for GitHub Copilot commands, including slash commands, context commands, intent commands, and best practices to maximize your productivity.",
+                    url: "guides/copilot_commands_reference.html",
+                    keywords: ["github", "copilot", "commands", "slash commands", "context commands", "intent commands", "AI", "coding assistant", "productivity"]
+                },
+                {
+                    title: "Running Local LLMs with Ollama",
+                    description: "Learn how to set up and run Large Language Models locally using Ollama and AnythingLLM on Windows 10, with step-by-step instructions for installation and configuration.",
+                    url: "guides/ollama_anythingllm_guide.html",
+                    keywords: ["ollama", "anythingllm", "llm", "local", "windows", "installation", "language model", "AI", "setup"]
+                },
+                {
+                    title: "T.A.C.O Marketing Strategy",
+                    description: "Learn how to create a comprehensive marketing strategy for any business using the T.A.C.O framework, focusing on actionable steps, insights, and best practices.",
+                    url: "guides/taco_marketing_strategy.html",
+                    keywords: ["marketing", "strategy", "taco", "framework", "business", "actionable steps"]
+                },
+                {
+                    title: "Gemma vs Gemini Comparison",
+                    description: "A quick reference guide comparing Google's current large language models, to help you understand which one might be most suitable for your specific needs.",
+                    url: "guides/gemma_vs_gemini_guide.html",
+                    keywords: ["gemma", "gemini", "google", "comparison", "language models", "AI", "model selection"]
+                },
+                {
+                    title: "AI Prompt Engineering",
+                    description: "Essential techniques for crafting effective prompts for AI tools like ChatGPT, Claude, and Gemini to get more accurate and useful responses.",
+                    url: "guides/prompt_engineering_guide.html",
+                    keywords: ["prompt", "engineering", "AI", "ChatGPT", "Claude", "Gemini", "prompts", "techniques"]
+                },
+                {
+                    title: "Docker Command Reference",
+                    description: "A concise reference of essential Docker commands for container management, networking, and troubleshooting for developers.",
+                    url: "guides/docker_command_reference.html", 
+                    keywords: ["docker", "commands", "container", "reference", "management", "networking", "troubleshooting"]
+                },
+                {
+                    title: "VS Code Productivity Shortcuts",
+                    description: "Master essential keyboard shortcuts and productivity tips for Visual Studio Code to speed up your development workflow.",
+                    url: "guides/vscode_shortcuts_guide.html",
+                    keywords: ["vscode", "vs code", "shortcuts", "productivity", "keyboard", "development", "workflow", "visual studio code"]
+                },
+                {
+                    title: "Git Workflow Best Practices",
+                    description: "A comprehensive guide to Git branching strategies, commit conventions, and collaboration workflows for teams.",
+                    url: "guides/git_workflow_guide.html",
+                    keywords: ["git", "workflow", "branching", "commit", "collaboration", "teams", "best practices", "conventions"]
+                }
+            ];
+            
+            // Search function
+            function performSearch() {
+                const query = searchInput.value.trim().toLowerCase();
+                
+                if (query.length < 2) {
+                    searchResults.innerHTML = '';
+                    searchResults.classList.remove('active');
+                    return;
+                }
+                
+                const results = guidesData.filter(guide => {
+                    // Check if query matches title, description or keywords
+                    return guide.title.toLowerCase().includes(query) || 
+                           guide.description.toLowerCase().includes(query) || 
+                           guide.keywords.some(keyword => keyword.toLowerCase().includes(query));
+                });
+                
+                displaySearchResults(results, query);
+            }
+            
+            // Display search results
+            function displaySearchResults(results, query) {
+                searchResults.innerHTML = '';
+                
+                if (results.length === 0) {
+                    searchResults.innerHTML = `<div class="search-no-results">No guides found matching "${query}"</div>`;
+                } else {
+                    results.forEach(result => {
+                        const resultItem = document.createElement('div');
+                        resultItem.classList.add('search-result-item');
+                        resultItem.innerHTML = `
+                            <div class="search-result-title">${result.title}</div>
+                            <p class="search-result-description">${result.description}</p>
+                        `;
+                        resultItem.addEventListener('click', () => {
+                            window.location.href = result.url;
+                        });
+                        searchResults.appendChild(resultItem);
+                    });
+                }
+                
+                searchResults.classList.add('active');
+            }
+            
+            // Event listeners for search
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                } else if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    searchResults.innerHTML = '';
+                    searchResults.classList.remove('active');
+                } else if (searchInput.value.trim().length >= 2) {
+                    performSearch();
+                }
+            });
+            
+            searchButton.addEventListener('click', performSearch);
+            
+            // Close search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchButton.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
+            });
         });
     </script>
 </body>
