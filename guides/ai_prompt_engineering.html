@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quirgs - A comprehensive guide to AI Prompt Engineering. Learn effective techniques and principles to harness the full potential of Large Language Models (LLMs).">
+    <meta name="author" content="Quirgs">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="AI, Artificial Intelligence, LLM, Large Language Models, Prompt Engineering, Chain-of-Thought, Role Prompting, Zero-Shot, Few-Shot, Vibe Coding, Context">
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+    <title>AI Prompt Engineering Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <header class="guide-header">
+        <div style="display: flex; justify-content: space-between; align-items: top;">
+            <div>
+                <img src="../assets/logo.png" alt="Quirgs Logo" class="logo">
+                <h1>AI Prompt Engineering Guide</h1>            
+            </div>
+        </div>
+        <div class="hamburger" id="hamburger-menu">
+            <span></span>                                                                                                              
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    
+    <div class="overlay" id="menu-overlay"></div>
+    
+    <nav id="main-nav">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#key-principles">Key Principles</a></li>
+            <li><a href="#prompting-techniques">Techniques</a></li>
+            <li><a href="#vibe-coding">Vibe Coding</a></li>
+            <li><a href="#conclusion">Conclusion</a></li>
+        </ul>
+    </nav>
+
+    <!-- In-page content search -->
+    <div class="content-search-container">
+        <div class="search-wrapper">
+            <input type="text" id="content-search-input" placeholder="Search within this guide..." aria-label="Search within guide content">
+            <div class="content-search-info" id="content-search-info"></div>
+            <div class="content-search-nav" id="content-search-nav">
+                <button id="prev-match" aria-label="Previous match" disabled>↑</button>
+                <button id="next-match" aria-label="Next match" disabled>↓</button>
+                <button id="clear-search" aria-label="Clear search" disabled>✕</button>
+            </div>
+            <button id="content-search-button" aria-label="Search Content">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <section id="introduction" class="box">
+        <h2>Introduction</h2>
+        <div>
+            <p>AI (Artificial Intelligence) and Large Language Models (LLMs) have revolutionized how we interact with technology, but crafting effective prompts is key to harnessing their full potential. Prompt engineering is the art and science of crafting effective prompts for LLMs to get the desired output. It's about communicating clearly and strategically with the AI.</p>
+            
+            <div class="expandable-content" id="intro-expandable">
+                <p>AI prompt engineering involves creating instructions or queries that guide a Large Language Model (LLM) to produce desired outputs efficiently.</p>
+                <p>The success of an AI model's response largely depends on how effectively the prompts are constructed, as they need clear and contextually rich cues for accurate interpretation. Vibe coding specifically refers to adjusting your phrasing according to emotional tones such as humor, urgency or empathy in order to align with user expectations better.</p>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="intro-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="key-principles" class="box">
+        <div>
+            <h2>Key Principles for Effective Prompt Engineering</h2>
+            <p>Understanding the fundamental principles of prompt engineering can significantly improve your interactions with AI models. The way you structure and phrase your prompts directly impacts the quality and relevance of the AI's responses.</p>
+            
+            <div class="expandable-content" id="principles-expandable">
+                <div class="box">
+                    <h3>Clarity & Conciseness</h3>
+                    <p>Clear language is paramount when constructing effective prompt sentences. The goal should be conciseness while maintaining clarity so as not to confuse the model with excessive or vague instructions. This can reduce ambiguity and increase accuracy of generated responses. The more detail you provide, the better the AI can understand your intent.</p>
+                    <ul>
+                        <li><strong>Define the Role:</strong> Tell the AI <em>who</em> it is. "You are a seasoned marketing copywriter..." is far more effective than just "Write an ad."</li>
+                        <li><strong>Set the Format:</strong> Specify the desired output format (e.g., "Write a bulleted list," "Generate a JSON object," "Compose a poem").</li>
+                        <li><strong>Provide Context:</strong> Give the AI the necessary background information. Don't assume it knows everything.</li>
+                        <li><strong>Iterate & Refine:</strong> Don't expect perfection on the first try. Experiment with different phrasing and parameters.</li>
+                    </ul>
+                </div>
+
+                <div class="box">
+                    <h3>Contextual Information</h3>
+                    <p>Providing additional context helps AI models better understand what you're asking for, resulting in more accurate outputs. For instance: Instead of merely stating "Tell me a joke," you could provide specific contexts like:</p>
+                    <ul>
+                        <li>"A funny roast about cats"</li>
+                        <li>"Lighthearted dad jokes"</li>
+                        <li>"A dry joke about coffee"</li>
+                    </ul>
+                    <p>The LLM would then generate responses based on the contextual cues you've provided.</p>
+                </div>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="principles-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="prompting-techniques" class="box">
+        <div>
+            <h2>Prompting Techniques</h2>
+            <p>Various prompting techniques can be employed to achieve different types of responses from LLMs. Understanding when and how to use each technique is essential for effective AI interactions.</p>
+            
+            <div class="expandable-content" id="techniques-expandable">
+                <div class="box">
+                    <h3>Zero-Shot Prompting</h3>
+                    <p>Asking the AI to perform a task without any examples.</p>
+                    <p><strong>Example:</strong> "Translate 'Hello' to Spanish."</p>
+                </div>
+
+                <div class="box">
+                    <h3>Few-Shot Prompting</h3>
+                    <p>Providing a few examples to guide the AI.</p>
+                    <p><strong>Example:</strong> "Translate the following English phrases to French: 'Hello' -> 'Bonjour', 'Goodbye' -> 'Au revoir'. Now translate 'Thank you'."</p>
+                </div>
+
+                <div class="box">
+                    <h3>Chain-of-Thought Prompting</h3>
+                    <p>Encourage the AI to explain its reasoning step-by-step. This is particularly useful for complex tasks.</p>
+                    <p><strong>Example:</strong> "Let's think step by step. I need to write a short story about a lost dog. First, I need to describe the dog..."</p>
+                </div>
+
+                <div class="box">
+                    <h3>Role Prompting</h3>
+                    <p>Assigning a specific role or persona to the AI to guide its responses.</p>
+                    <p><strong>Example:</strong> "You are a helpful and knowledgeable historian..."</p>
+                </div>
+
+                <div class="box">
+                    <h3>Constraint Prompting</h3>
+                    <p>Setting specific limitations or constraints on the AI's response.</p>
+                    <p><strong>Example:</strong> "Write a haiku about autumn, using only words with one syllable."</p>
+                </div>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="techniques-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="advanced-techniques" class="box">
+        <div>
+            <h2>Advanced Techniques</h2>
+            <p>Beyond the basic prompting methods, several advanced parameters and settings can be adjusted to fine-tune AI responses for specific use cases.</p>
+            
+            <div class="expandable-content" id="advanced-expandable">
+                <div class="box">
+                    <h3>Temperature</h3>
+                    <p>Controls the randomness of the output. Lower values (e.g., 0.2) produce more predictable, focused responses. Higher values (e.g., 0.8) lead to more creative, but potentially less coherent, results.</p>
+                </div>
+
+                <div class="box">
+                    <h3>Top-P (Nucleus Sampling)</h3>
+                    <p>Another way to control randomness, focusing on the most probable tokens. This parameter determines how many of the most likely next tokens to consider at each step.</p>
+                </div>
+
+                <div class="box">
+                    <h3>Frequency Penalty & Presence Penalty</h3>
+                    <p>These parameters discourage the AI from repeating words or phrases. Frequency penalty reduces the likelihood of repeated tokens based on their frequency, while presence penalty reduces the likelihood of any token that has appeared before, regardless of frequency.</p>
+                </div>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="advanced-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="vibe-coding" class="box">
+        <div>
+            <h2>Vibe Coding</h2>
+            <p>Vibe coding is a new trend in software development that leverages the power of AI and LLMs to create applications and write code. It focuses on the interaction between developers and AI, emphasizing the importance of effective communication and prompt engineering.</p>
+            
+            <div class="expandable-content" id="vibe-expandable">
+                <p>Vibe coding is not just about writing code; it's about creating a collaborative environment where developers and AI work together to produce high-quality software. This approach allows developers to focus on higher-level tasks while the AI handles the more mundane aspects of coding.</p>
+                <p>By using vibe coding techniques, developers can significantly increase their productivity and efficiency. This approach encourages experimentation and creativity, allowing developers to explore new ideas and solutions without being bogged down by the technical details.</p>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="vibe-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="conclusion" class="box">
+        <h2>Conclusion</h2>
+        <p>In summary, mastering AI Prompt engineering requires practice to understand how LLMs respond differently. Getting really valuable insights into the AI's behavior can help you craft better prompts. The more you experiment with different techniques, the more effective your prompts will become. Not all techniques will work for every situation and model, so be open to trying new approaches and refining your methods. Happy prompting!</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Quirgs - All guides are generated with care and attention to detail.</p>
+        <p>Have questions? Contact us at <a href="https://github.com/unqdlphn/quirgs/issues" style="color: #fff;">Quirgs Support</a></p>
+    </footer>
+    
+    <a href="#" class="back-to-top">Back to Top</a>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile navigation functionality
+        const hamburger = document.getElementById('hamburger-menu');
+        const nav = document.getElementById('main-nav');
+        const overlay = document.getElementById('menu-overlay');
+        
+        function closeMenu() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+        
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+        
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        });
+        
+        const navLinks = nav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMenu();
+            }
+        });
+        
+        overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        }, { passive: true });
+        
+        // Read More functionality
+        const readMoreBtns = document.querySelectorAll('.read-more-btn');
+        
+        // Hide all "Close" text initially
+        readMoreBtns.forEach(btn => {
+            const closeTxt = btn.querySelector('.read-less-text');
+            if (closeTxt) {
+                closeTxt.style.display = 'none';
+            }
+        });
+        
+        // Simple click handler for each button
+        readMoreBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Get element ID from aria-controls
+                const contentId = this.getAttribute('aria-controls');
+                // Find the element directly by ID
+                const content = document.getElementById(contentId);
+                
+                if (content) {
+                    // Toggle expanded class
+                    content.classList.toggle('expanded');
+                    // Toggle button expanded state
+                    this.classList.toggle('expanded');
+                    
+                    // Set aria state
+                    const isExpanded = content.classList.contains('expanded');
+                    this.setAttribute('aria-expanded', isExpanded);
+                    
+                    // Toggle text visibility
+                    const readMoreText = btn.querySelector('.read-more-text');
+                    const readLessText = btn.querySelector('.read-less-text');
+                    
+                    if (readMoreText) {
+                        readMoreText.style.display = isExpanded ? 'none' : 'inline';
+                    }
+                    if (readLessText) {
+                        readLessText.style.display = isExpanded ? 'inline' : 'none';
+                    }
+                }
+            });
+        });
+        
+        // Back to top button
+        const backToTopBtn = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // In-page content search functionality
+        const contentSearchInput = document.getElementById('content-search-input');
+        const contentSearchButton = document.getElementById('content-search-button');
+        const contentSearchInfo = document.getElementById('content-search-info');
+        const prevMatchButton = document.getElementById('prev-match');
+        const nextMatchButton = document.getElementById('next-match');
+        const clearSearchButton = document.getElementById('clear-search');
+        
+        let currentMatchIndex = 0;
+        let totalMatches = 0;
+        let matches = [];
+        
+        function performContentSearch() {
+            // Clear previous highlights
+            clearHighlights();
+            
+            const searchTerm = contentSearchInput.value.trim().toLowerCase();
+            if (searchTerm.length < 2) {
+                updateMatchInfo('');
+                resetNavButtons();
+                return;
+            }
+            
+            // Get all text nodes in the document body that are not in scripts or styles
+            const textNodes = [];
+            const walker = document.createTreeWalker(
+                document.body,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        // Skip script and style elements
+                        const parent = node.parentNode;
+                        if (parent && (parent.nodeName === 'SCRIPT' || parent.nodeName === 'STYLE' || 
+                                        parent.classList.contains('search-container') || 
+                                        parent.id === 'content-search-info')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        // Skip empty text nodes or nodes with only whitespace
+                        if (node.nodeValue.trim() === '') {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                },
+                false
+            );
+            
+            while(walker.nextNode()) {
+                textNodes.push(walker.currentNode);
+            }
+            
+            // Process each text node
+            matches = [];
+            textNodes.forEach(textNode => {
+                const text = textNode.nodeValue.toLowerCase();
+                const parent = textNode.parentNode;
+                let startIndex = 0;
+                let index;
+                
+                // Find all instances of the search term
+                while((index = text.indexOf(searchTerm, startIndex)) > -1) {
+                    // Store the match details for later navigation
+                    matches.push({
+                        node: textNode,
+                        parent: parent,
+                        startIndex: index,
+                        endIndex: index + searchTerm.length
+                    });
+                    
+                    startIndex = index + searchTerm.length;
+                }
+            });
+            
+            totalMatches = matches.length;
+            currentMatchIndex = totalMatches > 0 ? 0 : -1;
+            
+            // Highlight all matches
+            highlightMatches();
+            
+            // Update match info and buttons
+            updateMatchInfo(totalMatches > 0 ? 
+                `${currentMatchIndex + 1} of ${totalMatches} matches` : 
+                'No matches found');
+            
+            updateNavButtons();
+            
+            // Scroll to first match
+            if (totalMatches > 0) {
+                scrollToCurrentMatch();
+            }
+        }
+        
+        function highlightMatches() {
+            if (matches.length === 0) return;
+            
+            // Track which expandable sections need to be opened
+            const expandableSectionsToOpen = new Set();
+            
+            // First pass to identify expandable sections containing matches
+            matches.forEach(match => {
+                // Find if this match is within an expandable section
+                let parentElement = match.node.parentNode;
+                while (parentElement && parentElement !== document.body) {
+                    if (parentElement.classList && parentElement.classList.contains('expandable-content')) {
+                        // Found an expandable section containing a match
+                        expandableSectionsToOpen.add(parentElement.id);
+                        break;
+                    }
+                    parentElement = parentElement.parentNode;
+                }
+            });
+            
+            // Open expandable sections that contain matches
+            expandableSectionsToOpen.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section && !section.classList.contains('expanded')) {
+                    // Find the button that controls this section
+                    const button = document.querySelector(`[aria-controls="${sectionId}"]`);
+                    if (button) {
+                        // Add expanded class to section
+                        section.classList.add('expanded');
+                        
+                        // Update button state
+                        button.classList.add('expanded');
+                        button.setAttribute('aria-expanded', 'true');
+                        
+                        // Toggle text visibility
+                        const readMoreText = button.querySelector('.read-more-text');
+                        const readLessText = button.querySelector('.read-less-text');
+                        
+                        if (readMoreText) {
+                            readMoreText.style.display = 'none';
+                        }
+                        if (readLessText) {
+                            readLessText.style.display = 'inline';
+                        }
+                    }
+                }
+            });
+            
+            // Proceed with highlighting matches
+            matches.forEach((match, index) => {
+                const { node, startIndex, endIndex } = match;
+                const text = node.nodeValue;
+                
+                // Split the text node into parts
+                const before = text.substring(0, startIndex);
+                const found = text.substring(startIndex, endIndex);
+                const after = text.substring(endIndex);
+                
+                // Create elements
+                const parentNode = node.parentNode;
+                const fragment = document.createDocumentFragment();
+                
+                // Before text
+                if (before) {
+                    fragment.appendChild(document.createTextNode(before));
+                }
+                
+                // Highlighted text
+                const highlight = document.createElement('span');
+                highlight.className = 'highlight-search';
+                highlight.setAttribute('data-match-index', index);
+                highlight.textContent = found;
+                if (index === currentMatchIndex) {
+                    highlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    highlight.style.backgroundColor = '#ffcc00'; // Current match highlight
+                }
+                fragment.appendChild(highlight);
+                
+                // After text
+                if (after) {
+                    fragment.appendChild(document.createTextNode(after));
+                }
+                
+                // Replace the original text node
+                parentNode.replaceChild(fragment, node);
+            });
+        }
+        
+        function clearHighlights() {
+            const highlights = document.querySelectorAll('.highlight-search');
+            
+            highlights.forEach(highlight => {
+                const parent = highlight.parentNode;
+                // Get the text content and replace the highlight element with a text node
+                const textNode = document.createTextNode(highlight.textContent);
+                parent.replaceChild(textNode, highlight);
+                
+                // Normalize to merge adjacent text nodes
+                parent.normalize();
+            });
+            
+            // Reset match tracking
+            matches = [];
+            totalMatches = 0;
+            currentMatchIndex = -1;
+        }
+        
+        function updateMatchInfo(text) {
+            contentSearchInfo.textContent = text;
+        }
+        
+        function resetNavButtons() {
+            prevMatchButton.disabled = true;
+            nextMatchButton.disabled = true;
+            clearSearchButton.disabled = true;
+        }
+        
+        function updateNavButtons() {
+            prevMatchButton.disabled = totalMatches === 0 || currentMatchIndex === 0;
+            nextMatchButton.disabled = totalMatches === 0 || currentMatchIndex === totalMatches - 1;
+            clearSearchButton.disabled = totalMatches === 0;
+        }
+        
+        function scrollToCurrentMatch() {
+            if (currentMatchIndex >= 0 && currentMatchIndex < totalMatches) {
+                // Find the current highlight
+                const currentHighlight = document.querySelector(`.highlight-search[data-match-index="${currentMatchIndex}"]`);
+                
+                if (currentHighlight) {
+                    // Reset all highlights to the standard color
+                    document.querySelectorAll('.highlight-search').forEach(h => {
+                        h.style.backgroundColor = '#ffffa0'; // Default highlight color
+                    });
+                    
+                    // Highlight the current match with a different color
+                    currentHighlight.style.backgroundColor = '#ffcc00'; // Current match highlight
+                    
+                    // Calculate offset to account for sticky header and search bar
+                    const searchBarHeight = document.querySelector('.content-search-container').offsetHeight;
+                    const navHeight = document.querySelector('nav').offsetHeight;
+                    const scrollOffset = navHeight + searchBarHeight + 20; // added extra padding
+                    
+                    // Scroll to the current match with offset
+                    const elementTop = currentHighlight.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({
+                        top: elementTop - scrollOffset,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+        
+        function navigateToNextMatch() {
+            if (totalMatches === 0) return;
+            currentMatchIndex = (currentMatchIndex + 1) % totalMatches;
+            scrollToCurrentMatch();
+            updateMatchInfo(`${currentMatchIndex + 1} of ${totalMatches} matches`);
+            updateNavButtons();
+        }
+        
+        function navigateToPrevMatch() {
+            if (totalMatches === 0) return;
+            currentMatchIndex = (currentMatchIndex - 1 + totalMatches) % totalMatches;
+            scrollToCurrentMatch();
+            updateMatchInfo(`${currentMatchIndex + 1} of ${totalMatches} matches`);
+            updateNavButtons();
+        }
+        
+        // Event listeners for content search
+        contentSearchInput.addEventListener('input', performContentSearch);
+        contentSearchButton.addEventListener('click', performContentSearch);
+        prevMatchButton.addEventListener('click', navigateToPrevMatch);
+        nextMatchButton.addEventListener('click', navigateToNextMatch);
+        clearSearchButton.addEventListener('click', function() {
+            contentSearchInput.value = '';
+            clearHighlights();
+            updateMatchInfo('');
+            resetNavButtons();
+        });
+        
+        contentSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (e.shiftKey) {
+                    navigateToPrevMatch();
+                } else {
+                    navigateToNextMatch();
+                }
+            } else if (e.key === 'Escape') {
+                contentSearchInput.value = '';
+                clearHighlights();
+                updateMatchInfo('');
+                resetNavButtons();
+            }
+        });
+    });
+    </script>
+</body>
+</html>
