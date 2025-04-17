@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quirgs - Quick Reference Guide for Git Workflow. Learn common Git commands, branching strategies, and best practices.">
+    <meta name="author" content="Quirgs">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="Git Workflow, Git Commands, Branching, Version Control, Quick Reference Guide, Programming, Development">
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+    <title>Git Workflow Quick Reference Guide</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        /* Basic flowchart styling */
+        .flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: sans-serif;
+            margin-top: 20px;
+        }
+        .flowchart-step {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            text-align: center;
+            min-width: 150px;
+            position: relative; /* Needed for arrows */
+        }
+        .flowchart-step code {
+            background-color: #e0e0e0;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .flowchart-arrow {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 10px solid #555; /* Arrow pointing down */
+            margin: 0 auto 5px auto; /* Spacing between arrow and next step */
+        }
+        .flowchart-branch {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .flowchart-branch .flowchart-step {
+            margin-bottom: 0; /* Remove bottom margin for branched steps */
+        }
+        .flowchart-branch-connector {
+            /* Basic connector line (more complex lines might need SVG) */
+            border-top: 2px solid #555;
+            width: 50%;
+            margin: 10px auto;
+            position: relative;
+        }
+        .flowchart-branch-connector::before,
+        .flowchart-branch-connector::after {
+            content: '';
+            position: absolute;
+            top: -11px; /* Adjust based on arrow size */
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 10px solid #555;
+        }
+        .flowchart-branch-connector::before { left: -6px; } /* Arrow pointing left */
+        .flowchart-branch-connector::after { right: -6px; } /* Arrow pointing right */
+    </style>
+</head>
+
+<body>
+    <header class="guide-header">
+        <div style="display: flex; justify-content: space-between; align-items: top;">
+            <div>
+                <img src="../assets/logo.png" alt="Quirgs Logo" class="logo">
+                <h1>Git Workflow Reference</h1>
+            </div>
+            <div class="hamburger" id="hamburger-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <div class="overlay" id="menu-overlay"></div>
+
+    <nav id="main-nav">
+        <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="#basic-commands">Basics</a></li>
+            <li><a href="#branching">Branching</a></li>
+            <li><a href="#commits">Commits</a></li>
+            <li><a href="#pull-requests">Pull Requests</a></li>
+            <li><a href="#conflicts">Conflicts</a></li>
+            <li><a href="#advanced">Advanced</a></li>
+            <li><a href="#hooks">Hooks</a></li>
+        </ul>
+    </nav>
+
+    <!-- In-page content search -->
+    <div class="content-search-container">
+        <div class="search-wrapper">
+            <input type="text" id="content-search-input" placeholder="Search within this guide..." aria-label="Search within guide content">
+            <div class="content-search-info" id="content-search-info"></div>
+            <div class="content-search-nav" id="content-search-nav">
+                <button id="prev-match" aria-label="Previous match" disabled>↑</button>
+                <button id="next-match" aria-label="Next match" disabled>↓</button>
+                <button id="clear-search" aria-label="Clear search" disabled>✕</button>
+            </div>
+            <button id="content-search-button" aria-label="Search Content">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <section id="introduction" class="box">
+        <h2>Introduction</h2>
+        <div>
+            <p>Git is a distributed version control system that allows multiple developers to work on a project simultaneously without interfering with each other's changes. It tracks changes in source code during software development, enabling collaboration and maintaining a history of changes. Git is widely used in open-source and commercial projects, and it integrates well with platforms like GitHub, GitLab, and Bitbucket.</p>
+            <p>In this guide, we will cover the basic commands, branching strategies, commit best practices, pull requests, resolving merge conflicts, and advanced Git operations. Git is a powerful tool, and understanding its workflow is essential for effective collaboration in software development.</p>
+            <p>For more information on Git, visit the official documentation at <a href="https://git-scm.com/doc" target="_blank">git-scm.com</a></p>
+        </div>
+    </section>
+    <section id="basic-commands">
+        <div>
+            <h2>Basic Git Commands</h2>
+            <p>These are the fundamental commands you'll use in everyday Git operations.</p>
+            
+            <div class="expandable-content" id="basic-commands-expandable">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>git init</code></td><td>Initialize a new Git repository in the current directory.</td></tr>
+                        <tr><td><code>git clone [url]</code></td><td>Download a project and its entire version history.</td></tr>
+                        <tr><td><code>git status</code></td><td>Show the working tree status (changes, untracked files).</td></tr>
+                        <tr><td><code>git add [file]</code></td><td>Add file changes to the staging area. Use <code>.</code> for all changes.</td></tr>
+                        <tr><td><code>git commit -m "[message]"</code></td><td>Record staged changes to the repository with a descriptive message.</td></tr>
+                        <tr><td><code>git log</code></td><td>Show commit history. Add <code>--oneline</code> for brevity.</td></tr>
+                        <tr><td><code>git diff</code></td><td>Show changes between commits, commit and working tree, etc.</td></tr>
+                        <tr><td><code>git pull</code></td><td>Fetch changes from the remote repository and merge them into the current branch. (<code>git fetch</code> + <code>git merge</code>)</td></tr>
+                        <tr><td><code>git push</code></td><td>Upload local repository content to a remote repository.</td></tr>
+                        <tr><td><code>git remote -v</code></td><td>List configured remote repositories.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="basic-commands-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="branching">
+        <div>
+            <h2>Branching Strategies</h2>
+            <p>Branching allows parallel development without affecting the main codebase.</p>
+            
+            <div class="expandable-content" id="branching-expandable">
+                <h3>Common Branching Commands</h3>
+                <ul>
+                    <li><code>git branch</code>: List all local branches. Add <code>-a</code> for all remote branches.</li>
+                    <li><code>git branch [branch-name]</code>: Create a new branch.</li>
+                    <li><code>git checkout [branch-name]</code>: Switch to the specified branch.</li>
+                    <li><code>git checkout -b [branch-name]</code>: Create a new branch and switch to it immediately.</li>
+                    <li><code>git merge [branch-name]</code>: Merge the specified branch's history into the current branch.</li>
+                    <li><code>git branch -d [branch-name]</code>: Delete a local branch (only if merged). Use <code>-D</code> to force delete.</li>
+                    <li><code>git push origin --delete [branch-name]</code>: Delete a remote branch.</li>
+                </ul>
+
+                <h3>Simple Feature Branch Workflow (Flowchart)</h3>
+                <div class="flowchart">
+                    <div class="flowchart-step">Start on <code>main</code> branch</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step"><code>git pull origin main</code> (Update local main)</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step"><code>git checkout -b feature/new-thing</code> (Create feature branch)</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step">Work on feature (Edit, <code>git add</code>, <code>git commit</code>)</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step"><code>git push origin feature/new-thing</code> (Push feature branch)</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step">Create Pull Request (GitHub/GitLab etc.)</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step">Review & Merge PR</div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step">Switch back to <code>main</code>: <code>git checkout main</code></div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step">Update local main: <code>git pull origin main</code></div>
+                    <div class="flowchart-arrow"></div>
+                    <div class="flowchart-step">Delete local feature branch: <code>git branch -d feature/new-thing</code></div>
+                </div>
+
+                <h3>Other Strategies</h3>
+                <ul>
+                    <li><strong>Gitflow:</strong> More structured, uses feature, develop, release, hotfix, and main branches. Suitable for projects with scheduled releases.</li>
+                    <li><strong>GitHub Flow:</strong> Simpler, main is always deployable, features are developed in branches and merged via PRs. Good for CI/CD.</li>
+                    <li><strong>GitLab Flow:</strong> Similar to GitHub Flow but can include environment branches (e.g., production, staging).</li>
+                </ul>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="branching-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="commits">
+        <h2>Commit Best Practices</h2>
+        <p>Writing good commit messages is crucial for understanding project history.</p>
+        <ul>
+            <li><strong>Keep commits focused:</strong> Each commit should represent a single logical change.</li>
+            <li><strong>Write clear subject lines:</strong>
+                <ul>
+                    <li>Use imperative mood (e.g., "Fix bug", "Add feature", not "Fixed bug" or "Adds feature").</li>
+                    <li>Capitalize the subject line.</li>
+                    <li>Keep it concise (around 50 characters).</li>
+                    <li>Do not end with a period.</li>
+                </ul>
+            </li>
+            <li><strong>Use the body for details (optional):</strong>
+                <ul>
+                    <li>Separate subject from body with a blank line.</li>
+                    <li>Explain *what* and *why* vs. *how*.</li>
+                    <li>Wrap lines at 72 characters.</li>
+                </ul>
+            </li>
+            <li><strong>Reference issues/tickets:</strong> Include relevant issue tracker IDs (e.g., <code>Fixes #123</code>).</li>
+        </ul>
+        <pre><code>feat: Add user authentication endpoint
+
+Implement the /api/auth/login route using JWT for session management.
+This endpoint accepts username and password, validates credentials
+against the database, and returns a JWT token upon success.
+
+Addresses issue #45.</code></pre>
+    </section>
+
+    <section id="pull-requests">
+        <h2>Pull Requests (PRs) / Merge Requests (MRs)</h2>
+        <p>PRs are used to propose changes, discuss them, and integrate them into the main codebase.</p>
+        <ol>
+            <li><strong>Create a Feature Branch:</strong> As described in the <a href="#branching">Branching</a> section.</li>
+            <li><strong>Push the Branch:</strong> <code>git push origin [branch-name]</code>.</li>
+            <li><strong>Open a PR:</strong> Use the GitHub/GitLab/Bitbucket interface to create a PR from your feature branch to the target branch (e.g., <code>main</code> or <code>develop</code>).</li>
+            <li><strong>Describe Your Changes:</strong> Write a clear title and description explaining the purpose and scope of the changes. Reference related issues.</li>
+            <li><strong>Review Process:</strong> Team members review the code, provide feedback, and request changes if necessary.</li>
+            <li><strong>Address Feedback:</strong> Make necessary changes on your feature branch and push them. The PR updates automatically.</li>
+            <li><strong>Merge:</strong> Once approved, the PR is merged into the target branch.</li>
+            <li><strong>Clean Up:</strong> Delete the feature branch locally (<code>git branch -d [branch-name]</code>) and remotely (usually an option when merging).</li>
+        </ol>
+    </section>
+
+    <section id="conflicts">
+        <h2>Resolving Merge Conflicts</h2>
+        <p>Conflicts occur when Git cannot automatically merge changes from different branches.</p>
+        <ol>
+            <li><strong>Identify Conflicts:</strong> Git will notify you during a <code>git merge</code> or <code>git pull</code> if conflicts exist. <code>git status</code> will show conflicted files.</li>
+            <li><strong>Open Conflicted Files:</strong> Files with conflicts will contain markers:
+                <pre><code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Your changes (current branch)
+=======
+Incoming changes (branch being merged)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; [other-branch-name]</code></pre>
+            </li>
+            <li><strong>Edit Files:</strong> Manually edit the files to resolve the differences. Remove the conflict markers (<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>, <code>=======</code>, <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>) and keep the desired code.</li>
+            <li><strong>Stage Resolved Files:</strong> Use <code>git add [resolved-file-name]</code> for each file you fixed.</li>
+            <li><strong>Complete the Merge:</strong> Once all conflicts are resolved and staged, run <code>git commit</code>. Git usually provides a default commit message; you can keep it or modify it. If you were rebasing, use <code>git rebase --continue</code> instead.</li>
+        </ol>
+        <ul>
+            <li>Pull changes from the target branch frequently into your feature branch (<code>git pull origin main</code> while on your feature branch).</li>
+            <li>Keep branches short-lived.</li>
+            <li>Communicate with your team about what areas of the code you are working on.</li>
+            <li>Use tools like visual diff/merge tools integrated with your IDE or Git client.</li>
+        </ul>
+    </section>
+
+    <section id="advanced">
+        <div>
+            <h2>Advanced Git Operations</h2>
+            <p>More sophisticated Git commands for experienced users.</p>
+            
+            <div class="expandable-content" id="advanced-expandable">
+                <table>
+                    <thead>
+                        <tr><th>Command</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>git rebase -i [commit-ref]</code></td><td>Interactive rebase: allows squashing, editing, reordering commits before a reference.</td></tr>
+                        <tr><td><code>git cherry-pick [commit-hash]</code></td><td>Apply the changes introduced by a specific commit onto the current branch.</td></tr>
+                        <tr><td><code>git stash</code></td><td>Temporarily store modified, tracked files to switch branches or pull updates.</td></tr>
+                        <tr><td><code>git stash pop</code></td><td>Re-apply the most recently stashed changes and remove them from the stash list.</td></tr>
+                        <tr><td><code>git stash list</code></td><td>Show all stashed changesets.</td></tr>
+                        <tr><td><code>git reset [commit-ref]</code></td><td>Unstage files or reset the current branch head to a specified commit. Use with caution (<code>--soft</code>, <code>--mixed</code>, <code>--hard</code> options).</td></tr>
+                        <tr><td><code>git revert [commit-hash]</code></td><td>Create a new commit that undoes the changes made in a previous commit. Safer than <code>reset</code> for shared history.</td></tr>
+                        <tr><td><code>git tag [tag-name]</code></td><td>Create a lightweight tag pointing to the current commit (often used for releases, e.g., <code>v1.0.0</code>).</td></tr>
+                        <tr><td><code>git log --graph --oneline --decorate</code></td><td>Display commit history as a text-based graph.</td></tr>
+                    </tbody>
+                </table>
+                
+                <h3>Reset Options Explained</h3>
+                <ul>
+                    <li><strong>git reset --soft [commit]</strong>: Moves HEAD to the specified commit, but keeps changes in staging area. Useful when you want to recommit with different changes grouped together.</li>
+                    <li><strong>git reset --mixed [commit]</strong>: (Default) Moves HEAD and updates staging area. Changes are preserved in working directory but unstaged.</li>
+                    <li><strong>git reset --hard [commit]</strong>: Moves HEAD, updates staging area, and overwrites working directory. All changes are lost - use with extreme caution!</li>
+                </ul>
+                
+                <h3>Git Reflog - Your Safety Net</h3>
+                <p>The reflog records all changes to branch tips and other references, creating a log of your local repository's history:</p>
+                <ul>
+                    <li><code>git reflog</code>: Shows a log of all references (HEAD@{0}, HEAD@{1}, etc.)</li>
+                    <li>Useful for recovering lost commits after a hard reset or branch deletion</li>
+                    <li>Example recovery: <code>git checkout -b recovery-branch HEAD@{2}</code></li>
+                </ul>
+                
+                <h3>Advanced Workflow Examples</h3>
+                
+                <h4>Squashing Multiple Commits into One</h4>
+                <pre><code>git rebase -i HEAD~3  # Interactive rebase for last 3 commits
+# In the editor, change "pick" to "squash" or "s" for commits to combine
+# Save and edit the resulting commit message</code></pre>
+                
+                <h4>Removing a Sensitive File from History</h4>
+                <pre><code>git filter-branch --force --index-filter \
+'git rm --cached --ignore-unmatch PATH-TO-SENSITIVE-FILE' \
+--prune-empty --tag-name-filter cat -- --all
+git push origin --force --all  # Force push to overwrite history (use with caution!)</code></pre>
+                
+                <h4>Creating and Pushing a Tag for Releases</h4>
+                <pre><code>git tag -a v1.0.0 -m "Version 1.0.0 release"  # Create annotated tag
+git push origin v1.0.0                      # Push specific tag
+git push origin --tags                      # Push all tags</code></pre>
+            </div>
+            <button class="read-more-btn" aria-expanded="false" aria-controls="advanced-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="hooks">
+        <h2>Git Hooks</h2>
+        <p>Git hooks are scripts that run automatically at certain points in the Git workflow (e.g., before committing, after merging).</p>
+        <ul>
+            <li><strong>Location:</strong> Hooks reside in the <code>.git/hooks</code> directory of your repository. Sample hooks are provided with <code>.sample</code> extensions.</li>
+            <li><strong>Activation:</strong> Remove the <code>.sample</code> extension to activate a hook. Make sure the script is executable (<code>chmod +x .git/hooks/[hook-name]</code>).</li>
+            <li><strong>Common Hooks:</strong>
+                <ul>
+                    <li><code>pre-commit</code>: Runs before a commit message is entered. Used for linting, running tests, checking code style. If it exits non-zero, the commit is aborted.</li>
+                    <li><code>prepare-commit-msg</code>: Runs before the commit message editor is fired up but after the default message is created.</li>
+                    <li><code>commit-msg</code>: Runs after the commit message is entered. Used to validate the message format.</li>
+                    <li><code>post-commit</code>: Runs after a commit is completed. Used for notifications.</li>
+                    <li><code>pre-push</code>: Runs during <code>git push</code>, after remote refs have been updated but before any objects have been transferred. Used for running tests before pushing.</li>
+                </ul>
+            </li>
+            <li><strong>Note:</strong> Git hooks are local to your repository clone and are not versioned or transferred with <code>git clone</code>. Tools like Husky can help manage shareable hooks within a project.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Quirgs - All guides are generated with care and attention to detail.</p>
+        <p>Have questions? Contact us at <a href="https://github.com/unqdlphn/quirgs/issues" style="color: #fff;">Quirgs Support</a></p>
+    </footer>
+
+    <a href="#" class="back-to-top">Back to Top</a>
+
+    <script>
+    // Mobile navigation functionality (same as copilot_commands_reference.html)
+    document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.getElementById('hamburger-menu');
+        const nav = document.getElementById('main-nav');
+        const overlay = document.getElementById('menu-overlay');
+
+        function closeMenu() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.classList.remove('menu-open');
+        }
+
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            nav.classList.toggle('active');
+            overlay.classList.toggle('active');
+            document.body.classList.toggle('menu-open');
+        });
+
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        });
+
+        const navLinks = nav.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMenu();
+            }
+        });
+
+        overlay.addEventListener('touchstart', function(e) {
+            e.stopPropagation();
+            closeMenu();
+        }, { passive: true });
+        
+        // Read More functionality
+        const readMoreBtns = document.querySelectorAll('.read-more-btn');
+        
+        // Hide all "Close" text initially
+        readMoreBtns.forEach(btn => {
+            const closeTxt = btn.querySelector('.read-less-text');
+            if (closeTxt) {
+                closeTxt.style.display = 'none';
+            }
+        });
+        
+        // Simple click handler for each button
+        readMoreBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Get element ID from aria-controls
+                const contentId = this.getAttribute('aria-controls');
+                // Find the element directly by ID
+                const content = document.getElementById(contentId);
+                
+                if (content) {
+                    // Toggle expanded class
+                    content.classList.toggle('expanded');
+                    // Toggle button expanded state
+                    this.classList.toggle('expanded');
+                    
+                    // Set aria state
+                    const isExpanded = content.classList.contains('expanded');
+                    this.setAttribute('aria-expanded', isExpanded);
+                    
+                    // Toggle text visibility
+                    const readMoreText = btn.querySelector('.read-more-text');
+                    const readLessText = btn.querySelector('.read-less-text');
+                    
+                    if (readMoreText) {
+                        readMoreText.style.display = isExpanded ? 'none' : 'inline';
+                    }
+                    if (readLessText) {
+                        readLessText.style.display = isExpanded ? 'inline' : 'none';
+                    }
+                }
+            });
+        });
+
+        // Back to top button scroll functionality (same as copilot_commands_reference.html)
+        const backToTopBtn = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('visible');
+            } else {
+                backToTopBtn.classList.remove('visible');
+            }
+        });
+
+        // In-page content search functionality (same as copilot_commands_reference.html)
+        const contentSearchInput = document.getElementById('content-search-input');
+        const contentSearchButton = document.getElementById('content-search-button');
+        const contentSearchInfo = document.getElementById('content-search-info');
+        const prevMatchButton = document.getElementById('prev-match');
+        const nextMatchButton = document.getElementById('next-match');
+        const clearSearchButton = document.getElementById('clear-search');
+
+        let currentMatchIndex = 0;
+        let totalMatches = 0;
+        let matches = [];
+        let originalNodes = new Map(); // Store original nodes before highlighting
+
+        function performContentSearch() {
+            clearHighlights(); // Restore original content before searching again
+
+            const searchTerm = contentSearchInput.value.trim().toLowerCase();
+            if (searchTerm.length < 2) {
+                updateMatchInfo('');
+                resetNavButtons();
+                return;
+            }
+
+            const contentArea = document.querySelector('body'); // Search within the body
+            matches = [];
+
+            const walker = document.createTreeWalker(
+                contentArea,
+                NodeFilter.SHOW_TEXT,
+                {
+                    acceptNode: function(node) {
+                        // Skip script, style, search bar elements, and empty/whitespace nodes
+                        const parent = node.parentNode;
+                        if (parent && (parent.nodeName === 'SCRIPT' || parent.nodeName === 'STYLE' ||
+                                       parent.closest('.content-search-container') ||
+                                       parent.closest('header') || // Don't search header
+                                       parent.closest('nav') || // Don't search nav
+                                       parent.closest('footer') || // Don't search footer
+                                       node.nodeValue.trim() === '')) {
+                            return NodeFilter.FILTER_REJECT;
+                        }
+                        return NodeFilter.FILTER_ACCEPT;
+                    }
+                },
+                false
+            );
+
+            let node;
+            while (node = walker.nextNode()) {
+                const text = node.nodeValue.toLowerCase();
+                let startIndex = 0;
+                let index;
+
+                while ((index = text.indexOf(searchTerm, startIndex)) > -1) {
+                    matches.push({
+                        node: node,
+                        startIndex: index,
+                        endIndex: index + searchTerm.length
+                    });
+                    startIndex = index + searchTerm.length;
+                }
+            }
+
+            totalMatches = matches.length;
+            currentMatchIndex = totalMatches > 0 ? 0 : -1;
+
+            highlightMatches();
+
+            updateMatchInfo(totalMatches > 0 ?
+                `${currentMatchIndex + 1} of ${totalMatches} matches` :
+                'No matches found');
+
+            updateNavButtons();
+
+            if (totalMatches > 0) {
+                scrollToCurrentMatch();
+            }
+        }
+
+        function highlightMatches() {
+            if (matches.length === 0) return;
+
+            const expandableSectionsToOpen = new Set();
+            const nodesToProcess = new Map(); // Group matches by node
+
+            matches.forEach((match, index) => {
+                // Group matches by node to process each node only once
+                if (!nodesToProcess.has(match.node)) {
+                    nodesToProcess.set(match.node, []);
+                }
+                nodesToProcess.get(match.node).push({ ...match, index });
+
+                // Check if match is inside a collapsed expandable section
+                let parentElement = match.node.parentNode;
+                while (parentElement && parentElement !== document.body) {
+                    if (parentElement.classList && parentElement.classList.contains('expandable-content') && !parentElement.classList.contains('expanded')) {
+                        expandableSectionsToOpen.add(parentElement.id);
+                        break; // Found the relevant expandable section
+                    }
+                    parentElement = parentElement.parentNode;
+                }
+            });
+
+            // Open necessary expandable sections
+            expandableSectionsToOpen.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                const button = document.querySelector(`[aria-controls="${sectionId}"]`);
+                if (section && button && !section.classList.contains('expanded')) {
+                    button.click(); // Simulate click to expand
+                }
+            });
+
+            // Process nodes and apply highlights
+            nodesToProcess.forEach((nodeMatches, node) => {
+                if (!originalNodes.has(node)) {
+                    originalNodes.set(node, node.cloneNode(true)); // Store original node
+                }
+
+                const parent = node.parentNode;
+                if (!parent) return; // Node might have been removed
+
+                const fragment = document.createDocumentFragment();
+                let lastIndex = 0;
+                const text = node.nodeValue;
+
+                // Sort matches by start index to process in order
+                nodeMatches.sort((a, b) => a.startIndex - b.startIndex);
+
+                nodeMatches.forEach(match => {
+                    // Add text before the match
+                    if (match.startIndex > lastIndex) {
+                        fragment.appendChild(document.createTextNode(text.substring(lastIndex, match.startIndex)));
+                    }
+                    // Add the highlighted match
+                    const highlight = document.createElement('span');
+                    highlight.className = 'highlight-search';
+                    highlight.setAttribute('data-match-index', match.index);
+                    highlight.textContent = text.substring(match.startIndex, match.endIndex);
+                    fragment.appendChild(highlight);
+                    lastIndex = match.endIndex;
+                });
+
+                // Add any remaining text after the last match
+                if (lastIndex < text.length) {
+                    fragment.appendChild(document.createTextNode(text.substring(lastIndex)));
+                }
+
+                // Replace the original node with the fragment
+                parent.replaceChild(fragment, node);
+            });
+
+             // Ensure the current match is highlighted correctly after potential DOM changes
+             highlightCurrentMatch();
+        }
+
+        function clearHighlights() {
+            // Restore original nodes
+            originalNodes.forEach((originalNode, replacedNodeParent) => {
+                 // Find the highlights within the parent that replaced the original node
+                 const highlights = Array.from(replacedNodeParent.childNodes).filter(cn =>
+                     cn.nodeType === Node.ELEMENT_NODE && cn.classList.contains('highlight-search')
+                 );
+                 // Find the text nodes that were part of the replacement
+                 const textNodes = Array.from(replacedNodeParent.childNodes).filter(cn => cn.nodeType === Node.TEXT_NODE);
+
+                 if (highlights.length > 0 || textNodes.length > 1) { // Check if replacement happened
+                     // Attempt to find the first node of the replacement fragment
+                     let firstNode = highlights[0] || textNodes[0];
+                     if (firstNode && firstNode.parentNode === replacedNodeParent) {
+                         replacedNodeParent.replaceChild(originalNode, firstNode); // Replace the first part
+                         // Remove other parts of the fragment
+                         highlights.slice(1).forEach(h => h.remove());
+                         textNodes.slice(1).forEach(tn => tn.remove());
+                         replacedNodeParent.normalize(); // Merge adjacent text nodes
+                     }
+                 }
+            });
+
+
+            // Fallback: Remove any remaining highlight spans directly
+            const remainingHighlights = document.querySelectorAll('.highlight-search');
+            remainingHighlights.forEach(highlight => {
+                const parent = highlight.parentNode;
+                if (parent) {
+                    parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+                    parent.normalize();
+                }
+            });
+
+
+            originalNodes.clear(); // Clear the stored originals
+            matches = [];
+            totalMatches = 0;
+            currentMatchIndex = -1;
+        }
+
+
+        function updateMatchInfo(text) {
+            contentSearchInfo.textContent = text;
+        }
+
+        function resetNavButtons() {
+            prevMatchButton.disabled = true;
+            nextMatchButton.disabled = true;
+            clearSearchButton.disabled = contentSearchInput.value.length === 0; // Only disable if input is empty
+        }
+
+        function updateNavButtons() {
+            prevMatchButton.disabled = totalMatches <= 1 || currentMatchIndex === 0;
+            nextMatchButton.disabled = totalMatches <= 1 || currentMatchIndex === totalMatches - 1;
+            clearSearchButton.disabled = false; // Always enable if there was a search attempt
+        }
+
+        function highlightCurrentMatch() {
+             // Reset background for all highlights
+            document.querySelectorAll('.highlight-search').forEach(h => {
+                h.style.backgroundColor = '#ffffa0'; // Default highlight
+            });
+
+            if (currentMatchIndex >= 0 && currentMatchIndex < totalMatches) {
+                const currentHighlight = document.querySelector(`.highlight-search[data-match-index="${currentMatchIndex}"]`);
+                if (currentHighlight) {
+                    currentHighlight.style.backgroundColor = '#ffcc00'; // Current match highlight
+                }
+            }
+        }
+
+
+        function scrollToCurrentMatch() {
+            if (currentMatchIndex >= 0 && currentMatchIndex < totalMatches) {
+                highlightCurrentMatch(); // Ensure correct highlight is applied
+
+                const currentHighlight = document.querySelector(`.highlight-search[data-match-index="${currentMatchIndex}"]`);
+                if (currentHighlight) {
+                    // Calculate offset
+                    const headerHeight = document.querySelector('.guide-header')?.offsetHeight || 0;
+                    const searchBarHeight = document.querySelector('.content-search-container')?.offsetHeight || 0;
+                    // Use headerHeight if nav is not sticky or hidden, otherwise use nav height
+                    const stickyTopHeight = headerHeight + searchBarHeight;
+                    const scrollOffset = stickyTopHeight + 20; // Extra padding
+
+                    const elementTop = currentHighlight.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({
+                        top: elementTop - scrollOffset,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+
+        function navigateToNextMatch() {
+            if (totalMatches === 0) return;
+            currentMatchIndex = (currentMatchIndex + 1) % totalMatches;
+            scrollToCurrentMatch();
+            updateMatchInfo(`${currentMatchIndex + 1} of ${totalMatches} matches`);
+            updateNavButtons();
+        }
+
+        function navigateToPrevMatch() {
+            if (totalMatches === 0) return;
+            currentMatchIndex = (currentMatchIndex - 1 + totalMatches) % totalMatches;
+            scrollToCurrentMatch();
+            updateMatchInfo(`${currentMatchIndex + 1} of ${totalMatches} matches`);
+            updateNavButtons();
+        }
+
+        // Event listeners for content search
+        contentSearchInput.addEventListener('input', performContentSearch);
+        contentSearchButton.addEventListener('click', performContentSearch);
+        prevMatchButton.addEventListener('click', navigateToPrevMatch);
+        nextMatchButton.addEventListener('click', navigateToNextMatch);
+        clearSearchButton.addEventListener('click', function() {
+            contentSearchInput.value = '';
+            clearHighlights();
+            updateMatchInfo('');
+            resetNavButtons();
+        });
+
+        contentSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (totalMatches > 0) { // Only navigate if there are matches
+                    if (e.shiftKey) {
+                        navigateToPrevMatch();
+                    } else {
+                        navigateToNextMatch();
+                    }
+                } else {
+                    performContentSearch(); // Perform search if Enter is pressed with no matches yet
+                }
+            } else if (e.key === 'Escape') {
+                contentSearchInput.value = '';
+                clearHighlights();
+                updateMatchInfo('');
+                resetNavButtons();
+            }
+        });
+
+        // Initial state for clear button
+        resetNavButtons();
+
+    });
+    </script>
+</body>
+</html>
