@@ -1,87 +1,31 @@
-# Quirgs - Quick Reference Guides
+# Quirgs V2
 
 ![Quirgs Logo](assets/quirgs.png)
 
-## About Quirgs
+> **[SYSTEM]** Legacy infrastructure successfully archived. Constructing AI-native command center...
 
-Quirgs (Quick Reference Guides) is a collection of elegantly formatted, practical reference materials for developers. Created out of the need for clearer, more accessible documentation, Quirgs aims to make technical information beautiful and instantly useful.
+## The Pivot
 
-## Our Story
+Quirgs is undergoing a fundamental transformation. We are sunsetting our static, human-written reference guides and completely re-imagining our concept from the ground up. 
 
-Every developer knows the frustration of digging through lengthy documentation to find that one command or parameter they need. Quirgs was born from this shared experience - the belief that reference materials should be:
+In the age of thinking models and agentic coding, the needs of the open-source community have evolved. Quirgs V2 represents a hard pivot from **human reference material** to **AI-native context, workflows, and actionable tooling**.
 
-- **Scannable** - Find what you need in seconds
-- **Comprehensive** - Cover all the essential information
-- **Beautiful** - Designed with care and attention to detail
-- **Accessible** - Available wherever you need them
-- **Interactive** - Engage with the content in a meaningful way
-- **Mobile-Friendly** - Optimized for all devices
-- **Searchable** - Quickly locate specific commands or topics
+## Why the Change?
 
-## Current Features
-### Site Features
+Every developer knows the frustration of digging through lengthy documentation. But as AI models become our pair programmers, the problem space has shifted. It's no longer just about making information *scannable for humans*, but about creating environments that are *legible and actionable for AI assistants*.
 
-- **Guide Search**: Search for guides from the home page. 
-- **In-Page Content Search**: Robust search functionality for quick navigation within guides.
-- **Expandable Sections**: Collapsible content for a cleaner interface.
-- **Mobile-Friendly Navigation**: Responsive design with a hamburger menu for mobile users.
-- **Back-to-Top Button**: Quick navigation for long pages.
+Quirgs V2 focuses on building scaffolding designed specifically for AI workflows:
 
+- **AI Contexts** - Providing models with the precise, high-signal information they need.
+- **Agentic Workflows** - Actionable chains of execution tailored for thinking models.
+- **Developer Tooling** - Bridging the gap between human intent and autonomous execution.
 
-### GitHub Copilot Commands Reference
+## What's Next?
 
-Our flagship reference guide covers everything you need to know about interacting with GitHub Copilot:
+Our concept is currently in stealth development, but ideas are actively being brainstormed. Expect to see:
 
-- **Slash Commands** - Quick access to Copilot's core functionality (`/fix`, `/explain`, `/tests`, etc.)
-- **Context Commands** - How to reference your workspace, files, and selections
-- **Intent Commands** - Different ways to express what you need from Copilot
-- **Best Practices** - Tips for crafting effective prompts
-- **Advanced Usage** - Command combinations and advanced techniques
-- **Interface-Specific Commands** - Shortcuts and features for VS Code and GitHub.com
-- **Troubleshooting** - Solutions to common issues
+- Advanced generative scaffolding.
+- New SOPs modeled specifically for AI code agents.
+- Tools built for the open-source AI community.
 
-### Guide Search
-The home page features a **search bar** for quick access to guides. Users can:
-- Type keywords to filter guides.
-- Click on a guide to view its content.
-- Use the **search bar** to find specific commands or topics within the guide.  
-
-### In-Page Content Search
-
-Our guides now include a robust **in-page content search** feature, allowing users to:
-
-- Search for keywords within the guide.
-- Navigate between matches using **Next** and **Previous** buttons.
-- Highlight all matches for better visibility.
-- Clear search results with a single click.
-
-### Expandable Sections
-
-To improve readability, guides now feature **expandable sections** for detailed content. Users can:
-
-- Expand or collapse sections for a cleaner interface.
-- Automatically expand sections containing search matches.
-- Use a **clear all** button to reset the search and collapse all sections.
-- The expandable sections are designed to be intuitive and user-friendly, ensuring that users can easily navigate through the content.
-
-### Mobile-Friendly Navigation
-
-The site includes a **responsive navigation menu** with:
-
-- A hamburger menu for mobile devices.
-- Smooth transitions and overlay effects.
-- Automatic closing of the menu on link selection or screen resizing.
-
-
-### Bug Fixes
-
-- Fixed issues with the **in-page search navigation** buttons (`Next`, `Previous`, `Clear`) to ensure proper functionality.
-- Improved scroll offset calculations to account for sticky headers and search bars.
-- Enhanced the **expandable sections** to automatically open when search matches are found within them.
-- Resolved minor UI glitches in the **mobile navigation menu** for smoother transitions.
-
-### New Features
-
-- **Advanced Search Enhancements**: Improved the in-page content search functionality with better match highlighting and navigation.
-- **Expandable Content Improvements**: Enhanced readability by ensuring expandable sections dynamically adjust based on user interactions.
-
+More to come.
