@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quirgs - Quick Reference Guides generated daily. Technical guides on programming, AI, and technology tools.">
+    <meta name="author" content="Quirgs">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="Quick Reference, Guides, Technology, Programming, AI, Ollama, LLM, Technical Guides">
+    <link rel="icon" href="assets/favicon.png" type="image/x-icon">
+    <title>Quirgs - Quick Reference Guides</title>
+    <!-- External CSS - Fixed path -->
+    <link rel="stylesheet" href="css/styles.css">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3V21VKRR7E"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-3V21VKRR7E');
+</script>
+<!-- End of Google tag (gtag.js) -->
+
+</head>
+<body>
+    <header>
+        <div>
+            <img src="assets/logo.png" width="200" height="100%" alt="Quirgs Logo" class="index-logo">
+            <h1 class="tagline">Quick Reference Guides</h1>
+        </div>
+        <div class="hamburger" id="hamburger-menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+   
+    <div class="overlay" id="menu-overlay"></div>
+   
+    <nav id="main-nav">
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#guides">Available Guides</a></li>
+            <li><a href="#coming-soon">Coming Soon</a></li>
+            <li><a href="#why-quirgs">Why Quirgs?</a></li>
+        </ul>
+    </nav>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-wrapper">
+            <input type="text" id="search-input" placeholder="Search for guides..." aria-label="Search for guides">
+            <button id="search-button" aria-label="Search">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+        <div id="search-results" class="search-results"></div>
+    </div>
+
+    <section id="about">
+        <h2>About Quirgs</h2>
+        <p><strong>[In Development]</strong></p>
+        <div class="intro">
+            <p>Welcome to <strong>Quirgs!</strong> Your new open-source hub for concise, practical <strong>Qui</strong>ck<strong> r</strong>eference <strong>g</strong>uide<strong>s</strong> on technical topics, including AI workflows, SOPs, flowcharts and more. No ads, no spam, just guides.</p>
+            
+            <div class="expandable-content" id="about-expandable">
+                <p>Every developer knows the frustration of digging through lengthy documentation to find that one command or parameter they need. Quirgs was born from this shared experience - the belief that reference materials should be:</p>
+                <ul>
+                    <li><strong>Scannable</strong> - Find what you need in seconds</li> 
+                    <li><strong>Comprehensive</strong> - Cover all the essential information</li>
+                    <li><strong>Beautiful</strong> - Designed with care and attention to detail</li>
+                    <li><strong>Accessible</strong> - Available wherever you need them</li>
+                    <li><strong>Interactive</strong> - Engage with the content in a meaningful way</li>
+                    <li><strong>Mobile-Friendly</strong> - Optimized for all devices</li>
+                    <li><strong>Searchable</strong> - Quickly locate guides or keywords</li>
+                </ul>
+                <p>Each one is carefully crafted to provide essential information in an easily digestible format, helping you learn and implement new technologies faster. The information is gathered by humans and LLMs, and then distilled into a quick reference format. Some of the guides are based on community requests, ensuring they stay relevant to your needs.</p>
+                <p>We aim to cover a wide range of topics. Whether you're a developer, data scientist, or just someone interested in technology, we have something for you. <i>Quirgs!</i></p>
+                <p>Stay tuned for more guides!</p>
+            </div>
+            <button class="read-more-btn" id="read-more-btn" aria-expanded="false" aria-controls="about-expandable">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Close</span>
+            </button>
+        </div>
+    </section>
+
+    <section id="guides">
+        <h2>Available Guides</h2>
+        <div class="guides-container" id="guides-container">
+            <div class="guide-card">
+                <h3>GitHub Copilot Commands</h3>
+                <p>A comprehensive reference for GitHub Copilot commands, including slash commands, context commands, intent commands, and best practices to maximize your productivity.</p>
+                <a href="guides/copilot_commands_reference.html">View Guide</a>
+            </div>
+            <div class="guide-card">
+                <h3>Running Local LLMs with Ollama</h3>
+                <p>Learn how to set up and run Large Language Models locally using Ollama and AnythingLLM on Windows 10, with step-by-step instructions for installation and configuration.</p>
+                <a href="guides/ollama_anythingllm_guide.html">View Guide</a>
+            </div>
+            <div class="guide-card">
+                <h3>T.A.C.O Marketing Strategy</h3>
+                <p>Learn how to create a comprehensive marketing strategy for any business using the T.A.C.O framework, focusing on actionable steps, insights, and best practices.</p>
+                <a href="guides/taco_marketing_strategy.html">View Guide</a>
+            </div>
+            <div class="guide-card">
+                <h3>Gemma vs Gemini Comparison</h3>
+                <p>A quick reference guide comparing Google's current large language models, to help you understand which one might be most suitable for your specific needs.  </p>
+                <a href="guides/gemma_vs_gemini_guide.html">View Guide</a>
+            </div>
+            <div class="guide-card">
+                <h3>AI Prompt Engineering</h3>
+                <p>A quick reference guide for crafting effective prompts and how to engage with LLMs to get the best experience and response to your request or instructions. </p>
+                <a href="guides/ai_prompt_engineering.html">View Guide</a>
+            </div>
+            <div class="guide-card">
+                <h3>Git Workflow Reference</h3>
+                <p>An easy to follow guide to Git branching, commit conventions, and collaboration workflows. Learn about advanced commands and best practices in a quick reference guide. </p>
+                <a href="guides/git_workflow_reference.html">View Guide</a>
+            </div>
+        </div>
+        <div class="pagination-container">
+            <div class="pagination" id="pagination">
+                <!-- Pagination will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <section id="coming-soon">
+        <h2>Coming Soon</h2>
+        <p>We're constantly working on new quick reference guides. Here's a preview of what's coming next:</p>
+        <button class="read-more-btn" id="coming-soon-btn" aria-expanded="false" aria-controls="coming-soon-expandable">
+            <span class="read-more-text">Show Upcoming Guides</span>
+            <span class="read-less-text">Hide Upcoming Guides</span>
+        </button>
+        <div class="expandable-content" id="coming-soon-expandable" style="margin-top: 15px;">
+            <div class="guides-container">
+                <div class="guide-card">
+                    <h3>Vibe Coding Workflow</h3>
+                    <p>A standard operating procedure and workflow for developing software projects and with LLM agents and code editors.</p>
+                    <a href="/" style="background-color: #6a737d;">Coming Soon</a>
+                </div>
+                <div class="guide-card">
+                    <h3>Ollama and Context Protocol</h3>
+                    <p>A quick reference guide to understanding the context protocol for models used in Ollama, including setup and best practices.</p>
+                    <a href="/" style="background-color: #6a737d;">Coming Soon</a>
+                </div>     
+            </div>
+        </div>
+    </section>
+
+    <!--<section id="request">
+        <h2>Request a Guide</h2>
+        <p>Have a topic you'd like to see covered in a quick reference guide? Submit your request below and we'll consider it for our next daily guide!</p>
+        
+        <form id="guideRequestForm" action="#" method="POST">
+            <div>
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            
+            <div>
+                <label for="social">Social Media Link (Optional)</label>
+                <input type="url" id="social" name="social" placeholder="Twitter, LinkedIn, GitHub, etc.">
+            </div>
+            
+            <div>
+                <label for="guideIdea">Guide Idea</label>
+                <textarea id="guideIdea" name="guideIdea" placeholder="Describe the guide you'd like to see. Be as specific as possible about the technology, concepts, or tools you want covered." required></textarea>
+            </div>
+            
+            <div>
+                <button type="submit">Submit Request</button>
+            </div>
+        </form>
+    </section> -->
+
+    <section id="why-quirgs">
+        <h2>Why Quirgs?</h2>
+        <ul>
+            <li><strong>Concise</strong> - Get straight to the essential information without wading through lengthy tutorials</li>
+            <li><strong>Practical</strong> - Focus on real-world usage and applications</li>
+            <li><strong>Community-driven</strong> - Guides are created based on what you actually need</li>
+            <li><strong>Technical depth</strong> - Written for developers and tech professionals</li>
+            <li><strong>Regularly updated</strong> - New guides added daily based on requests</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Quirgs - All guides are generated with care and attention to detail.</p>
+        <p>Have questions? Contact us at <a href="https://github.com/unqdlphn/quirgs/issues" style="color: #fff;">Quirgs Support</a></p>
+    </footer>
+
+    <!-- Add back to top button -->
+    <a href="#" class="back-to-top">Back to Top</a>
+
+    <script>
+        // Mobile navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburger = document.getElementById('hamburger-menu');
+            const nav = document.getElementById('main-nav');
+            const overlay = document.getElementById('menu-overlay');
+            
+            // Function to close the menu
+            function closeMenu() {
+                nav.classList.remove('active');
+                hamburger.classList.remove('active');
+                hamburger.setAttribute('aria-expanded', 'false');
+                overlay.classList.remove('active');
+                document.body.classList.remove('menu-open');
+            }
+            
+            // Toggle menu when hamburger is clicked or when Enter/Space is pressed
+            hamburger.addEventListener('click', toggleMenu);
+            hamburger.addEventListener('keydown', function(e) {
+                // 13 is Enter, 32 is Space
+                if (e.keyCode === 13 || e.keyCode === 32) {
+                    e.preventDefault();
+                    toggleMenu();
+                }
+            });
+            
+            function toggleMenu() {
+                const isExpanded = hamburger.classList.contains('active');
+                hamburger.classList.toggle('active');
+                hamburger.setAttribute('aria-expanded', !isExpanded);
+                nav.classList.toggle('active');
+                overlay.classList.toggle('active');
+                document.body.classList.toggle('menu-open');
+            }
+            
+            // Close menu when overlay is clicked - Adding stopPropagation to ensure event doesn't bubble up
+            overlay.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeMenu();
+            }, { passive: true }); // Added passive: true for better performance
+            
+            // Close menu when nav link is clicked
+            const navLinks = nav.querySelectorAll('a');
+            navLinks.forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
+            
+            // Close menu on window resize if viewport becomes desktop size
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    closeMenu();
+                }
+            });
+            
+            // Additional event listener for touchstart on mobile to ensure overlay clicks work properly
+            overlay.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+                closeMenu();
+            }, { passive: true }); // Added passive: true for better performance
+            
+            // Read More functionality for About section
+            const readMoreBtn = document.getElementById('read-more-btn');
+            const expandableContent = document.getElementById('about-expandable');
+            
+            if (readMoreBtn && expandableContent) {
+                readMoreBtn.addEventListener('click', function() {
+                    expandableContent.classList.toggle('expanded');
+                    readMoreBtn.classList.toggle('expanded');
+                    
+                    // Update ARIA attributes for accessibility
+                    const isExpanded = expandableContent.classList.contains('expanded');
+                    readMoreBtn.setAttribute('aria-expanded', isExpanded);
+                });
+            }
+            
+            // Back to top button scroll functionality
+            const backToTopBtn = document.querySelector('.back-to-top');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) { // Show after scrolling down 300px
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+
+            // Pagination functionality
+            const guidesContainer = document.getElementById('guides-container');
+            const paginationContainer = document.getElementById('pagination');
+            const guidesPerPage = 6;
+            let currentPage = 1;
+            
+            function setupPagination() {
+                if (!guidesContainer || !paginationContainer) return;
+                
+                const guideCards = guidesContainer.querySelectorAll('.guide-card');
+                const totalPages = Math.ceil(guideCards.length / guidesPerPage);
+                
+                // Create pagination controls
+                paginationContainer.innerHTML = '';
+                
+                // Previous button
+                const prevButton = document.createElement('button');
+                prevButton.textContent = 'Previous';
+                prevButton.classList.add('pagination-button', 'prev-button');
+                prevButton.disabled = currentPage === 1;
+                prevButton.setAttribute('aria-label', 'Go to previous page');
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        updateGuideDisplay();
+                    }
+                });
+                paginationContainer.appendChild(prevButton);
+                
+                // Page buttons
+                for (let i = 1; i <= totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    pageButton.classList.add('pagination-button', 'page-button');
+                    if (i === currentPage) {
+                        pageButton.classList.add('active');
+                        pageButton.setAttribute('aria-current', 'page');
+                    }
+                    pageButton.setAttribute('aria-label', `Go to page ${i}`);
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        updateGuideDisplay();
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+                
+                // Next button
+                const nextButton = document.createElement('button');
+                nextButton.textContent = 'Next';
+                nextButton.classList.add('pagination-button', 'next-button');
+                nextButton.disabled = currentPage === totalPages;
+                nextButton.setAttribute('aria-label', 'Go to next page');
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        updateGuideDisplay();
+                    }
+                });
+                paginationContainer.appendChild(nextButton);
+            }
+            
+            function updateGuideDisplay() {
+                const guideCards = guidesContainer.querySelectorAll('.guide-card');
+                const startIndex = (currentPage - 1) * guidesPerPage;
+                const endIndex = startIndex + guidesPerPage;
+                
+                // Update which guides are visible
+                guideCards.forEach((card, index) => {
+                    if (index >= startIndex && index < endIndex) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+                
+                // Update pagination buttons
+                const totalPages = Math.ceil(guideCards.length / guidesPerPage);
+                const pageButtons = paginationContainer.querySelectorAll('.page-button');
+                pageButtons.forEach((button, index) => {
+                    const pageNum = index + 1;
+                    button.classList.toggle('active', pageNum === currentPage);
+                    button.setAttribute('aria-current', pageNum === currentPage ? 'page' : 'false');
+                });
+                
+                // Update prev/next buttons
+                const prevButton = paginationContainer.querySelector('.prev-button');
+                const nextButton = paginationContainer.querySelector('.next-button');
+                if (prevButton) prevButton.disabled = currentPage === 1;
+                if (nextButton) nextButton.disabled = currentPage === totalPages;
+                
+                // Only scroll to guides section when pagination buttons are clicked, not on initial load
+                if (window.initialLoadComplete) {
+                    const guidesSection = document.getElementById('guides');
+                    if (guidesSection) {
+                        guidesSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            }
+            
+            // Initialize pagination
+            window.initialLoadComplete = false;
+            setupPagination();
+            updateGuideDisplay();
+            window.initialLoadComplete = true;
+
+            // Coming Soon expander functionality
+            const comingSoonBtn = document.getElementById('coming-soon-btn');
+            const comingSoonExpandable = document.getElementById('coming-soon-expandable');
+            
+            if (comingSoonBtn && comingSoonExpandable) {
+                comingSoonBtn.addEventListener('click', function() {
+                    comingSoonExpandable.classList.toggle('expanded');
+                    comingSoonBtn.classList.toggle('expanded');
+                    
+                    // Update ARIA attributes for accessibility
+                    const isExpanded = comingSoonExpandable.classList.contains('expanded');
+                    comingSoonBtn.setAttribute('aria-expanded', isExpanded);
+                });
+            }
+
+            // Search functionality
+            const searchInput = document.getElementById('search-input');
+            const searchButton = document.getElementById('search-button');
+            const searchResults = document.getElementById('search-results');
+            
+            // Guide data for search functionality
+            const guidesData = [
+                {
+                    title: "GitHub Copilot Commands",
+                    description: "A comprehensive reference for GitHub Copilot commands, including slash commands, context commands, intent commands, and best practices to maximize your productivity.",
+                    url: "guides/copilot_commands_reference.html",
+                    keywords: ["github", "copilot", "commands", "slash commands", "context commands", "intent commands", "AI", "coding assistant", "productivity"]
+                },
+                {
+                    title: "Running Local LLMs with Ollama",
+                    description: "Learn how to set up and run Large Language Models locally using Ollama and AnythingLLM on Windows 10, with step-by-step instructions for installation and configuration.",
+                    url: "guides/ollama_anythingllm_guide.html",
+                    keywords: ["ollama", "anythingllm", "llm", "local", "windows", "installation", "language model", "AI", "setup"]
+                },
+                {
+                    title: "T.A.C.O Marketing Strategy",
+                    description: "Learn how to create a comprehensive marketing strategy for any business using the T.A.C.O framework, focusing on actionable steps, insights, and best practices.",
+                    url: "guides/taco_marketing_strategy.html",
+                    keywords: ["marketing", "strategy", "taco", "framework", "business", "actionable steps"]
+                },
+                {
+                    title: "Gemma vs Gemini Comparison",
+                    description: "A quick reference guide comparing Google's current large language models, to help you understand which one might be most suitable for your specific needs.",
+                    url: "guides/gemma_vs_gemini_guide.html",
+                    keywords: ["gemma", "gemini", "google", "comparison", "language models", "AI", "model selection"]
+                },
+                {
+                    title: "AI Prompt Engineering",
+                    description: "Essential techniques for crafting effective prompts for AI tools like ChatGPT, Claude, and Gemini to get more accurate and useful responses.",
+                    url: "guides/prompt_engineering_guide.html",
+                    keywords: ["prompt", "engineering", "AI", "ChatGPT", "Claude", "Gemini", "prompts", "techniques"]
+                },
+                {
+                    title: "Git Workflow Reference",
+                    description: "An easy to follow guide to Git branching, commit conventions, and collaboration workflows. Learn about advanced commands and best practices in a quick reference guide.",
+                    url: "guides/git_workflow_reference.html",
+                    keywords: ["git", "workflow", "branching", "commit", "collaboration", "best practices", "reference"]
+                }                
+            ];
+            
+            // Search function
+            function performSearch() {
+                const query = searchInput.value.trim().toLowerCase();
+                
+                if (query.length < 2) {
+                    searchResults.innerHTML = '';
+                    searchResults.classList.remove('active');
+                    return;
+                }
+                
+                const results = guidesData.filter(guide => {
+                    // Check if query matches title, description or keywords
+                    return guide.title.toLowerCase().includes(query) || 
+                           guide.description.toLowerCase().includes(query) || 
+                           guide.keywords.some(keyword => keyword.toLowerCase().includes(query));
+                });
+                
+                displaySearchResults(results, query);
+            }
+            
+            // Display search results
+            function displaySearchResults(results, query) {
+                searchResults.innerHTML = '';
+                
+                if (results.length === 0) {
+                    searchResults.innerHTML = `<div class="search-no-results">No guides found matching "${query}"</div>`;
+                } else {
+                    results.forEach(result => {
+                        const resultItem = document.createElement('div');
+                        resultItem.classList.add('search-result-item');
+                        resultItem.innerHTML = `
+                            <div class="search-result-title">${result.title}</div>
+                            <p class="search-result-description">${result.description}</p>
+                        `;
+                        resultItem.addEventListener('click', () => {
+                            window.location.href = result.url;
+                        });
+                        searchResults.appendChild(resultItem);
+                    });
+                }
+                
+                searchResults.classList.add('active');
+            }
+            
+            // Event listeners for search
+            searchInput.addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    performSearch();
+                } else if (e.key === 'Escape') {
+                    searchInput.value = '';
+                    searchResults.innerHTML = '';
+                    searchResults.classList.remove('active');
+                } else if (searchInput.value.trim().length >= 2) {
+                    performSearch();
+                }
+            });
+            
+            searchButton.addEventListener('click', performSearch);
+            
+            // Close search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchInput.contains(e.target) && !searchButton.contains(e.target) && !searchResults.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
