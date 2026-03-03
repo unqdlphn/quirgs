@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,16 +62,25 @@
             border-radius: 50%;
         }
 
-        .close { background-color: #ff5f56; }
-        .minimize { background-color: #ffbd2e; }
-        .maximize { background-color: #27c93f; }
+        .close {
+            background-color: #ff5f56;
+        }
+
+        .minimize {
+            background-color: #ffbd2e;
+        }
+
+        .maximize {
+            background-color: #27c93f;
+        }
 
         .terminal-title {
             flex-grow: 1;
             text-align: center;
             color: #71717a;
             font-size: 0.85rem;
-            margin-right: 60px; /* offset for buttons to keep text centered */
+            margin-right: 60px;
+            /* offset for buttons to keep text centered */
         }
 
         .terminal-body {
@@ -98,9 +108,17 @@
             margin-right: 8px;
         }
 
-        .text-red { color: var(--accent-red); }
-        .text-yellow { color: var(--accent-yellow); }
-        .text-bright { color: var(--text-bright); }
+        .text-red {
+            color: var(--accent-red);
+        }
+
+        .text-yellow {
+            color: var(--accent-yellow);
+        }
+
+        .text-bright {
+            color: var(--text-bright);
+        }
 
         .cursor {
             display: inline-block;
@@ -129,11 +147,19 @@
         }
 
         @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="terminal-container">
@@ -152,7 +178,7 @@
 
     <script>
         // Terminal text sequence
-        const sequence =[
+        const sequence = [
             { type: 'input', text: './shutdown_v1.sh' },
             { type: 'output', text: '[INFO] Initiating deprecation sequence for Legacy Quirgs...', delay: 500 },
             { type: 'output', text: '<span class="text-yellow">[WARN] Static reference guides and human-written SOPs offline.</span>', delay: 800 },
@@ -166,7 +192,7 @@
             { type: 'output', text: '<span class="text-bright">QUIRGS V2 is currently in development.</span>', delay: 400 },
             { type: 'output', text: 'We are re-imagining our concept from the ground up to support the open-source community with tooling built for the age of thinking models.', delay: 400 },
             { type: 'blank', delay: 200 },
-            { type: 'output', text: 'Follow the commit history or get in touch: <a href="https://github.com/your-github-username" target="_blank">GitHub</a> | <a href="mailto:your-email@quirgs.com">Contact</a>', delay: 0 },
+            { type: 'output', text: 'Follow the commit history or get in touch: <a href="https://github.com/unqdlphn/quirgs" target="_blank"> GitHub</a>', delay: 0 },
             { type: 'prompt-only' }
         ];
 
@@ -181,7 +207,7 @@
             return new Promise(resolve => {
                 let i = 0;
                 // Temporarily remove HTML tags for typing effect, or just insert HTML directly if it contains tags
-                if(text.includes('<span') || text.includes('<a')) {
+                if (text.includes('<span') || text.includes('<a')) {
                     element.innerHTML += text;
                     setTimeout(resolve, speed * 10);
                 } else {
@@ -203,26 +229,26 @@
             for (const step of sequence) {
                 const line = document.createElement('div');
                 line.className = 'line';
-                
+
                 if (step.type === 'input') {
                     line.innerHTML = getPromptHTML();
                     const textSpan = document.createElement('span');
                     line.appendChild(textSpan);
-                    
+
                     // Add cursor to current line
                     const cursor = document.createElement('span');
                     cursor.className = 'cursor';
                     line.appendChild(cursor);
-                    
+
                     terminal.appendChild(line);
-                    
+
                     await new Promise(r => setTimeout(r, 600)); // Pause before typing
                     await typeText(textSpan, step.text, 50);
                     await new Promise(r => setTimeout(r, 400)); // Pause after typing
-                    
+
                     // Remove cursor
                     line.removeChild(cursor);
-                } 
+                }
                 else if (step.type === 'output') {
                     terminal.appendChild(line);
                     await typeText(line, step.text, 0); // Fast output
@@ -241,7 +267,7 @@
 
                 // Scroll to bottom
                 terminal.scrollTop = terminal.scrollHeight;
-                
+
                 // Wait for specified delay
                 if (step.delay) {
                     await new Promise(r => setTimeout(r, step.delay));
@@ -253,4 +279,5 @@
         setTimeout(runSequence, 1000);
     </script>
 </body>
+
 </html>
