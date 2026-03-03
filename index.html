@@ -23,12 +23,26 @@
             color: var(--text-main);
             font-family: 'Fira Code', 'Courier New', Courier, monospace;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+        }
+
+        .main-wrapper {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .logo {
+            width: 96px;
+            margin-top: 32px;
         }
 
         .terminal-container {
@@ -162,18 +176,21 @@
 
 <body>
 
-    <div class="terminal-container">
-        <div class="terminal-header">
-            <div class="mac-btns">
-                <div class="mac-btn close"></div>
-                <div class="mac-btn minimize"></div>
-                <div class="mac-btn maximize"></div>
+    <div class="main-wrapper">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="mac-btns">
+                    <div class="mac-btn close"></div>
+                    <div class="mac-btn minimize"></div>
+                    <div class="mac-btn maximize"></div>
+                </div>
+                <div class="terminal-title">admin@quirgs: ~</div>
             </div>
-            <div class="terminal-title">admin@quirgs: ~</div>
+            <div class="terminal-body" id="terminal">
+                <!-- Content will be injected by JavaScript -->
+            </div>
         </div>
-        <div class="terminal-body" id="terminal">
-            <!-- Content will be injected by JavaScript -->
-        </div>
+        <img src="assets/logo.png" alt="Quirgs Logo" class="logo">
     </div>
 
     <script>
