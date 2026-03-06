@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <title>Quirgs | System Update</title>
     <style>
         :root {
@@ -24,9 +24,9 @@
             font-family: 'Fira Code', 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            min-height: 100dvh;
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
@@ -38,6 +38,7 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+            margin: auto 0;
         }
 
         .logo {
@@ -55,6 +56,8 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            max-height: calc(100vh - 120px);
+            max-height: calc(100dvh - 120px);
         }
 
         .terminal-header {
@@ -101,7 +104,8 @@
             padding: 24px;
             font-size: 0.95rem;
             line-height: 1.6;
-            min-height: 400px;
+            min-height: min(400px, 60vh);
+            min-height: min(400px, 60dvh);
             overflow-y: auto;
         }
 
