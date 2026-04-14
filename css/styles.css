@@ -13,7 +13,7 @@
     --color-example-border: #0164d6;
     --color-row-even: #f8f8f8;
     --color-footer-text: #fff;
-   
+
     /* Typography */
     --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     --font-family-code: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
@@ -23,7 +23,7 @@
     --font-size-code: 85%;
     --font-size-footer: 14px;
     --line-height: 1.6;
-   
+
     /* Spacing */
     --spacing-xs: 5px;
     --spacing-sm: 10px;
@@ -31,12 +31,12 @@
     --spacing-lg: 20px;
     --spacing-xl: 40px;
     --spacing-xxl: 50px;
-   
+
     /* Borders and radius */
     --border-radius: 5px;
     --border-width: 1px;
     --border-btn-pill: 50px;
-   
+
     /* Layout */
     --max-width: 1080px;
     --logo-width: 125px;
@@ -67,7 +67,8 @@ header {
     margin-bottom: var(--spacing-sm);
 }
 
-h2, h3 {
+h2,
+h3 {
     margin-top: var(--spacing-xs);
     margin-bottom: var(--spacing-md);
 }
@@ -126,7 +127,8 @@ table {
     border: var(--border-width) solid var(--color-border-table);
 }
 
-th, td {
+th,
+td {
     padding: var(--spacing-sm) var(--spacing-md);
     border: var(--border-width) solid var(--color-border-table);
     text-align: left;
@@ -147,7 +149,8 @@ section {
     border: var(--border-width) solid var(--color-border);
     border-radius: var(--border-radius);
     background-color: #fff;
-    scroll-margin-top: 80px; /* Adds margin only when scrolling to this element via anchor */
+    scroll-margin-top: 80px;
+    /* Adds margin only when scrolling to this element via anchor */
 }
 
 /* Specific adjustment for section headings that are targets of anchor links */
@@ -156,12 +159,13 @@ section h2 {
 }
 
 /* Update section targeting to be more comprehensive */
-section, 
-section > div,
-section > div > h2,
-section > h2,
+section,
+section>div,
+section>div>h2,
+section>h2,
 [id] {
-    scroll-margin-top: 80px; /* Ensure consistent scroll margin for all potential anchor targets */
+    scroll-margin-top: 80px;
+    /* Ensure consistent scroll margin for all potential anchor targets */
 }
 
 code {
@@ -261,11 +265,13 @@ footer {
     padding-bottom: var(--spacing-lg);
     margin-bottom: var(--spacing-lg);
     background-color: var(--color-nav);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add smooth transition */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    /* Add smooth transition */
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    position: relative; /* For button positioning */
+    position: relative;
+    /* For button positioning */
 }
 
 .guide-card:hover {
@@ -278,8 +284,10 @@ footer {
 }
 
 .guide-card p {
-    margin-top: 0px; /* Reduce top margin for better spacing */
-    margin-bottom: 60px; /* Increase bottom margin to make room for button */
+    margin-top: 0px;
+    /* Reduce top margin for better spacing */
+    margin-bottom: 60px;
+    /* Increase bottom margin to make room for button */
 }
 
 .guide-card a {
@@ -291,8 +299,10 @@ footer {
     text-align: center;
     text-decoration: none;
     font-weight: 500;
-    transition: background-color 0.3s ease; /* Smooth button color transition */
-    position: absolute; /* Position at bottom left */
+    transition: background-color 0.3s ease;
+    /* Smooth button color transition */
+    position: absolute;
+    /* Position at bottom left */
     bottom: var(--spacing-lg);
     left: var(--spacing-md);
 }
@@ -322,7 +332,8 @@ label {
     font-weight: 500;
 }
 
-input, textarea {
+input,
+textarea {
     width: 100%;
     padding: var(--spacing-sm);
     border: 1px solid var(--color-border-table);
@@ -384,7 +395,7 @@ button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 998;
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -409,16 +420,19 @@ body.menu-open {
 }
 
 .expandable-content.expanded {
-    max-height: 3000px; /* Increased value for longer content sections */
+    max-height: 3000px;
+    /* Increased value for longer content sections */
 }
 
 /* Modified read-more button styles to remove hover effects */
 .read-more-btn {
     background: none;
     border: none;
-    color: var(--color-primary); /* Ensure good contrast */
+    color: var(--color-primary);
+    /* Ensure good contrast */
     cursor: pointer;
-    font-weight: 600; /* Slightly bolder for better readability */
+    font-weight: 600;
+    /* Slightly bolder for better readability */
     padding: 8px 0;
     margin-top: 10px;
     display: inline-flex;
@@ -454,7 +468,8 @@ body.menu-open {
     content: '▼';
     font-size: 10px;
     margin-left: 5px;
-    transition: none; /* Remove transition effect */
+    transition: none;
+    /* Remove transition effect */
 }
 
 .read-more-btn.expanded::after {
@@ -493,26 +508,28 @@ button.read-more-btn:hover {
     body {
         padding: var(--spacing-sm);
     }
-   
+
     table {
         display: block;
         overflow-x: auto;
     }
-   
+
     .guides-container {
         grid-template-columns: 1fr;
     }
 
     .guide-card p {
-        margin-top: 0px; /* Reduce top margin for better spacing */
-        margin-bottom: 60px; /* Increase bottom margin to make room for button */
+        margin-top: 0px;
+        /* Reduce top margin for better spacing */
+        margin-bottom: 60px;
+        /* Increase bottom margin to make room for button */
 
     }
-    
+
     .hamburger {
         display: flex;
     }
-    
+
     nav {
         position: fixed;
         top: 0;
@@ -522,29 +539,29 @@ button.read-more-btn:hover {
         background-color: darkslategray;
         color: #ccc;
         transition: right 0.3s ease;
-        box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
         z-index: 999;
         padding-top: 70px;
     }
-    
+
     nav a {
         color: white;
         text-decoration: none;
     }
-    
+
     nav a:hover {
         text-decoration: underline;
     }
-    
+
     nav.active {
         right: 0;
     }
-    
+
     nav ul {
         flex-direction: column;
         padding-top: 20px;
     }
-    
+
     nav ul li {
         margin: 10px 0;
         width: 100%;
@@ -553,7 +570,8 @@ button.read-more-btn:hover {
 
     .search-container {
         position: sticky;
-        top: 0 !important; /* Ensure it stays at the top */
+        top: 0 !important;
+        /* Ensure it stays at the top */
         margin: 0;
         z-index: 99;
         display: flex;
@@ -564,14 +582,15 @@ button.read-more-btn:hover {
 
     .content-search-container {
         position: sticky;
-        top: 0 !important; /* Ensure it stays at the top */
+        top: 0 !important;
+        /* Ensure it stays at the top */
         margin: 0;
         z-index: 99;
         display: flex;
         align-items: center;
         background-color: white;
         border-radius: var(--border-radius);
-    }    
+    }
 
 }
 
@@ -582,13 +601,13 @@ button.read-more-btn:hover {
 
 .guide-header .logo {
     margin-bottom: var(--spacing-xs);
-    
+
 }
 
 .guide-header h1 {
     margin-top: var(--spacing-xs);
     margin-bottom: var(--spacing-md);
-   
+
 }
 
 /* Pagination styles */
@@ -633,7 +652,8 @@ button.read-more-btn:hover {
 
 /* Hide guides that are not on the current page */
 .guide-card {
-    display: block; /* Changed from 'none' to ensure cards are visible by default */
+    display: block;
+    /* Changed from 'none' to ensure cards are visible by default */
 }
 
 .guide-card.hidden {
@@ -804,6 +824,7 @@ button.read-more-btn:hover {
     font-family: sans-serif;
     margin-top: 20px;
 }
+
 .flowchart-step {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -812,30 +833,39 @@ button.read-more-btn:hover {
     border-radius: 4px;
     text-align: center;
     min-width: 150px;
-    position: relative; /* Needed for arrows */
+    position: relative;
+    /* Needed for arrows */
 }
+
 .flowchart-step code {
     background-color: #e0e0e0;
     padding: 2px 4px;
     border-radius: 3px;
 }
+
 .flowchart-arrow {
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 10px solid #555; /* Arrow pointing down */
-    margin: 0 auto 5px auto; /* Spacing between arrow and next step */
+    border-top: 10px solid #555;
+    /* Arrow pointing down */
+    margin: 0 auto 5px auto;
+    /* Spacing between arrow and next step */
 }
+
 .flowchart-branch {
     display: flex;
     justify-content: space-around;
     width: 100%;
     margin-bottom: 10px;
 }
+
 .flowchart-branch .flowchart-step {
-    margin-bottom: 0; /* Remove bottom margin for branched steps */
+    margin-bottom: 0;
+    /* Remove bottom margin for branched steps */
 }
+
 .flowchart-branch-connector {
     /* Basic connector line (more complex lines might need SVG) */
     border-top: 2px solid #555;
@@ -843,16 +873,27 @@ button.read-more-btn:hover {
     margin: 10px auto;
     position: relative;
 }
+
 .flowchart-branch-connector::before,
 .flowchart-branch-connector::after {
     content: '';
     position: absolute;
-    top: -11px; /* Adjust based on arrow size */
+    top: -11px;
+    /* Adjust based on arrow size */
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
     border-top: 10px solid #555;
 }
-.flowchart-branch-connector::before { left: -6px; } /* Arrow pointing left */
-.flowchart-branch-connector::after { right: -6px; } /* Arrow pointing right */
+
+.flowchart-branch-connector::before {
+    left: -6px;
+}
+
+/* Arrow pointing left */
+.flowchart-branch-connector::after {
+    right: -6px;
+}
+
+/* Arrow pointing right */
