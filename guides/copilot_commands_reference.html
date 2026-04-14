@@ -9,7 +9,7 @@
     <meta name="keywords" content="GitHub Copilot Commands, Quick Reference Guide, Programming, AI, Technology, Commands, Best Practices">
     <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
     <title>GitHub Copilot Quick Reference Guide</title>
-    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/guides-v2.css">
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-3V21VKRR7E"></script>
@@ -26,11 +26,13 @@
 
 <body>
     <header class="guide-header">
-        <div style="display: flex; justify-content: space-between; align-items: top;">
+        <div class="guide-header-inner">
             <div>
                 <img src="../assets/logo.png" alt="Quirgs Logo" class="logo">
                 <h1>GitHub Copilot commands</h1>
+                <span class="legacy-pill">v1 archive · pre-reasoning model era</span>
             </div>
+            <a href="index.html" class="back-to-dir">← all guides</a>
             <div class="hamburger" id="hamburger-menu">
                 <span></span>
                 <span></span>
@@ -286,7 +288,7 @@
     </section>
 
     <footer>
-        <p>&copy; 2025 Quirgs - All guides are generated with care and attention to detail.</p>
+        <p>&copy; <span id="yr-guide"></span> Quirgs — All guides are preserved with care.</p>
         <p>Have questions? Contact us at <a href="https://github.com/unqdlphn/quirgs/issues" style="color: #fff;">Quirgs Support</a></p>
     </footer>
    
@@ -639,5 +641,6 @@
         });
     });
     </script>
+    <script>document.getElementById("yr-guide").textContent=new Date().getFullYear();</script>
 </body>
 </html>

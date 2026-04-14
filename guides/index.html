@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+    <meta name="description"
+        content="Quirgs Legacy Guide Archive — static reference guides from v1. Human-written SOPs, quick references, and how-tos from the pre-reasoning model era.">
+    <meta name="robots" content="index, follow">
+    <link rel="icon" href="../assets/favicon.png" type="image/x-icon">
+    <title>Quirgs | Legacy Guide Archive</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3V21VKRR7E"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-3V21VKRR7E');
+    </script>
+
+    <style>
+        :root {
+            --bg-color: #09090b;
+            --term-bg: #18181b;
+            --term-border: #27272a;
+            --card-bg: #1c1c1f;
+            --card-border: #2e2e33;
+            --text-main: #a1a1aa;
+            --text-bright: #f4f4f5;
+            --text-muted: #52525b;
+            --accent-green: #4ade80;
+            --accent-blue: #60a5fa;
+            --accent-red: #f87171;
+            --accent-yellow: #facc15;
+            --accent-purple: #a78bfa;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Fira Code', 'Courier New', Courier, monospace;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: 24px 20px 48px;
+        }
+
+        /* ── Header ─────────────────────────────── */
+        .site-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--term-border);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            border: none;
+        }
+
+        .logo-link:hover {
+            opacity: 0.8;
+        }
+
+        .logo {
+            width: 48px;
+            height: auto;
+        }
+
+        .site-name {
+            font-size: 1rem;
+            color: var(--text-bright);
+            letter-spacing: 0.05em;
+        }
+
+        .back-link {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--text-muted);
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent-blue);
+            border-color: var(--accent-blue);
+        }
+
+        /* ── Page intro ─────────────────────────── */
+        .page-intro {
+            max-width: 900px;
+            margin: 0 auto 36px;
+        }
+
+        .breadcrumb {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .breadcrumb span {
+            color: var(--accent-green);
+        }
+
+        .page-intro h1 {
+            font-size: 1.4rem;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .page-intro .subtitle {
+            font-size: 0.85rem;
+            color: var(--text-main);
+            line-height: 1.6;
+            max-width: 560px;
+        }
+
+        .legacy-badge {
+            display: inline-block;
+            margin-top: 14px;
+            font-size: 0.72rem;
+            color: var(--accent-yellow);
+            border: 1px solid #3d3610;
+            background: rgba(250, 204, 21, 0.06);
+            padding: 4px 10px;
+            border-radius: 4px;
+            letter-spacing: 0.04em;
+        }
+
+        .legacy-badge::before {
+            content: '[ARCHIVE] ';
+        }
+
+        /* ── Guide grid ─────────────────────────── */
+        .guides-grid {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        /* ── Guide card ─────────────────────────── */
+        .guide-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 22px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .guide-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-tag {
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 3px;
+            width: fit-content;
+        }
+
+        .tag-devtools {
+            color: var(--accent-green);
+            background: rgba(74, 222, 128, 0.08);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+
+        .tag-ai {
+            color: var(--accent-purple);
+            background: rgba(167, 139, 250, 0.08);
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .tag-strategy {
+            color: var(--accent-yellow);
+            background: rgba(250, 204, 21, 0.08);
+            border: 1px solid rgba(250, 204, 21, 0.2);
+        }
+
+        .tag-local-llm {
+            color: var(--accent-blue);
+            background: rgba(96, 165, 250, 0.08);
+            border: 1px solid rgba(96, 165, 250, 0.2);
+        }
+
+        .card-title {
+            font-size: 0.95rem;
+            color: var(--text-bright);
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .card-desc {
+            font-size: 0.8rem;
+            color: var(--text-main);
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .card-cta {
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            margin-top: 4px;
+            transition: color 0.2s;
+        }
+
+        .guide-card:hover .card-cta {
+            color: var(--accent-green);
+        }
+
+        .card-cta::before {
+            content: '→ ';
+        }
+
+        /* ── Footer ─────────────────────────────── */
+        .site-footer {
+            max-width: 900px;
+            margin: 60px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid var(--term-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .site-footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .site-footer a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* ── Responsive ──────────────────────────── */
+        @media (max-width: 600px) {
+            .site-header {
+                margin-bottom: 28px;
+            }
+
+            .page-intro h1 {
+                font-size: 1.1rem;
+            }
+
+            .guides-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <a href="../index.html" class="logo-link" aria-label="Quirgs home">
+            <img src="../assets/logo.png" alt="Quirgs Logo" class="logo">
+            <span class="site-name">quirgs</span>
+        </a>
+        <a href="../index.html" class="back-link">← back to home</a>
+    </header>
+
+    <main>
+        <div class="page-intro">
+            <p class="breadcrumb">admin@quirgs <span>~/guides</span> $</p>
+            <h1>Legacy Guide Archive</h1>
+            <p class="subtitle">
+                Static reference guides and human-written SOPs from the v1 era.
+                These pages are preserved for readers arriving from search.
+                New tooling built for the age of thinking models is coming in v2.
+            </p>
+            <span class="legacy-badge">v1 content · read-only · pre-reasoning model era</span>
+        </div>
+
+        <div class="guides-grid">
+
+            <a href="git_workflow_reference.html" class="guide-card" id="guide-git">
+                <span class="card-tag tag-devtools">Dev Tools</span>
+                <h2 class="card-title">Git Workflow Quick Reference</h2>
+                <p class="card-desc">Common Git commands, branching strategies, commit best practices, PR workflows, and
+                    advanced operations.</p>
+                <span class="card-cta">Open guide</span>
+            </a>
+
+            <a href="ai_prompt_engineering.html" class="guide-card" id="guide-prompts">
+                <span class="card-tag tag-ai">AI</span>
+                <h2 class="card-title">AI Prompt Engineering Guide</h2>
+                <p class="card-desc">Techniques and principles for writing effective prompts to get the most out of
+                    large language models.</p>
+                <span class="card-cta">Open guide</span>
+            </a>
+
+            <a href="copilot_commands_reference.html" class="guide-card" id="guide-copilot">
+                <span class="card-tag tag-devtools">Dev Tools</span>
+                <h2 class="card-title">GitHub Copilot Quick Reference</h2>
+                <p class="card-desc">A comprehensive cheat-sheet of GitHub Copilot commands and shortcuts for everyday
+                    AI-assisted coding.</p>
+                <span class="card-cta">Open guide</span>
+            </a>
+
+            <a href="gemma_vs_gemini_guide.html" class="guide-card" id="guide-gemma">
+                <span class="card-tag tag-ai">AI</span>
+                <h2 class="card-title">Gemma vs Gemini Compared</h2>
+                <p class="card-desc">A side-by-side comparison of Google's Gemma and Gemini model families — strengths,
+                    trade-offs, and best use cases.</p>
+                <span class="card-cta">Open guide</span>
+            </a>
+
+            <a href="ollama_anythingllm_guide.html" class="guide-card" id="guide-ollama">
+                <span class="card-tag tag-local-llm">Local LLM</span>
+                <h2 class="card-title">Ollama + AnythingLLM on Windows 10</h2>
+                <p class="card-desc">Step-by-step guide to running local LLMs privately on Windows 10 using Ollama and
+                    AnythingLLM.</p>
+                <span class="card-cta">Open guide</span>
+            </a>
+
+            <a href="taco_marketing_strategy.html" class="guide-card" id="guide-taco">
+                <span class="card-tag tag-strategy">Strategy</span>
+                <h2 class="card-title">T.A.C.O Marketing Strategy</h2>
+                <p class="card-desc">The TACO framework for startup marketing — covering VEGAN, CRAFT, STREET, and
+                    CRUNCHY growth strategies.</p>
+                <span class="card-cta">Open guide</span>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <span>© <span id="yr-dir"></span> Quirgs · Legacy Archive</span>
+        <a href="https://github.com/unqdlphn/quirgs" target="_blank">GitHub →</a>
+    </footer>
+
+    <script>document.getElementById("yr-dir").textContent = new Date().getFullYear();</script>
+</body>
+
+</html>
