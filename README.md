@@ -6,7 +6,7 @@
 
 ## The Pivot
 
-Quirgs is undergoing a fundamental transformation. We are sunsetting our static, human-written reference guides and completely re-imagining our concept from the ground up. 
+Quirgs is undergoing a fundamental transformation. We are sunsetting our static, human-written reference guides and completely re-imagining our concept from the ground up.
 
 In the age of thinking models and agentic coding, the needs of the open-source community have evolved. Quirgs V2 represents a hard pivot from **human reference material** to **AI-native context, workflows, and actionable tooling**.
 
