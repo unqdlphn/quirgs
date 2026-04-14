@@ -42,7 +42,7 @@ body {
     background-color: var(--bg);
     color: var(--text);
     font-family: var(--font-sans);
-    font-size: 15px;
+    font-size: 16px;
     line-height: 1.7;
     padding: 0 16px 64px;
 }
@@ -150,7 +150,7 @@ nav#main-nav a {
     display: block;
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    color: var(--text-muted);
+    color: var(--text);
     border-bottom: none;
     padding: 12px 14px;
     transition: color 0.2s, background 0.2s;
