@@ -1,6 +1,6 @@
 # Quirgs V2
 
-![Quirgs Logo](assets/quirgs.png)
+![Quirgs Logo](assets/quirgs_logo.webp)
 
 > **[SYSTEM]** Legacy infrastructure successfully archived. Constructing AI-native command center...
 
