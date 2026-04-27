@@ -134,6 +134,10 @@
             color: var(--accent-yellow);
         }
 
+        .text-blue {
+            color: var(--accent-blue);
+        }
+
         .text-bright {
             color: var(--text-bright);
         }
@@ -202,10 +206,12 @@
         const sequence = [
             { type: 'input', text: './shutdown_v1.sh' },
             { type: 'output', text: '[INFO] Initiating deprecation sequence for Legacy Quirgs...', delay: 500 },
-            { type: 'output', text: '<span class="text-yellow">[WARN] Static reference guides and human-written SOPs offline.</span>', delay: 800 },
+            { type: 'output', text: '<span class="text-yellow">[WARN] Static reference guides and human-written SOPs archived.</span>', delay: 800 },
             { type: 'output', text: '<span class="text-bright">[SYSTEM] Reasoning models detected. Adapting ecosystem...</span>', delay: 1200 },
             { type: 'output', text: '<span class="text-red">[OK] Legacy infrastructure successfully archived.</span>', delay: 500 },
             { type: 'blank', delay: 400 },
+            { type: 'output', text: '<span class="text-yellow">[ARCHIVE]&nbsp;</span> Legacy reference guides still available:&nbsp;<a href="guides/index.html">quirgs.com/guides</a>', delay: 0 },
+            { type: 'blank', delay: 800 },
             { type: 'input', text: './init_v2_pivot.sh --concept=stealth' },
             { type: 'output', text: '[BUILDING] Constructing AI-native command center...', delay: 800 },
             { type: 'output', text: '[BUILDING] Compiling generative scaffolding and developer contexts...', delay: 1000 },
@@ -213,9 +219,20 @@
             { type: 'output', text: '<span class="text-bright">QUIRGS V2 is currently in development.</span>', delay: 400 },
             { type: 'output', text: 'We are re-imagining our concept from the ground up to support the open-source community with tooling built for the age of thinking models.', delay: 400 },
             { type: 'blank', delay: 200 },
-            { type: 'output', text: 'Follow the commit history or get in touch: <a href="https://github.com/unqdlphn/quirgs" target="_blank"> GitHub</a>', delay: 0 },
+
+            { type: 'input', text: 'ls -la /quirgs/skills/' },
+            { type: 'output', text: 'total 7&nbsp;&nbsp; <span class="text-bright">  AI Compliance Suite  ·  Dropping weekly starting in a few weeks...</span>', delay: 500 },
             { type: 'blank', delay: 200 },
-            { type: 'output', text: '<span class="text-yellow">[ARCHIVE]</span> Legacy reference guides still available: <a href="guides/index.html">quirgs.com/guides</a>', delay: 0 },
+            { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">pii-exposure-checker</span>  <span class="text-yellow">[skill.1]</span>', delay: 130 },
+            { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">iso-42001-audit-prep</span>  <span class="text-yellow">[skill.2]</span>', delay: 130 },
+            { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">hitl-compliance-gate</span>  <span class="text-yellow">[skill.3]</span>', delay: 130 },
+            { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">incident-response-logger</span>  <span class="text-yellow">[skill.4]</span>', delay: 130 },
+            { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">eu-ai-act-classifier</span>  <span class="text-yellow">[skill.5]</span>', delay: 130 },
+            { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">nist-ai-rmf-checkpoint</span>  <span class="text-yellow">[skill.6]</span>', delay: 130 },
+            { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">ai-transparency-writer</span>  <span class="text-yellow">[skill.7]</span>', delay: 130 },
+            { type: 'blank', delay: 500 },
+            { type: 'output', text: '<span class="text-yellow">[BUNDLE]&nbsp;</span> quirgs-compliance&nbsp;&nbsp;<span class="text-bright">All 7 skills · Coming Soon</span>', delay: 300 },
+            { type: 'output', text: 'Subscribe to get notified at launch:&nbsp;<a href="https://github.com/unqdlphn/quirgs" target="_blank">Github</a>', delay: 0 },
             { type: 'prompt-only' }
         ];
 
