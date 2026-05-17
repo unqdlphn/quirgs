@@ -1,4 +1,4 @@
-# Quirgs V2
+# Quirgs V2 - Governance first. Build accordingly
 
 ![Quirgs Logo](assets/quirgs_logo.webp)
 
