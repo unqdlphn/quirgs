@@ -3,3 +3,10 @@ MAINTENANCE.md
 gitknow.md
 
 *_v2
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
