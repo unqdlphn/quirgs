@@ -1,8 +1,10 @@
+# original quirks
 .DS_Store
 MAINTENANCE.md
 gitknow.md
 
 *_v2
+_v2/
 
 # wrangler files
 .wrangler
@@ -10,3 +12,18 @@ gitknow.md
 !.dev.vars.example
 .env*
 !.env.example
+
+# astro
+dist/
+.astro/
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# jetbrains setting folder
+.idea/
+.vscode/
