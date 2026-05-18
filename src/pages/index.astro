@@ -293,7 +293,7 @@
                     terminal.appendChild(line);
 
                     await new Promise(r => setTimeout(r, 600)); // Pause before typing
-                    await typeText(textSpan, step.text, 50);
+                    await typeText(textSpan, step.text || '', 50);
                     await new Promise(r => setTimeout(r, 400)); // Pause after typing
 
                     // Remove cursor
@@ -301,7 +301,7 @@
                 }
                 else if (step.type === 'output') {
                     terminal.appendChild(line);
-                    await typeText(line, step.text, 0); // Fast output
+                    await typeText(line, step.text || '', 0); // Fast output
                 }
                 else if (step.type === 'blank') {
                     line.innerHTML = '&nbsp;';
