@@ -1,13 +1,16 @@
+---
+// src/pages/index.astro
+---
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-    <title>Quirgs | System Update</title>
-    <link rel="icon" href="public/favicon.ico" sizes="48x48">
-    <link rel="icon" href="public/favicon.svg" sizes="any" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="public/favicon.svg">
+    <title>Quirgs | AI Governance Skills</title>
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/favicon.svg">
     <style>
         :root {
             --bg-color: #09090b;
@@ -131,18 +134,22 @@
 
         .text-red {
             color: var(--accent-red);
+            margin-right: 0px;
         }
 
         .text-yellow {
             color: var(--accent-yellow);
+            margin-right: 0px;
         }
 
         .text-blue {
             color: var(--accent-blue);
+            margin-right: 0px;
         }
 
         .text-bright {
             color: var(--text-bright);
+            margin-right: 0px;
         }
 
         .cursor {
@@ -201,10 +208,10 @@
                 <!-- Content will be injected by JavaScript -->
             </div>
         </div>
-        <img src="assets/logo.png" alt="Quirgs Logo" class="logo">
+        <img src="/assets/logo.png" alt="Quirgs Logo" class="logo">
     </div>
 
-    <script>
+    <script lang="ts">
         // Terminal text sequence
         const sequence = [
             { type: 'input', text: './shutdown_v1.sh' },
@@ -239,15 +246,15 @@
             { type: 'prompt-only' }
         ];
 
-        const terminal = document.getElementById('terminal');
+        const terminal = document.getElementById('terminal') as HTMLElement;
         let currentStep = 0;
 
         function getPromptHTML() {
             return `<span class="prompt">admin@quirgs</span><span class="path">~/system</span><span class="text-bright">$</span> `;
         }
 
-        async function typeText(element, text, speed = 30) {
-            return new Promise(resolve => {
+        async function typeText(element: HTMLElement, text: string, speed = 30) {
+            return new Promise<void>(resolve => {
                 let i = 0;
                 // Temporarily remove HTML tags for typing effect, or just insert HTML directly if it contains tags
                 if (text.includes('<span') || text.includes('<a')) {
@@ -286,7 +293,7 @@
                     terminal.appendChild(line);
 
                     await new Promise(r => setTimeout(r, 600)); // Pause before typing
-                    await typeText(textSpan, step.text, 50);
+                    await typeText(textSpan, step.text || '', 50);
                     await new Promise(r => setTimeout(r, 400)); // Pause after typing
 
                     // Remove cursor
@@ -294,7 +301,7 @@
                 }
                 else if (step.type === 'output') {
                     terminal.appendChild(line);
-                    await typeText(line, step.text, 0); // Fast output
+                    await typeText(line, step.text || '', 0); // Fast output
                 }
                 else if (step.type === 'blank') {
                     line.innerHTML = '&nbsp;';
