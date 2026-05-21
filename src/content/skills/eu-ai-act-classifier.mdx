@@ -1,0 +1,58 @@
+---
+title: "EU AI Act Classifier"
+slug: "eu-ai-act-classifier"
+tagline: "Classify your AI system's risk tier in 60 seconds"
+framework: ["EU AI Act", "Annex III", "Article 6"]
+status: live
+version: "1.0.0"
+lastUpdated: 2026-05-21
+installCmd: "Open Cowork → Plugins → ＋ Install → quirgs-compliance.plugin"
+tags: ["EU AI Act", "risk classification", "compliance", "Annex III"]
+---
+
+## What it does
+
+The EU AI Act Classifier takes a plain-language description of your AI system and returns a definitive risk tier under the EU AI Act — prohibited, high-risk (Annex III), GPAI, limited-risk, or minimal-risk — along with the specific legal basis for that classification. It then surfaces the exact obligations that attach to your tier and deployment role (provider, deployer, importer, or distributor), so you know precisely what compliance work is required before you ship.
+
+## Frameworks covered
+
+- EU AI Act (Regulation 2024/1689)
+- Annex III — high-risk AI system categories
+- Article 6 — classification rules for high-risk AI
+- Article 5 — prohibited AI practices
+- Article 3 — definitions (GPAI, provider, deployer)
+
+## When to use it
+
+Reach for this skill at the start of any new AI project or before deploying an existing system in the EU market. It's the right first step before running any other compliance tool — you need to know your tier before you can know your obligations. Also use it when your system's purpose, training data, or deployment context changes in a material way, since tier classification is fact-specific and shifts with the system.
+
+## Example output (abbreviated)
+
+```
+RISK TIER DETERMINATION
+─────────────────────────────────────────────
+System: Automated CV screening tool used in recruitment
+Confirmed tier: HIGH-RISK
+Legal basis: Annex III, Point 4(a) — AI systems used for recruitment or selection of natural persons
+
+OBLIGATIONS (Provider role)
+─────────────────────────────────────────────
+☐ Establish a risk management system (Article 9)
+☐ Ensure data governance and training data requirements (Article 10)
+☐ Prepare technical documentation (Article 11, Annex IV)
+☐ Enable automatic logging / audit trail (Article 12)
+☐ Provide instructions for use (Article 13)
+☐ Implement human oversight measures (Article 14)
+☐ Meet accuracy, robustness, and cybersecurity requirements (Article 15)
+☐ Register in EU database before market placement (Article 49)
+☐ Conduct conformity assessment (Article 43)
+☐ Affix CE marking (Article 48)
+```
+
+## Install
+
+Available as part of the **Quirgs Compliance Bundle** — 7 skills, one install.
+
+`Open Cowork → Plugins → ＋ Install → quirgs-compliance.plugin`
+
+Bundle launches Week 12. Individual Gist drop scheduled per the [release calendar](/bundle/).
