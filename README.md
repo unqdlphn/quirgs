@@ -28,4 +28,4 @@ Our concept is currently in stealth development, but ideas are actively being br
 - New SOPs modeled specifically for AI code agents.
 - Tools built for the open-source AI community.
 
-More to come. Stay tuned in.
+More to come. Stay tuned.
