@@ -1,0 +1,66 @@
+---
+// src/pages/skills/index.astro
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const skills = await getCollection('skills');
+
+const dropOrder = [
+  'pii-exposure-checker',
+  'iso-42001-audit-prep',
+  'hitl-compliance-gate',
+  'incident-response-logger',
+  'eu-ai-act-classifier',
+  'nist-ai-rmf-checkpoint',
+  'ai-transparency-writer'
+];
+
+// Sort returned entries by drop order
+const sortedSkills = skills.sort((a, b) => {
+  return dropOrder.indexOf(a.id) - dropOrder.indexOf(b.id);
+});
+
+const getStatusClass = (status: string) => {
+  if (status === 'live') return 'text-green';
+  if (status === 'draft') return 'text-yellow';
+  return 'text-red';
+};
+---
+
+<BaseLayout 
+  title="Skills | Quirgs" 
+  description="7 production-validated AI compliance skills. EU AI Act, NIST AI RMF, ISO 42001, GDPR."
+  terminalPath="~/skills"
+>
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span> cd skills/
+  </div>
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/skills</span><span class="text-bright">$</span> ls -la /quirgs/skills/
+  </div>
+  <div class="line">&nbsp;</div>
+  <div class="line text-bright">total 7</div>
+  
+  {sortedSkills.map((skill) => {
+    // Format version to v1.0 (or v1.0.0 depending on frontmatter)
+    const rawVersion = skill.data.version;
+    const cleanVersion = rawVersion.startsWith('v') ? rawVersion : `v${rawVersion}`;
+    // Format and pad fields for aligned terminal list
+    const slugPadded = skill.id.padEnd(26, ' ');
+    const versionPadded = cleanVersion.padEnd(6, ' ');
+    const statusText = `[${skill.data.status}]`;
+    const statusPadded = statusText.padEnd(9, ' ');
+    const tagline = skill.data.tagline;
+
+    return (
+      <div class="line">
+        <span>-rwxr--r--  compliance  </span>
+        <a href={`/skills/${skill.id}/`}>{skill.id}</a>
+        <span>{' '.repeat(26 - skill.id.length)}</span>
+        <span>{versionPadded}</span>
+        <span class={getStatusClass(skill.data.status)}>{statusPadded}</span>
+        <span>{tagline}</span>
+      </div>
+    );
+  })}
+</BaseLayout>

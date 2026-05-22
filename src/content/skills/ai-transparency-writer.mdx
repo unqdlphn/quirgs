@@ -1,0 +1,56 @@
+---
+title: "AI Transparency Writer"
+slug: "ai-transparency-writer"
+tagline: "Draft EU AI Act Article 13 transparency notices and NIST-aligned model cards"
+framework: ["EU AI Act", "Article 13", "NIST AI RMF"]
+status: live
+version: "1.0.0"
+lastUpdated: 2026-05-21
+tags: ["transparency", "EU AI Act", "Article 13", "model card", "disclosure"]
+---
+
+## What it does
+
+The AI Transparency Writer produces ready-to-publish transparency documentation in two modes: an EU AI Act Article 13 transparency notice for deployers of high-risk AI systems, and a NIST AI RMF-aligned model card for teams that need structured documentation of an AI system's purpose, capabilities, limitations, and risk profile. Both outputs are actual draft documents — not checklists or templates — that can be edited and published directly after legal review.
+
+## Frameworks covered
+
+- EU AI Act Article 13 — transparency and provision of information to deployers
+- EU AI Act Article 50 — transparency obligations for certain AI systems (deepfake, emotion recognition)
+- NIST AI RMF 1.0 — Govern function, GV-1 and GV-6 subcategories
+- NIST AI RMF Playbook — model documentation guidance
+
+## When to use it
+
+A transparency notice under Article 13 is legally required before a high-risk AI system is placed on the EU market or put into service. Deployers must receive clear, intelligible information about the system's intended purpose, its capabilities and limitations, human oversight requirements, and the identity of the provider. Reach for this skill after completing EU AI Act risk classification — once you know you're in Annex III, this notice is a required deliverable. The model card mode is useful for any team that needs internal or public documentation of an AI system's properties, regardless of regulatory obligation.
+
+## Example output (abbreviated)
+
+```
+AI SYSTEM TRANSPARENCY NOTICE
+Pursuant to EU AI Act Article 13
+
+Provider: Acme Analytics GmbH
+Registered address: [Address]
+Contact: compliance@acme-analytics.example
+
+1. SYSTEM IDENTITY
+   System name: CreditScore Assist v2.1
+   System version: 2.1.4
+   Intended purpose: Decision support for consumer credit risk assessment
+
+2. CAPABILITIES AND LIMITATIONS
+   This system produces a risk score and contributing factor summary based on
+   applicant financial history, behavioural data, and market context. It is designed
+   to assist human credit officers — it does not make autonomous approval or
+   rejection decisions. The system has been validated on applicants aged 25–65
+   in Germany, Austria, and Switzerland. Performance outside this demographic
+   and geographic scope has not been evaluated.
+
+3. HUMAN OVERSIGHT
+   A qualified credit officer must review all system outputs before a credit
+   decision is communicated to the applicant. The system includes an override
+   flag that allows the officer to reject the AI recommendation with a recorded
+   rationale...
+```
+

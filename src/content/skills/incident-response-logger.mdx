@@ -1,0 +1,62 @@
+---
+title: "Incident Response Logger"
+slug: "incident-response-logger"
+tagline: "Structure AI incident reports aligned to NIST SP 800-61 and EU AI Act Article 62"
+framework: ["NIST SP 800-61", "EU AI Act", "Article 62"]
+status: live
+version: "1.0.0"
+lastUpdated: 2026-05-21
+tags: ["incident response", "NIST", "Article 62", "serious incident", "reporting"]
+---
+
+## What it does
+
+The Incident Response Logger takes a description of an AI system failure, unexpected output, or harm event and structures it into a complete incident report aligned to the NIST SP 800-61 incident response lifecycle and EU AI Act Article 62 serious incident reporting requirements. It determines whether the incident meets the Article 62 serious incident threshold, identifies the required notification timeline and recipients (internal, national market surveillance authority, the Commission), and produces a pre-filled report ready for legal sign-off and, where required, regulatory submission.
+
+## Frameworks covered
+
+- NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide (four-phase lifecycle)
+- EU AI Act Article 62 — reporting of serious incidents by providers of high-risk AI systems
+- EU AI Act Recital 97 — serious incident definition and proportionality
+- ISO/IEC 42001:2023 Clause 10 — continual improvement and nonconformity handling
+
+## When to use it
+
+Reach for this skill the moment an AI system produces an output that causes or could cause harm to a person, a group, or critical infrastructure — or when a system behaves in a way that is materially outside its documented intended purpose. In the EU, providers of high-risk AI systems must report serious incidents to the national market surveillance authority without undue delay and within 15 days of becoming aware (EU AI Act Article 62). This skill ensures the right information is captured in the right structure before the clock runs out. It also supports post-incident reviews, where the structured log becomes the basis for root-cause analysis and AIMS corrective action.
+
+## Example output (abbreviated)
+
+```
+AI INCIDENT REPORT
+─────────────────────────────────────────────────────────────
+Incident ID: INC-2026-0047
+System: Autonomous document classification — HR screening pipeline
+Provider: [Organization name]
+Reported by: [Name / Role]
+Date of detection: 2026-05-19
+Report date: 2026-05-21
+
+SEVERITY ASSESSMENT
+  Severity: HIGH
+  Affected parties: ~340 job applicants (incorrectly screened out)
+  Nature of harm: Discriminatory outcome — applicants with non-Western name formats
+                  disproportionately rejected at automated pre-screen stage
+
+EU AI ACT ARTICLE 62 THRESHOLD
+  Determination: SERIOUS INCIDENT — meets threshold
+  Basis: Harm to fundamental rights (non-discrimination); system is Annex III
+         high-risk (recruitment use case, Point 4(a))
+  Notification deadline: 2026-06-03 (15 days from detection)
+  Notify: [National market surveillance authority — member state of deployment]
+
+NIST SP 800-61 PHASE: DETECTION AND ANALYSIS
+  ✅ Incident detected via bias monitoring alert (2026-05-19 14:32 UTC)
+  ✅ Scope confirmed — affected applicant pool identified
+  ⚠️  Root cause under analysis — preliminary: name tokenisation bias in preprocessing step
+
+IMMEDIATE NEXT ACTION
+  Suspend automated pre-screen for affected pipeline pending root-cause confirmation.
+  Notify legal counsel and DPO within 24 hours.
+  Prepare Article 62 notification draft — due 2026-06-03.
+```
+

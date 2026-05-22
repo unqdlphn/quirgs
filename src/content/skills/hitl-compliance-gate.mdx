@@ -1,0 +1,53 @@
+---
+title: "HITL Compliance Gate"
+slug: "hitl-compliance-gate"
+tagline: "Insert a structured human review checkpoint into any AI workflow"
+framework: ["EU AI Act", "NIST AI RMF", "ISO/IEC 42001:2023"]
+status: live
+version: "1.0.0"
+lastUpdated: 2026-05-21
+tags: ["HITL", "human-in-the-loop", "compliance gate", "review checkpoint"]
+---
+
+## What it does
+
+The HITL Compliance Gate generates a structured sign-off checklist that a human reviewer works through before AI-generated output is allowed to proceed — to publication, deployment, user delivery, or any downstream system. It maps each checklist item to a specific control from EU AI Act, NIST AI RMF, or ISO/IEC 42001:2023, so reviewers know exactly what they are confirming and why it matters. Each item carries a pass / fail / pending status and a notes field for the reviewer's observations.
+
+## Frameworks covered
+
+- EU AI Act (Regulation 2024/1689) — Articles 9, 13, 14, 16
+- NIST AI RMF 1.0 — Govern, Measure, and Manage functions
+- ISO/IEC 42001:2023 — Clauses 6, 8, and 9 (planning, operations, performance evaluation)
+
+## When to use it
+
+Insert a compliance gate at any moment where human judgment must verify AI output before it advances. The most common trigger points are pre-deployment (before a model goes to production), pre-publication (before AI-generated content reaches an audience), and pre-release (before a new AI feature ships to users). It's also useful mid-workflow when a reviewer needs a structured record of what they checked and approved — not just a verbal sign-off.
+
+## Example output (abbreviated)
+
+```
+HITL COMPLIANCE GATE — SIGN-OFF CHECKLIST
+─────────────────────────────────────────────────────────────
+Workflow: AI-generated customer support responses
+Gate type: Pre-publication
+Reviewer: [Name / Role]
+Date: 2026-05-21
+
+EU AI ACT
+  ✅ PASS   — Output does not constitute a prohibited practice (Article 5)
+  ✅ PASS   — Human oversight mechanism is active and able to intervene (Article 14)
+  ⚠️  PENDING — Transparency notice provided to end users confirming AI involvement (Article 13)
+                Notes: Notice draft under legal review — gate holds until confirmed
+
+NIST AI RMF
+  ✅ PASS   — Output reviewed against documented acceptable use policy (GV-1.1)
+  ❌ FAIL   — Adverse output detection logging not yet active (MG-2.4)
+                Notes: Logging ticket open — do not advance to production
+
+ISO/IEC 42001
+  ✅ PASS   — AI system objective and scope documented (Clause 4.3)
+  ✅ PASS   — Monitoring and evaluation plan in place (Clause 9.1)
+
+GATE STATUS: HOLD — resolve FAIL items before proceeding
+```
+

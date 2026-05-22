@@ -1,0 +1,56 @@
+---
+title: "PII Exposure Checker"
+slug: "pii-exposure-checker"
+tagline: "Audit AI data pipelines for PII exposure under GDPR and EU AI Act Article 10"
+framework: ["GDPR", "EU AI Act", "Article 10"]
+status: live
+version: "1.0.0"
+lastUpdated: 2026-05-21
+tags: ["PII", "GDPR", "data governance", "privacy", "Article 10"]
+---
+
+## What it does
+
+The PII Exposure Checker audits your AI system's data inputs, training datasets, and inference pipeline for personally identifiable information exposure risks. For each finding, it assigns a risk rating (critical / high / medium / low), maps the exposure to the specific GDPR provision or EU AI Act Article 10 control that applies, and recommends a concrete remediation action. The output is a structured exposure report — not just a flag list — that is ready for a data protection officer review or an Article 10 compliance audit.
+
+## Frameworks covered
+
+- GDPR — Articles 5, 6, 9, 25, and 35 (lawful basis, special category data, data minimization, privacy by design, DPIA)
+- EU AI Act Article 10 — data and data governance requirements for high-risk AI
+- EU AI Act Recital 44 — bias in training data
+- ISO/IEC 27701:2019 — privacy information management (supplementary)
+
+## When to use it
+
+Run this audit before training a new model on any dataset that originates from real-world user activity, customer records, health systems, or scraped web content. It's also the right tool before deploying an existing model in a new context where inference inputs may contain personal data not present in the original training scope. EU AI Act Article 10 requires that high-risk AI systems use training, validation, and test data that are relevant, representative, and free from errors — and the data governance documentation must demonstrate it. This skill produces the evidence that supports that claim.
+
+## Example output (abbreviated)
+
+```
+PII EXPOSURE REPORT
+─────────────────────────────────────────────────────────────
+System: Medical triage support model
+Dataset audited: intake_forms_2023_cleaned.csv
+Audit date: 2026-05-21
+
+FINDING #1
+  Risk rating: CRITICAL
+  PII type: Special category — health data (GDPR Article 9)
+  Location: Column "chief_complaint" — free-text field containing patient-reported
+            symptoms, medications, and prior diagnoses
+  Applicable control: GDPR Art. 9(2) — no explicit consent or qualifying basis
+                      documented for processing this category
+                      EU AI Act Art. 10(3) — special category data requires
+                      strict necessity justification and enhanced safeguards
+  Remediation: Pseudonymise free-text field before training; document legal basis
+               under Art. 9(2)(h) (medical purposes) with DPO sign-off;
+               run DPIA (Art. 35) before model deployment
+
+FINDING #2
+  Risk rating: HIGH
+  PII type: Direct identifier — full name + date of birth combination
+  Location: Columns "patient_name", "dob"
+  Applicable control: GDPR Art. 5(1)(c) — data minimisation
+  Remediation: Drop both columns; replace with anonymised patient ID token
+```
+
