@@ -36,7 +36,7 @@ curl -I https://feat-[branch-name].quirgs-[hash].pages.dev
 Read the file at:
 
 ```
-_v2/feat_handoffs/[branch-name]-jules-validation.md
+[branch-name]-jules-validation.md
 ```
 
 Replace `[branch-name]` with the sanitised branch name (e.g. `feat/skills-content` → `branch2`).
@@ -44,8 +44,8 @@ Replace `[branch-name]` with the sanitised branch name (e.g. `feat/skills-conten
 Current validation files:
 | Branch | File |
 |---|---|
-| `feat/astro-scaffold` | `_v2/feat_handoffs/branch1-jules-validation.md` |
-| `feat/skills-content` | `_v2/feat_handoffs/branch2-jules-validation.md` |
+| `feat/astro-scaffold` | `branch1-jules-validation.md` |
+| `feat/skills-content` | `branch2-jules-validation.md` |
 
 If no validation file exists for the branch, comment on the PR:
 `Jules: No validation file found for this branch. HITL — please provide a validation brief before Jules can proceed.`
