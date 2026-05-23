@@ -49,6 +49,7 @@ Current validation files:
 | `feat/bundle-page` | `branch3-jules-validation.md` |
 | `feat/registry-api` | `branch4-jules-validation.md` |
 | `feat/hitl-gate` | `branch5-jules-validation.md` |
+| `feat/gist-sync` | `branch6-jules-validation.md` |
 
 If no validation file exists for the branch, comment on the PR:
 `Jules: No validation file found for this branch. HITL — please provide a validation brief before Jules can proceed.`
