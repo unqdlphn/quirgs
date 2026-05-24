@@ -1,0 +1,18 @@
+name: Sync Skills to Gists
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'skills/*/SKILL.md'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Sync changed SKILL.md files to Gists
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_SYNC_TOKEN }}
+          GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node .github/scripts/sync-gists.js
