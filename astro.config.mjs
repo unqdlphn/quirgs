@@ -10,4 +10,17 @@ export default defineConfig({
   adapter: cloudflare(),
   site: 'https://quirgs.com',
   integrations: [mdx(), keystatic()],
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 3000,
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (warning.code === 'MODULE_LEVEL_DIRECTIVE' && warning.message.includes('use client')) {
+            return;
+          }
+          warn(warning);
+        },
+      },
+    },
+  },
 });
