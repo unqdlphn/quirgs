@@ -11,6 +11,9 @@ export default defineConfig({
   site: 'https://quirgs.com',
   integrations: [mdx(), keystatic()],
   vite: {
+    optimizeDeps: {
+      exclude: ['virtual:keystatic-config'],
+    },
     build: {
       chunkSizeWarningLimit: 3000,
       rollupOptions: {
