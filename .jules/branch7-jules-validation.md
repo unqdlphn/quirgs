@@ -97,7 +97,7 @@ The following require HITL action or a live run against `main`. Jules flags thes
 
 - Keystatic OAuth flow (requires `KEYSTATIC_GITHUB_CLIENT_ID` / `KEYSTATIC_GITHUB_CLIENT_SECRET` / `KEYSTATIC_SECRET` env vars set in Cloudflare, plus an authenticated GitHub session)
 - Actual content editing via Keystatic admin UI (requires OAuth + GitHub write access)
-- Cloudflare Pages env vars (HITL-only, not testable via preview URL)
+- Cloudflare Pages env vars (HITL-only — set under Workers & Pages → quirgs → Settings → Build → Variables and secrets)
 
 ---
 
