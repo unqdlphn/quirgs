@@ -29,5 +29,3 @@ Our concept is currently in stealth development, but ideas are actively being br
 - Tools built for the open-source AI community.
 
 More to come. Stay tuned.
-
-**re-depoly**
