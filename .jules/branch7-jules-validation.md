@@ -8,6 +8,19 @@
 
 ---
 
+## ⚠️ Implementation Deviations — Read Before Validating
+
+During build, Agy discovered that **Astro 6 removed `output: 'hybrid'`**. The mode was merged into `output: 'static'`, which now natively supports per-route on-demand rendering. The handoff doc specified `'hybrid'` — the actual implementation correctly uses `'static'`. Jules must account for this when checking `astro.config.mjs`.
+
+Additional deviations from original scope — all correct and intentional:
+- `output: 'static'` (not `'hybrid'`) — Astro 6 change; `'hybrid'` no longer exists
+- `react` and `react-dom` added as dependencies — Keystatic Admin UI is React-based; required for build
+- `.npmrc` created at repo root with `legacy-peer-deps=true` — required for Cloudflare Pages automated build pipeline due to peer dep mismatch between `@keystatic/astro` and Astro 6
+- `slug: fields.text({ label: 'Slug' })` added to `keystatic.config.ts` schema — required; `slugField: 'slug'` needs the field to exist in the schema
+- Vite `chunkSizeWarningLimit: 3000` and Rollup `onwarn` hook added to `astro.config.mjs` — suppresses Keystatic/React `"use client"` directive warnings; cosmetic only, no functional impact
+
+---
+
 ## Pre-Validation — Confirm Build Deployed
 
 ```bash
@@ -18,8 +31,8 @@ curl -I https://feat-keystatic.quirgs-[hash].pages.dev
 - HTTP 4xx / 5xx → report build failure, include status code, stop
 
 If the build failed, check the Cloudflare Pages build log first. A failed build in B7 is most likely one of:
-- Missing `@astrojs/cloudflare` adapter (install step incomplete)
-- `output: 'hybrid'` set without the adapter (Astro will error — adapter is required)
+- `.npmrc` not picked up by Cloudflare Pages (check it exists at repo root)
+- Missing `react` / `react-dom` peer deps
 - Keystatic config syntax error in `keystatic.config.ts`
 
 ---
@@ -54,14 +67,15 @@ This is the highest-priority check. All existing routes must still return HTTP 2
 |---|---|---|
 | `keystatic.config.ts` present at repo root | PR diff | File exists at `/keystatic.config.ts` |
 | `astro.config.mjs` updated | PR diff | File is modified in PR |
-| `package.json` updated | PR diff | Three new deps present: `@keystatic/core`, `@keystatic/astro`, `@astrojs/cloudflare` |
+| `.npmrc` present at repo root | PR diff | File exists; content is `legacy-peer-deps=true` |
+| `package.json` updated | PR diff | Five new deps present: `@keystatic/core`, `@keystatic/astro`, `@astrojs/cloudflare`, `react`, `react-dom` |
 | `package-lock.json` updated | PR diff | Lock file reflects new installs |
 
 ### 4. `astro.config.mjs` — Correctness
 
 | Check | Method | Pass Condition |
 |---|---|---|
-| `output` is `'hybrid'` | Read file | `output: 'hybrid'` present |
+| `output` is `'static'` | Read file | `output: 'static'` present — **not** `'hybrid'`; Astro 6 removed hybrid mode |
 | Cloudflare adapter imported and used | Read file | `import cloudflare from '@astrojs/cloudflare'` + `adapter: cloudflare()` |
 | Keystatic integration imported and added | Read file | `import keystatic from '@keystatic/astro'` + `keystatic()` in integrations array |
 | MDX integration still present | Read file | `mdx()` still present in integrations array — must not be removed |
@@ -75,7 +89,7 @@ This is the highest-priority check. All existing routes must still return HTTP 2
 | Collection is `skills` | Read file | `collections: { skills: collection({...}) }` |
 | `slugField` is `'slug'` | Read file | `slugField: 'slug'` |
 | `path` targets skills content dir | Read file | `path: 'src/content/skills/*'` |
-| All schema fields present | Read file | `title`, `tagline`, `framework`, `status`, `version`, `lastUpdated`, `gistUrl`, `installCmd`, `tags`, `content` all defined |
+| All schema fields present | Read file | `slug`, `title`, `tagline`, `framework`, `status`, `version`, `lastUpdated`, `gistUrl`, `installCmd`, `tags`, `content` all defined — `slug` is required as a `fields.text()` entry because it is the `slugField` |
 | `content` field is `fields.mdx()` | Read file | `content: fields.mdx({ label: 'Content' })` |
 | `status` options are correct | Read file | Options include `live`, `draft`, `deprecated` |
 
