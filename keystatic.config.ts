@@ -13,6 +13,7 @@ export default config({
       format: { contentField: 'content' },
       schema: {
         title: fields.text({ label: 'Title' }),
+        slug: fields.text({ label: 'Slug' }),
         tagline: fields.text({ label: 'Tagline' }),
         framework: fields.array(
           fields.text({ label: 'Framework' }),
