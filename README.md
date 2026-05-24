@@ -12,7 +12,7 @@ In the age of thinking models and agentic coding, the needs of the open-source c
 
 ## Why the Change?
 
-Every developer knows the frustration of digging through lengthy documentation. But as AI models become our pair programmers, the problem space has shifted. It's no longer just about making information *scannable for humans*, but about creating environments that are *legible and actionable for AI assistants*.
+Every developer knows the frustration of digging through lengthy documentation. But as AI models become our pair programmers, the problem space has shifted. It's no longer just about making information _scannable for humans_, but about creating environments that are _legible and actionable for AI assistants_.
 
 Quirgs V2 focuses on building scaffolding designed specifically for AI workflows:
 
@@ -29,3 +29,5 @@ Our concept is currently in stealth development, but ideas are actively being br
 - Tools built for the open-source AI community.
 
 More to come. Stay tuned.
+
+**re-depoly**
