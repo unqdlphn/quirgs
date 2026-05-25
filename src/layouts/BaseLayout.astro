@@ -169,34 +169,6 @@ const { title, description, terminalPath = "~" } = Astro.props;
                 margin-right: 0px;
             }
 
-            /* Blinking cursor */
-            .cursor {
-                display: inline-block;
-                width: 10px;
-                height: 1.2em;
-                background-color: var(--text-bright);
-                vertical-align: bottom;
-                animation: blink 1s step-end infinite;
-                margin-left: 2px;
-            }
-
-            @keyframes blink {
-                0%, 100% { opacity: 1; }
-                50%       { opacity: 0; }
-            }
-
-            /* Inline tag — yellow bordered pill used in terminal listings */
-            .tag {
-                color: var(--accent-yellow);
-                border: 1px solid var(--accent-yellow);
-                padding: 0px 6px;
-                border-radius: 3px;
-                font-size: 0.8rem;
-                margin-left: 8px;
-                display: inline-block;
-                line-height: 1.4;
-            }
-
             a {
                 color: var(--accent-blue);
                 text-decoration: none;
@@ -290,11 +262,6 @@ const { title, description, terminalPath = "~" } = Astro.props;
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
-            }
-
-            /* install-cmd-row: command + copy button row inside .install-block */
-            .install-cmd-row {
-                gap: 10px;
             }
 
             .install-block .label {

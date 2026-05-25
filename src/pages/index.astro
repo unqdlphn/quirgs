@@ -11,7 +11,7 @@
     <link rel="icon" href="/favicon.ico" sizes="48x48">
     <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/favicon.svg">
-    <style is:global>
+    <style>
         :root {
             --bg-color: #09090b;
             --term-bg: #18181b;
@@ -147,11 +147,6 @@
             margin-right: 0px;
         }
 
-        .text-green {
-            color: var(--accent-green);
-            margin-right: 0px;
-        }
-
         .text-bright {
             color: var(--text-bright);
             margin-right: 0px;
@@ -223,7 +218,7 @@
             { type: 'output', text: '[INFO] Initiating deprecation sequence for Legacy Quirgs...', delay: 500 },
             { type: 'output', text: '<span class="text-yellow">[WARN] Static reference guides and human-written SOPs archived.</span>', delay: 800 },
             { type: 'output', text: '<span class="text-bright">[SYSTEM] Reasoning models detected. Adapting ecosystem...</span>', delay: 1200 },
-            { type: 'output', text: '<span class="text-bright">[OK] Legacy infrastructure successfully archived.</span>', delay: 500 },
+            { type: 'output', text: '<span class="text-red">[OK] Legacy infrastructure successfully archived.</span>', delay: 500 },
             { type: 'blank', delay: 400 },
             { type: 'output', text: '<span class="text-yellow">[ARCHIVE]&nbsp;</span> Legacy reference guides still available:&nbsp;<a href="guides/index.html">quirgs.com/guides</a>', delay: 0 },
             { type: 'blank', delay: 800 },
@@ -236,7 +231,7 @@
             { type: 'blank', delay: 200 },
 
             { type: 'input', text: 'ls -la /quirgs/skills/' },
-            { type: 'output', text: 'total 7&nbsp;&nbsp; <span class="text-bright">  AI Compliance Suite  ·  7 production-validated skills</span>', delay: 500 },
+            { type: 'output', text: 'total 7&nbsp;&nbsp; <span class="text-bright">  AI Compliance Suite  ·  Dropping weekly starting in a few weeks...</span>', delay: 500 },
             { type: 'blank', delay: 200 },
             { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">pii-exposure-checker</span>  <span class="text-yellow">[skill.1]</span>', delay: 130 },
             { type: 'output', text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">iso-42001-audit-prep</span>  <span class="text-yellow">[skill.2]</span>', delay: 130 },
