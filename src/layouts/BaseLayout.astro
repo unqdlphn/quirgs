@@ -1,5 +1,7 @@
 ---
 // src/layouts/BaseLayout.astro
+import HelpModal from '../components/HelpModal.astro';
+
 interface Props {
     title: string;
     description: string;
@@ -114,7 +116,27 @@ const { title, description, terminalPath = "~" } = Astro.props;
                 text-align: center;
                 color: #71717a;
                 font-size: 0.85rem;
-                margin-right: 60px; /* offset for buttons to keep text centered */
+                /* no right margin — help-trigger sits to the right instead */
+            }
+
+            /* [?] help trigger button in the terminal header */
+            .help-trigger {
+                background: transparent;
+                border: 1px solid var(--term-border);
+                color: #71717a;
+                font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+                font-size: 0.75rem;
+                padding: 2px 6px;
+                cursor: pointer;
+                border-radius: 3px;
+                transition: color 0.15s, border-color 0.15s;
+                flex-shrink: 0;
+                line-height: 1;
+            }
+
+            .help-trigger:hover {
+                color: var(--accent-blue);
+                border-color: var(--accent-blue);
             }
 
             .terminal-body {
@@ -131,6 +153,11 @@ const { title, description, terminalPath = "~" } = Astro.props;
                 display: flex;
                 flex-wrap: wrap;
                 white-space: pre-wrap;
+            }
+
+            /* Tighter line spacing for continuation rows (e.g. bundle contents list) */
+            .line-tight {
+                margin-bottom: 2px;
             }
 
             .prompt {
@@ -410,6 +437,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
                     <div class="terminal-title">
                         admin@quirgs: {terminalPath}
                     </div>
+                    <button id="help-open-btn" class="help-trigger" aria-label="Open help" title="How Quirgs works">[?]</button>
                 </div>
                 <div class="terminal-body">
                     <slot />
@@ -417,5 +445,6 @@ const { title, description, terminalPath = "~" } = Astro.props;
             </div>
             <img src="/assets/logo.png" alt="Quirgs Logo" class="logo" />
         </div>
+        <HelpModal />
     </body>
 </html>

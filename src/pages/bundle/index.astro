@@ -1,6 +1,7 @@
 ---
 // src/pages/bundle/index.astro
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
 ---
 
 <BaseLayout
@@ -8,65 +9,64 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
   description="7 production-validated AI compliance skills in one installable bundle. EU AI Act, NIST AI RMF, ISO 42001."
   terminalPath="~/install"
 >
-    <!-- Navigation -->
-    <div class="line">
-        <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span>&nbsp;cd ..
-    </div>
-    <div class="line">
-        <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span>&nbsp;ls
-    </div>
-    <div class="line">
-        <span class="text-blue">&rarr;&nbsp;&nbsp;<a href="/">/</a></span><span style="margin-left: 9ch; color: #71717a;">&larr; main landing page</span>
-    </div>
-    <div class="line">
-        <span class="text-blue">&rarr;&nbsp;&nbsp;<a href="/skills/">/skills/</a></span><span style="margin-left: 3ch; color: #71717a;">&larr; skills registry</span>
-    </div>
-    <div class="line">
-        <span class="text-blue">&rarr;&nbsp;&nbsp;/bundle/</span><span style="margin-left: 4ch; color: var(--text-bright); font-weight: bold;">(you are here)</span>
-    </div>
-    <div class="line">
-        <span class="text-blue">&rarr;&nbsp;&nbsp;<a href="/guides/">/guides/</a></span><span style="margin-left: 3ch; color: #71717a;">&larr; legacy guides</span>
-    </div>
-    <div class="line">&nbsp;</div>
+  <!-- Site navigation -->
+  <NavBlock currentPath="/bundle/" />
 
-    <!-- Main install sequence -->
-    <div class="line">
-        <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span>&nbsp;./get-bundle.sh quirgs-compliance
-    </div>
-    <div class="line">&nbsp;</div>
-    <div class="line">
-        <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-compliance v1.0 (7 skills)
-    </div>
-    <div class="line">
-        <span class="text-bright">[CONTENTS]</span>&nbsp;&nbsp;<a href="/skills/eu-ai-act-classifier">eu-ai-act-classifier</a>
-    </div>
-    <div class="line">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/nist-ai-rmf-checkpoint">nist-ai-rmf-checkpoint</a>
-    </div>
-    <div class="line">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/hitl-compliance-gate">hitl-compliance-gate</a>
-    </div>
-    <div class="line">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/ai-transparency-writer">ai-transparency-writer</a>
-    </div>
-    <div class="line">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/pii-exposure-checker">pii-exposure-checker</a>
-    </div>
-    <div class="line">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/iso-42001-audit-prep">iso-42001-audit-prep</a>
-    </div>
-    <div class="line">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/incident-response-logger">incident-response-logger</a>
-    </div>
-    <div class="line">&nbsp;</div>
-    <div class="line">
-        <span class="text-bright">[INSTALL]</span>&nbsp;&nbsp;&nbsp;Open Cowork &rarr; Plugins &rarr; ＋ Install
-    </div>
-    <div class="line">
-        <span class="text-bright">[DOWNLOAD]</span>&nbsp;&nbsp;quirgs-compliance.plugin  ↓  <span class="tag">Coming Soon</span>
-    </div>
-    <div class="line">&nbsp;</div>
-    <div class="line">
-        <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span><span class="cursor"></span>
-    </div>
+  <!-- Main install sequence -->
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/install</span
+    ><span class="text-bright">$</span>&nbsp;./get-bundle.sh quirgs-compliance
+  </div>
+  <div class="line">&nbsp;</div>
+  <div class="line">
+    <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-compliance
+    v1.0 (7 skills)
+  </div>
+  <div class="line bundle-contents">
+    <span class="text-bright">[CONTENTS]</span>&nbsp;&nbsp;<span
+      class="contents-list"
+      ><a href="/skills/ai-transparency-writer">ai-transparency-writer</a><br
+      /><a href="/skills/eu-ai-act-classifier">eu-ai-act-classifier</a><br /><a
+        href="/skills/hitl-compliance-gate">hitl-compliance-gate</a
+      ><br /><a href="/skills/incident-response-logger"
+        >incident-response-logger</a
+      ><br /><a href="/skills/iso-42001-audit-prep">iso-42001-audit-prep</a><br
+      /><a href="/skills/nist-ai-rmf-checkpoint">nist-ai-rmf-checkpoint</a><br
+      /><a href="/skills/pii-exposure-checker">pii-exposure-checker</a></span
+    >
+  </div>
+  <div class="line">&nbsp;</div>
+  <div class="line">
+    <span class="text-bright">[INSTALL]</span>&nbsp;&nbsp;&nbsp;Open Cowork
+    &rarr; Plugins &rarr; + Install
+  </div>
+  <div class="line">
+    <span class="text-bright">[DOWNLOAD]</span
+    >&nbsp;&nbsp;quirgs-compliance.plugin ↓ <span class="tag">Coming Soon</span>
+  </div>
+  <div class="line">&nbsp;</div>
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/install</span
+    ><span class="text-bright">$</span><span class="cursor"></span>
+  </div>
 </BaseLayout>
+
+<style>
+  /* Contents block: single div, no inter-line margin gaps */
+  .bundle-contents {
+    align-items: flex-start;
+  }
+
+  .contents-list {
+    line-height: 1.55;
+  }
+
+  /* Suppress the dashed underline on skill links inside the contents block only */
+  .contents-list a {
+    border-bottom: none;
+  }
+
+  .contents-list a:hover {
+    border-bottom: 1px dashed var(--accent-green);
+  }
+</style>
