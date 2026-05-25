@@ -1,6 +1,6 @@
 ---
 // src/pages/index.astro
-import HelpModal from '../components/HelpModal.astro';
+import HelpModal from "../components/HelpModal.astro";
 ---
 
 <!doctype html>
@@ -112,12 +112,14 @@ import HelpModal from '../components/HelpModal.astro';
         background: transparent;
         border: 1px solid var(--term-border);
         color: #71717a;
-        font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+        font-family: "JetBrains Mono", "Courier New", Courier, monospace;
         font-size: 0.75rem;
         padding: 2px 6px;
         cursor: pointer;
         border-radius: 3px;
-        transition: color 0.15s, border-color 0.15s;
+        transition:
+          color 0.15s,
+          border-color 0.15s;
         flex-shrink: 0;
         line-height: 1;
       }
@@ -229,7 +231,12 @@ import HelpModal from '../components/HelpModal.astro';
             <div class="mac-btn maximize"></div>
           </div>
           <div class="terminal-title">admin@quirgs: ~</div>
-          <button id="help-open-btn" class="help-trigger" aria-label="Open help" title="How Quirgs works">[?]</button>
+          <button
+            id="help-open-btn"
+            class="help-trigger"
+            aria-label="Open help"
+            title="How Quirgs works">[?]</button
+          >
         </div>
         <div class="terminal-body" id="terminal">
           <!-- Content will be injected by JavaScript -->
@@ -333,7 +340,7 @@ import HelpModal from '../components/HelpModal.astro';
       let currentStep = 0;
 
       function getPromptHTML() {
-        return `<span class="prompt">admin@quirgs</span><span class="path">~/system</span><span class="text-bright">$</span> `;
+        return `<span class="prompt">admin@quirgs</span><span class="path">~/system</span><span class="text-bright">$&nbsp;</span>`;
       }
 
       async function typeText(element: HTMLElement, text: string, speed = 30) {
