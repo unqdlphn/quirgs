@@ -155,6 +155,11 @@ const { title, description, terminalPath = "~" } = Astro.props;
                 white-space: pre-wrap;
             }
 
+            /* Tighter line spacing for continuation rows (e.g. bundle contents list) */
+            .line-tight {
+                margin-bottom: 2px;
+            }
+
             .prompt {
                 color: var(--accent-green);
                 margin-right: 8px;
