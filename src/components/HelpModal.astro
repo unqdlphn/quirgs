@@ -1,0 +1,307 @@
+---
+// src/components/HelpModal.astro
+// Terminal-themed help overlay for first-time visitors.
+// Explains: what a quirg is, how to read the ls listing, status badges,
+// and how to install a skill.
+//
+// Triggered by the [?] button in BaseLayout's terminal header.
+// Dismissed by clicking the backdrop, pressing Escape, or clicking [×].
+//
+// Included once in BaseLayout — available on every page that uses it.
+---
+
+<!-- Modal backdrop -->
+<div id="help-modal-backdrop" class="help-backdrop" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Help — How Quirgs works">
+  <div class="help-terminal">
+
+    <!-- Header bar -->
+    <div class="help-header">
+      <div class="mac-btns">
+        <div class="mac-btn close"></div>
+        <div class="mac-btn minimize"></div>
+        <div class="mac-btn maximize"></div>
+      </div>
+      <div class="help-title">admin@quirgs: ~/help</div>
+      <button id="help-close-btn" class="help-close" aria-label="Close help">[×]</button>
+    </div>
+
+    <!-- Body -->
+    <div class="help-body">
+
+      <div class="help-line">
+        <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span>&nbsp;man quirgs
+      </div>
+      <div class="help-line">&nbsp;</div>
+
+      <div class="help-line">
+        <span class="text-bright help-section-label">WHAT IS A QUIRG?</span>
+      </div>
+      <div class="help-line help-indent">
+        A quirg is a self-contained AI governance tool — packaged as a
+      </div>
+      <div class="help-line help-indent">
+        Claude agent skill (.plugin), guide, or SOP. Install one in Cowork
+      </div>
+      <div class="help-line help-indent">
+        and it becomes a live compliance assistant inside your workflow.
+      </div>
+      <div class="help-line">&nbsp;</div>
+
+      <div class="help-line">
+        <span class="text-bright help-section-label">READING THE SKILLS LIST</span>
+      </div>
+      <div class="help-line help-indent">
+        The <a href="/skills/">skills registry</a> displays like a Unix file listing:
+      </div>
+      <div class="help-line">&nbsp;</div>
+      <div class="help-line help-indent help-example">
+        -rwxr--r--&nbsp;&nbsp;compliance&nbsp;&nbsp;<span class="text-blue">eu-ai-act-classifier</span>&nbsp;&nbsp;<span class="text-green">v1.0</span>&nbsp;&nbsp;<span class="text-green">[live]</span>
+      </div>
+      <div class="help-line">&nbsp;</div>
+      <div class="help-line help-indent">
+        <span class="text-yellow">·</span> The name is a clickable link to the skill's detail page.
+      </div>
+      <div class="help-line help-indent">
+        <span class="text-yellow">·</span> Version shows the current release.
+      </div>
+      <div class="help-line help-indent">
+        <span class="text-yellow">·</span> Status badges:
+      </div>
+      <div class="help-line help-indent-2">
+        <span class="text-green">[live]</span>&nbsp;&nbsp;&nbsp;— production-ready, install now
+      </div>
+      <div class="help-line help-indent-2">
+        <span class="text-yellow">[draft]</span>&nbsp;&nbsp;— in development, not yet released
+      </div>
+      <div class="help-line help-indent-2">
+        <span class="text-red">[deprecated]</span>&nbsp;— archived, no longer maintained
+      </div>
+      <div class="help-line">&nbsp;</div>
+
+      <div class="help-line">
+        <span class="text-bright help-section-label">INSTALLING A SKILL</span>
+      </div>
+      <div class="help-line help-indent">
+        Each skill page has an <span class="text-bright">[INSTALL]</span> block with two options:
+      </div>
+      <div class="help-line">&nbsp;</div>
+      <div class="help-line help-indent">
+        <span class="text-yellow">1.</span> <span class="text-bright">Gist install</span> — opens the skill's GitHub Gist. Copy the
+      </div>
+      <div class="help-line help-indent-2">
+        SKILL.md and paste it into your Cowork plugins folder.
+      </div>
+      <div class="help-line help-indent">
+        <span class="text-yellow">2.</span> <span class="text-bright">Bundle install</span> — one .plugin file with all 7 skills.
+      </div>
+      <div class="help-line help-indent-2">
+        Open Cowork → Plugins → ＋ Install → select the file.
+      </div>
+      <div class="help-line">&nbsp;</div>
+
+      <div class="help-line">
+        <span class="text-bright help-section-label">SITE LAYOUT</span>
+      </div>
+      <div class="help-line help-indent">
+        <span class="text-blue">/</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;← you are here (landing page)
+      </div>
+      <div class="help-line help-indent">
+        <span class="text-blue"><a href="/skills/">/skills/</a></span>&nbsp;&nbsp;&nbsp;← browse all 7 compliance skills
+      </div>
+      <div class="help-line help-indent">
+        <span class="text-blue"><a href="/bundle/">/bundle/</a></span>&nbsp;&nbsp;&nbsp;← install the full compliance bundle
+      </div>
+      <div class="help-line help-indent">
+        <span class="text-blue"><a href="/guides/">/guides/</a></span>&nbsp;&nbsp;&nbsp;← legacy reference guides (archived)
+      </div>
+      <div class="help-line">&nbsp;</div>
+
+      <div class="help-line">
+        <span class="prompt">admin@quirgs</span><span class="path">~/help</span><span class="text-bright">$</span>&nbsp;<span class="cursor"></span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .help-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .help-backdrop.open {
+    display: flex;
+  }
+
+  .help-terminal {
+    width: 100%;
+    max-width: 680px;
+    max-height: 85vh;
+    background-color: var(--term-bg);
+    border: 1px solid var(--term-border);
+    border-radius: 8px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: modal-in 0.15s ease-out;
+  }
+
+  @keyframes modal-in {
+    from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)     scale(1);    }
+  }
+
+  .help-header {
+    background-color: #09090b;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--term-border);
+    flex-shrink: 0;
+  }
+
+  .help-title {
+    flex-grow: 1;
+    text-align: center;
+    color: #71717a;
+    font-size: 0.85rem;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+  }
+
+  .help-close {
+    background: transparent;
+    border: 1px solid var(--term-border);
+    color: #71717a;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: color 0.15s, border-color 0.15s;
+    line-height: 1;
+  }
+
+  .help-close:hover {
+    color: var(--accent-red, #f87171);
+    border-color: var(--accent-red, #f87171);
+  }
+
+  .help-body {
+    padding: 20px 24px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+    color: var(--text-main);
+    overflow-y: auto;
+  }
+
+  .help-line {
+    margin-bottom: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+
+  .help-section-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    margin-bottom: 2px;
+    color: var(--text-bright);
+  }
+
+  .help-indent {
+    padding-left: 2ch;
+  }
+
+  .help-indent-2 {
+    padding-left: 4ch;
+  }
+
+  .help-example {
+    background: #09090b;
+    border: 1px solid var(--term-border);
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    display: block;
+    margin: 0 0 4px 2ch;
+  }
+
+  /* Inherit prompt/path/text colors from BaseLayout */
+  .help-body .prompt { color: var(--accent-green); margin-right: 8px; font-weight: bold; }
+  .help-body .path   { color: var(--accent-blue);  margin-right: 8px; }
+  .help-body .text-bright { color: var(--text-bright); }
+  .help-body .text-blue   { color: var(--accent-blue); }
+  .help-body .text-green  { color: var(--accent-green); }
+  .help-body .text-yellow { color: var(--accent-yellow); }
+  .help-body .text-red    { color: var(--accent-red); }
+
+  .help-body a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent-blue);
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .help-body a:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+  }
+
+  .help-body .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background-color: var(--text-bright);
+    vertical-align: bottom;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+  }
+</style>
+
+<script>
+  const backdrop = document.getElementById('help-modal-backdrop');
+  const closeBtn = document.getElementById('help-close-btn');
+  const openBtn  = document.getElementById('help-open-btn');
+
+  function openModal() {
+    backdrop?.classList.add('open');
+    backdrop?.removeAttribute('aria-hidden');
+    closeBtn?.focus();
+  }
+
+  function closeModal() {
+    backdrop?.classList.remove('open');
+    backdrop?.setAttribute('aria-hidden', 'true');
+    openBtn?.focus();
+  }
+
+  openBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+
+  // Click outside the terminal window to close
+  backdrop?.addEventListener('click', (e) => {
+    if (e.target === backdrop) closeModal();
+  });
+
+  // Escape key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && backdrop?.classList.contains('open')) {
+      closeModal();
+    }
+  });
+</script>

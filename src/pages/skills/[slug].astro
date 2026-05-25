@@ -2,6 +2,7 @@
 // src/pages/skills/[slug].astro
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBlock from '../../components/NavBlock.astro';
 
 export async function getStaticPaths() {
   const skills = await getCollection('skills');
@@ -22,14 +23,8 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split('T')[0];
   description={entry.data.tagline}
   terminalPath={`~/skills/${entry.id}`}
 >
-  <!-- Back navigation -->
-  <div class="line">
-    <span class="prompt">admin@quirgs</span><span class="path">~/skills</span><span class="text-bright">$</span> cd ..
-  </div>
-  <div class="line">
-    <a href="/skills/">← /skills/</a>
-  </div>
-  <div class="line">&nbsp;</div>
+  <!-- Site navigation -->
+  <NavBlock currentPath="/skills/" />
 
   <!-- Cat README.md command -->
   <div class="line">

@@ -1,284 +1,55 @@
 ---
 // src/pages/bundle/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBlock from '../../components/NavBlock.astro';
 ---
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-    <title>Quirgs Compliance Bundle | AI Governance Skills</title>
-    <meta name="description" content="7 production-validated AI compliance skills in one installable bundle. EU AI Act, NIST AI RMF, ISO 42001." />
-    <link rel="icon" href="/favicon.ico" sizes="48x48">
-    <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/favicon.svg">
-    <style>
-        :root {
-            --bg-color: #09090b;
-            --term-bg: #18181b;
-            --term-border: #27272a;
-            --text-main: #a1a1aa;
-            --text-bright: #f4f4f5;
-            --accent-green: #4ade80;
-            --accent-blue: #60a5fa;
-            --accent-red: #f87171;
-            --accent-yellow: #facc15;
-        }
+<BaseLayout
+  title="Quirgs Compliance Bundle | AI Governance Skills"
+  description="7 production-validated AI compliance skills in one installable bundle. EU AI Act, NIST AI RMF, ISO 42001."
+  terminalPath="~/install"
+>
+    <!-- Site navigation -->
+    <NavBlock currentPath="/bundle/" />
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            min-height: 100dvh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .main-wrapper {
-            width: 100%;
-            max-width: 800px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            margin: auto 0;
-        }
-
-        .logo {
-            width: 96px;
-            margin-top: 32px;
-        }
-
-        .terminal-container {
-            width: 100%;
-            max-width: 800px;
-            background-color: var(--term-bg);
-            border: 1px solid var(--term-border);
-            border-radius: 8px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            max-height: calc(100vh - 120px);
-            max-height: calc(100dvh - 120px);
-        }
-
-        .terminal-header {
-            background-color: #09090b;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid var(--term-border);
-        }
-
-        .mac-btns {
-            display: flex;
-            gap: 8px;
-        }
-
-        .mac-btn {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .close {
-            background-color: #ff5f56;
-        }
-
-        .minimize {
-            background-color: #ffbd2e;
-        }
-
-        .maximize {
-            background-color: #27c93f;
-        }
-
-        .terminal-title {
-            flex-grow: 1;
-            text-align: center;
-            color: #71717a;
-            font-size: 0.85rem;
-            margin-right: 60px;
-            /* offset for buttons to keep text centered */
-        }
-
-        .terminal-body {
-            padding: 24px;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            min-height: min(400px, 60vh);
-            min-height: min(400px, 60dvh);
-            overflow-y: auto;
-        }
-
-        .line {
-            margin-bottom: 8px;
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .prompt {
-            color: var(--accent-green);
-            margin-right: 8px;
-            font-weight: bold;
-        }
-
-        .path {
-            color: var(--accent-blue);
-            margin-right: 8px;
-        }
-
-        .text-red {
-            color: var(--accent-red);
-            margin-right: 0px;
-        }
-
-        .text-yellow {
-            color: var(--accent-yellow);
-            margin-right: 0px;
-        }
-
-        .text-blue {
-            color: var(--accent-blue);
-            margin-right: 0px;
-        }
-
-        .text-bright {
-            color: var(--text-bright);
-            margin-right: 0px;
-        }
-
-        .tag {
-            color: var(--accent-yellow);
-            border: 1px solid var(--accent-yellow);
-            padding: 0px 6px;
-            border-radius: 3px;
-            font-size: 0.8rem;
-            margin-left: 8px;
-            display: inline-block;
-            line-height: 1.4;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.2em;
-            background-color: var(--text-bright);
-            vertical-align: bottom;
-            animation: blink 1s step-end infinite;
-            margin-left: 2px;
-        }
-
-        a {
-            color: var(--accent-blue);
-            text-decoration: none;
-            border-bottom: 1px dashed var(--accent-blue);
-            transition: color 0.2s, border-color 0.2s;
-        }
-
-        a:hover {
-            color: var(--accent-green);
-            border-color: var(--accent-green);
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
-    <div class="main-wrapper">
-        <div class="terminal-container">
-            <div class="terminal-header">
-                <div class="mac-btns">
-                    <div class="mac-btn close"></div>
-                    <div class="mac-btn minimize"></div>
-                    <div class="mac-btn maximize"></div>
-                </div>
-                <div class="terminal-title">admin@quirgs: ~/install</div>
-            </div>
-            <div class="terminal-body" id="terminal">
-                <!-- Navigation -->
-                <div class="line">
-                    <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span>&nbsp;cd ..
-                </div>
-                <div class="line">
-                    <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span>&nbsp;ls
-                </div>
-                <div class="line">
-                    <span class="text-blue">&rarr;&nbsp;&nbsp;<a href="/">/</a></span><span style="margin-left: 9ch; color: #71717a;">&larr; main landing page</span>
-                </div>
-                <div class="line">
-                    <span class="text-blue">&rarr;&nbsp;&nbsp;<a href="/skills/">/skills/</a></span><span style="margin-left: 3ch; color: #71717a;">&larr; skills registry</span>
-                </div>
-                <div class="line">
-                    <span class="text-blue">&rarr;&nbsp;&nbsp;/bundle/</span><span style="margin-left: 4ch; color: var(--text-bright); font-weight: bold;">(you are here)</span>
-                </div>
-                <div class="line">
-                    <span class="text-blue">&rarr;&nbsp;&nbsp;<a href="/guides/">/guides/</a></span><span style="margin-left: 3ch; color: #71717a;">&larr; legacy guides</span>
-                </div>
-                <div class="line">&nbsp;</div>
-
-                <!-- Main install sequence -->
-                <div class="line">
-                    <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span>&nbsp;./get-bundle.sh quirgs-compliance
-                </div>
-                <div class="line">&nbsp;</div>
-                <div class="line">
-                    <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-compliance v1.0 (7 skills)
-                </div>
-                <div class="line">
-                    <span class="text-bright">[CONTENTS]</span>&nbsp;&nbsp;<a href="/skills/eu-ai-act-classifier">eu-ai-act-classifier</a>
-                </div>
-                <div class="line">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/nist-ai-rmf-checkpoint">nist-ai-rmf-checkpoint</a>
-                </div>
-                <div class="line">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/hitl-compliance-gate">hitl-compliance-gate</a>
-                </div>
-                <div class="line">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/ai-transparency-writer">ai-transparency-writer</a>
-                </div>
-                <div class="line">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/pii-exposure-checker">pii-exposure-checker</a>
-                </div>
-                <div class="line">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/iso-42001-audit-prep">iso-42001-audit-prep</a>
-                </div>
-                <div class="line">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/incident-response-logger">incident-response-logger</a>
-                </div>
-                <div class="line">&nbsp;</div>
-                <div class="line">
-                    <span class="text-bright">[INSTALL]</span>&nbsp;&nbsp;&nbsp;Open Cowork &rarr; Plugins &rarr; ＋ Install
-                </div>
-                <div class="line">
-                    <span class="text-bright">[DOWNLOAD]</span>&nbsp;&nbsp;quirgs-compliance.plugin  ↓  <span class="tag">Coming Soon</span>
-                </div>
-                <div class="line">&nbsp;</div>
-                <div class="line">
-                    <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span><span class="cursor"></span>
-                </div>
-            </div>
-        </div>
-        <img src="/assets/logo.png" alt="Quirgs Logo" class="logo">
+    <!-- Main install sequence -->
+    <div class="line">
+        <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span>&nbsp;./get-bundle.sh quirgs-compliance
     </div>
-
-</body>
-
-</html>
+    <div class="line">&nbsp;</div>
+    <div class="line">
+        <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-compliance v1.0 (7 skills)
+    </div>
+    <div class="line">
+        <span class="text-bright">[CONTENTS]</span>&nbsp;&nbsp;<a href="/skills/eu-ai-act-classifier">eu-ai-act-classifier</a>
+    </div>
+    <div class="line">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/nist-ai-rmf-checkpoint">nist-ai-rmf-checkpoint</a>
+    </div>
+    <div class="line">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/hitl-compliance-gate">hitl-compliance-gate</a>
+    </div>
+    <div class="line">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/ai-transparency-writer">ai-transparency-writer</a>
+    </div>
+    <div class="line">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/pii-exposure-checker">pii-exposure-checker</a>
+    </div>
+    <div class="line">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/iso-42001-audit-prep">iso-42001-audit-prep</a>
+    </div>
+    <div class="line">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="/skills/incident-response-logger">incident-response-logger</a>
+    </div>
+    <div class="line">&nbsp;</div>
+    <div class="line">
+        <span class="text-bright">[INSTALL]</span>&nbsp;&nbsp;&nbsp;Open Cowork &rarr; Plugins &rarr; ＋ Install
+    </div>
+    <div class="line">
+        <span class="text-bright">[DOWNLOAD]</span>&nbsp;&nbsp;quirgs-compliance.plugin  ↓  <span class="tag">Coming Soon</span>
+    </div>
+    <div class="line">&nbsp;</div>
+    <div class="line">
+        <span class="prompt">admin@quirgs</span><span class="path">~/install</span><span class="text-bright">$</span><span class="cursor"></span>
+    </div>
+</BaseLayout>

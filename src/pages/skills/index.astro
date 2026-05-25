@@ -2,6 +2,7 @@
 // src/pages/skills/index.astro
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBlock from '../../components/NavBlock.astro';
 
 const skills = await getCollection('skills');
 
@@ -27,14 +28,12 @@ const getStatusClass = (status: string) => {
 };
 ---
 
-<BaseLayout 
-  title="Skills | Quirgs" 
+<BaseLayout
+  title="Skills | Quirgs"
   description="7 production-validated AI compliance skills. EU AI Act, NIST AI RMF, ISO 42001, GDPR."
   terminalPath="~/skills"
 >
-  <div class="line">
-    <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span> cd skills/
-  </div>
+  <NavBlock currentPath="/skills/" />
   <div class="line">
     <span class="prompt">admin@quirgs</span><span class="path">~/skills</span><span class="text-bright">$</span> ls -la /quirgs/skills/
   </div>

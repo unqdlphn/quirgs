@@ -1,5 +1,7 @@
 ---
 // src/layouts/BaseLayout.astro
+import HelpModal from '../components/HelpModal.astro';
+
 interface Props {
     title: string;
     description: string;
@@ -114,7 +116,27 @@ const { title, description, terminalPath = "~" } = Astro.props;
                 text-align: center;
                 color: #71717a;
                 font-size: 0.85rem;
-                margin-right: 60px; /* offset for buttons to keep text centered */
+                /* no right margin — help-trigger sits to the right instead */
+            }
+
+            /* [?] help trigger button in the terminal header */
+            .help-trigger {
+                background: transparent;
+                border: 1px solid var(--term-border);
+                color: #71717a;
+                font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
+                font-size: 0.75rem;
+                padding: 2px 6px;
+                cursor: pointer;
+                border-radius: 3px;
+                transition: color 0.15s, border-color 0.15s;
+                flex-shrink: 0;
+                line-height: 1;
+            }
+
+            .help-trigger:hover {
+                color: var(--accent-blue);
+                border-color: var(--accent-blue);
             }
 
             .terminal-body {
@@ -167,6 +189,34 @@ const { title, description, terminalPath = "~" } = Astro.props;
             .text-bright {
                 color: var(--text-bright);
                 margin-right: 0px;
+            }
+
+            /* Blinking cursor */
+            .cursor {
+                display: inline-block;
+                width: 10px;
+                height: 1.2em;
+                background-color: var(--text-bright);
+                vertical-align: bottom;
+                animation: blink 1s step-end infinite;
+                margin-left: 2px;
+            }
+
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50%       { opacity: 0; }
+            }
+
+            /* Inline tag — yellow bordered pill used in terminal listings */
+            .tag {
+                color: var(--accent-yellow);
+                border: 1px solid var(--accent-yellow);
+                padding: 0px 6px;
+                border-radius: 3px;
+                font-size: 0.8rem;
+                margin-left: 8px;
+                display: inline-block;
+                line-height: 1.4;
             }
 
             a {
@@ -262,6 +312,11 @@ const { title, description, terminalPath = "~" } = Astro.props;
                 display: flex;
                 align-items: center;
                 flex-wrap: wrap;
+            }
+
+            /* install-cmd-row: command + copy button row inside .install-block */
+            .install-cmd-row {
+                gap: 10px;
             }
 
             .install-block .label {
@@ -377,6 +432,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
                     <div class="terminal-title">
                         admin@quirgs: {terminalPath}
                     </div>
+                    <button id="help-open-btn" class="help-trigger" aria-label="Open help" title="How Quirgs works">[?]</button>
                 </div>
                 <div class="terminal-body">
                     <slot />
@@ -384,5 +440,6 @@ const { title, description, terminalPath = "~" } = Astro.props;
             </div>
             <img src="/assets/logo.png" alt="Quirgs Logo" class="logo" />
         </div>
+        <HelpModal />
     </body>
 </html>

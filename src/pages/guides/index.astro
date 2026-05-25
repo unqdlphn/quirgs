@@ -1,6 +1,7 @@
 ---
 // src/pages/guides/index.astro
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import NavBlock from '../../components/NavBlock.astro';
 
 const guides = [
   { file: 'ai_prompt_engineering.html', name: 'AI Prompt Engineering' },
@@ -12,14 +13,12 @@ const guides = [
 ];
 ---
 
-<BaseLayout 
-  title="Guides Archive | Quirgs" 
+<BaseLayout
+  title="Guides Archive | Quirgs"
   description="Legacy reference guides from Quirgs V1 — preserved at original URLs."
   terminalPath="~/guides"
 >
-  <div class="line">
-    <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span> cd guides/
-  </div>
+  <NavBlock currentPath="/guides/" />
   <div class="line">
     <span class="prompt">admin@quirgs</span><span class="path">~/guides</span><span class="text-bright">$</span> ls -la /guides/
   </div>
