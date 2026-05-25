@@ -1,3 +1,16 @@
+/*
+ * ============================================================
+ * LEGACY GUIDES STYLESHEET — public/css/styles.css
+ * ============================================================
+ * Used exclusively by: /public/guides/*.html (legacy static guides)
+ * DO NOT use in Astro pages or any new page under /src/.
+ * The canonical design system for all Astro pages lives in:
+ *   src/layouts/BaseLayout.astro (global styles)
+ *   src/pages/index.astro (home page inline styles)
+ * These are completely different design languages. Do not mix.
+ * ============================================================
+ */
+
 :root {
     /* Color scheme */
     --color-background: darkslategray;
