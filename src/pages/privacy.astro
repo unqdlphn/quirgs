@@ -1,0 +1,37 @@
+---
+// src/pages/privacy.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="Privacy Policy | Quirgs"
+  description="Privacy policy for the Quirgs AI governance skills registry."
+  terminalPath="~/privacy"
+>
+  <NavBlock currentPath="/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/privacy</span
+    ><span class="text-bright">$</span>&nbsp;cat privacy.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">Privacy Policy</h1>
+    <p class="tagline">How we handle information on quirgs.com.</p>
+  </div>
+
+  <div class="archive-note">
+    <strong class="text-yellow">[PLACEHOLDER]</strong>&nbsp; The full privacy
+    policy is still being drafted. The site is a static registry of open-source
+    AI governance skills and does not currently collect personal data, set
+    tracking cookies, or run analytics. A complete policy will be published here
+    ahead of any change to that.
+  </div>
+
+  <div class="line">&nbsp;</div>
+  <div>
+    Questions? See <a href="/support/">/support/</a>.
+  </div>
+</BaseLayout>

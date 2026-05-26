@@ -26,6 +26,12 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split('T')[0];
   <!-- Site navigation -->
   <NavBlock currentPath="/skills/" />
 
+  <!-- Back to skills listing -->
+  <div class="line">
+    <span class="text-blue">&larr;</span>&nbsp;<a href="/skills/">back to skills</a>
+  </div>
+  <div class="line">&nbsp;</div>
+
   <!-- Cat README.md command -->
   <div class="line">
     <span class="prompt">admin@quirgs</span><span class="path">~/skills</span><span class="text-bright">$</span> cat {entry.id}/README.md

@@ -1,6 +1,7 @@
 ---
 // src/pages/index.astro
 import HelpModal from "../components/HelpModal.astro";
+import Footer from "../components/Footer.astro";
 ---
 
 <!doctype html>
@@ -53,7 +54,28 @@ import HelpModal from "../components/HelpModal.astro";
 
       .logo {
         width: 96px;
-        margin-top: 32px;
+        margin-top: 0;
+        flex-shrink: 0;
+      }
+
+      .site-bottom-row {
+        width: 100%;
+        max-width: 800px;
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      @media (max-width: 600px) {
+        .logo {
+          width: 64px;
+        }
+        .site-bottom-row {
+          margin-top: 16px;
+          gap: 8px;
+        }
       }
 
       .terminal-container {
@@ -242,7 +264,10 @@ import HelpModal from "../components/HelpModal.astro";
           <!-- Content will be injected by JavaScript -->
         </div>
       </div>
-      <img src="/assets/logo.png" alt="Quirgs Logo" class="logo" />
+      <div class="site-bottom-row">
+        <Footer />
+        <img src="/assets/logo.png" alt="Quirgs Logo" class="logo" />
+      </div>
     </div>
     <HelpModal />
 

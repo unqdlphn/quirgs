@@ -1,0 +1,38 @@
+---
+// src/pages/support.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="Support | Quirgs"
+  description="How to get help with Quirgs AI governance skills."
+  terminalPath="~/support"
+>
+  <NavBlock currentPath="/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/support</span
+    ><span class="text-bright">$</span>&nbsp;cat support.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">Support</h1>
+    <p class="tagline">Get help with installing or using a Quirgs skill.</p>
+  </div>
+
+  <div class="archive-note">
+    <strong class="text-yellow">[PLACEHOLDER]</strong>&nbsp; A formal support
+    channel is being set up. For now, file an issue against the relevant
+    skill&rsquo;s Gist, or check <a href="/guides/">/guides/</a> for background on
+    installation and the underlying frameworks.
+  </div>
+
+  <div class="line">&nbsp;</div>
+  <div>
+    See also: <a href="/skills/">/skills/</a> &middot; <a href="/bundle/"
+      >/bundle/</a
+    >
+  </div>
+</BaseLayout>

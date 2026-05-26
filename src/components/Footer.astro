@@ -1,0 +1,57 @@
+---
+// src/components/Footer.astro
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="footer-row">
+    <span>&copy;&nbsp;<span id="footer-year">{year}</span>&nbsp;Quirgs</span>
+    <span class="footer-sep">·</span>
+    <a href="/privacy/">Privacy</a>
+    <span class="footer-sep">·</span>
+    <a href="/terms/">Terms</a>
+    <span class="footer-sep">·</span>
+    <a href="/support/">Support</a>
+  </div>
+</footer>
+
+<script is:inline>
+  var el = document.getElementById('footer-year');
+  if (el) el.textContent = String(new Date().getFullYear());
+</script>
+
+<style>
+  .site-footer {
+    color: #71717a;
+    font-size: 0.8rem;
+    text-align: left;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  .footer-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-sep {
+    color: #3f3f46;
+  }
+  .site-footer a {
+    border-bottom: none;
+    color: #a1a1aa;
+  }
+  .site-footer a:hover {
+    color: var(--accent-green);
+    border-bottom: 1px dashed var(--accent-green);
+  }
+  @media (max-width: 600px) {
+    .site-footer {
+      font-size: 0.65rem;
+    }
+    .footer-row {
+      gap: 5px;
+    }
+  }
+</style>
