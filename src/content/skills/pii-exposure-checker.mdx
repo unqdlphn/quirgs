@@ -2,7 +2,23 @@
 title: "PII Exposure Checker"
 slug: "pii-exposure-checker"
 tagline: "Audit AI data pipelines for PII exposure under GDPR and EU AI Act Article 10"
+pillar: "Inventory"
 framework: ["GDPR", "EU AI Act", "Article 10"]
+interoperates_with:
+  - "eu-ai-act-classifier"
+  - "hitl-compliance-gate"
+triggers:
+  - "check for PII"
+  - "audit data for personal info"
+  - "GDPR data audit"
+  - "scan training data"
+  - "data minimization"
+  - "PII exposure risk"
+  - "Article 10 compliance"
+example_prompts:
+  - "Audit this dataset for PII before we use it to train our model."
+  - "Check our AI inference pipeline for personal data exposure under GDPR."
+  - "Does our training data meet EU AI Act Article 10 requirements?"
 status: live
 version: "1.0.0"
 lastUpdated: 2026-05-21

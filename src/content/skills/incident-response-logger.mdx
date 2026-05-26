@@ -2,7 +2,23 @@
 title: "Incident Response Logger"
 slug: "incident-response-logger"
 tagline: "Structure AI incident reports aligned to NIST SP 800-61 and EU AI Act Article 62"
+pillar: "Checkpoints"
 framework: ["NIST SP 800-61", "EU AI Act", "Article 62"]
+interoperates_with:
+  - "hitl-compliance-gate"
+  - "eu-ai-act-classifier"
+triggers:
+  - "log an AI incident"
+  - "report AI failure"
+  - "Article 62"
+  - "serious incident report"
+  - "post-incident review"
+  - "something went wrong with our AI"
+  - "AI incident debrief"
+example_prompts:
+  - "Log an AI incident — our CV screening model produced biased outputs affecting ~300 applicants."
+  - "Does this incident meet the EU AI Act Article 62 serious incident threshold?"
+  - "Structure a post-incident review for our AI model failure from last week."
 status: live
 version: "1.0.0"
 lastUpdated: 2026-05-21

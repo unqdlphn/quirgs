@@ -2,7 +2,24 @@
 title: "HITL Compliance Gate"
 slug: "hitl-compliance-gate"
 tagline: "Insert a structured human review checkpoint into any AI workflow"
+pillar: "Checkpoints"
 framework: ["EU AI Act", "NIST AI RMF", "ISO/IEC 42001:2023"]
+interoperates_with:
+  - "eu-ai-act-classifier"
+  - "nist-ai-rmf-checkpoint"
+  - "iso-42001-audit-prep"
+  - "ai-transparency-writer"
+triggers:
+  - "compliance gate"
+  - "run a compliance check"
+  - "HITL review"
+  - "is this EU AI Act compliant"
+  - "check before we ship"
+  - "human review checkpoint"
+example_prompts:
+  - "Run a compliance check before we publish this AI-generated report."
+  - "Insert a HITL gate at the end of this workflow before it goes to users."
+  - "We're about to deploy — run a compliance gate across EU AI Act, NIST, and ISO."
 status: live
 version: "1.0.0"
 lastUpdated: 2026-05-21
