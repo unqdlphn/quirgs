@@ -1,7 +1,57 @@
-Apache License  
-Version 2.0, January 2004
-http://www.apache.org/licenses/
+Quirgs Source-Available License (Site Code)
+Copyright (c) 2026 Quirgs
 
-TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+Permission is granted, free of charge, to any person obtaining a copy
+of this software to use, copy, and modify it for personal, educational,
+and internal organizational purposes only.
 
-Copyright (c) 2025 Quirgs.com - All rights reserved.
+The following are expressly prohibited without prior written permission
+from Quirgs:
+
+1. Using this software, in whole or in part, to provide a commercial
+   product or service that competes with Quirgs.
+2. Redistributing this software as part of a commercial product,
+   SaaS offering, or bundled product sold to third parties.
+3. Sublicensing or selling copies of this software.
+
+This license applies to all site infrastructure in this repository:
+Astro components, layouts, Cloudflare Workers, scripts, and CI/CD workflows.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+QUIRGS BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY ARISING FROM
+THE USE OF THIS SOFTWARE.
+
+---
+
+Quirgs Skill Content License
+Copyright (c) 2026 Quirgs
+
+The skills, governance documents, and compliance content in this repository
+(all files under skills/, src/content/skills/, and any governance documents)
+are licensed under Creative Commons Attribution-NonCommercial-NoDerivatives
+4.0 International (CC BY-NC-ND 4.0).
+
+Full license text: https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+Under this license you may:
+- Use the skills for personal, educational, and internal organizational
+  purposes with attribution to Quirgs.
+
+The following are expressly prohibited:
+1. Any commercial use, sale, sublicensing, or redistribution of the skills
+   or governance content, including as part of a competing product or service.
+2. Creating and distributing derivative governance skill products based on
+   this content for commercial purposes.
+3. Removing, altering, or omitting the advisory disclaimer present in any
+   skill file. The following disclaimer must be preserved in any permitted
+   reproduction: "Outputs are for informational and governance support
+   purposes only. Not legal advice. Not a substitute for qualified counsel."
+
+THE SKILL CONTENT IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND.
+QUIRGS SHALL NOT BE LIABLE FOR ANY DAMAGES ARISING FROM USE OF OR
+RELIANCE ON THIS CONTENT.
+
+The official and only authorized distribution channel for the Quirgs
+Compliance Bundle is GitHub Gists published by https://github.com/unqdlphn.
