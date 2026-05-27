@@ -84,7 +84,9 @@ import Footer from "../components/Footer.astro";
         background-color: var(--term-bg);
         border: 1px solid var(--term-border);
         border-radius: 8px;
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.5),
+          0 0 30px rgba(74, 222, 128, 0.2);
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -274,85 +276,43 @@ import Footer from "../components/Footer.astro";
     <script>
       // Terminal text sequence
       const sequence = [
-        { type: "input", text: "./init_v2_pivot.sh --concept=stealth" },
+        { type: "input", text: "cat README.md" },
+        { type: "blank", delay: 200 },
         {
           type: "output",
-          text: "[BUILDING] Constructing AI-native command center...",
-          delay: 800,
+          text: '<span class="text-bright">Quirgs</span> &nbsp;— AI governance skills for teams building with AI.',
+          delay: 400,
         },
         {
           type: "output",
-          text: "[BUILDING] Compiling generative scaffolding and developer contexts...",
-          delay: 1000,
+          text: '<span class="text-green">Governance first. Build accordingly.</span>',
+          delay: 300,
+        },
+        { type: "blank", delay: 200 },
+        {
+          type: "output",
+          text: "7 production-validated compliance skills for Claude, Cowork, and the Anthropic ecosystem.",
+          delay: 400,
+        },
+        {
+          type: "output",
+          text: "Classify risk. Gate decisions. Audit for standards. Stay transparent.",
+          delay: 400,
         },
         { type: "blank", delay: 300 },
         {
           type: "output",
-          text: '<span class="text-bright">Quirgs V2 is currently in development.</span>',
-          delay: 400,
+          text: '<span class="text-yellow">[BUNDLE]&nbsp;</span> quirgs-compliance&nbsp;&nbsp;<span class="text-bright">All 7 skills ·</span>&nbsp;<a href="/bundle/">View the full suite &rarr;</a>',
+          delay: 300,
         },
-        {
-          type: "output",
-          text: "We are re-imagining our concept from the ground up to support the open-source community with tooling built for the age of thinking models.",
-          delay: 400,
-        },
-        { type: "blank", delay: 200 },
+        { type: "blank", delay: 400 },
         {
           type: "output",
           text: '<span class="text-yellow">[ARCHIVE]&nbsp;</span> Legacy reference guides still available:&nbsp;<a href="guides/index.html">quirgs.com/guides</a>',
           delay: 0,
         },
-        { type: "blank", delay: 400 },
-
-        { type: "input", text: "ls -la /quirgs/skills/" },
-        {
-          type: "output",
-          text: 'total 7&nbsp;&nbsp; <span class="text-bright">  AI Compliance Suite  ·  7 production-validated skills</span>',
-          delay: 500,
-        },
-        { type: "blank", delay: 200 },
-        {
-          type: "output",
-          text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">ai-transparency-writer</span>  <span class="text-yellow">[skill.1]</span>',
-          delay: 130,
-        },
-        {
-          type: "output",
-          text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">eu-ai-act-classifier</span>  <span class="text-yellow">[skill.2]</span>',
-          delay: 130,
-        },
-        {
-          type: "output",
-          text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">hitl-compliance-gate</span>  <span class="text-yellow">[skill.3]</span>',
-          delay: 130,
-        },
-        {
-          type: "output",
-          text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">incident-response-logger</span>  <span class="text-yellow">[skill.4]</span>',
-          delay: 130,
-        },
-        {
-          type: "output",
-          text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">iso-42001-audit-prep</span>  <span class="text-yellow">[skill.5]</span>',
-          delay: 130,
-        },
-        {
-          type: "output",
-          text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">nist-ai-rmf-checkpoint</span>  <span class="text-yellow">[skill.6]</span>',
-          delay: 130,
-        },
-        {
-          type: "output",
-          text: '-rwxr--r--  <span class="text-blue" style="display:inline-block;min-width:26ch">pii-exposure-checker</span>  <span class="text-yellow">[skill.7]</span>',
-          delay: 130,
-        },
         { type: "blank", delay: 500 },
-        {
-          type: "output",
-          text: '<span class="text-yellow">[BUNDLE]&nbsp;</span> quirgs-compliance&nbsp;&nbsp;<span class="text-bright">All 7 skills ·</span>&nbsp;<a href="/bundle/">Install now &rarr;</a>',
-          delay: 300,
-        },
-        { type: "blank", delay: 400 },
+
         {
           type: "output",
           text: '<span class="text-bright">Browse:&nbsp;</span><a href="/skills/">/skills/</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/bundle/">/bundle/</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/guides/">/guides/</a>',
