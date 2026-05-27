@@ -274,35 +274,36 @@ import Footer from "../components/Footer.astro";
     <script>
       // Terminal text sequence
       const sequence = [
-        { type: "input", text: "./init_v2_pivot.sh --concept=stealth" },
+        { type: "input", text: "cat README.md" },
+        { type: "blank", delay: 200 },
         {
           type: "output",
-          text: "[BUILDING] Constructing AI-native command center...",
-          delay: 800,
-        },
-        {
-          type: "output",
-          text: "[BUILDING] Compiling generative scaffolding and developer contexts...",
-          delay: 1000,
-        },
-        { type: "blank", delay: 300 },
-        {
-          type: "output",
-          text: '<span class="text-bright">Quirgs V2 is currently in development.</span>',
+          text: '<span class="text-bright">Quirgs</span> — AI governance skills for teams building with AI.',
           delay: 400,
         },
         {
           type: "output",
-          text: "We are re-imagining our concept from the ground up to support the open-source community with tooling built for the age of thinking models.",
-          delay: 400,
+          text: '<span class="text-green">Governance first. Build accordingly.</span>',
+          delay: 300,
         },
         { type: "blank", delay: 200 },
+        {
+          type: "output",
+          text: "7 production-validated compliance skills for Claude, Cowork, and the Anthropic ecosystem.",
+          delay: 400,
+        },
+        {
+          type: "output",
+          text: "Classify risk. Gate decisions. Audit for standards. Stay transparent.",
+          delay: 400,
+        },
+        { type: "blank", delay: 300 },
         {
           type: "output",
           text: '<span class="text-yellow">[ARCHIVE]&nbsp;</span> Legacy reference guides still available:&nbsp;<a href="guides/index.html">quirgs.com/guides</a>',
           delay: 0,
         },
-        { type: "blank", delay: 400 },
+        { type: "blank", delay: 500 },
 
         { type: "input", text: "ls -la /quirgs/skills/" },
         {
@@ -349,7 +350,7 @@ import Footer from "../components/Footer.astro";
         { type: "blank", delay: 500 },
         {
           type: "output",
-          text: '<span class="text-yellow">[BUNDLE]&nbsp;</span> quirgs-compliance&nbsp;&nbsp;<span class="text-bright">All 7 skills ·</span>&nbsp;<a href="/bundle/">Install now &rarr;</a>',
+          text: '<span class="text-yellow">[BUNDLE]&nbsp;</span> quirgs-compliance&nbsp;&nbsp;<span class="text-bright">All 7 skills ·</span>&nbsp;<a href="/bundle/">Install the full suite &rarr;</a>',
           delay: 300,
         },
         { type: "blank", delay: 400 },
