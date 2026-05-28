@@ -30,3 +30,4 @@ pnpm-debug.log*
 
 # cowork / claude local session files
 .claude/
+/CLAUDE.md
