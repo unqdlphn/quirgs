@@ -87,7 +87,8 @@ Remaining failures require HITL review.
 - **Never modify files in `public/guides/`.** SEO-indexed — zero content changes.
 - **Never modify `src/pages/index.astro`** unless the validation brief explicitly includes it.
 - **Never push to `main` directly.** All work is on feature branches. Merges to `main` are HITL-approved only.
-- **Never add a `deploy.yml` workflow.** Cloudflare Pages deploys natively via GitHub integration — no workflow file is needed or wanted.
+- **Never add a `deploy.yml` workflow.** Cloudflare deploys via native GitHub integration — no workflow file is needed or wanted.
 - **Never add a `CNAME` file.** Domain binding is managed in the Cloudflare dashboard. This file has been deleted deliberately — do not restore it.
-- **Validate against the preview URL only** — never against `quirgs.com` (production).
+- **Never add a `.nojekyll` file.** GitHub Pages is decommissioned. `.nojekyll` was added and removed during the launch incident — do not restore it.
+- **Validate against the preview URL for feature branches.** `feat/*` → v2 PRs generate branch preview URLs — always validate there. `v2 → main` deploys directly to production with no preview — smoke tests for that merge run against `quirgs.com`.
 - **Do not infer what to validate.** Always work from a provided validation brief.
