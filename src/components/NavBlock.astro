@@ -1,0 +1,57 @@
+---
+// src/components/NavBlock.astro
+// Reusable terminal-style site navigation.
+// Renders a `ls` listing of all top-level routes with the current page
+// highlighted as "(you are here)" rather than a link.
+//
+// Usage:
+//   import NavBlock from '../../components/NavBlock.astro';
+//   <NavBlock currentPath="/skills/" />
+
+interface Props {
+  currentPath: string; // e.g. '/', '/skills/', '/bundle/', '/guides/'
+}
+
+const { currentPath } = Astro.props;
+
+const routes = [
+  { path: '/',                label: '/',                description: 'main landing page'      },
+  { path: '/skills/',         label: '/skills/',         description: 'skills registry'        },
+  { path: '/bundle/',         label: '/bundle/',         description: 'compliance bundle'      },
+  { path: '/guides/',         label: '/guides/',         description: 'legacy guides'          },
+  { path: '/transparency/',   label: '/transparency/',   description: 'AI transparency notice' },
+];
+---
+
+<div class="line">
+  <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span>&nbsp;ls
+</div>
+{routes.map((route) => {
+  const isCurrent = route.path === currentPath;
+  return (
+    <div class="line">
+      {isCurrent ? (
+        <span>
+          <span class="text-blue">&rarr;&nbsp;&nbsp;{route.label}</span>
+          <span class="nav-current">&nbsp;&nbsp;&nbsp;&nbsp;(you are here)</span>
+        </span>
+      ) : (
+        <span>
+          <span class="text-blue">&rarr;&nbsp;&nbsp;<a href={route.path}>{route.label}</a></span>
+          <span class="nav-desc">&nbsp;&nbsp;&nbsp;&nbsp;&larr; {route.description}</span>
+        </span>
+      )}
+    </div>
+  );
+})}
+<div class="line">&nbsp;</div>
+
+<style>
+  .nav-current {
+    color: var(--text-bright);
+    font-weight: bold;
+  }
+  .nav-desc {
+    color: #71717a;
+  }
+</style>

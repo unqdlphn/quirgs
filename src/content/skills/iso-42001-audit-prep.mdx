@@ -1,0 +1,73 @@
+---
+title: "ISO 42001 Audit Prep"
+slug: "iso-42001-audit-prep"
+tagline: "Walk clause-by-clause ISO/IEC 42001:2023 audit readiness checks"
+pillar: "Standards Alignment"
+framework: ["ISO/IEC 42001:2023", "AIMS"]
+interoperates_with:
+  - "hitl-compliance-gate"
+  - "nist-ai-rmf-checkpoint"
+triggers:
+  - "ISO 42001"
+  - "AIMS"
+  - "AI management system"
+  - "ISO audit"
+  - "audit readiness"
+  - "gap analysis"
+  - "get certified"
+example_prompts:
+  - "Run an ISO/IEC 42001 readiness assessment — we're targeting certification in Q4."
+  - "What clauses are we missing for ISO 42001? We have a management review next month."
+  - "Do a gap analysis of our AIMS against ISO/IEC 42001:2023."
+status: live
+version: "1.0.0"
+lastUpdated: 2026-05-21
+tags: ["ISO 42001", "AIMS", "audit", "certification", "gap analysis"]
+---
+
+## What it does
+
+The ISO 42001 Audit Prep skill guides teams through a clause-by-clause readiness assessment against ISO/IEC 42001:2023 — the international standard for AI management systems (AIMS). For each clause, it produces a control status (implemented / partial / not implemented), identifies the audit evidence that a third-party auditor will look for, flags gaps, and assigns a control owner. The output is a structured gap analysis report that can serve as your internal audit workpaper or as preparation material before an external certification audit.
+
+## Frameworks covered
+
+- ISO/IEC 42001:2023 — AI Management System standard (all clauses 4–10)
+- ISO/IEC 42002 — AI management system implementation guidance (supplementary)
+- ISO 9001:2015 — referenced by 42001 for management system structure (HLS)
+
+## When to use it
+
+Use this skill when your organization is preparing for ISO/IEC 42001 certification — either as a self-assessment ahead of an external audit, or as an ongoing internal audit tool. It's also valuable when leadership needs a structured view of where the AIMS stands before committing to a certification timeline, or when a new AI system is added to scope and the team needs to assess whether existing controls cover it. Unlike a quick multi-framework checklist, this skill performs clause-level depth — it produces the kind of documented evidence review an auditor will actually examine.
+
+## Example output (abbreviated)
+
+```
+ISO/IEC 42001:2023 AUDIT READINESS REPORT
+─────────────────────────────────────────────────────────────
+Organization: Meridian Data Solutions
+AIMS scope: AI-assisted fraud detection — retail banking division
+Assessment date: 2026-05-21
+
+CLAUSE 4 — CONTEXT OF THE ORGANIZATION
+  4.1 — Understanding the organization and its context
+        Status: ✅ IMPLEMENTED
+        Evidence: Stakeholder register v2.3 (dated 2026-01); risk context documented
+        Notes: Covers internal/external issues. Updated annually — next review Jan 2027.
+
+  4.2 — Understanding the needs of interested parties
+        Status: ⚠️  PARTIAL
+        Evidence: Customer and regulator requirements documented; employee concerns not yet captured
+        Gap: Internal stakeholder input process not formalized
+        Owner: HR / AI Governance Lead
+        Remediation: Add internal stakeholder survey to next AIMS review cycle (Q3 2026)
+
+CLAUSE 6 — PLANNING
+  6.1 — Actions to address risks and opportunities
+        Status: ❌ NOT IMPLEMENTED
+        Evidence: No formal AI risk register found for this system
+        Gap: Risk identification and treatment plan required before audit
+        Owner: AI Risk Manager
+        Remediation: Establish AI risk register using Annex A controls as baseline;
+                     target completion 2026-07-01
+```
+

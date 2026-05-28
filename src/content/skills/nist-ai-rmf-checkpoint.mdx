@@ -1,0 +1,70 @@
+---
+title: "NIST AI RMF Checkpoint"
+slug: "nist-ai-rmf-checkpoint"
+tagline: "Walk the Govern / Map / Measure / Manage functions at any project stage"
+pillar: "Standards Alignment"
+framework: ["NIST AI RMF 1.0", "NIST AI RMF Playbook"]
+interoperates_with:
+  - "hitl-compliance-gate"
+  - "iso-42001-audit-prep"
+triggers:
+  - "NIST AI RMF"
+  - "Govern / Map / Measure / Manage"
+  - "risk profiling"
+  - "AI risk assessment"
+  - "risk profile"
+  - "check our AI governance"
+  - "NIST risk management"
+example_prompts:
+  - "Run a NIST AI RMF assessment on our loan underwriting model at the pre-deployment stage."
+  - "Which NIST AI RMF controls are we missing before we go to production?"
+  - "Build a risk profile for our AI system against the NIST AI RMF."
+status: live
+version: "1.0.0"
+lastUpdated: 2026-05-21
+tags: ["NIST", "AI RMF", "risk management", "governance"]
+---
+
+## What it does
+
+The NIST AI RMF Checkpoint walks your AI system through a structured, stage-scoped assessment against the four core functions of the NIST AI Risk Management Framework 1.0 — Govern, Map, Measure, and Manage. It produces a risk profile that identifies which controls are addressed, which are missing, and what the NIST AI RMF Playbook recommends as next actions. The output is scoped to your project lifecycle stage, so you get relevant controls — not a kitchen-sink checklist.
+
+## Frameworks covered
+
+- NIST AI RMF 1.0 (January 2023)
+- NIST AI RMF Playbook (subcategory-level actions)
+- NIST AI RMF Organizational Profiles (generic and sector-specific)
+
+## When to use it
+
+Use this skill when your organization needs to evaluate AI risk against a federal or enterprise standard — particularly when working with U.S. government agencies, federal contractors, or any organization that has adopted the AI RMF as a governance baseline. It's also the right tool mid-project when your team wants to understand which risk controls are in place before moving to the next lifecycle stage, or when preparing for an internal governance review.
+
+## Example output (abbreviated)
+
+```
+NIST AI RMF RISK PROFILE
+─────────────────────────────────────────────
+System: Loan underwriting decision support tool
+Lifecycle stage: Pre-deployment testing
+Assessment date: 2026-05-21
+
+GOVERN
+  ✅ GV-1.1 — Organizational policies for AI risk established
+  ✅ GV-2.2 — Roles and responsibilities for AI risk defined
+  ⚠️  GV-4.1 — Organizational risk tolerance for this system NOT documented
+
+MAP
+  ✅ MP-2.3 — AI system purpose and context documented
+  ❌ MP-5.1 — Negative impacts on third parties NOT assessed
+
+MEASURE
+  ⚠️  MS-1.1 — Bias and fairness metrics defined but not yet tested across demographic groups
+
+MANAGE
+  ❌ MG-2.2 — Incident response plan for AI failures NOT in place
+
+RECOMMENDED NEXT ACTION
+Run bias/fairness evaluation across protected classes before deployment gate (MS-1.1).
+Draft incident response runbook scoped to loan denial errors (MG-2.2).
+```
+

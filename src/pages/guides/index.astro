@@ -1,0 +1,56 @@
+---
+// src/pages/guides/index.astro
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
+
+const guides = [
+  { file: "ai_prompt_engineering.html", name: "AI Prompt Engineering" },
+  {
+    file: "copilot_commands_reference.html",
+    name: "Copilot Commands Reference",
+  },
+  { file: "gemma_vs_gemini_guide.html", name: "Gemma vs Gemini" },
+  { file: "git_workflow_reference.html", name: "Git Workflow Reference" },
+  { file: "ollama_anythingllm_guide.html", name: "Ollama + AnythingLLM" },
+  { file: "taco_marketing_strategy.html", name: "T.A.C.O Marketing Strategy" },
+];
+---
+
+<BaseLayout
+  title="Guides Archive | Quirgs"
+  description="Legacy reference guides from Quirgs V1 — preserved at original URLs."
+  terminalPath="~/guides"
+>
+  <NavBlock currentPath="/guides/" />
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/guides</span
+    ><span class="text-bright">$</span> ls -la /guides/
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="text-yellow">[ARCHIVE]</span> Legacy reference guides
+  </div>
+  <div class="line">&nbsp;</div>
+  {
+    guides.map((guide) => {
+      // Pad filename to 34 chars for alignment
+      const filePadded = guide.file.padEnd(34, " ");
+      return (
+        <div class="line">
+          <span>-rw-r--r-- guides </span>
+          <a href={`/guides/${guide.file}`}>{guide.file}</a>
+          <span>{" ".repeat(34 - guide.file.length)}</span>
+          <span>{guide.name}</span>
+        </div>
+      );
+    })
+  }
+
+  <div class="archive-note">
+    <span class="text-yellow">[NOTE]</span> &rarr; These guides were published before
+    Quirgs V2.<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; They are preserved exactly as
+    written — URLs and content unchanged.<br />
+  </div>
+</BaseLayout>

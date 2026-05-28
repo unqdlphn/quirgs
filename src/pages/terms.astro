@@ -1,0 +1,37 @@
+---
+// src/pages/terms.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="Terms of Service | Quirgs"
+  description="Terms of service for the Quirgs AI governance skills registry."
+  terminalPath="~/terms"
+>
+  <NavBlock currentPath="/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/terms</span
+    ><span class="text-bright">$</span>&nbsp;cat terms.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">Terms of Service</h1>
+    <p class="tagline">Conditions for using quirgs.com and its skills.</p>
+  </div>
+
+  <div class="archive-note">
+    <strong class="text-yellow">[PLACEHOLDER]</strong>&nbsp; Full terms are
+    still being drafted. In the meantime: the skills published here are provided
+    as-is, without warranty, for evaluation and integration into your own AI
+    governance workflows. Refer to each skill&rsquo;s license (see its Gist) for
+    redistribution terms.
+  </div>
+
+  <div class="line">&nbsp;</div>
+  <div>
+    Questions? See <a href="/support/">/support/</a>.
+  </div>
+</BaseLayout>
