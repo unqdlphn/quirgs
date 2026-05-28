@@ -29,7 +29,7 @@ Workers are deployed from their own subdirectories with `wrangler` (e.g. `cd wor
 
 ### The site is static, but content-driven
 
-`astro.config.mjs` declares `output: 'static'` with the `@astrojs/cloudflare` adapter. The site builds to `./dist`; Cloudflare serves it from there (see `wrangler.jsonc`). There is no SSR — every page is rendered at build time.
+`astro.config.mjs` declares `output: 'static'` with the `@astrojs/cloudflare` adapter. The adapter emits a split output: `dist/client/` (static assets) and `dist/server/` (SSR entry). Cloudflare serves static assets from `dist/client` — `wrangler.jsonc` `assets.directory` must point at `dist/client`, not `dist`. There is no SSR — every page is rendered at build time.
 
 The skills registry pages (`/skills/`, `/skills/[slug]/`, `/bundle/`) are generated from the `skills` content collection defined in [src/content.config.ts](src/content.config.ts). The schema is strict (Zod) — adding a frontmatter field requires touching both `content.config.ts` AND `keystatic.config.ts`, because Keystatic mirrors the same files via GitHub storage and edits round-trip through PRs.
 
@@ -64,9 +64,10 @@ Each has its own `wrangler.toml`, its own `.dev.vars`, and is deployed separatel
 
 ## Branching
 
-- `main` — production. Cloudflare auto-deploys on push.
-- `v2` — active integration branch for the V2 Astro rebuild. **Branch new feature work off `v2`**, not `main`.
-- `feat/<scope>` — feature branches off `v2`. Build plan, architecture notes, and per-feature handoffs live in [\_v2/](_v2/).
+- `main` — production. Cloudflare deploys on push. No branch preview — direct to quirgs.com.
+- `v2` — permanent staging branch. **All feature work branches from `v2` and merges back to `v2` first.** After every `v2 → main` merge, re-sync immediately: `git checkout v2 && git merge main && git push`. Never let `v2` fall behind `main`.
+- `feat/<scope>` — always cut from `v2`. `feat/*` → `v2` PRs generate Cloudflare branch preview URLs. Jules validates against the preview URL before merge. **Never merge a feature branch directly to `main`** — it skips the preview gate.
+- `_v2/` — docs folder only (architecture specs, session prompts, handoffs). Not a code branch.
 
 ## Brand voice for any user-facing copy you write
 
@@ -83,3 +84,8 @@ The brand voice is declarative, technical, no hype. The canonical reference is [
 - `package-lock.json` internally references the package name `certain-crater` (Astro's default-generated name from before the rename). Cosmetic only — `package.json` is authoritative. Don't "fix" it as a side quest.
 - The `_v2/` directory contains build plans and session prompts — it is intentionally tracked but should not be referenced from production code.
 - Skill MDX files live in `src/content/skills/`. Skill **SKILL.md** files (the Gist-sync sources) live in `skills/`. Both are valid; they serve different pipelines.
+
+## Launch-day fixes (2026-05-27 — do not revert)
+
+- **`wrangler.jsonc` `assets.directory: "dist/client"`** — The `@astrojs/cloudflare` adapter splits build output into `dist/client/` (static) and `dist/server/` (SSR entry). Setting `assets.directory` to `dist` (the pre-launch value) caused 404 on every route. Must be `dist/client`. Do not change this back.
+- **GitHub Pages decommissioned** — GitHub Pages was still building the repo alongside Cloudflare after the v2 merge, causing Jekyll to choke on `.astro` files. Resolved by deleting the GitHub Pages apex A record in DNS. The site now serves exclusively from the Cloudflare Worker. `.nojekyll` was added and then removed — do not re-add it. Do not re-enable GitHub Pages for this repo.
