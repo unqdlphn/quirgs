@@ -18,7 +18,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -51,6 +51,8 @@ const { title, description, terminalPath = "~" } = Astro.props;
         margin: 0;
         padding: 20px;
         box-sizing: border-box;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
       }
 
       .main-wrapper {
@@ -138,7 +140,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
       .terminal-title {
         flex-grow: 1;
         text-align: center;
-        color: #71717a;
+        color: #a1a1aa;
         font-size: 0.85rem;
         /* no right margin — help-trigger sits to the right instead */
       }
@@ -147,7 +149,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
       .help-trigger {
         background: transparent;
         border: 1px solid var(--term-border);
-        color: #71717a;
+        color: #a1a1aa;
         font-family: "JetBrains Mono", "Courier New", Courier, monospace;
         font-size: 0.75rem;
         padding: 2px 6px;
@@ -459,7 +461,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
     </style>
   </head>
   <body>
-    <div class="main-wrapper">
+    <main class="main-wrapper">
       <div class="terminal-container">
         <div class="terminal-header">
           <div class="mac-btns">
@@ -485,7 +487,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
         <Footer />
         <img src="/assets/logo.png" alt="Quirgs Logo" class="logo" />
       </div>
-    </div>
+    </main>
     <HelpModal />
   </body>
 </html>

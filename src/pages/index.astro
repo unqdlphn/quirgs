@@ -10,8 +10,9 @@ import Footer from "../components/Footer.astro";
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
+    <meta name="description" content="Quirgs — AI governance compliance skills for teams building with AI. Classify risk, gate decisions, audit for standards, and stay transparent." />
     <title>Quirgs | AI Governance Skills</title>
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
@@ -41,6 +42,8 @@ import Footer from "../components/Footer.astro";
         margin: 0;
         padding: 20px;
         box-sizing: border-box;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
       }
 
       .main-wrapper {
@@ -128,14 +131,14 @@ import Footer from "../components/Footer.astro";
       .terminal-title {
         flex-grow: 1;
         text-align: center;
-        color: #71717a;
+        color: #a1a1aa;
         font-size: 0.85rem;
       }
 
       .help-trigger {
         background: transparent;
         border: 1px solid var(--term-border);
-        color: #71717a;
+        color: #a1a1aa;
         font-family: "JetBrains Mono", "Courier New", Courier, monospace;
         font-size: 0.75rem;
         padding: 2px 6px;
@@ -246,7 +249,7 @@ import Footer from "../components/Footer.astro";
   </head>
 
   <body>
-    <div class="main-wrapper">
+    <main class="main-wrapper">
       <div class="terminal-container">
         <div class="terminal-header">
           <div class="mac-btns">
@@ -270,7 +273,7 @@ import Footer from "../components/Footer.astro";
         <Footer />
         <img src="/assets/logo.png" alt="Quirgs Logo" class="logo" />
       </div>
-    </div>
+    </main>
     <HelpModal />
 
     <script>

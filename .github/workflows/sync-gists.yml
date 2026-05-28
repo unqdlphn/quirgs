@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
       - name: Sync changed SKILL.md files to Gists
         env:
           GIST_TOKEN: ${{ secrets.GIST_SYNC_TOKEN }}
