@@ -1,0 +1,33 @@
+---
+// src/pages/404.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="404 | Quirgs"
+  description="Page not found."
+  terminalPath="~/404"
+>
+  <NavBlock currentPath="/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/</span><span
+      class="text-bright">$</span
+    >&nbsp;cat 404.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">[ERR] 404 — Not Found</h1>
+    <p class="line">That path doesn't exist.</p>
+  </div>
+
+  <div class="line">&nbsp;</div>
+  <div class="line">The page you requested could not be located.</div>
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <a href="/">← restart</a>
+  </div>
+</BaseLayout>
