@@ -172,3 +172,4 @@ After presenting the risk profile, offer:
 - **Surface the right questions** — when evidence is unclear, generate the question the reviewer needs to answer, not a generic placeholder
 - **Avoid false confidence** — if evidence is insufficient to assess a subcategory, mark it ⬜ and explain what's needed
 - **Plain language summary always** — the narrative in the profile should be readable by a non-technical executive
+- **Advisory only** — Outputs are for informational and governance support purposes only. They do not constitute legal or regulatory advice and are not a substitute for qualified counsel or a certified auditor.
