@@ -54,12 +54,7 @@ async function run() {
   }
 
   const changedFiles = diffOutput.split('\n').map(f => f.trim()).filter(Boolean);
-  const skillFiles = changedFiles.filter(file => /^skills\/[^/]+\/SKILL\.md$/.test(file));
-
-  if (skillFiles.length === 0) {
-    console.log('No skills/*/SKILL.md files changed. Exiting sync script.');
-    process.exit(0);
-  }
+  let skillFiles = changedFiles.filter(file => /^skills\/[^/]+\/SKILL\.md$/.test(file));
 
   let map = {};
   try {
@@ -69,6 +64,28 @@ async function run() {
   } catch (e) {
     console.error(`Failed to read or parse map at ${MAP_PATH}:`, e);
     process.exit(1);
+  }
+
+  // Bootstrap pass: if any skill directories lack a Gist ID, add them to the
+  // work list regardless of what changed in this commit. This handles the case
+  // where SKILL.md files were committed but the workflow only processed a subset.
+  const skillsDir = path.join(__dirname, '../../skills');
+  if (fs.existsSync(skillsDir)) {
+    const allSlugs = fs.readdirSync(skillsDir).filter(entry => {
+      const skillPath = path.join(skillsDir, entry, 'SKILL.md');
+      return fs.existsSync(skillPath);
+    });
+    const unmappedSlugs = allSlugs.filter(slug => !map[slug]);
+    if (unmappedSlugs.length > 0) {
+      console.log(`Bootstrap: found ${unmappedSlugs.length} skill(s) not yet in gist-map.json — adding to sync: ${unmappedSlugs.join(', ')}`);
+      const unmappedFiles = unmappedSlugs.map(slug => `skills/${slug}/SKILL.md`);
+      skillFiles = [...new Set([...skillFiles, ...unmappedFiles])];
+    }
+  }
+
+  if (skillFiles.length === 0) {
+    console.log('No skills/*/SKILL.md files to sync. Exiting.');
+    process.exit(0);
   }
 
   let mapChanged = false;
