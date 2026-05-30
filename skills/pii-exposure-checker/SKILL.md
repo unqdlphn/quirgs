@@ -188,3 +188,4 @@ After presenting the report, offer:
   is actionable. Use `references/remediation-actions.md` for specifics
 - **This audit supports, not replaces, a DPIA** — for high-risk processing, a formal Data
   Protection Impact Assessment conducted with the DPO is required under GDPR Article 35
+- **Advisory only** — Outputs are for informational and governance support purposes only. They do not constitute legal or regulatory advice and are not a substitute for qualified counsel or a certified auditor.
