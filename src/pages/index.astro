@@ -64,6 +64,10 @@ import Footer from "../components/Footer.astro";
         flex-shrink: 0;
       }
 
+      .logo-link {
+        border-bottom: none;
+      }
+
       .site-bottom-row {
         width: 100%;
         max-width: 800px;
@@ -274,7 +278,7 @@ import Footer from "../components/Footer.astro";
       </div>
       <div class="site-bottom-row">
         <Footer />
-        <a href="/" title="Quirgs Home">
+        <a href="/" title="Quirgs Home" class="logo-link">
           <img src="/assets/logo.png" alt="Quirgs Logo" class="logo" />
         </a>
       </div>
