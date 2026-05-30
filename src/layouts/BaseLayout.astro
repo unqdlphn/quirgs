@@ -372,6 +372,9 @@ const { title, description, terminalPath = "~" } = Astro.props;
         border: 1px solid var(--term-border);
         color: var(--text-bright);
         font-family: inherit;
+        word-break: break-all;
+        overflow-wrap: anywhere;
+        min-width: 0;
       }
 
       .copy-btn {
