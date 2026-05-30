@@ -166,3 +166,4 @@ After classification and obligations output, offer:
 - **GPAI is additive** — GPAI obligations stack on top of any other applicable tier
 - **Jurisdictional scope** — the Act applies if the AI output is used in the EU, regardless of where the provider is based
 - **Always flag legal review** for Medium/Low confidence classifications — this tool supports compliance work but is not a substitute for qualified legal advice
+- **Advisory only** — Outputs are for informational and governance support purposes only. They do not constitute legal or regulatory advice and are not a substitute for qualified counsel or a certified auditor.
