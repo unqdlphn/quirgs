@@ -14,11 +14,21 @@ description: >
   rather than a quick multi-framework sign-off gate.
 ---
 
+> **Install:** `/install https://github.com/unqdlphn/quirgs/releases/download/v1.0.0/nist-ai-rmf-checkpoint.plugin`
+
 # NIST AI RMF Checkpoint
 
 A guided, function-by-function walkthrough of the NIST AI Risk Management Framework
 (AI RMF 1.0). Produces a structured AI Risk Profile with control status and recommended
 actions scoped to the current lifecycle stage.
+
+> **Current NIST AI Landscape (updated May 2026):**
+>
+> - The **AI Safety Institute** has been renamed the **Center for AI Standards and Innovation (CAISI)**.
+> - The **AI Safety Institute Consortium** has been renamed the **NIST Artificial Intelligence Consortium**.
+> - NIST has formally established six task groups under the consortium: Testing and Evaluation; Risks and Impacts; Evaluation Science and Measurement; Bias and Limitations of Generative Tools; **Documentation Cards**; and Chemical and Biological Security.
+> - The policy direction has shifted toward "measurement science" and U.S. competitiveness alongside risk management — not instead of it. The AI RMF 1.0 functions (GOVERN, MAP, MEASURE, MANAGE) remain unchanged and authoritative.
+> - The **Documentation Cards** task group directly aligns with the GOVERN function and model card outputs from this skill. Reference this group when justifying documentation card practices to U.S. federal stakeholders.
 
 ---
 
@@ -39,14 +49,14 @@ Use answers to scope which functions to run and how deep to go.
 
 ## Step 2 — Select Scope
 
-| User says… | Run these functions |
-|---|---|
-| "Full assessment" or "all four" | GOVERN → MAP → MEASURE → MANAGE (in order) |
-| "We're just starting out" | GOVERN + MAP |
-| "We're about to deploy" | MEASURE + MANAGE |
-| "Post-deployment review" | MANAGE (monitoring subcategories) |
-| Specific function named | That function only |
-| Ambiguous | Ask: *"Should I run a full four-function assessment, or focus on a specific area?"* |
+| User says…                      | Run these functions                                                                 |
+| ------------------------------- | ----------------------------------------------------------------------------------- |
+| "Full assessment" or "all four" | GOVERN → MAP → MEASURE → MANAGE (in order)                                          |
+| "We're just starting out"       | GOVERN + MAP                                                                        |
+| "We're about to deploy"         | MEASURE + MANAGE                                                                    |
+| "Post-deployment review"        | MANAGE (monitoring subcategories)                                                   |
+| Specific function named         | That function only                                                                  |
+| Ambiguous                       | Ask: _"Should I run a full four-function assessment, or focus on a specific area?"_ |
 
 ---
 
@@ -56,6 +66,7 @@ For each selected function, load the corresponding reference file and generate a
 **Function Assessment Block** using the format below.
 
 Reference files:
+
 - `references/govern.md`
 - `references/map.md`
 - `references/measure.md`
@@ -172,4 +183,3 @@ After presenting the risk profile, offer:
 - **Surface the right questions** — when evidence is unclear, generate the question the reviewer needs to answer, not a generic placeholder
 - **Avoid false confidence** — if evidence is insufficient to assess a subcategory, mark it ⬜ and explain what's needed
 - **Plain language summary always** — the narrative in the profile should be readable by a non-technical executive
-- **Advisory only** — Outputs are for informational and governance support purposes only. They do not constitute legal or regulatory advice and are not a substitute for qualified counsel or a certified auditor.

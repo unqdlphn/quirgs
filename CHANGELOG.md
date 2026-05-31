@@ -13,6 +13,23 @@ _No pending changes._
 
 ---
 
+## Plugin Packaging — Distribution Model
+
+**Branch:** `feat/plugin-packaging`
+
+Established `.plugin` files on GitHub Releases as the functional install mechanism, fixing the gap where Gist installs strip each skill's `references/` directory.
+
+### Added
+
+- 7 individual `.plugin` archives (zip preserving `SKILL.md` + `references/`) plus `quirgs-compliance-bundle.plugin` (all 7 under slug subdirectories), built into the gitignored `dist/plugins/` and published as GitHub Release `v1.0.0` assets.
+- Locked distribution model: **Gist** (`SKILL.md` only) = discovery / SEO / read-only preview; **individual `.plugin`** = single-skill install with full `references/`; **bundle `.plugin`** = all 7 in one install. Install URL format: `https://github.com/unqdlphn/quirgs/releases/download/v{version}/{slug}.plugin`.
+
+### Changed
+
+- `installCmd` in all 7 `src/content/skills/{slug}.mdx` repointed from the Gist URL to the `v1.0.0` Release `.plugin` asset. `gistUrl` retained — Gists stay as preview/SEO.
+
+---
+
 ## Gist Sync — Live Drop
 
 **Merged to `main` via PR# 37-41 · 2026-05-29**

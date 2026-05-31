@@ -15,6 +15,8 @@ description: >
   routes to the right stakeholders automatically.
 ---
 
+> **Install:** `/install https://github.com/unqdlphn/quirgs/releases/download/v1.0.0/incident-response-logger.plugin`
+
 # Incident Response Logger
 
 Structures AI incident reports to align with NIST SP 800-61 response phases and EU AI

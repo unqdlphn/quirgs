@@ -13,6 +13,8 @@ description: >
   human reviewer can work through before approving.
 ---
 
+> **Install:** `/install https://github.com/unqdlphn/quirgs/releases/download/v1.0.0/hitl-compliance-gate.plugin`
+
 # HITL Compliance Gate
 
 A reusable, plug-in compliance checkpoint for any AI workflow. When a human is about to
