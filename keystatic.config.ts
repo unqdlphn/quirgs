@@ -31,6 +31,7 @@ export default config({
         version: fields.text({ label: 'Version' }),
         lastUpdated: fields.date({ label: 'Last Updated' }),
         gistUrl: fields.url({ label: 'Gist URL' }),
+        marketplaceCmd: fields.text({ label: 'Marketplace Add Command' }),
         installCmd: fields.text({ label: 'Install Command' }),
         tags: fields.array(
           fields.text({ label: 'Tag' }),
