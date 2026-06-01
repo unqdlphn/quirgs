@@ -42,7 +42,7 @@ import NavBlock from "../../components/NavBlock.astro";
       <code>/plugin marketplace add unqdlphn/quirgs</code>
       <button
         class="copy-btn"
-        onclick="navigator.clipboard.writeText('/plugin marketplace add unqdlphn/quirgs'); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);"
+        onclick={`navigator.clipboard.writeText('/plugin marketplace add unqdlphn/quirgs'); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
       >
         Copy
       </button>
@@ -52,7 +52,7 @@ import NavBlock from "../../components/NavBlock.astro";
       <code>/plugin install quirgs-compliance@quirgs</code>
       <button
         class="copy-btn"
-        onclick="navigator.clipboard.writeText('/plugin install quirgs-compliance@quirgs'); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);"
+        onclick={`navigator.clipboard.writeText('/plugin install quirgs-compliance@quirgs'); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
       >
         Copy
       </button>
