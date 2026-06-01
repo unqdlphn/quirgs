@@ -63,6 +63,8 @@ Inside Claude Code, add the marketplace once, then install:
 > with the marketplace **name** suffix (`@quirgs`, the `name` field in
 > `marketplace.json`).
 
+> **Auto-update note:** Third-party marketplaces have auto-update disabled by default. To pull new skill versions after install, run `/plugin marketplace update quirgs`.
+
 The public [Gists](https://gist.github.com/unqdlphn) carry each `SKILL.md` for
 discovery, SEO, and read-only preview — they are **not** an install path, since
 a Gist cannot deliver a Skill's `references/` directory.

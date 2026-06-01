@@ -1,12 +1,12 @@
 ---
 // src/pages/skills/[slug].astro
-import { getCollection, render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import NavBlock from '../../components/NavBlock.astro';
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
 
 export async function getStaticPaths() {
-  const skills = await getCollection('skills');
-  return skills.map(entry => ({
+  const skills = await getCollection("skills");
+  return skills.map((entry) => ({
     params: { slug: entry.id },
     props: { entry },
   }));
@@ -15,11 +15,11 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split('T')[0];
+const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
 ---
 
-<BaseLayout 
-  title={`${entry.data.title} | Quirgs Skills`} 
+<BaseLayout
+  title={`${entry.data.title} | Quirgs Skills`}
   description={entry.data.tagline}
   terminalPath={`~/skills/${entry.id}`}
 >
@@ -28,13 +28,16 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split('T')[0];
 
   <!-- Back to skills listing -->
   <div class="line">
-    <span class="text-blue">&larr;</span>&nbsp;<a href="/skills/">back to skills</a>
+    <span class="text-blue">&larr;</span>&nbsp;<a href="/skills/"
+      >back to skills</a
+    >
   </div>
   <div class="line">&nbsp;</div>
 
   <!-- Cat README.md command -->
   <div class="line">
-    <span class="prompt">admin@quirgs</span><span class="path">~/skills</span><span class="text-bright">$</span> cat {entry.id}/README.md
+    <span class="prompt">admin@quirgs</span><span class="path">~/skills</span
+    ><span class="text-bright">$</span> cat {entry.id}/README.md
   </div>
   <div class="line">&nbsp;</div>
 
@@ -44,7 +47,9 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split('T')[0];
     <p class="tagline">{entry.data.tagline}</p>
     <div class="badges-row">
       <span class="badge version-badge">v{entry.data.version}</span>
-      <span class={`badge status-badge status-${entry.data.status}`}>[{entry.data.status}]</span>
+      <span class={`badge status-badge status-${entry.data.status}`}
+        >[{entry.data.status}]</span
+      >
     </div>
   </div>
 
@@ -55,44 +60,58 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split('T')[0];
 
   <!-- Metadata footer -->
   <div class="detail-footer">
-    <p><span class="label">FRAMEWORKS:</span> {entry.data.framework.join(', ')}</p>
-    <p><span class="label">TAGS:</span> {entry.data.tags.join(', ')}</p>
+    <p>
+      <span class="label">FRAMEWORKS:</span>
+      {entry.data.framework.join(", ")}
+    </p>
+    <p><span class="label">TAGS:</span> {entry.data.tags.join(", ")}</p>
     <p><span class="label">LAST UPDATED:</span> {lastUpdatedFormatted}</p>
   </div>
 
   <!-- Install block -->
-  {(entry.data.gistUrl || entry.data.marketplaceCmd || entry.data.installCmd) && (
-    <div class="install-block">
-      {entry.data.marketplaceCmd && (
-        <p class="install-cmd-row">
-          <span class="label">[STEP 1]</span>
-          <code>{entry.data.marketplaceCmd}</code>
-          <button
-            class="copy-btn"
-            onclick={`navigator.clipboard.writeText("${entry.data.marketplaceCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
-          >
-            Copy
-          </button>
+  {
+    (entry.data.gistUrl ||
+      entry.data.marketplaceCmd ||
+      entry.data.installCmd) && (
+      <div class="install-block">
+        {entry.data.marketplaceCmd && (
+          <p class="install-cmd-row">
+            <span class="label">[STEP 1]</span>
+            <code>{entry.data.marketplaceCmd}</code>
+            <button
+              class="copy-btn"
+              onclick={`navigator.clipboard.writeText("${entry.data.marketplaceCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
+            >
+              Copy
+            </button>
+          </p>
+        )}
+        {entry.data.installCmd && (
+          <p class="install-cmd-row">
+            <span class="label">[STEP 2]</span>
+            <code>{entry.data.installCmd}</code>
+            <button
+              class="copy-btn"
+              onclick={`navigator.clipboard.writeText("${entry.data.installCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
+            >
+              Copy
+            </button>
+          </p>
+        )}
+        {entry.data.gistUrl && (
+          <p>
+            <span class="label">[PREVIEW]</span>
+            <a href={entry.data.gistUrl} target="_blank" rel="noopener">
+              View source on Gist
+            </a>
+          </p>
+        )}
+        <p class="install-note">
+          <span class="text-yellow">[NOTE]&nbsp;</span> Auto-update is off by
+          default for third-party marketplaces. To pull new versions:&nbsp;
+          <code>/plugin marketplace update quirgs</code>
         </p>
-      )}
-      {entry.data.installCmd && (
-        <p class="install-cmd-row">
-          <span class="label">[STEP 2]</span>
-          <code>{entry.data.installCmd}</code>
-          <button
-            class="copy-btn"
-            onclick={`navigator.clipboard.writeText("${entry.data.installCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
-          >
-            Copy
-          </button>
-        </p>
-      )}
-      {entry.data.gistUrl && (
-        <p>
-          <span class="label">[PREVIEW]</span>
-          <a href={entry.data.gistUrl} target="_blank" rel="noopener">View source on Gist</a>
-        </p>
-      )}
-    </div>
-  )}
+      </div>
+    )
+  }
 </BaseLayout>
