@@ -12,6 +12,8 @@ description: >
   hitl-compliance-gate for a quick multi-framework sign-off check instead.
 ---
 
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install iso-42001-audit-prep@quirgs`
+
 # ISO/IEC 42001 Audit Prep
 
 A clause-by-clause readiness guide for ISO/IEC 42001:2023 — the international standard

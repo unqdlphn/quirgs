@@ -61,24 +61,36 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split('T')[0];
   </div>
 
   <!-- Install block -->
-  {(entry.data.gistUrl || entry.data.installCmd) && (
+  {(entry.data.gistUrl || entry.data.marketplaceCmd || entry.data.installCmd) && (
     <div class="install-block">
-      {entry.data.gistUrl && (
-        <p>
-          <span class="label">[INSTALL]</span>
-          <a href={entry.data.gistUrl} target="_blank" rel="noopener">Install from Gist</a>
+      {entry.data.marketplaceCmd && (
+        <p class="install-cmd-row">
+          <span class="label">[STEP 1]</span>
+          <code>{entry.data.marketplaceCmd}</code>
+          <button
+            class="copy-btn"
+            onclick={`navigator.clipboard.writeText("${entry.data.marketplaceCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
+          >
+            Copy
+          </button>
         </p>
       )}
       {entry.data.installCmd && (
         <p class="install-cmd-row">
-          <span class="label">[BUNDLE]</span>
+          <span class="label">[STEP 2]</span>
           <code>{entry.data.installCmd}</code>
-          <button 
-            class="copy-btn" 
+          <button
+            class="copy-btn"
             onclick={`navigator.clipboard.writeText("${entry.data.installCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
           >
             Copy
           </button>
+        </p>
+      )}
+      {entry.data.gistUrl && (
+        <p>
+          <span class="label">[PREVIEW]</span>
+          <a href={entry.data.gistUrl} target="_blank" rel="noopener">View source on Gist</a>
         </p>
       )}
     </div>

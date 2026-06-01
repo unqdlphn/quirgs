@@ -13,6 +13,8 @@ description: >
   after drafting before the notice is published.
 ---
 
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install ai-transparency-writer@quirgs`
+
 # AI Transparency Writer
 
 Drafts compliant, publication-ready transparency notices, model cards, and system
@@ -37,19 +39,19 @@ only for what's genuinely missing:
    Article 13, recommend running `eu-ai-act-classifier` first — Article 13 only applies
    to high-risk systems, and the obligations differ by role.
 
-If the framework is ambiguous, ask: *"Should I draft an EU AI Act Article 13 notice,
-a NIST-aligned model card, or both?"*
+If the framework is ambiguous, ask: _"Should I draft an EU AI Act Article 13 notice,
+a NIST-aligned model card, or both?"_
 
 ---
 
 ## Step 2 — Select Mode and Load References
 
-| Target framework | Load |
-|---|---|
-| EU AI Act Article 13 | `references/article-13-requirements.md` |
-| NIST AI RMF model card | `references/model-card-template.md` |
-| Both | Both files |
-| Ambiguous | Ask (see Step 1) |
+| Target framework       | Load                                    |
+| ---------------------- | --------------------------------------- |
+| EU AI Act Article 13   | `references/article-13-requirements.md` |
+| NIST AI RMF model card | `references/model-card-template.md`     |
+| Both                   | Both files                              |
+| Ambiguous              | Ask (see Step 1)                        |
 
 Also load `references/disclosure-examples.md` for language patterns and worked examples
 regardless of mode — it helps produce natural, accurate prose rather than boilerplate.
@@ -119,6 +121,7 @@ full prose for each section; do not leave sections blank.]
 ```
 
 **Drafting principles:**
+
 - Write in plain language accessible to affected individuals — not legal jargon
 - Be specific: generic boilerplate fails compliance reviews and erodes user trust
 - Where information is unknown, flag explicitly (e.g., "[ human oversight contact — to be confirmed ]") rather than omitting or writing vague filler
@@ -132,11 +135,13 @@ full prose for each section; do not leave sections blank.]
 After drafting, run a quick internal check:
 
 **For Article 13 notices:**
+
 - Verify all mandatory fields from `references/article-13-requirements.md` are present
 - Flag any field where user input was insufficient and a placeholder was used
 - Note whether the system's risk tier has been confirmed
 
 **For NIST model cards:**
+
 - Verify all sections from `references/model-card-template.md` are addressed
 - Flag any section left thin due to missing information
 

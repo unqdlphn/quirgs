@@ -15,6 +15,8 @@ description: >
   routes to the right stakeholders automatically.
 ---
 
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install incident-response-logger@quirgs`
+
 # Incident Response Logger
 
 Structures AI incident reports to align with NIST SP 800-61 response phases and EU AI

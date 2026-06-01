@@ -36,8 +36,12 @@ const skills = defineCollection({
     version: z.string(),
     lastUpdated: z.coerce.date(),
 
-    // Distribution — populated by sync-gists.yml on first push
+    // Distribution — hand-maintained (not auto-populated). sync-gists.yml only
+    // syncs SKILL.md to the Gist and updates skills/gist-map.json.
     gistUrl: z.string().url().optional(),
+    // Step 1 of the marketplace install: registers the quirgs marketplace
+    marketplaceCmd: z.string().optional(),
+    // Step 2 of the marketplace install: installs the plugin from it
     installCmd: z.string().optional(),
 
     // Search and discovery

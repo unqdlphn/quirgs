@@ -1,0 +1,67 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "quirgs",
+  "description": "Governance-first AI compliance skills for Claude, from quirgs.com.",
+  "owner": {
+    "name": "Quirgs",
+    "url": "https://quirgs.com"
+  },
+  "plugins": [
+    {
+      "name": "quirgs-compliance",
+      "description": "All seven governance-first AI compliance skills in one install: EU AI Act classification, NIST AI RMF checkpoints, ISO 42001 audit prep, HITL gating, PII exposure checks, incident response logging, and AI transparency writing.",
+      "source": "./plugins/quirgs-compliance",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/"
+    },
+    {
+      "name": "ai-transparency-writer",
+      "description": "Draft EU AI Act Article 13 transparency disclosures, user-facing AI notices, and model cards.",
+      "source": "./plugins/ai-transparency-writer",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/ai-transparency-writer/"
+    },
+    {
+      "name": "eu-ai-act-classifier",
+      "description": "Classify an AI system's risk tier under the EU AI Act and surface the legal obligations that apply.",
+      "source": "./plugins/eu-ai-act-classifier",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/eu-ai-act-classifier/"
+    },
+    {
+      "name": "hitl-compliance-gate",
+      "description": "Insert human-in-the-loop checkpoints into AI workflows and map them to EU AI Act, ISO 42001, and NIST AI RMF controls.",
+      "source": "./plugins/hitl-compliance-gate",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/hitl-compliance-gate/"
+    },
+    {
+      "name": "incident-response-logger",
+      "description": "Log and triage AI incidents against EU AI Act Article 62 reporting thresholds and NIST 800-61 response phases.",
+      "source": "./plugins/incident-response-logger",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/incident-response-logger/"
+    },
+    {
+      "name": "iso-42001-audit-prep",
+      "description": "Prepare for an ISO/IEC 42001 AI management system audit: clause coverage, Annex A controls, and evidence collection.",
+      "source": "./plugins/iso-42001-audit-prep",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/iso-42001-audit-prep/"
+    },
+    {
+      "name": "nist-ai-rmf-checkpoint",
+      "description": "Run an AI system through the NIST AI RMF 1.0 Govern, Map, Measure, and Manage functions and surface gaps.",
+      "source": "./plugins/nist-ai-rmf-checkpoint",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/nist-ai-rmf-checkpoint/"
+    },
+    {
+      "name": "pii-exposure-checker",
+      "description": "Audit AI data pipelines for PII exposure under GDPR and EU AI Act Article 10, with risk ratings and remediation actions.",
+      "source": "./plugins/pii-exposure-checker",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/pii-exposure-checker/"
+    }
+  ]
+}
