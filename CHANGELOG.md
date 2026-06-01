@@ -13,20 +13,28 @@ _No pending changes._
 
 ---
 
-## Plugin Packaging — Distribution Model
+## Plugin Packaging — Marketplace Distribution
 
 **Branch:** `feat/plugin-packaging`
 
-Established `.plugin` files on GitHub Releases as the functional install mechanism, fixing the gap where Gist installs strip each skill's `references/` directory.
+Made the 7 compliance skills installable via a Claude Code plugin marketplace, fixing the gap where Gist installs (and the abandoned `.plugin`/Releases approach) could not deliver each skill's runtime `references/` directory. Raw `.plugin` zips were rejected by Claude with "Plugin validation failed" — Claude installs plugins only from a git-repo marketplace, so the model was redesigned around `marketplace.json` + a committed plugin tree.
 
 ### Added
 
-- 7 individual `.plugin` archives (zip preserving `SKILL.md` + `references/`) plus `quirgs-compliance-bundle.plugin` (all 7 under slug subdirectories), built into the gitignored `dist/plugins/` and published as GitHub Release `v1.0.0` assets.
-- Locked distribution model: **Gist** (`SKILL.md` only) = discovery / SEO / read-only preview; **individual `.plugin`** = single-skill install with full `references/`; **bundle `.plugin`** = all 7 in one install. Install URL format: `https://github.com/unqdlphn/quirgs/releases/download/v{version}/{slug}.plugin`.
+- `.claude-plugin/marketplace.json` (marketplace name `quirgs`) at the repo root, listing one plugin: `quirgs-compliance`.
+- `plugins/quirgs-compliance/` — a Claude Code plugin (`.claude-plugin/plugin.json` + `skills/<slug>/{SKILL.md,references/}` for all 7 skills). The full `references/` are committed so they survive install. Verified with `claude plugin validate` and a real local install/uninstall round-trip.
+- `marketplaceCmd` field in the skills content schema (`content.config.ts` + `keystatic.config.ts`) for the marketplace-add step, rendered as a `[STEP 1]` row on each skill detail page.
+- Locked distribution model: **Gist** (`SKILL.md` only) = discovery / SEO / read-only preview; **marketplace plugin** (`quirgs-compliance`) = functional install with full `references/`, all 7 skills. Install: `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`.
 
 ### Changed
 
-- `installCmd` in all 7 `src/content/skills/{slug}.mdx` repointed from the Gist URL to the `v1.0.0` Release `.plugin` asset. `gistUrl` retained — Gists stay as preview/SEO.
+- `installCmd` in all 7 `src/content/skills/{slug}.mdx` now `/plugin install quirgs-compliance@quirgs`; each also gains `marketplaceCmd`. `gistUrl` retained (relabeled `[PREVIEW]` in the UI).
+- Install line in all 7 Gist-source `skills/{slug}/SKILL.md` points at the marketplace commands (propagates to the Gists via `sync-gists.yml`).
+- Skill detail install block (`src/pages/skills/[slug].astro`) renders two copy-able steps (`[STEP 1]` marketplace add, `[STEP 2]` install) plus a `[PREVIEW]` Gist link.
+
+### Removed
+
+- Abandoned the `.plugin`-on-GitHub-Releases approach (draft Release `v1.0.0` deleted). `.plugin` zips are not a valid Claude install format.
 
 ---
 
