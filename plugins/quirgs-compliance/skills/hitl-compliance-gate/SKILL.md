@@ -13,8 +13,6 @@ description: >
   human reviewer can work through before approving.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
-
 # HITL Compliance Gate
 
 A reusable, plug-in compliance checkpoint for any AI workflow. When a human is about to
@@ -121,7 +119,7 @@ After the human completes the checklist:
 
 ## Key Principles
 
-- **Advisory only** — Outputs are for informational and governance support purposes only. They do not constitute legal, regulatory, or compliance advice and are not a substitute for qualified legal counsel, a licensed compliance professional, or a certified auditor.
+- **Advisory only** — All outputs produced by this skill are for informational and governance support purposes only. They do not constitute legal advice, regulatory advice, or a formal compliance determination. No output from this skill should be relied upon as a substitute for advice from qualified legal counsel, a licensed compliance professional, or a certified auditor with jurisdiction-specific expertise.
 - **Never skip the gate** if the user invokes it — even under time pressure.
 - **Scope questions to the stage** — don't ask deployment questions during design review.
 - **Be concise but complete** — 8–15 checklist items is the target range. More than 20 becomes noise.

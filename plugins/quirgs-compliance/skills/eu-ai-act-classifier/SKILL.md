@@ -14,8 +14,6 @@ description: >
   primary need.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
-
 # EU AI Act Classifier
 
 Determines an AI system's risk tier under EU Regulation 2024/1689 (the EU AI Act),
@@ -44,21 +42,17 @@ If critical information is missing, ask before classifying. A wrong tier is wors
 Work through the classification logic in order. The first match wins.
 
 ### 2a. Check for Prohibited Practices (Article 5)
-
 Load `references/prohibited.md`. If the system matches any prohibited practice → output
 **PROHIBITED** and stop. Do not proceed to further classification.
 
 ### 2b. Check for High-Risk Classification (Annex III + Article 6)
-
 Load `references/high-risk.md`. Check both pathways:
-
 - **Article 6(1)** — safety component of a product regulated under EU harmonisation legislation (Annex I)
 - **Article 6(2) / Annex III** — standalone high-risk AI in one of eight listed domains
 
 If either pathway matches → classify as **HIGH-RISK**.
 
 ### 2c. Check for General-Purpose AI (GPAI) (Articles 51–56)
-
 Load `references/gpai.md`. If the system is a general-purpose AI model (trained on broad
 data, usable across many tasks) → classify as **GPAI** and determine if it is a
 **GPAI model with systemic risk** (≥10^25 FLOPs training compute or designated by Commission).
@@ -67,12 +61,10 @@ GPAI classification can overlap with other tiers — a GPAI model embedded in a 
 system carries both sets of obligations.
 
 ### 2d. Check for Limited Risk (Articles 50)
-
 If the system involves: chatbots, deepfakes, emotion recognition, or biometric categorisation
 → classify as **LIMITED RISK** (transparency obligations apply).
 
 ### 2e. Default: Minimal Risk
-
 If none of the above apply → classify as **MINIMAL RISK** (no mandatory obligations,
 voluntary codes of conduct encouraged).
 
@@ -149,7 +141,6 @@ RECOMMENDED NEXT STEPS
 ```
 
 Reference files for obligations:
-
 - `references/obligations-high-risk.md`
 - `references/obligations-gpai.md`
 - `references/obligations-limited-risk.md`

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "quirgs",
+  "description": "Governance-first AI compliance skills for Claude, from quirgs.com.",
+  "owner": {
+    "name": "Quirgs",
+    "url": "https://quirgs.com"
+  },
+  "plugins": [
+    {
+      "name": "quirgs-compliance",
+      "description": "Seven governance-first AI compliance skills bundled together: EU AI Act classification, NIST AI RMF checkpoints, ISO 42001 audit prep, HITL gating, PII exposure checks, incident response logging, and AI transparency writing.",
+      "source": "./plugins/quirgs-compliance",
+      "category": "security",
+      "homepage": "https://quirgs.com/skills/"
+    }
+  ]
+}

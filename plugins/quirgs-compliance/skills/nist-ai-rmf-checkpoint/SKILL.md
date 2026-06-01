@@ -14,8 +14,6 @@ description: >
   rather than a quick multi-framework sign-off gate.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
-
 # NIST AI RMF Checkpoint
 
 A guided, function-by-function walkthrough of the NIST AI Risk Management Framework
@@ -23,7 +21,6 @@ A guided, function-by-function walkthrough of the NIST AI Risk Management Framew
 actions scoped to the current lifecycle stage.
 
 > **Current NIST AI Landscape (updated May 2026):**
->
 > - The **AI Safety Institute** has been renamed the **Center for AI Standards and Innovation (CAISI)**.
 > - The **AI Safety Institute Consortium** has been renamed the **NIST Artificial Intelligence Consortium**.
 > - NIST has formally established six task groups under the consortium: Testing and Evaluation; Risks and Impacts; Evaluation Science and Measurement; Bias and Limitations of Generative Tools; **Documentation Cards**; and Chemical and Biological Security.
@@ -49,14 +46,14 @@ Use answers to scope which functions to run and how deep to go.
 
 ## Step 2 — Select Scope
 
-| User says…                      | Run these functions                                                                 |
-| ------------------------------- | ----------------------------------------------------------------------------------- |
-| "Full assessment" or "all four" | GOVERN → MAP → MEASURE → MANAGE (in order)                                          |
-| "We're just starting out"       | GOVERN + MAP                                                                        |
-| "We're about to deploy"         | MEASURE + MANAGE                                                                    |
-| "Post-deployment review"        | MANAGE (monitoring subcategories)                                                   |
-| Specific function named         | That function only                                                                  |
-| Ambiguous                       | Ask: _"Should I run a full four-function assessment, or focus on a specific area?"_ |
+| User says… | Run these functions |
+|---|---|
+| "Full assessment" or "all four" | GOVERN → MAP → MEASURE → MANAGE (in order) |
+| "We're just starting out" | GOVERN + MAP |
+| "We're about to deploy" | MEASURE + MANAGE |
+| "Post-deployment review" | MANAGE (monitoring subcategories) |
+| Specific function named | That function only |
+| Ambiguous | Ask: *"Should I run a full four-function assessment, or focus on a specific area?"* |
 
 ---
 
@@ -66,7 +63,6 @@ For each selected function, load the corresponding reference file and generate a
 **Function Assessment Block** using the format below.
 
 Reference files:
-
 - `references/govern.md`
 - `references/map.md`
 - `references/measure.md`
