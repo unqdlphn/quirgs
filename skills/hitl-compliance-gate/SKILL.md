@@ -13,7 +13,7 @@ description: >
   human reviewer can work through before approving.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install hitl-compliance-gate@quirgs`
 
 # HITL Compliance Gate
 

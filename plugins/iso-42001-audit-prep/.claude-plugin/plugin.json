@@ -1,0 +1,12 @@
+{
+  "name": "iso-42001-audit-prep",
+  "description": "Prepare for an ISO/IEC 42001 AI management system audit: clause coverage, Annex A controls, and evidence collection. Ships with clause, Annex A, and evidence-guide reference material.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Quirgs",
+    "url": "https://quirgs.com"
+  },
+  "homepage": "https://quirgs.com/skills/iso-42001-audit-prep/",
+  "repository": "https://github.com/unqdlphn/quirgs",
+  "license": "MIT"
+}

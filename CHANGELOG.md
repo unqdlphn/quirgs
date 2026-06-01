@@ -36,6 +36,16 @@ Made the 7 compliance skills installable via a Claude Code plugin marketplace, f
 
 - Abandoned the `.plugin`-on-GitHub-Releases approach (draft Release `v1.0.0` deleted). `.plugin` zips are not a valid Claude install format.
 
+### Added (individual skill plugins)
+
+- 7 single-skill plugins under `plugins/<slug>/` (`.claude-plugin/plugin.json` + self-contained `skills/<slug>/{SKILL.md,references/}`), so each skill can be installed on its own: `/plugin install <slug>@quirgs`. `marketplace.json` now lists 8 plugins (the bundle + 7 individuals). Validated and round-trip tested via `claude plugin install`.
+
+### Changed (UX copy for the marketplace model)
+
+- Per-skill `installCmd` in each `src/content/skills/{slug}.mdx` now installs that skill's own plugin (`/plugin install <slug>@quirgs`); the Gist-source `skills/{slug}/SKILL.md` install lines match. The bundle install (`quirgs-compliance@quirgs`) is surfaced on `/bundle/`.
+- `HelpModal` (`src/components/HelpModal.astro`) rewritten: the "WHAT IS A QUIRG?" and "INSTALLING A SKILL" sections now describe the two-step marketplace flow instead of the abandoned `.plugin`/Cowork copy-paste model.
+- `/bundle/` page (`src/pages/bundle/index.astro`) install block replaced the fake `.plugin` download + Cowork steps with the `[STEP 1]`/`[STEP 2]` marketplace commands.
+
 ---
 
 ## Gist Sync — Live Drop

@@ -1,0 +1,12 @@
+{
+  "name": "eu-ai-act-classifier",
+  "description": "Classify an AI system's risk tier under the EU AI Act and surface the legal obligations that apply. Ships with prohibited, high-risk, limited-risk, and GPAI reference material.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Quirgs",
+    "url": "https://quirgs.com"
+  },
+  "homepage": "https://quirgs.com/skills/eu-ai-act-classifier/",
+  "repository": "https://github.com/unqdlphn/quirgs",
+  "license": "MIT"
+}

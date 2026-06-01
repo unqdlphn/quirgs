@@ -14,7 +14,7 @@ description: >
   rather than a quick multi-framework sign-off gate.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install nist-ai-rmf-checkpoint@quirgs`
 
 # NIST AI RMF Checkpoint
 

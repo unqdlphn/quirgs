@@ -12,7 +12,7 @@ description: >
   hitl-compliance-gate for a quick multi-framework sign-off check instead.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install iso-42001-audit-prep@quirgs`
 
 # ISO/IEC 42001 Audit Prep
 

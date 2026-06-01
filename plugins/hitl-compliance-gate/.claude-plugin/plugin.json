@@ -1,0 +1,12 @@
+{
+  "name": "hitl-compliance-gate",
+  "description": "Insert human-in-the-loop checkpoints into AI workflows and map them to EU AI Act, ISO 42001, and NIST AI RMF controls. Ships with per-framework reference material.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Quirgs",
+    "url": "https://quirgs.com"
+  },
+  "homepage": "https://quirgs.com/skills/hitl-compliance-gate/",
+  "repository": "https://github.com/unqdlphn/quirgs",
+  "license": "MIT"
+}

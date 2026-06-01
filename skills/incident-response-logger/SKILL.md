@@ -15,7 +15,7 @@ description: >
   routes to the right stakeholders automatically.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install incident-response-logger@quirgs`
 
 # Incident Response Logger
 

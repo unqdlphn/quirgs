@@ -14,7 +14,7 @@ description: >
   for each finding — not just a list of what was found.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install pii-exposure-checker@quirgs`
 
 # PII Exposure Checker
 

@@ -13,7 +13,7 @@ description: >
   after drafting before the notice is published.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install ai-transparency-writer@quirgs`
 
 # AI Transparency Writer
 

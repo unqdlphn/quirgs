@@ -14,7 +14,7 @@ description: >
   primary need.
 ---
 
-> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install quirgs-compliance@quirgs`
+> **Install:** `/plugin marketplace add unqdlphn/quirgs` then `/plugin install eu-ai-act-classifier@quirgs`
 
 # EU AI Act Classifier
 

@@ -1,0 +1,12 @@
+{
+  "name": "pii-exposure-checker",
+  "description": "Audit AI data pipelines for PII exposure under GDPR and EU AI Act Article 10, with risk ratings and remediation actions. Ships with PII category and remediation reference material.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Quirgs",
+    "url": "https://quirgs.com"
+  },
+  "homepage": "https://quirgs.com/skills/pii-exposure-checker/",
+  "repository": "https://github.com/unqdlphn/quirgs",
+  "license": "MIT"
+}
