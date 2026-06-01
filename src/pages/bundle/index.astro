@@ -36,15 +36,27 @@ import NavBlock from "../../components/NavBlock.astro";
     >
   </div>
   <div class="line">&nbsp;</div>
-  <div class="line">
-    <span class="text-bright">[STEP 1]</span>&nbsp;&nbsp;&nbsp;<code
-      >/plugin marketplace add unqdlphn/quirgs</code
-    >
-  </div>
-  <div class="line">
-    <span class="text-bright">[STEP 2]</span>&nbsp;&nbsp;&nbsp;<code
-      >/plugin install quirgs-compliance@quirgs</code
-    >
+  <div class="install-block">
+    <p class="install-cmd-row">
+      <span class="label">[STEP 1]</span>
+      <code>/plugin marketplace add unqdlphn/quirgs</code>
+      <button
+        class="copy-btn"
+        onclick="navigator.clipboard.writeText('/plugin marketplace add unqdlphn/quirgs'); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);"
+      >
+        Copy
+      </button>
+    </p>
+    <p class="install-cmd-row">
+      <span class="label">[STEP 2]</span>
+      <code>/plugin install quirgs-compliance@quirgs</code>
+      <button
+        class="copy-btn"
+        onclick="navigator.clipboard.writeText('/plugin install quirgs-compliance@quirgs'); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);"
+      >
+        Copy
+      </button>
+    </p>
   </div>
   <div class="line">&nbsp;</div>
   <div class="line">
