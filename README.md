@@ -31,13 +31,41 @@ three formats:
 
 | Format | What it is |
 | --- | --- |
-| **Skill** | Installable Claude agent skill in `.plugin` format. Cowork-compatible. Executes a governance workflow inside an AI environment. |
+| **Skill** | Installable Claude Code skill, distributed through the `quirgs` plugin marketplace. Executes a governance workflow inside an AI environment. |
 | **Guide** | Structured how-to reference. Teaches a principle, standard, or implementation pattern in depth. |
 | **Tool** | Reusable SOP, workflow, or automation system. Operational — meant to be run, not just read. |
 
 The current production catalog is seven Skills covering the EU AI Act, NIST AI
 RMF, ISO/IEC 42001, HITL gating, PII exposure, incident response, and AI
 transparency disclosure. See [`src/content/skills/`](src/content/skills/).
+
+---
+
+## Installing the skills
+
+The Skills are distributed as a [Claude Code plugin
+marketplace](https://code.claude.com/docs/en/plugin-marketplaces). The
+[`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json) at the repo
+root lists eight plugins — the seven-skill `quirgs-compliance` bundle plus one
+single-skill plugin per Skill — and each plugin's source lives under
+[`plugins/`](plugins/) with its full `SKILL.md` and `references/` committed so
+they survive install.
+
+Inside Claude Code, add the marketplace once, then install:
+
+```
+/plugin marketplace add unqdlphn/quirgs
+/plugin install quirgs-compliance@quirgs        # all seven skills
+/plugin install eu-ai-act-classifier@quirgs     # or a single skill
+```
+
+> The marketplace is added by its repo (`unqdlphn/quirgs`) but plugins install
+> with the marketplace **name** suffix (`@quirgs`, the `name` field in
+> `marketplace.json`).
+
+The public [Gists](https://gist.github.com/unqdlphn) carry each `SKILL.md` for
+discovery, SEO, and read-only preview — they are **not** an install path, since
+a Gist cannot deliver a Skill's `references/` directory.
 
 ---
 
@@ -78,6 +106,11 @@ quirgs/
 │   ├── content/
 │   │   └── skills/             # 7 .mdx skill entries — source of truth
 │   └── content.config.ts       # Zod schema for the skills collection
+├── .claude-plugin/
+│   └── marketplace.json        # Plugin marketplace catalog (name: quirgs)
+├── plugins/                    # Installable Claude Code plugins
+│   ├── quirgs-compliance/      # Bundle — all 7 skills
+│   └── <slug>/                 # One single-skill plugin per Skill
 ├── public/
 │   ├── assets/                 # Logos, favicon assets
 │   ├── css/                    # Static stylesheets
@@ -104,7 +137,7 @@ quirgs/
 | `/` | [src/pages/index.astro](src/pages/index.astro) | Animated terminal boot sequence. JS-injected DOM, no CSS keyframe drift-ins. Lists the seven Skills and links to bundle, guides, and skill detail pages. |
 | `/skills/` | [src/pages/skills/index.astro](src/pages/skills/index.astro) | Skill registry. Reads the `skills` content collection, sorts by drop order, renders an aligned `ls -la` listing. |
 | `/skills/[slug]/` | [src/pages/skills/[slug].astro](src/pages/skills/[slug].astro) | Per-skill detail page rendered from MDX with badges, install block, and interop references. |
-| `/bundle/` | [src/pages/bundle/index.astro](src/pages/bundle/index.astro) | Compliance bundle install page (`quirgs-compliance`, 7 Skills). |
+| `/bundle/` | [src/pages/bundle/index.astro](src/pages/bundle/index.astro) | Compliance bundle install page — marketplace install commands for `quirgs-compliance` (7 Skills). |
 | `/guides/` | [src/pages/guides/index.astro](src/pages/guides/index.astro) | Index of legacy V1 guides, served verbatim from `/public/guides/`. URLs preserved for SEO. |
 | `/transparency/` | [src/pages/transparency.astro](src/pages/transparency.astro) | AI transparency notice — disclosure of AI-generated content, AI-assisted development, and platform governance posture. |
 | `/support/` | [src/pages/support.astro](src/pages/support.astro) | GitHub Issues + social channels. |
@@ -123,10 +156,11 @@ typed frontmatter contract:
 - **Identity** — `title`, `slug`, `tagline`
 - **Governance structure** — `pillar` (Inventory, Checkpoints, Standards
   Alignment), `framework[]`, `interoperates_with[]`
-- **Cowork integration** — `triggers[]`, `example_prompts[]`
+- **Invocation** — `triggers[]`, `example_prompts[]`
 - **Publication state** — `status` (`live` / `draft` / `deprecated`), `version`,
   `lastUpdated`
-- **Distribution** — `gistUrl`, `installCmd` (populated by `sync-gists.yml`)
+- **Distribution** — `gistUrl` (read-only Gist preview), `marketplaceCmd` and
+  `installCmd` (the two-step `/plugin` install rendered on the detail page)
 - **Discovery** — `tags[]`
 
 [Keystatic](keystatic.config.ts) is wired against the same files with GitHub
@@ -159,9 +193,10 @@ preflight, JSON response helpers, and table bootstrapping on first hit.
 
 [`.github/workflows/sync-gists.yml`](.github/workflows/sync-gists.yml) watches
 `skills/*/SKILL.md` on `main` and publishes each changed skill to its
-corresponding public Gist via `.github/scripts/sync-gists.js`. The Gist URL and
-install command are then surfaced in the skill's MDX frontmatter for the site
-to render.
+corresponding public Gist via `.github/scripts/sync-gists.js`, updating
+[`skills/gist-map.json`](skills/gist-map.json) when a new Gist is created. The
+`gistUrl`, `marketplaceCmd`, and `installCmd` fields in each skill's MDX
+frontmatter are maintained by hand, not auto-populated by this workflow.
 
 Cloudflare builds the Astro site on push and posts a preview URL per branch.
 PR validation against the preview is documented in
@@ -214,9 +249,9 @@ are in `brand/style guide/Quirgs Brand Style Guide.md`.
 ## Working in this repo
 
 - `main` is production. Cloudflare deploys it on push.
-- `v2` is the active integration branch for the V2 Astro rebuild.
-- Feature work branches off `v2` as `feat/<scope>`. See `_v2/` for the build
-  plan, architecture notes, and per-feature handoffs.
+- Feature work branches off `main` as `feat/<scope>` and PRs back to `main`.
+  Each `feat/*` branch gets its own Cloudflare preview URL — validate there,
+  never against production. See `_v2/` for build plans and handoffs.
 - HITL review is required at every stage where AI output influences a
   published deliverable. No AI-generated code or content reaches `main` without
   explicit human sign-off.
