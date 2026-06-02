@@ -2,6 +2,8 @@
 // src/pages/privacy.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
+
+const effectiveDate = "June 2, 2026";
 ---
 
 <BaseLayout
@@ -22,13 +24,136 @@ import NavBlock from "../components/NavBlock.astro";
     <p class="tagline">How we handle information on quirgs.com.</p>
   </div>
 
-  <div class="archive-note">
-    <strong class="text-yellow">[PLACEHOLDER]</strong>&nbsp; The full privacy
-    policy is still being drafted. The site is a static registry of open-source
-    AI governance skills and does not collect personal data or set tracking
-    cookies. Cloudflare Web Analytics is in use. It collects anonymous,
-    aggregated page view data. No cookies are set. No personally identifiable
-    information is collected. Data is processed by Cloudflare, Inc.
+  <div class="terminal-body" style="padding: 0;">
+    <p><strong class="text-bright">Effective date:</strong> {effectiveDate}</p>
+
+    <h2>1. Who we are</h2>
+    <p>
+      Quirgs (<strong class="text-bright">quirgs.com</strong>) is a registry of
+      AI governance skills and reference guides. The site is operated as a sole
+      proprietorship. Contact: <a href="/support/">/support/</a>.
+    </p>
+
+    <h2>2. What we collect</h2>
+    <p>
+      We do not collect personal data through forms, accounts, or sign-ups.
+      quirgs.com has no authentication layer and no user-submitted content.
+    </p>
+    <p>
+      We do collect anonymous, aggregated usage data through the analytics tools
+      described in Section 4. This data cannot be used to identify you
+      personally.
+    </p>
+
+    <h2>3. Cookies</h2>
+    <p>
+      The following cookies may be set when you visit quirgs.com. All are
+      functional or analytics in nature. No advertising or cross-site tracking
+      cookies are set.
+    </p>
+
+    <table class="cookie-table">
+      <thead>
+        <tr>
+          <th>Cookie</th>
+          <th>Provider</th>
+          <th>Purpose</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>_ga</code></td>
+          <td>Google Analytics 4</td>
+          <td>Registers a unique ID to generate statistical data on how you use the site.</td>
+          <td>2 years</td>
+        </tr>
+        <tr>
+          <td><code>_ga_&lt;ID&gt;</code></td>
+          <td>Google Analytics 4</td>
+          <td>Used by Google Analytics to persist session state.</td>
+          <td>2 years</td>
+        </tr>
+        <tr>
+          <td><code>__cf_bm</code></td>
+          <td>Cloudflare</td>
+          <td>Bot management. Distinguishes legitimate visitors from automated traffic.</td>
+          <td>30 minutes</td>
+        </tr>
+        <tr>
+          <td><code>_cfuvid</code></td>
+          <td>Cloudflare</td>
+          <td>Rate limiting and abuse prevention at the network edge.</td>
+          <td>Session</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>
+      Google Analytics data is processed by Google LLC under Google's privacy
+      policy (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>).
+      Cloudflare cookies are set by Cloudflare, Inc. and governed by Cloudflare's
+      privacy policy (<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy/</a>).
+    </p>
+    <p>
+      Cloudflare Web Analytics is also active on this site. Unlike traditional
+      analytics, it does not set cookies or collect personal data — it uses
+      edge-side aggregation only.
+    </p>
+
+    <h2>4. Analytics</h2>
+    <p>
+      We use two analytics tools to understand site usage:
+    </p>
+    <p>
+      <strong class="text-bright">Google Analytics 4</strong> — Collects
+      anonymized page view, session, and interaction data. IP addresses are
+      anonymized. Data is retained for 14 months. You can opt out via the
+      <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.
+    </p>
+    <p>
+      <strong class="text-bright">Cloudflare Web Analytics</strong> — A
+      privacy-first, cookieless analytics tool. Collects aggregate page view
+      data at the network edge. No personal data or cookies are used.
+    </p>
+    <p>
+      This site is also registered with <strong class="text-bright">Google Search Console</strong>,
+      which provides search performance data (e.g., which queries surface
+      quirgs.com in Google Search). Search Console does not set cookies on your
+      browser — it only processes data on Google's servers.
+    </p>
+
+    <h2>5. Third-party services</h2>
+    <p>
+      Skills distributed through quirgs.com link to external sources (GitHub
+      Gists). Clicking those links takes you off quirgs.com and into GitHub's
+      privacy policy. We have no control over data collected by third-party
+      sites.
+    </p>
+
+    <h2>6. Data retention</h2>
+    <p>
+      We do not store personal data on our own servers. Google Analytics data
+      is retained for 14 months per Google's default setting. Cloudflare Web
+      Analytics data is retained per Cloudflare's standard policy.
+    </p>
+
+    <h2>7. Your rights</h2>
+    <p>
+      If you are located in the European Economic Area, UK, or California, you
+      may have rights to access, correct, or delete data held about you under
+      GDPR, UK GDPR, or CCPA. Because we do not directly store personal data,
+      requests relating to Google Analytics data should be directed to Google.
+      Contact us at <a href="/support/">/support/</a> with any questions.
+    </p>
+
+    <h2>8. Changes to this policy</h2>
+    <p>
+      We may update this policy as our analytics tooling or data practices
+      change. The effective date at the top will reflect the most recent
+      revision. Continued use of quirgs.com after an update constitutes
+      acceptance of the revised policy.
+    </p>
   </div>
 
   <div class="line">&nbsp;</div>
@@ -36,3 +161,47 @@ import NavBlock from "../components/NavBlock.astro";
     Questions? See <a href="/support/">/support/</a>.
   </div>
 </BaseLayout>
+
+<style>
+  .cookie-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px 0;
+    font-size: 0.85rem;
+  }
+
+  .cookie-table th,
+  .cookie-table td {
+    border: 1px solid var(--term-border);
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .cookie-table th {
+    color: var(--text-bright);
+    background: rgba(255, 255, 255, 0.03);
+    font-weight: bold;
+  }
+
+  .cookie-table td code {
+    color: var(--accent-green);
+    background: #09090b;
+    padding: 1px 5px;
+    border-radius: 3px;
+    border: 1px solid var(--term-border);
+    font-family: inherit;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 600px) {
+    .cookie-table {
+      font-size: 0.78rem;
+    }
+
+    .cookie-table th,
+    .cookie-table td {
+      padding: 6px 8px;
+    }
+  }
+</style>
