@@ -492,5 +492,23 @@ const { title, description, terminalPath = "~" } = Astro.props;
       </div>
     </main>
     <HelpModal />
+
+    <script>
+      // Delegated copy-to-clipboard for [data-copy] buttons.
+      // Replaces inline onclick handlers so the CSP needs no 'unsafe-inline'
+      // / 'unsafe-hashes' for script-src.
+      document.addEventListener("click", (event) => {
+        const target = event.target as HTMLElement;
+        const btn = target.closest<HTMLButtonElement>(".copy-btn[data-copy]");
+        if (!btn) return;
+        const text = btn.dataset.copy ?? "";
+        navigator.clipboard.writeText(text);
+        const original = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => {
+          btn.textContent = original;
+        }, 2000);
+      });
+    </script>
   </body>
 </html>

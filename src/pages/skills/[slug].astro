@@ -78,10 +78,7 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
           <p class="install-cmd-row">
             <span class="label">[STEP 1]</span>
             <code>{entry.data.marketplaceCmd}</code>
-            <button
-              class="copy-btn"
-              onclick={`navigator.clipboard.writeText("${entry.data.marketplaceCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
-            >
+            <button class="copy-btn" data-copy={entry.data.marketplaceCmd}>
               Copy
             </button>
           </p>
@@ -90,10 +87,7 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
           <p class="install-cmd-row">
             <span class="label">[STEP 2]</span>
             <code>{entry.data.installCmd}</code>
-            <button
-              class="copy-btn"
-              onclick={`navigator.clipboard.writeText("${entry.data.installCmd.replace(/"/g, '\\"')}"); const btn = this; btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 2000);`}
-            >
+            <button class="copy-btn" data-copy={entry.data.installCmd}>
               Copy
             </button>
           </p>
