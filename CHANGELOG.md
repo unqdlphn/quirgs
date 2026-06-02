@@ -13,6 +13,34 @@ _No pending changes._
 
 ---
 
+## CSP Tightening — Drop `'unsafe-inline'`
+
+**Branch:** `feat/csp-tighten` — PR #46 (2026-06-01)
+
+Replaced the temporary `script-src`/`style-src` `'unsafe-inline'` allowances (originally needed for the JS-injected terminal boot animation) with a hash-pinned, `self`-only Content-Security-Policy in `public/_headers`. Validated against the Cloudflare branch preview: site, skills + copy buttons, and legacy guides all load and function, with zero CSP violations in the devtools console.
+
+### Added
+
+- `public/_headers` — strict CSP for the main site: `script-src 'self'` + SHA-256 hashes of the three Astro-bundled inline scripts (HelpModal, landing terminal boot, delegated copy-to-clipboard) + `static.cloudflareinsights.com`; `style-src 'self'`; `connect-src 'self' https://cloudflareinsights.com` (Cloudflare Web Analytics beacon); plus `frame-ancestors 'none'`, `base-uri 'self'`, `form-action 'self'`, `object-src 'none'`, `upgrade-insecure-requests`. Hash-regeneration steps are documented inline.
+- Delegated copy-to-clipboard listener in `src/layouts/BaseLayout.astro` (replaces inline `onclick` handlers, which can't be hashed without `'unsafe-hashes'`).
+
+### Changed
+
+- `astro.config.mjs` — `build.inlineStylesheets: 'never'` (all component CSS emitted as external `'self'` stylesheets instead of inline `<style>`); `markdown.syntaxHighlight: false` (default Shiki emitted an inline `style=` on `<pre>`; all skill code fences are plaintext, so nothing is lost).
+- `src/pages/bundle/index.astro` and `src/pages/skills/[slug].astro` — copy buttons use `[data-copy]` attributes instead of inline `onclick` handlers.
+- `src/pages/index.astro` — removed the runtime-injected `style="font-weight: bold;"` fragments so `style-src 'self'` fires no violations; boot sequence content, order, and timing are unchanged.
+
+### Removed
+
+- Redundant `is:inline` footer-year script in `src/components/Footer.astro` (the year is already rendered at build time).
+
+### Notes
+
+- Legacy `/guides/*` keep their own inline scripts/styles; the strict policy is detached there (`! Content-Security-Policy`) so Cloudflare's `_headers` comma-join doesn't intersect it onto those pages and break them.
+- The three `sha256` hashes are tied to the exact bundled inline-script bytes — recompute them if a bundled script changes or Astro/Vite is bumped.
+
+---
+
 ## Plugin Packaging — Marketplace Distribution
 
 **Branch:** `feat/plugin-packaging`
