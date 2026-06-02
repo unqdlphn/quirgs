@@ -31,3 +31,4 @@ pnpm-debug.log*
 # cowork / claude local session files
 .claude/
 /CLAUDE.md
+claude_expertise_report.docx
