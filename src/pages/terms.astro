@@ -2,6 +2,8 @@
 // src/pages/terms.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
+
+const effectiveDate = "June 2, 2026";
 ---
 
 <BaseLayout
@@ -22,12 +24,102 @@ import NavBlock from "../components/NavBlock.astro";
     <p class="tagline">Conditions for using quirgs.com and its skills.</p>
   </div>
 
-  <div class="archive-note">
-    <strong class="text-yellow">[PLACEHOLDER]</strong>&nbsp; Full terms are
-    still being drafted. In the meantime: the skills published here are provided
-    as-is, without warranty, for evaluation and integration into your own AI
-    governance workflows. Refer to each skill&rsquo;s license (see its Gist) for
-    redistribution terms.
+  <div class="terminal-body" style="padding: 0;">
+    <p><strong class="text-bright">Effective date:</strong> {effectiveDate}</p>
+
+    <h2>1. Acceptance</h2>
+    <p>
+      By accessing or using quirgs.com, you agree to these Terms of Service. If
+      you do not agree, do not use this site.
+    </p>
+
+    <h2>2. What Quirgs provides</h2>
+    <p>
+      Quirgs is a registry of AI governance skills, guides, and tools. Content
+      is provided for informational and integration purposes. Skills published
+      here are designed for use with compatible AI agent platforms (e.g.,
+      Claude, Cowork).
+    </p>
+    <p>
+      Nothing on quirgs.com constitutes legal, compliance, or regulatory advice.
+      Governance skills are reference implementations — you are responsible for
+      validating their suitability for your specific regulatory context before
+      deploying them in production.
+    </p>
+
+    <h2>3. Use of the site</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>Scrape, mirror, or systematically copy content without permission.</li>
+      <li>Use the site in any way that violates applicable law or regulation.</li>
+      <li>Attempt to reverse-engineer, disable, or interfere with site infrastructure.</li>
+      <li>Represent Quirgs skills as your own original work for commercial redistribution without modification.</li>
+    </ul>
+
+    <h2>4. Skill licenses</h2>
+    <p>
+      Each skill published on quirgs.com is distributed via a public GitHub
+      Gist. The applicable license is specified in the Gist. Where no license
+      is specified, skills are provided for personal and organizational
+      evaluation use only — redistribution requires written permission.
+    </p>
+    <p>
+      Skills may be integrated into your own AI workflows and agent
+      configurations without restriction, provided you do not redistribute them
+      as a standalone product.
+    </p>
+
+    <h2>5. Disclaimer of warranties</h2>
+    <p>
+      quirgs.com and all skills are provided <strong class="text-bright">"as is"</strong>,
+      without warranty of any kind, express or implied, including but not
+      limited to warranties of merchantability, fitness for a particular
+      purpose, or non-infringement. We do not warrant that skills will produce
+      legally compliant outputs in your jurisdiction or for your specific use
+      case.
+    </p>
+
+    <h2>6. Limitation of liability</h2>
+    <p>
+      To the maximum extent permitted by applicable law, Quirgs and its
+      operators shall not be liable for any indirect, incidental, special,
+      consequential, or punitive damages arising from your use of this site or
+      its skills, even if advised of the possibility of such damages.
+    </p>
+
+    <h2>7. Third-party links and tools</h2>
+    <p>
+      quirgs.com links to external resources (GitHub Gists, documentation, AI
+      platform providers). We are not responsible for the content, availability,
+      or privacy practices of third-party sites. Links are provided for
+      convenience only.
+    </p>
+
+    <h2>8. Intellectual property</h2>
+    <p>
+      The Quirgs name, logo, and brand assets are proprietary. Site content,
+      page layouts, and design are copyright Quirgs unless otherwise noted.
+      Skill content distributed via public Gists is licensed per the terms in
+      each Gist.
+    </p>
+
+    <h2>9. Changes to these terms</h2>
+    <p>
+      We may update these terms at any time. The effective date at the top will
+      reflect the latest revision. Continued use of quirgs.com after a change
+      constitutes acceptance of the updated terms.
+    </p>
+
+    <h2>10. Governing law</h2>
+    <p>
+      These terms are governed by the laws of the State of Texas, United States,
+      without regard to its conflict of law provisions.
+    </p>
+
+    <h2>11. Contact</h2>
+    <p>
+      Questions about these terms? See <a href="/support/">/support/</a>.
+    </p>
   </div>
 
   <div class="line">&nbsp;</div>
