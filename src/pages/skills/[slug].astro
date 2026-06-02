@@ -74,9 +74,13 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
       entry.data.marketplaceCmd ||
       entry.data.installCmd) && (
       <div class="install-block">
+        <p class="install-step">
+          <span class="label">[STEP 1]</span>
+          <span>Open Claude Code — these are Claude Code plugin commands.</span>
+        </p>
         {entry.data.marketplaceCmd && (
           <p class="install-cmd-row">
-            <span class="label">[STEP 1]</span>
+            <span class="label">[STEP 2]</span>
             <code>{entry.data.marketplaceCmd}</code>
             <button class="copy-btn" data-copy={entry.data.marketplaceCmd}>
               Copy
@@ -85,7 +89,7 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
         )}
         {entry.data.installCmd && (
           <p class="install-cmd-row">
-            <span class="label">[STEP 2]</span>
+            <span class="label">[STEP 3]</span>
             <code>{entry.data.installCmd}</code>
             <button class="copy-btn" data-copy={entry.data.installCmd}>
               Copy
