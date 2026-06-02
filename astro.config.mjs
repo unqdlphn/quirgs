@@ -12,6 +12,18 @@ export default defineConfig({
   adapter: cloudflare(),
   site: 'https://quirgs.com',
   integrations: [react(), mdx(), keystatic(), sitemap()],
+  build: {
+    // Emit all component styles as external stylesheets (never inline <style>)
+    // so the CSP can use `style-src 'self'` with no 'unsafe-inline'.
+    inlineStylesheets: 'never',
+  },
+  markdown: {
+    // Default Shiki highlighting emits an inline `style=` on <pre>, which would
+    // require `style-src 'unsafe-inline'`. All skill code fences are plaintext
+    // (no token coloring to lose), and BaseLayout already styles
+    // `.terminal-body pre`/`code`, so disable it for a clean `style-src 'self'`.
+    syntaxHighlight: false,
+  },
   vite: {
     optimizeDeps: {
       exclude: ['virtual:keystatic-config'],

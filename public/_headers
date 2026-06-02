@@ -1,0 +1,32 @@
+# Cloudflare static-asset response headers.
+# Docs: https://developers.cloudflare.com/workers/static-assets/headers/
+#
+# Content-Security-Policy — tightened (feat/csp-tighten).
+# script-src/style-src no longer use 'unsafe-inline':
+#   - All component CSS is emitted as external 'self' stylesheets
+#     (astro.config.mjs build.inlineStylesheets: 'never').
+#   - Syntax highlighting is disabled (build.markdown.syntaxHighlight: false)
+#     so no inline style= remains on rendered code blocks.
+#   - The three remaining inline <script> blocks (Astro-bundled, inlined) are
+#     pinned by SHA-256 hash:
+#       1. HelpModal open/close       (all pages)
+#       2. landing terminal boot      (index.html only)
+#       3. delegated copy-to-clipboard (BaseLayout pages)
+#   - static.cloudflareinsights.com / cloudflareinsights.com are allowed for
+#     Cloudflare Web Analytics (edge-injected beacon, not in source).
+#
+# REGENERATING THE HASHES: these are SHA-256 of the exact inline <script> bodies
+# in dist/client after `npm run build`. If you change any bundled script (or bump
+# Astro/Vite, which can change the inlined wrapper), recompute and update them.
+#   npm run build
+#   # then hash each unique inline <script> body, e.g.:
+#   printf '%s' '<exact script body>' | openssl dgst -sha256 -binary | openssl base64
+/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-RG2Vl9/CWuC4bLS0RKUEC98FHboSICAr9i2TuJ3w2Z4=' 'sha256-7mOQhPMQdA0CMrN8nd86Gw09Z+uogn61ZdXgDbI6iPQ=' 'sha256-o6syoIy/8TVskZPnPiYVhZ54gs6eixrEjsqxWx61PAE=' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+
+# Legacy SEO guides (public/guides/*) are preserved verbatim and contain their
+# own inline scripts/styles that must not be modified. Detach the strict policy
+# above so the comma-join rule doesn't intersect it onto these pages (which would
+# break them). They keep their pre-existing no-CSP status quo.
+/guides/*
+  ! Content-Security-Policy
