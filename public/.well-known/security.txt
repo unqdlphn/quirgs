@@ -1,0 +1,7 @@
+# Quirgs security contact — RFC 9116
+# https://quirgs.com/.well-known/security.txt
+
+Contact: https://github.com/unqdlphn/quirgs/security/advisories/new
+Expires: 2027-06-03T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://quirgs.com/.well-known/security.txt
