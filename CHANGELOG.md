@@ -13,6 +13,25 @@ _No pending changes._
 
 ---
 
+## SEO — Self-Referencing Canonicals + robots.txt
+
+**Branch:** `feat/seo-canonical-robots` — PR #52 (2026-06-03)
+
+Fixed Google canonical/duplicate issues surfaced after adding the site to Search Console. The skills-page 403s turned out to be a stale crawl from before Cloudflare's "Allow verified bots" was enabled (live test now passes); the durable code fixes here close the canonical gaps that let `chatgpt.com` be credited as the canonical for legacy guides, and prevent www/apex duplication.
+
+### Added
+
+- `src/layouts/BaseLayout.astro` — self-referencing `<link rel="canonical">` derived from the configured `site` (`https://quirgs.com`) + `Astro.url.pathname`, emitted on every terminal/skills page.
+- `public/_headers` — per-path `Link: …; rel="canonical"` headers for each legacy `/guides/*.html`, fixing the chatgpt.com canonical attribution without editing the protected guide files (HTTP `Link` is honored like the HTML tag).
+- `public/robots.txt` — site-wide crawl allow, `Disallow: /keystatic/` (deferred admin), `Sitemap:` pointing at `sitemap-index.xml`.
+
+### Notes
+
+- Canonicals resolve to the apex production URL even when served from a Cloudflare branch-preview host (derived from `site`, not the request host), so previews self-canonicalize back to production and don't compete for indexing.
+- AI-training-bot policy is enforced at the Cloudflare edge (Security → Bots), not in `robots.txt`. The www→apex 301 is a Cloudflare Redirect Rule, not a code change.
+
+---
+
 ## CSP Tightening — Drop `'unsafe-inline'`
 
 **Branch:** `feat/csp-tighten` — PR #46 (2026-06-01)
