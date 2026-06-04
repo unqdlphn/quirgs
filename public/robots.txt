@@ -1,0 +1,11 @@
+# quirgs.com — robots policy
+# Search indexing is allowed site-wide. AI-training-bot policy is enforced
+# at the Cloudflare edge (Security -> Bots), not here.
+
+User-agent: *
+Allow: /
+
+# Deferred / non-public routes — keep them out of the index.
+Disallow: /keystatic/
+
+Sitemap: https://quirgs.com/sitemap-index.xml
