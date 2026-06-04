@@ -10,6 +10,11 @@ interface Props {
 }
 
 const { title, description, terminalPath = "~" } = Astro.props;
+
+// Self-referencing canonical. Without it Google self-selects, which previously
+// let chatgpt.com be credited as canonical for legacy guides. Derived from the
+// configured `site` (https://quirgs.com) so it's absolute and query-string-free.
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <!doctype html>
@@ -22,6 +27,7 @@ const { title, description, terminalPath = "~" } = Astro.props;
     />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
