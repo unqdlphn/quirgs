@@ -195,6 +195,9 @@ nav#main-nav a:hover {
 
 #content-search-input {
     flex: 1;
+    /* allow the input to shrink below its content width so the nav
+       arrows/clear button stay on-screen instead of overflowing right */
+    min-width: 0;
     background: transparent;
     border: none;
     outline: none;
