@@ -13,6 +13,18 @@ _No pending changes._
 
 ---
 
+## Fix — Legacy Guides Mobile Search Overflow
+
+**Branch:** `fix/guides-search-mobile-overflow` — (2026-06-06)
+
+Fixed a mobile overflow bug in the legacy `/guides/*` in-page search bar. When the input was tapped/focused and matches appeared, the flex input refused to shrink below its content width and pushed the prev/next/clear nav arrows off the right edge into horizontal overflow, making them unreachable.
+
+### Fixed
+
+- `public/css/guides-v2.css` — added `min-width: 0` to `#content-search-input` so the flex input shrinks instead of forcing overflow (root-cause fix, applies at all widths). The fix lives in the shared stylesheet, not in `public/guides/`, so the protected legacy HTML is untouched and all six guides are corrected at once.
+
+---
+
 ## SEO — Self-Referencing Canonicals + robots.txt
 
 **Branch:** `feat/seo-canonical-robots` — PR #52 (2026-06-03)
