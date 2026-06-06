@@ -27,10 +27,7 @@ The current build of Quirgs V2 (Astro 6 migration) has been assessed for perform
 ## 4. Security & Compliance Assessment
 - **Content Security Policy (CSP):**
     - Strict CSP is implemented via `public/_headers`.
-    - All three production inline scripts have been verified against their SHA-256 hashes:
-        1. **HelpModal:** `RG2Vl9/CWuC4bLS0RKUEC98FHboSICAr9i2TuJ3w2Z4=` ✅
-        2. **Landing Terminal:** `7mOQhPMQdA0CMrN8nd86Gw09Z+uogn61ZdXgDbI6iPQ=` ✅
-        3. **Copy-to-Clipboard:** `o6syoIy/8TVskZPnPiYVhZ54gs6eixrEjsqxWx61PAE=` ✅
+    - All three production inline scripts (HelpModal, Landing Terminal, and Copy-to-Clipboard) have been verified to match the SHA-256 hashes pinned in the security policy. ✅
 - **Worker Security:**
     - `registry-api` and `hitl-gate` implement Bearer token authentication for all write operations.
     - CORS is configured to allow interoperability while maintaining origin control.
