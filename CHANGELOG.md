@@ -13,6 +13,25 @@ _No pending changes._
 
 ---
 
+## Test — Worker test coverage (V3 prep)
+
+**Branch:** `feat/worker-tests` — (2026-06-09)
+
+First automated test coverage in the repo, targeting the two standalone Workers (the only runtime logic). 39 tests run in workerd via Vitest's Workers pool against real (local) KV and D1 bindings resolved from each Worker's own `wrangler.toml`.
+
+### Added
+
+- `workers/registry-api/test/index.spec.js` — 15 tests: CORS preflight/headers, `GET /skills` list + non-JSON KV passthrough, `GET /skills/:slug` 200/404 + cache headers, `POST /skills/:slug` auth gating (missing/wrong/non-Bearer token), malformed-body 400, KV round-trip and overwrite, unknown-route 404s.
+- `workers/hitl-gate/test/index.spec.js` — 24 tests: CORS, lazy table bootstrap, event creation + field validation, newest-first listing with parsed payloads, PATCH state machine (pending→approved/rejected, no double transition, `archived` rejected as TTL-only, invalid status, 404), and the lazy 30-day TTL boundary (31 days archived + still fetchable by id, 29 days retained).
+- `workers/*/vitest.config.js` — per-Worker configs using the vitest 4 `cloudflareTest()` plugin API; test-only `nodejs_compat` flag and `*_WRITE_TOKEN` bindings injected via miniflare overrides (deploy config untouched).
+- `package.json` — `npm test` runs both suites (`test:registry`, `test:hitl`); `vitest` + `@cloudflare/vitest-pool-workers` added as devDependencies.
+
+### Notes
+
+- `@cloudflare/vitest-pool-workers@0.16.x` (vitest 4) removed both the `/config` import subpath and per-test `isolatedStorage`; suites reset their own KV/D1 state in `beforeEach`.
+
+---
+
 ## Fix — Skills listing hardening + homepage canonical
 
 **Branch:** `fix/skills-listing-hardening` — (2026-06-09)
