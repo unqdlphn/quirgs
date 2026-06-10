@@ -13,6 +13,19 @@ _No pending changes._
 
 ---
 
+## Fix — Skills listing hardening + homepage canonical
+
+**Branch:** `fix/skills-listing-hardening` — (2026-06-09)
+
+### Fixed
+
+- `src/pages/skills/index.astro` — `" ".repeat()` now clamps to `Math.max(0, 26 - slug.length)`, preventing a negative-count `RangeError` when a future skill slug reaches 26+ characters.
+- `src/pages/skills/index.astro` — sort comparator maps `indexOf` result of `-1` to `Infinity` so skills absent from `dropOrder` fall to the bottom of the listing rather than the top.
+- `src/pages/skills/index.astro` — removed dead `slugPadded` variable (was computed but never used in the rendered output).
+- `src/pages/index.astro` — added `<link rel="canonical">` to the standalone homepage head; PR #52 wired canonicals via `BaseLayout` but the homepage bypasses `BaseLayout` and was missed.
+
+---
+
 ## Fix — Legacy Guides Mobile Search Overflow
 
 **Branch:** `fix/guides-search-mobile-overflow` — (2026-06-06)
