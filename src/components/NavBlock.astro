@@ -1,12 +1,18 @@
 ---
 // src/components/NavBlock.astro
-// Reusable terminal-style site navigation.
-// Renders a `ls` listing of all top-level routes with the current page
-// highlighted as "(you are here)" rather than a link.
+// Compact terminal-style site navigation, rendered as a bash tab-completion
+// row: `cd <TAB>` followed by the primary route tokens. Routes beyond the
+// primary set live in the SiteMenu overlay, reachable via the trailing
+// [+N more] trigger (and the [≡] button in the terminal header) — so this
+// block stays two lines tall no matter how many pages the site grows.
+//
+// Routes come from src/data/routes.ts — add pages there, not here.
 //
 // Usage:
 //   import NavBlock from '../../components/NavBlock.astro';
 //   <NavBlock currentPath="/skills/" />
+
+import { routes, primaryRoutes } from "../data/routes";
 
 interface Props {
   currentPath: string; // e.g. '/', '/skills/', '/bundle/', '/guides/'
@@ -14,49 +20,83 @@ interface Props {
 
 const { currentPath } = Astro.props;
 
-const routes = [
-  { path: '/',                label: '/',                description: 'main landing page'      },
-  { path: '/skills/',         label: '/skills/',         description: 'skills registry'        },
-  { path: '/bundle/',         label: '/bundle/',         description: 'compliance bundle'      },
-  { path: '/guides/',         label: '/guides/',         description: 'legacy guides'          },
-  { path: '/transparency/',   label: '/transparency/',   description: 'AI transparency notice' },
-];
+const promptPath =
+  currentPath === "/" ? "~/" : `~/${currentPath.slice(1, -1)}`;
+
+const moreCount = routes.length - primaryRoutes.length;
 ---
 
-<div class="line">
-  <span class="prompt">admin@quirgs</span><span class="path">~/</span><span class="text-bright">$</span>&nbsp;ls
-</div>
-{routes.map((route) => {
-  const isCurrent = route.path === currentPath;
-  return (
-    <div class="line">
-      {isCurrent ? (
-        <span>
-          <span class="text-blue">&rarr;&nbsp;&nbsp;{route.label}</span>
-          <span class="nav-current">&nbsp;&nbsp;&nbsp;&nbsp;(you are here)</span>
-        </span>
+<nav class="nav-block" aria-label="Site navigation">
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">{promptPath}</span><span class="text-bright">$</span>&nbsp;cd&nbsp;<span class="nav-tab-key">&lt;TAB&gt;</span>
+  </div>
+  <div class="line nav-completions">
+    {primaryRoutes.map((route) =>
+      route.path === currentPath ? (
+        <span class="nav-token nav-current" aria-current="page">{route.label}</span>
       ) : (
-        <span>
-          <span class="text-blue">&rarr;&nbsp;&nbsp;<a href={route.path}>{route.label}</a></span>
-          <span class="nav-desc">&nbsp;&nbsp;&nbsp;&nbsp;&larr; {route.description}</span>
-        </span>
-      )}
-    </div>
-  );
-})}
+        <a class="nav-token" href={route.path}>{route.label}</a>
+      )
+    )}
+    {moreCount > 0 && (
+      <button
+        type="button"
+        class="nav-token nav-more menu-trigger"
+        aria-label={`Open site menu (${moreCount} more pages)`}
+      >[+{moreCount} more]</button>
+    )}
+  </div>
+</nav>
 <div class="line">&nbsp;</div>
 
 <style>
+  .nav-tab-key {
+    color: #71717a;
+  }
+  .nav-completions {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 3ch;
+    row-gap: 4px;
+  }
+  .nav-token {
+    color: var(--accent-blue);
+    border-bottom: 1px dashed var(--accent-blue);
+    text-decoration: none;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  a.nav-token:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+  }
   .nav-current {
     color: var(--text-bright);
     font-weight: bold;
+    border-bottom: 1px solid transparent;
   }
-  .nav-desc {
+  .nav-more {
+    background: transparent;
+    border: none;
+    border-bottom: 1px dashed #71717a;
     color: #71717a;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    padding: 0;
+    cursor: pointer;
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .nav-more:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
   }
   @media (max-width: 600px) {
-    .nav-desc {
-      display: none;
+    .nav-completions {
+      column-gap: 2ch;
     }
   }
 </style>

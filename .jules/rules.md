@@ -85,7 +85,7 @@ Remaining failures require HITL review.
 
 - **Never merge a PR.** Merge is HITL-only.
 - **Never modify files in `public/guides/`.** SEO-indexed — zero content changes.
-- **Never modify `src/pages/index.astro`** unless the validation brief explicitly includes it.
+- **Edit `src/pages/index.astro` with care** (rule relaxed 2026-06-10 — was "never modify"). The boot sequence is brand-critical: keep it JS-injected and `setTimeout`-sequenced, no fade/slide transitions, and its inline boot script hash is pinned in the CSP (`public/_headers`).
 - **Never push to `main` directly.** All work is on feature branches. Merges to `main` are HITL-approved only.
 - **Never add a `deploy.yml` workflow.** Cloudflare deploys via native GitHub integration — no workflow file is needed or wanted.
 - **Never add a `CNAME` file.** Domain binding is managed in the Cloudflare dashboard. This file has been deleted deliberately — do not restore it.
