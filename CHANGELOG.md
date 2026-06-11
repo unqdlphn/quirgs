@@ -19,7 +19,7 @@ Navigation redesign to absorb future plugin/menu pages without growing every pag
 
 - `src/data/routes.ts` — single source of truth for site routes (path, label, description, group, primary flag). Adding a page is now a one-line change here; NavBlock and SiteMenu derive from it.
 - `src/components/SiteMenu.astro` — terminal-themed sitemap overlay rendering all routes as a grouped `tree --dirsfirst` listing (registry / docs / site). Opened by the new `[≡]` button in the terminal header or NavBlock's `[+N more]` token; closes via `[×]`, backdrop click, or Escape. Same mechanics as HelpModal.
-- `[≡]` site-menu trigger in BaseLayout's terminal header, left of `[?]`.
+- `[≡]` site-menu trigger in the terminal header (BaseLayout and the standalone landing page), left of `[?]`. The landing boot sequence is untouched.
 
 ### Changed
 

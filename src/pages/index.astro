@@ -1,6 +1,7 @@
 ---
 // src/pages/index.astro
 import HelpModal from "../components/HelpModal.astro";
+import SiteMenu from "../components/SiteMenu.astro";
 import Footer from "../components/Footer.astro";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
@@ -166,6 +167,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         border-color: var(--accent-blue);
       }
 
+      .help-trigger + .help-trigger {
+        margin-left: 8px;
+      }
+
       .terminal-body {
         padding: 24px;
         font-size: 0.95rem;
@@ -269,6 +274,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           </div>
           <div class="terminal-title">admin@quirgs: ~</div>
           <button
+            class="help-trigger menu-trigger"
+            aria-label="Open site menu"
+            title="Site map">[≡]</button
+          >
+          <button
             id="help-open-btn"
             class="help-trigger"
             aria-label="Open help"
@@ -287,6 +297,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       </div>
     </main>
     <HelpModal />
+    <SiteMenu currentPath="/" />
 
     <script>
       // Terminal text sequence
