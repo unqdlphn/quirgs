@@ -9,7 +9,23 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
-_No pending changes._
+## Feat — Scalable navigation (V3 prep)
+
+**Branch:** `feat/nav-scale` — (2026-06-10)
+
+Navigation redesign to absorb future plugin/menu pages without growing every page. The inline nav is now a fixed two lines regardless of how many routes exist; everything beyond the primary set lives in a sitemap overlay.
+
+### Added
+
+- `src/data/routes.ts` — single source of truth for site routes (path, label, description, group, primary flag). Adding a page is now a one-line change here; NavBlock and SiteMenu derive from it.
+- `src/components/SiteMenu.astro` — terminal-themed sitemap overlay rendering all routes as a grouped `tree --dirsfirst` listing (registry / docs / site). Opened by the new `[≡]` button in the terminal header or NavBlock's `[+N more]` token; closes via `[×]`, backdrop click, or Escape. Same mechanics as HelpModal.
+- `[≡]` site-menu trigger in BaseLayout's terminal header, left of `[?]`.
+
+### Changed
+
+- `NavBlock.astro` — rewritten from a one-line-per-route `ls` listing (6+ lines) to a bash tab-completion row (`$ cd <TAB>` + wrapping route tokens, 2 lines). Same `currentPath` prop; no consuming-page changes.
+- `HelpModal.astro` — SITE LAYOUT section no longer hardcodes a second copy of the sitemap; it points at the `[≡]` menu instead.
+- `public/_headers` — pinned the SiteMenu inline script hash (`sha256-S8s+X/FJ…`) in the CSP `script-src`; the three existing hashes are unchanged.
 
 ---
 
