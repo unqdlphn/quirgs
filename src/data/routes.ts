@@ -27,7 +27,7 @@ export interface SiteRoute {
 export const GROUP_ORDER = ["registry", "docs", "site"] as const;
 
 export const routes: SiteRoute[] = [
-  { path: "/",              label: "~",             description: "main landing page",      group: "site",     primary: true },
+  { path: "/",              label: "/",             description: "main landing page",      group: "site",     primary: true },
   { path: "/skills/",       label: "skills/",       description: "skills registry",        group: "registry", primary: true },
   { path: "/bundle/",       label: "bundle/",       description: "compliance bundle",      group: "registry", primary: true },
   { path: "/guides/",       label: "guides/",       description: "reference guides",       group: "docs",     primary: true },

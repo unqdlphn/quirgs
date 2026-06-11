@@ -29,7 +29,7 @@ const grouped = routesByGroup
   .filter((g) => g.routes.length > 0);
 
 const maxLabel = Math.max(
-  ...grouped.flatMap((g) => g.routes.map((r) => r.label.length))
+  ...grouped.flatMap((g) => g.routes.map((r) => r.label.length)),
 );
 const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
 ---
@@ -52,8 +52,10 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
         <div class="mac-btn maximize"></div>
       </div>
       <div class="menu-title">admin@quirgs: ~/sitemap</div>
-      <button id="site-menu-close" class="menu-close" aria-label="Close site menu"
-        >[×]</button
+      <button
+        id="site-menu-close"
+        class="menu-close"
+        aria-label="Close site menu">[×]</button
       >
     </div>
 
@@ -67,9 +69,11 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
       <div class="menu-line menu-tree">
         {
           rootRoute && rootRoute.path === currentPath ? (
-            <span class="menu-current" aria-current="page">~</span>
+            <span class="menu-current" aria-current="page">
+              /
+            </span>
           ) : (
-            <a href="/">~</a>
+            <a href="/">/</a>
           )
         }
       </div>
