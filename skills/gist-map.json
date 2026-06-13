@@ -6,12 +6,12 @@
   "incident-response-logger": "4708e63f8e0761964a899f68b65f7fdd",
   "iso-42001-audit-prep": "a377f2b8d88f81ca49d3a2d133a8bc1e",
   "nist-ai-rmf-checkpoint": "48b798cba35f7a66ba07b1a99a5ec318",
-  "publish-income": "",
-  "publish-update": "",
-  "publish-broadcast": "",
-  "publish-license": "",
-  "publish-provenance": "",
-  "publish-shield": "",
-  "publish-harvest": "",
-  "publish-workflow": ""
+  "publish-income": "92dd188f9cb03c685550039661a72375",
+  "publish-update": "1d504499be7a022e353ec2e584c09f6e",
+  "publish-broadcast": "e390c6ff43eaba1f2c23ed1568d887be",
+  "publish-license": "e8468f09a7a8dd6391eabc618aef8e42",
+  "publish-provenance": "0ade6211fc928bfcb166635c5919737c",
+  "publish-shield": "85093a27fa12fe8e060dde8c4e6af9a8",
+  "publish-harvest": "11d11f0babecdf49e8af1b76a0bf7cbd",
+  "publish-workflow": "9cdf388b15cc75a0a1a13125147b8f3c"
 }
