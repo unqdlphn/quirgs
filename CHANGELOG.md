@@ -45,6 +45,12 @@ Eight-skill PUBLISH Bundle for music publishers, targeting the Quirgs Plugin Mar
 - `public/_headers` — Pinned two new `script-src` SHA-256 hashes for the redesigned `/skills/` (tab + pillar filter) and `/bundle/` (tab switcher) inline scripts. Without them the strict CSP silently blocked both scripts on the Cloudflare preview — tabs and the pillar dropdown rendered but did nothing (worked in `npm run dev`, which does not enforce `_headers`).
 - `keystatic.config.ts` — Added the `bundle` select field to mirror the new `bundle` enum in `content.config.ts`, per the dual-schema rule. (Keystatic remains dormant under Astro 6; this keeps the mirror honest for when support returns.)
 
+### Changed
+
+- **Renamed the `/bundle/` route to `/bundles/`** (directory `src/pages/bundle/` → `src/pages/bundles/`). The original singular name was coined for the single compliance bundle before multi-bundle scaling was considered; with the PUBLISH bundle landing alongside compliance, the plural is correct. Updated `src/data/routes.ts`, `src/pages/index.astro` (boot-sequence link), `NavBlock` `currentPath`, and `README.md`. The `bundle` *frontmatter field* on skills is unchanged — only the route moved.
+- `public/_redirects` — New file. `301` from `/bundle` and `/bundle/` → `/bundles/` so the previously-published (discovered, not indexed) `quirgs.com/bundle` URL does not dead-end.
+- `public/_headers` — Recomputed the pinned landing-terminal-boot `script-src` SHA-256 hash. The `/bundle/` → `/bundles/` href edit lives inside the JS-injected boot string in `index.astro`, which changed the inlined script bytes; the old hash would have CSP-blocked the boot animation. The other five inline-script hashes were verified unchanged.
+
 ---
 
 ## Feat — Scalable navigation (V3 prep)
