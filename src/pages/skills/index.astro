@@ -16,14 +16,14 @@ const dropOrder = [
   "nist-ai-rmf-checkpoint",
   "pii-exposure-checker",
   // Publish bundle
-  "publish-workflow",
-  "publish-income",
+  "publish-provenance",
   "publish-update",
   "publish-broadcast",
-  "publish-provenance",
-  "publish-shield",
   "publish-license",
+  "publish-income",
+  "publish-shield",
   "publish-harvest",
+  "publish-workflow",
 ];
 
 const sortedSkills = skills.sort((a, b) => {
@@ -38,8 +38,12 @@ const getStatusClass = (status: string) => {
   return "text-red";
 };
 
-const complianceCount = sortedSkills.filter((s) => s.data.bundle === "compliance").length;
-const publishCount = sortedSkills.filter((s) => s.data.bundle === "publish").length;
+const complianceCount = sortedSkills.filter(
+  (s) => s.data.bundle === "compliance",
+).length;
+const publishCount = sortedSkills.filter(
+  (s) => s.data.bundle === "publish",
+).length;
 const totalCount = sortedSkills.length;
 
 const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
@@ -60,19 +64,38 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   <!-- Filter bar -->
   <div class="filter-bar">
     <div class="tab-group" role="tablist" aria-label="Filter by bundle">
-      <button class="tab-btn active" data-bundle="all" role="tab" aria-selected="true">
+      <button
+        class="tab-btn active"
+        data-bundle="all"
+        role="tab"
+        aria-selected="true"
+      >
         [ ALL&nbsp;·&nbsp;{totalCount} ]
       </button>
-      <button class="tab-btn" data-bundle="compliance" role="tab" aria-selected="false">
+      <button
+        class="tab-btn"
+        data-bundle="compliance"
+        role="tab"
+        aria-selected="false"
+      >
         [ COMPLIANCE&nbsp;·&nbsp;{complianceCount} ]
       </button>
-      <button class="tab-btn" data-bundle="publish" role="tab" aria-selected="false">
+      <button
+        class="tab-btn"
+        data-bundle="publish"
+        role="tab"
+        aria-selected="false"
+      >
         [ PUBLISH&nbsp;·&nbsp;{publishCount} ]
       </button>
     </div>
     <div class="pillar-group">
       <label for="pillar-select" class="filter-label">pillar:</label>
-      <select id="pillar-select" class="tui-select" aria-label="Filter by pillar">
+      <select
+        id="pillar-select"
+        class="tui-select"
+        aria-label="Filter by pillar"
+      >
         <option value="all">all pillars</option>
         {pillars.map((p) => <option value={p}>{p}</option>)}
       </select>
@@ -95,7 +118,9 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
     {
       sortedSkills.map((skill) => {
         const rawVersion = skill.data.version;
-        const version = rawVersion.startsWith("v") ? rawVersion : `v${rawVersion}`;
+        const version = rawVersion.startsWith("v")
+          ? rawVersion
+          : `v${rawVersion}`;
 
         return (
           <div
@@ -362,12 +387,10 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   // Tab buttons
   document.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
-      document
-        .querySelectorAll(".tab-btn")
-        .forEach((b) => {
-          b.classList.remove("active");
-          b.setAttribute("aria-selected", "false");
-        });
+      document.querySelectorAll(".tab-btn").forEach((b) => {
+        b.classList.remove("active");
+        b.setAttribute("aria-selected", "false");
+      });
       btn.classList.add("active");
       btn.setAttribute("aria-selected", "true");
       activeBundle = btn.dataset.bundle ?? "all";
@@ -376,7 +399,9 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   });
 
   // Pillar dropdown
-  const pillarSelect = document.getElementById("pillar-select") as HTMLSelectElement | null;
+  const pillarSelect = document.getElementById(
+    "pillar-select",
+  ) as HTMLSelectElement | null;
   pillarSelect?.addEventListener("change", () => {
     activePillar = pillarSelect.value;
     applyFilter();

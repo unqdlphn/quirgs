@@ -17,14 +17,14 @@ const complianceOrder = [
 ];
 
 const publishOrder = [
-  "publish-workflow",
-  "publish-income",
+  "publish-provenance",
   "publish-update",
   "publish-broadcast",
-  "publish-provenance",
-  "publish-shield",
   "publish-license",
+  "publish-income",
+  "publish-shield",
   "publish-harvest",
+  "publish-workflow",
 ];
 
 const sortBy = (order: string[]) => (a: { id: string }, b: { id: string }) => {
@@ -325,7 +325,9 @@ const publishSkills = skills
 </style>
 
 <script>
-  const tabs = document.querySelectorAll<HTMLButtonElement>(".tab-btn[data-panel]");
+  const tabs = document.querySelectorAll<HTMLButtonElement>(
+    ".tab-btn[data-panel]",
+  );
   const panels = document.querySelectorAll<HTMLElement>(".bundle-panel");
 
   tabs.forEach((tab) => {
