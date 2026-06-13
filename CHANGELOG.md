@@ -9,7 +9,17 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
-## Feat — PUBLISH Bundle plugin (feat/publish-bundle)
+## Fix — Publish skill Gist links (fix/publish-gist-links)
+
+**Branch:** `fix/publish-gist-links` — (2026-06-13)
+
+### Fixed
+
+- Added the missing `gistUrl` frontmatter field to all 8 `src/content/skills/publish-*.mdx` files, sourced from `skills/gist-map.json`. The publish skill detail pages already carried `marketplaceCmd`/`installCmd` but no `gistUrl`, so the "View source Gist" link never rendered (the `/skills/[slug]` template only emits it when `gistUrl` is present). Compliance skills already had it.
+
+### Notes
+
+- The initial Gist-sync run after the PUBLISH bundle merge was blocked by a repo ruleset ("PR needed for merge") at the gist-map push-back step, so the freshly-created Gist IDs were never committed. The retry's bootstrap pass then created a second set of Gists — leaving 8 duplicate publish Gists. The duplicates not referenced in `gist-map.json` were deleted manually; the 8 surviving Gists were reconciled against the map (all match) before wiring `gistUrl` into the MDX.
 
 **Branch:** `feat/publish-bundle` — (2026-06-12)
 
