@@ -50,8 +50,7 @@ const phase2 = [
   <div class="line">&nbsp;</div>
 
   <div class="line">
-    <span class="prompt">admin@quirgs</span><span class="path"
-      >~/resources</span
+    <span class="prompt">admin@quirgs</span><span class="path">~/resources</span
     ><span class="text-bright">$</span>&nbsp;cat publish-bundle-stress-test.md
   </div>
   <div class="line">&nbsp;</div>
@@ -92,36 +91,36 @@ const phase2 = [
   </p>
   <ul>
     <li>
-      <span class="text-bright">publish-income</span> — royalty reconciliation,
-      statement-to-ledger, discrepancy flagging
+      <span class="text-bright">publish-income</span> — royalty reconciliation, statement-to-ledger,
+      discrepancy flagging
     </li>
     <li>
-      <span class="text-bright">publish-update</span> — catalog metadata hygiene
-      audit and enrichment
+      <span class="text-bright">publish-update</span> — catalog metadata hygiene audit
+      and enrichment
     </li>
     <li>
-      <span class="text-bright">publish-broadcast</span> — DDEX and PRO
-      registration data extraction
+      <span class="text-bright">publish-broadcast</span> — DDEX and PRO registration
+      data extraction
     </li>
     <li>
-      <span class="text-bright">publish-license</span> — three-agent sync stack:
-      brief analysis → catalog matching → pitch writing
+      <span class="text-bright">publish-license</span> — three-agent sync stack: brief
+      analysis → catalog matching → pitch writing
     </li>
     <li>
-      <span class="text-bright">publish-provenance</span> — AI involvement
-      assessment and creation log generation
+      <span class="text-bright">publish-provenance</span> — AI involvement assessment
+      and creation log generation
     </li>
     <li>
-      <span class="text-bright">publish-shield</span> — pre-release compliance
-      gate and AI governance policy generator
+      <span class="text-bright">publish-shield</span> — pre-release compliance gate
+      and AI governance policy generator
     </li>
     <li>
-      <span class="text-bright">publish-harvest</span> — quarterly catalog
-      performance review
+      <span class="text-bright">publish-harvest</span> — quarterly catalog performance
+      review
     </li>
     <li>
-      <span class="text-bright">publish-workflow</span> — orchestrator, runs the
-      full weekly publishing OS cadence
+      <span class="text-bright">publish-workflow</span> — orchestrator, runs the full
+      weekly publishing OS cadence
     </li>
   </ul>
   <p>
@@ -214,9 +213,9 @@ const phase2 = [
 
   <h2 class="text-bright">Phase 1 Results</h2>
   <p>
-    <span class="text-bright">93 / 94 tests passing on first run.</span> (1 test
-    had a wrong expected count due to a footer row in the workbook — corrected in
-    the same session.)
+    <span class="text-bright">93 / 94 tests passing on first run.</span> (1 test had
+    a wrong expected count due to a footer row in the workbook — corrected in the
+    same session.)
   </p>
   <p>
     After correction: <span class="text-green"
@@ -281,28 +280,28 @@ const phase2 = [
   <h2 class="text-bright">The Gap Found and Closed</h2>
   <p>
     Phase 2 surfaced one real gap: <code>publish-shield</code> and
-    <code>publish-provenance</code> were applying tier thresholds inconsistently
-    when AI tool descriptions were provided without an explicit tier label. The
-    skills were not resolving tool names to tiers inline.
+    <code>publish-provenance</code> were applying tier thresholds inconsistently when
+    AI tool descriptions were provided without an explicit tier label. The skills
+    were not resolving tool names to tiers inline.
   </p>
   <p><span class="text-bright">Fix applied before merging:</span></p>
   <ul>
     <li>
       <code>ai-tool-tier-map.md</code> created in the plugin — maps AI tool names
-      to tiers (e.g., iZotope Ozone → Tier 1, Suno chord generation → Tier 2,
-      vocal cloning → Tier 3)
+      to tiers (e.g., iZotope Ozone → Tier 1, Suno chord generation → Tier 2, vocal
+      cloning → Tier 3)
     </li>
     <li>Inline tier resolution rules added to Gist stubs for both skills</li>
     <li>
-      <code>publish-shield</code> and <code>publish-provenance</code> SKILL.md
-      files updated in both the plugin and <code>quirgs/skills/</code> locations
+      <code>publish-shield</code> and <code>publish-provenance</code> SKILL.md files
+      updated in both the plugin and <code>quirgs/skills/</code> locations
     </li>
     <li>CHANGELOG updated under <code>feat/publish-bundle</code></li>
   </ul>
   <p>
-    This is the outcome that justifies the testing process. The gap was small but
-    it was real, and it would have produced inconsistent compliance assessments
-    in production. It was caught before the branch merged.
+    This is the outcome that justifies the testing process. The gap was small
+    but it was real, and it would have produced inconsistent compliance
+    assessments in production. It was caught before the branch merged.
   </p>
 
   <h2 class="text-bright">What This Demonstrates</h2>
@@ -320,30 +319,39 @@ const phase2 = [
   </p>
   <p>
     <span class="text-bright">The hard-stop invariant is load-bearing.</span> The
-    most important test in the suite is the one where Retro Groove scores 78% —
-    above any reasonable pitch threshold — but is blocked by an unresolved sample
-    clearance. The skill correctly rejects the pitch. An AI that pitches a
-    blocked track because the match score is high is an AI that creates legal
-    liability. This skill doesn't do that.
+    most important test in the suite is the one where Retro Groove scores 78% — above
+    any reasonable pitch threshold — but is blocked by an unresolved sample clearance.
+    The skill correctly rejects the pitch. An AI that pitches a blocked track because
+    the match score is high is an AI that creates legal liability. This skill doesn't
+    do that.
   </p>
   <p>
     <span class="text-bright">The gap found in Phase 2 was non-trivial.</span> It
-    wasn't a typo or a missing bracket. It was a reasoning inconsistency in how
-    two skills handled ambiguous input. That kind of gap doesn't show up in a
-    demo. It shows up under load, against real operational scenarios, with a
-    human reviewer who knows what to look for.
+    wasn't a typo or a missing bracket. It was a reasoning inconsistency in how two
+    skills handled ambiguous input. That kind of gap doesn't show up in a demo. It
+    shows up under load, against real operational scenarios, with a human reviewer
+    who knows what to look for.
   </p>
 
   <div class="detail-footer">
     <p><span class="label">PUBLISHED:</span> June 12, 2026</p>
-    <p><span class="label">PHASE 1:</span> 93 / 93 deterministic — 0 failures</p>
+    <p>
+      <span class="label">PHASE 1:</span> 93 / 93 deterministic — 0 failures
+    </p>
     <p><span class="label">PHASE 2:</span> 6 / 6 reasoning — 0 failures</p>
-    <p><span class="label">BUNDLE:</span> <a href="/bundles/">quirgs-publish</a></p>
+    <p>
+      <span class="label">BUNDLE:</span>
+      <a href="/bundles/">quirgs-publish</a>
+    </p>
+    <p>
+      <span class="label">EBOOK:</span>
+      <a href="https://www.amazon.com/dp/B0H5671G2K">Amazon</a> · <a
+        href="https://books.apple.com/us/book/id6778948787">Apple Books</a
+      >
+    </p>
   </div>
 
-  <p class="signoff text-main">
-    Quirgs · Governance first. Build accordingly.
-  </p>
+  <p class="signoff text-main">Quirgs · Governance first. Build accordingly.</p>
 </BaseLayout>
 
 <style>
