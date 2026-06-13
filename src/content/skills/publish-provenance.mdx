@@ -1,0 +1,83 @@
+---
+title: "Publish Provenance"
+slug: "publish-provenance"
+tagline: "Creation log and AI involvement assessment for every release"
+bundle: "publish"
+pillar: "Checkpoints"
+framework: ["Copyright Act (17 U.S.C. §102)", "EU AI Act Article 13", "Platform AI Disclosure Policies", "Provenance Triangle Framework"]
+interoperates_with:
+  - "publish-shield"
+  - "publish-broadcast"
+  - "publish-workflow"
+triggers:
+  - "document my AI use"
+  - "log how I made this"
+  - "create a provenance record"
+  - "AI transparency for my release"
+  - "copyright declaration for AI music"
+  - "how do I disclose AI in my music"
+  - "Provenance Triangle"
+  - "is my music copyrightable if I used AI"
+example_prompts:
+  - "Log the creation process for this track — I used Suno for chord exploration and iZotope for mastering."
+  - "Assess my AI involvement on this album and give me a copyright-readiness determination."
+  - "Generate a provenance record I can attach to the sync pitch for this placement."
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-provenance@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["AI provenance", "creation log", "AI transparency", "copyright", "music publishing", "AI disclosure"]
+---
+
+## What it does
+
+Publish Provenance generates a formal provenance record for a music release, documenting the creative process and assessing the degree of AI involvement using the Provenance Triangle framework. The Triangle evaluates three dimensions: human authorship (original creative decisions made by a human), AI tool use (which tools were used and at what involvement tier), and synthesis degree (how much of the final output derives from AI generation versus human performance and arrangement).
+
+Each tool used in the production chain is mapped to an AI involvement tier: Tier 0 (traditional tools, no AI), Tier 1 (AI-assisted, human-primary), Tier 2 (AI-generative, substantially rewritten or arranged by human), Tier 3 (AI-primary, human-curated), or Tier 4 (AI-generated voice/likeness without authorization — hard stop). The assessment produces a copyright-readiness determination and a disclosure label appropriate for the platform, PRO, or sync submission requiring it.
+
+## Frameworks covered
+
+- Copyright Act (17 U.S.C. §102) — human authorship requirement for copyright registration
+- EU AI Act Article 13 — transparency obligations for AI-generated content
+- Platform AI disclosure policies (Spotify, Apple Music, YouTube, TikTok, DistroKid)
+- Provenance Triangle Framework — Tier 0–4 AI involvement classification
+- USCO AI registration guidance (2024)
+
+## When to use it
+
+Run Publish Provenance for every release that used any AI tool in the production chain — even Tier 1 tools like AI-assisted mastering. The record is required before publish-broadcast (PRO registration increasingly requires AI disclosure) and before publish-license (sync supervisors ask about AI use on submission forms). It also creates the audit trail needed for platform takedown disputes and copyright challenges.
+
+For Tier 3 tracks, the record surfaces whether the release can claim copyright protection at all — and documents the creative decisions that support any claim. For Tier 4, the skill issues a hard stop and routes to the appropriate legal escalation.
+
+## Example output (abbreviated)
+
+```
+PROVENANCE RECORD — "Static Shore"
+─────────────────────────────────────────────────────────────
+Artist: Dani Rivers   ISRC: US-AB1-26-00023   Release: 2026-06-20
+
+PRODUCTION CHAIN ASSESSMENT
+  Tool / Process              Tier  Notes
+  ─────────────────────────────────────────────────────────────
+  Chord bed exploration       Tier 2  Suno — output substantially rearranged
+  Melodic composition         Tier 0  Human — original performance, no AI
+  Lyrics (draft)              Tier 2  ChatGPT draft — rewritten by human author
+  Lyrics (final)              Tier 0  Human — confirmed original final text
+  Mixing                      Tier 0  Human — Logic Pro, standard tools
+  Mastering                   Tier 1  iZotope Ozone AI — AI-assisted, human-approved
+
+PROVENANCE TRIANGLE SCORE
+  Human Authorship:   74%  ███████████████░░░░░
+  AI Involvement:     26%  █████░░░░░░░░░░░░░░░
+  Synthesis Degree:   Low — AI outputs heavily reworked
+
+TIER DETERMINATION: Tier 2 — AI-Assisted (Generative, Human-Primary)
+COPYRIGHT READINESS: ✅ Eligible — sufficient human authorship
+DISCLOSURE LABEL: "Produced with AI assistance (Tier 2)"
+
+PLATFORM REQUIREMENTS
+  Spotify:     Disclosure required on distributor form
+  TikTok:      AI label required at upload
+  Apple Music: Disclosure recommended but not yet enforced
+```

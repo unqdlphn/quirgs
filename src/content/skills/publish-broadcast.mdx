@@ -1,0 +1,81 @@
+---
+title: "Publish Broadcast"
+slug: "publish-broadcast"
+tagline: "DDEX ERN + PRO registration packets — ready for submission"
+bundle: "publish"
+pillar: "Checkpoints"
+framework: ["DDEX ERN 4.1", "ASCAP", "BMI", "SESAC", "PRS for Music", "SOCAN"]
+interoperates_with:
+  - "publish-update"
+  - "publish-provenance"
+  - "publish-workflow"
+triggers:
+  - "prepare DDEX registration"
+  - "submit to PRO"
+  - "register my release with ASCAP"
+  - "PRO registration packet"
+  - "submit my compositions for performance rights"
+  - "register my sound recordings"
+  - "prepare registration data"
+example_prompts:
+  - "Prepare a DDEX ERN packet for this EP — three tracks, two co-writers, one featuring artist."
+  - "Register these compositions with ASCAP. Two tracks have BMI co-writers — generate split packets."
+  - "We just signed a new artist. Generate the full PRO registration set for their debut single."
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-broadcast@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["DDEX", "PRO registration", "ASCAP", "BMI", "rights registration", "music publishing"]
+---
+
+## What it does
+
+Publish Broadcast extracts and validates all data required to register a release with DDEX delivery networks and with performing rights organizations. It maps every required field for both registration types, surfaces gaps (missing IPI numbers, unregistered co-writers, split conflicts between PROs), and flags anything that would cause a rejection before submission.
+
+For DDEX, it produces a validated ERN 4.1 data packet covering sound recording identifiers, deal terms, and release metadata. For PROs, it generates separate composition registration records for each rights society involved, handling split-PRO scenarios where co-writers are members of different organizations. All outputs are submission-ready — formatted for direct upload or entry into PRO web portals.
+
+## Frameworks covered
+
+- DDEX ERN 4.1 — Electronic Release Notification standard for DSP delivery
+- ASCAP Works Registration — composition and recording registration
+- BMI Songview — works registration and share reporting
+- SESAC, PRS for Music, SOCAN — international PRO registration protocols
+- ISRC (ISO 3901) — sound recording identifiers required for DDEX
+
+## When to use it
+
+Run Publish Broadcast after publish-update confirms metadata is clean — DDEX and PRO registration will fail on bad ISRCs or missing credits. Use it for every new release before it goes to distributors, and whenever a composition is being registered for the first time. It's particularly important for co-written tracks: split-PRO scenarios (ASCAP composer + BMI co-writer) require separate registration packets for each society, and the skill handles that routing automatically.
+
+## Example output (abbreviated)
+
+```
+BROADCAST REGISTRATION REPORT
+─────────────────────────────────────────────────────────────
+Release: "Northern Light" EP — Neon Sound Publishing
+Tracks: 3   Compositions: 3   Co-writers: 2
+
+DDEX ERN 4.1 PACKET — STATUS: READY
+  Sound recordings: 3 validated
+  ISRCs: all present and unique
+  Deal terms: standard streaming + download
+  Missing field: ✅ none — packet ready for delivery
+
+PRO REGISTRATION PACKETS
+  Track 1 "Northern Light" — ASCAP only
+    Composer (ASCAP): IPI 00345678901 ✅
+    Publisher (ASCAP): IPI 00123456789 ✅
+    STATUS: READY
+
+  Track 2 "Static Shore" — split PRO (ASCAP + BMI)
+    Composer A (ASCAP): IPI 00345678901 ✅
+    Composer B (BMI): IPI not on file ⚠️
+    ACTION: Request IPI from co-writer before BMI submission
+    STATUS: HOLD — BMI packet blocked on IPI gap
+
+  Track 3 "Midnight Drift" — ASCAP only
+    Composer (ASCAP): IPI 00345678901 ✅
+    STATUS: READY
+
+GATE STATUS: HOLD on Track 2 BMI packet — 2 of 3 packets ready
+```

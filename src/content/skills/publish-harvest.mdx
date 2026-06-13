@@ -1,0 +1,78 @@
+---
+title: "Publish Harvest"
+slug: "publish-harvest"
+tagline: "Quarterly catalog performance review — tiers, gaps, and next actions"
+bundle: "publish"
+pillar: "Inventory"
+framework: ["Catalog Performance Analytics", "PRO Distribution Reporting", "Sync Revenue Standards", "DSP Streaming Metrics"]
+interoperates_with:
+  - "publish-income"
+  - "publish-workflow"
+triggers:
+  - "quarterly review"
+  - "catalog performance review"
+  - "how is my catalog performing"
+  - "quarterly harvest"
+  - "which tracks are performing"
+  - "which tracks are underperforming"
+  - "catalog health check"
+  - "review my publishing income for the quarter"
+example_prompts:
+  - "Run the quarterly harvest for Q1 — here are my reconciled statements from publish-income."
+  - "Which tracks in my catalog are underperforming and should be pulled from active pitch lists?"
+  - "Identify sync licensing gaps in my catalog based on this quarter's brief activity."
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-harvest@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["catalog performance", "quarterly review", "royalty analytics", "sync gaps", "music publishing"]
+---
+
+## What it does
+
+Publish Harvest runs a structured quarterly performance review across the full catalog. It pulls key metrics from the reconciled royalty ledger (publish-income output), categorizes every track into one of four performance tiers — Growth, Stable, Declining, or Dormant — and surfaces concentration risk, revenue anomalies, and sync licensing gaps.
+
+The review calculates which tracks are generating disproportionate revenue (top-4 concentration), which are trending down quarter-over-quarter, and where the catalog has holes relative to active brief types. It closes with a tiered harvest report: specific recommended actions for each performance segment, from investment decisions on Growth tracks to retirement or catalog re-pitch decisions on Dormant ones.
+
+## Frameworks covered
+
+- Catalog performance tiering (Growth, Stable, Declining, Dormant)
+- Revenue concentration analysis
+- Streaming velocity and trend detection
+- Sync revenue benchmarking against catalog size
+- Quarter-over-quarter comparison methodology
+
+## When to use it
+
+Run Publish Harvest at the end of every quarter, after publish-income has reconciled the period's statements into a clean ledger. It's the strategic layer that sits above the transactional reconciliation — it answers not just "what came in" but "what does this mean for the catalog." Use it before making catalog development decisions, investment prioritization calls, or sync pitch list updates. Also use it when the owner wants a single document summarizing catalog health for an investor, partner, or board conversation.
+
+## Example output (abbreviated)
+
+```
+QUARTERLY HARVEST REPORT — Q1 2026
+─────────────────────────────────────────────────────────────
+Catalog: Neon Sound Publishing   Tracks: 47   Revenue: $24,840
+
+PERFORMANCE TIERS
+  Growth (↑)    8 tracks   $14,210   57% of revenue   — invest, pitch actively
+  Stable (→)   18 tracks    $7,920   32% of revenue   — maintain current strategy
+  Declining (↓) 11 tracks   $2,410   10% of revenue   — investigate or reactivate
+  Dormant (—)   10 tracks     $300    1% of revenue   — review for retirement or re-pitch
+
+CONCENTRATION RISK
+  Top 4 tracks: $14,030 = 56% of total revenue
+  Threshold exceeded (>50%) — catalog over-concentrated
+  Recommendation: Accelerate growth on tracks ranked 5–10
+
+ANOMALY FLAGS
+  TX-10003 "Neon Flash" — Q1 ASCAP payout 33× historical average
+  Action: Verify licensing event — possible unlicensed commercial use
+
+SYNC GAP ANALYSIS
+  Missing: Uptempo electronic (120–140 BPM) — 4 briefs this quarter, 0 catalog matches
+  Missing: Instrumental ambient — 2 briefs, 1 weak match (52% score)
+  Recommendation: Commission 3–5 tracks targeting uptempo electronic profile
+
+GATE: Harvest report ready for owner review (HITL required before action)
+```

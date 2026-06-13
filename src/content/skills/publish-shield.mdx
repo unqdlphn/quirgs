@@ -1,0 +1,77 @@
+---
+title: "Publish Shield"
+slug: "publish-shield"
+tagline: "Pre-release platform compliance + AI governance policy for music publishers"
+bundle: "publish"
+pillar: "Checkpoints"
+framework: ["DSP Content Policies", "EU AI Act", "DistroKid AI Music Policy", "TikTok AI Content Standards", "YouTube AI Disclosure Requirements"]
+interoperates_with:
+  - "publish-provenance"
+  - "publish-license"
+  - "publish-workflow"
+triggers:
+  - "platform compliance check"
+  - "is my release compliant"
+  - "check platform policies for AI music"
+  - "AI governance policy for my catalog"
+  - "write an AI policy for my label"
+  - "pre-release gate"
+  - "can I distribute AI-generated music"
+  - "does YouTube allow AI music"
+example_prompts:
+  - "Run a pre-release compliance check for this Tier 2 single before it goes to DistroKid."
+  - "Write an AI governance policy for my independent label."
+  - "This track is going to TikTok — does it meet their AI music disclosure requirements?"
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-shield@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["platform compliance", "AI governance", "music publishing", "pre-release gate", "DSP policies"]
+---
+
+## What it does
+
+Publish Shield is a two-module pre-release gate. Module A checks the release against current content policies across major DSPs and distributors — Spotify, Apple Music, YouTube, TikTok, Amazon Music, and DistroKid — surfacing any disclosure requirements, labeling obligations, or outright restrictions that apply based on the track's AI involvement tier. It issues a per-platform pass/hold/block status and explains the specific policy clause that triggered each flag.
+
+Module B generates a documented AI governance policy for the publishing operation: a written internal policy covering how AI tools are evaluated, approved, and disclosed in creative workflows. The policy is formatted for internal review and can be published publicly as a label transparency statement.
+
+Publish Shield loads the AI tool tier map to infer involvement tier from the disclosed production tools when a tier hasn't been explicitly provided by publish-provenance.
+
+## Frameworks covered
+
+- DSP content policies for AI-generated music (Spotify, Apple Music, YouTube, TikTok, Amazon)
+- Distributor submission policies (DistroKid, TuneCore, CD Baby)
+- EU AI Act Article 13 — transparency for AI-generated outputs
+- TikTok AI-generated content labeling standards
+- YouTube's synthetic media disclosure requirements
+
+## When to use it
+
+Run Publish Shield as the final gate before any release goes to distribution. A track that passes publish-provenance with a Tier 2 or Tier 3 determination needs platform-specific clearance before delivery — platform policies are updated frequently and vary significantly. Publish Shield also feeds into publish-license: tracks with active platform blocks should not be pitched for sync, regardless of catalog fit score.
+
+Use Module B when building or reviewing the label's AI policy, when a platform or rights society requests documentation of AI use policies, or when publishing governance documentation for audit purposes.
+
+## Example output (abbreviated)
+
+```
+PRE-RELEASE COMPLIANCE REPORT — "Northern Light" EP
+─────────────────────────────────────────────────────────────
+AI Involvement: Tier 2 — AI-Assisted (inferred from tool disclosure)
+Distributor: DistroKid
+
+PLATFORM STATUS
+  Platform      Status  Policy Basis
+  ─────────────────────────────────────────────────────────────
+  Spotify       ✅ PASS  Tier 2 permitted; disclosure required via distributor form
+  Apple Music   ✅ PASS  No active Tier 2 restriction; disclosure recommended
+  YouTube       ✅ PASS  AI label required at upload (auto-detected by Content ID)
+  TikTok        ⚠️  HOLD  AI-generated label required before organic posting
+                         Action: Enable AI-generated content tag in TikTok for Artists
+  Amazon Music  ✅ PASS  No active restriction
+  DistroKid     ✅ PASS  Check "AI-generated content" on upload form for Tier 2
+
+BLOCKS: 0 hard blocks   HOLDS: 1 (TikTok — labeling, not distribution)
+
+GATE STATUS: PROCEED — resolve TikTok label before organic campaign launch
+```

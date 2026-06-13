@@ -1,0 +1,77 @@
+---
+title: "Publish Income"
+slug: "publish-income"
+tagline: "Reconcile royalty statements against your catalog ledger"
+bundle: "publish"
+pillar: "Inventory"
+framework: ["PRO Distribution Reporting", "DSP Royalty Statement Standards", "ASCAP", "BMI", "SESAC"]
+interoperates_with:
+  - "publish-harvest"
+  - "publish-workflow"
+triggers:
+  - "reconcile my royalty statements"
+  - "check my DSP payments"
+  - "Statement-to-Ledger"
+  - "why don't my streams match my payment"
+  - "flag royalty discrepancies"
+  - "audit my income"
+  - "check my distributor payout"
+example_prompts:
+  - "Reconcile this DistroKid statement against my catalog — flag any tracks with missing or underpaid royalties."
+  - "I have three PRO distributions from ASCAP, BMI, and SESAC this quarter. Build a master ledger."
+  - "My Spotify payment is $800 lower than last quarter for the same streams. What's wrong?"
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-income@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["royalty reconciliation", "DSP statements", "PRO income", "music publishing", "ledger"]
+---
+
+## What it does
+
+Publish Income compares incoming royalty statements — from DSPs, distributors, and performing rights organizations — against an internal catalog ledger and flags every discrepancy it finds. Each flag is classified on a D1-D6 severity scale: D1 for minor rounding variances, up to D6 for structural conflicts that require legal or accounting review. The skill outputs a structured discrepancy report with flagged line items, recommended actions per flag, a reconciliation summary, and a master ledger template pre-filled from the statement data.
+
+When no ledger exists yet, the skill builds one from the statement, establishing a baseline for all future reconciliation cycles.
+
+## Frameworks covered
+
+- PRO distribution reporting (ASCAP, BMI, SESAC, PRS, SOCAN)
+- DSP royalty statement formats (Spotify, Apple Music, YouTube, Amazon, TikTok)
+- Distributor summary formats (DistroKid, TuneCore, CD Baby, AWAL, Amuse)
+- Statement-to-Ledger reconciliation protocol
+
+## When to use it
+
+Run Publish Income whenever a new royalty statement arrives. It's the entry point for the quarterly catalog review cycle — publish-harvest consumes the reconciled ledger as its primary input. Also use it when a payment looks wrong, streams and revenue are misaligned, or multiple source statements need consolidating into a single view. If a track is missing from a statement entirely, the skill will surface that as a D4 flag for investigation.
+
+## Example output (abbreviated)
+
+```
+RECONCILIATION REPORT — Q1 2026
+─────────────────────────────────────────────────────────────
+Source: DistroKid + ASCAP Q1 Distribution
+Period: Jan 1 – Mar 31, 2026
+Tracks reconciled: 47
+
+DISCREPANCY FLAGS
+  D5 [CRITICAL] TX-10003 — ASCAP Q1 payout $8,204 vs. ledger estimate $247
+                Trigger: Distribution > 3× historical average
+                Action: Verify track registration — possible unlicensed commercial use
+  D4 [HIGH]     TX-10011 — "Neon Flash" missing from DistroKid Q1 statement
+                Trigger: Track present in catalog, absent from distribution
+                Action: Confirm active distribution status with DistroKid
+  D3 [MEDIUM]   TX-10019 — ISRC conflict: two tracks share ISRC US-AB1-26-00147
+                Trigger: Duplicate ISRC on separate recordings
+                Action: Request ISRC re-issuance for secondary track
+  D1 [LOW]      TX-10004 — $0.12 rounding variance on Apple statement
+                Trigger: Sub-$1 variance within rounding tolerance
+                Action: Log and carry forward
+
+RECONCILIATION SUMMARY
+  Matched (clean):  43 tracks
+  Flagged:           4 tracks
+  Estimated gap:   $8,217 pending resolution
+
+GATE STATUS: HOLD on D5 and D4 — resolve before closing quarter
+```

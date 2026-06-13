@@ -7,6 +7,7 @@ import NavBlock from "../../components/NavBlock.astro";
 const skills = await getCollection("skills");
 
 const dropOrder = [
+  // Compliance bundle
   "ai-transparency-writer",
   "eu-ai-act-classifier",
   "hitl-compliance-gate",
@@ -14,9 +15,17 @@ const dropOrder = [
   "iso-42001-audit-prep",
   "nist-ai-rmf-checkpoint",
   "pii-exposure-checker",
+  // Publish bundle
+  "publish-workflow",
+  "publish-income",
+  "publish-update",
+  "publish-broadcast",
+  "publish-provenance",
+  "publish-shield",
+  "publish-license",
+  "publish-harvest",
 ];
 
-// Sort returned entries by drop order; skills absent from dropOrder sort last
 const sortedSkills = skills.sort((a, b) => {
   const ai = dropOrder.indexOf(a.id);
   const bi = dropOrder.indexOf(b.id);
@@ -28,11 +37,17 @@ const getStatusClass = (status: string) => {
   if (status === "draft") return "text-yellow";
   return "text-red";
 };
+
+const complianceCount = sortedSkills.filter((s) => s.data.bundle === "compliance").length;
+const publishCount = sortedSkills.filter((s) => s.data.bundle === "publish").length;
+const totalCount = sortedSkills.length;
+
+const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
 ---
 
 <BaseLayout
   title="Skills | Quirgs"
-  description="7 production-validated AI compliance skills. EU AI Act, NIST AI RMF, ISO 42001, GDPR."
+  description="15 production-validated skills for AI governance and music publishing. EU AI Act, NIST AI RMF, ISO 42001, DDEX, PRO registration."
   terminalPath="~/skills"
 >
   <NavBlock currentPath="/skills/" />
@@ -41,36 +56,79 @@ const getStatusClass = (status: string) => {
     ><span class="text-bright">$</span> ls -la /quirgs/skills/
   </div>
   <div class="line">&nbsp;</div>
-  <div class="line text-bright">total 7</div>
 
-  {
-    sortedSkills.map((skill) => {
-      // Format version to v1.0 (or v1.0.0 depending on frontmatter)
-      const rawVersion = skill.data.version;
-      const cleanVersion = rawVersion.startsWith("v")
-        ? rawVersion
-        : `v${rawVersion}`;
-      // Format and pad fields for aligned terminal list
-      const versionPadded = cleanVersion.padEnd(6, " ");
-      const statusText = `[${skill.data.status}]`;
-      const statusPadded = statusText.padEnd(9, " ");
-      const tagline = skill.data.tagline;
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <div class="tab-group" role="tablist" aria-label="Filter by bundle">
+      <button class="tab-btn active" data-bundle="all" role="tab" aria-selected="true">
+        [ ALL&nbsp;·&nbsp;{totalCount} ]
+      </button>
+      <button class="tab-btn" data-bundle="compliance" role="tab" aria-selected="false">
+        [ COMPLIANCE&nbsp;·&nbsp;{complianceCount} ]
+      </button>
+      <button class="tab-btn" data-bundle="publish" role="tab" aria-selected="false">
+        [ PUBLISH&nbsp;·&nbsp;{publishCount} ]
+      </button>
+    </div>
+    <div class="pillar-group">
+      <label for="pillar-select" class="filter-label">pillar:</label>
+      <select id="pillar-select" class="tui-select" aria-label="Filter by pillar">
+        <option value="all">all pillars</option>
+        {pillars.map((p) => <option value={p}>{p}</option>)}
+      </select>
+    </div>
+  </div>
 
-      return (
-        <div class="line">
-          <span>-rwxr--r-- compliance </span>
-          <a href={`/skills/${skill.id}/`}>{skill.id}</a>
-          <span>{" ".repeat(Math.max(0, 26 - skill.id.length))}</span>
-          <span>{versionPadded}</span>
-          <span class={getStatusClass(skill.data.status)}>{statusPadded}</span>
-          <span>{tagline}</span>
-        </div>
-      );
-    })
-  }
+  <!-- Table header -->
+  <div class="skills-table">
+    <div class="skills-header">
+      <span class="col-bundle text-bright">BUNDLE</span>
+      <span class="col-name text-bright">SKILL</span>
+      <span class="col-ver text-bright">VER</span>
+      <span class="col-status text-bright">STATUS</span>
+      <span class="col-tagline text-bright">TAGLINE</span>
+    </div>
+    <div class="divider-row">
+      <span class="divider-line"></span>
+    </div>
 
+    {
+      sortedSkills.map((skill) => {
+        const rawVersion = skill.data.version;
+        const version = rawVersion.startsWith("v") ? rawVersion : `v${rawVersion}`;
+
+        return (
+          <div
+            class="skill-row"
+            data-bundle={skill.data.bundle}
+            data-pillar={skill.data.pillar}
+          >
+            <span
+              class={`col-bundle ${skill.data.bundle === "compliance" ? "text-blue" : "text-yellow"}`}
+            >
+              {skill.data.bundle}
+            </span>
+            <a class="col-name" href={`/skills/${skill.id}/`}>
+              {skill.id}
+            </a>
+            <span class="col-ver">{version}</span>
+            <span class={`col-status ${getStatusClass(skill.data.status)}`}>
+              [{skill.data.status}]
+            </span>
+            <span class="col-tagline">{skill.data.tagline}</span>
+          </div>
+        );
+      })
+    }
+
+    <div class="no-results" style="display:none;">
+      <span class="text-yellow">[WARN]</span> No skills match the current filter.
+    </div>
+  </div>
+
+  <div class="line">&nbsp;</div>
   <div class="archive-note">
-    <span class="text-yellow">[NOTE]</span> &rarr; These skills are for governance
+    <span class="text-yellow">[NOTE]</span> &rarr; Compliance skills are for governance
     education purposes only.<br />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&rarr; They do not constitute legal
     advice or a formal compliance determination.<br />
@@ -80,3 +138,247 @@ const getStatusClass = (status: string) => {
     making compliance decisions.
   </div>
 </BaseLayout>
+
+<style>
+  /* ── Filter bar ─────────────────────────────────────────────── */
+  .filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+
+  .tab-group {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--term-border);
+    color: var(--text-main);
+    font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+    font-size: 0.78rem;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition:
+      color 0.15s,
+      border-color 0.15s,
+      background 0.15s;
+    letter-spacing: 0.03em;
+    margin-right: -1px;
+  }
+
+  .tab-btn:first-child {
+    border-radius: 3px 0 0 3px;
+  }
+
+  .tab-btn:last-child {
+    border-radius: 0 3px 3px 0;
+    margin-right: 0;
+  }
+
+  .tab-btn:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+    z-index: 1;
+    position: relative;
+  }
+
+  .tab-btn.active {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+    background: rgba(74, 222, 128, 0.08);
+    z-index: 1;
+    position: relative;
+  }
+
+  .pillar-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .filter-label {
+    color: var(--text-main);
+    font-size: 0.78rem;
+    font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+  }
+
+  .tui-select {
+    background: var(--term-bg);
+    border: 1px solid var(--term-border);
+    color: var(--accent-yellow);
+    font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+    font-size: 0.78rem;
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 24px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23facc15'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    transition:
+      border-color 0.15s,
+      color 0.15s;
+  }
+
+  .tui-select:hover,
+  .tui-select:focus {
+    border-color: var(--accent-yellow);
+  }
+
+  /* ── Skills table ───────────────────────────────────────────── */
+  .skills-table {
+    width: 100%;
+    font-size: 0.88rem;
+    line-height: 1.8;
+  }
+
+  .skills-header,
+  .skill-row {
+    display: grid;
+    grid-template-columns: 11ch 26ch 7ch 8ch 1fr;
+    gap: 0 8px;
+    align-items: baseline;
+  }
+
+  .skills-header {
+    margin-bottom: 2px;
+  }
+
+  .divider-row {
+    margin-bottom: 6px;
+  }
+
+  .divider-line {
+    display: block;
+    height: 1px;
+    background: var(--term-border);
+    width: 100%;
+  }
+
+  .skill-row {
+    padding: 1px 0;
+    transition: background 0.1s;
+    border-radius: 2px;
+  }
+
+  .skill-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .skill-row[hidden],
+  .skill-row.hidden {
+    display: none;
+  }
+
+  .col-bundle,
+  .col-name,
+  .col-ver,
+  .col-status,
+  .col-tagline {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .col-tagline {
+    color: var(--text-main);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .no-results {
+    padding: 8px 0;
+    color: var(--text-main);
+    font-size: 0.88rem;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .skills-header,
+    .skill-row {
+      grid-template-columns: 10ch 1fr 6ch;
+      grid-template-rows: auto auto;
+    }
+
+    .col-ver {
+      display: none;
+    }
+
+    .col-tagline {
+      grid-column: 1 / -1;
+      font-size: 0.78rem;
+      color: var(--text-main);
+      opacity: 0.75;
+      padding-left: 2px;
+    }
+
+    .skills-header .col-tagline,
+    .skills-header .col-ver {
+      display: none;
+    }
+
+    .filter-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+</style>
+
+<script>
+  // Tab + pillar filter logic — runs client-side
+  const rows = document.querySelectorAll<HTMLElement>(".skill-row");
+  const noResults = document.querySelector<HTMLElement>(".no-results");
+  let activeBundle = "all";
+  let activePillar = "all";
+
+  function applyFilter() {
+    let visible = 0;
+    rows.forEach((row) => {
+      const rowBundle = row.dataset.bundle ?? "";
+      const rowPillar = row.dataset.pillar ?? "";
+      const bundleMatch = activeBundle === "all" || rowBundle === activeBundle;
+      const pillarMatch = activePillar === "all" || rowPillar === activePillar;
+      if (bundleMatch && pillarMatch) {
+        row.classList.remove("hidden");
+        visible++;
+      } else {
+        row.classList.add("hidden");
+      }
+    });
+    if (noResults) {
+      noResults.style.display = visible === 0 ? "block" : "none";
+    }
+  }
+
+  // Tab buttons
+  document.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document
+        .querySelectorAll(".tab-btn")
+        .forEach((b) => {
+          b.classList.remove("active");
+          b.setAttribute("aria-selected", "false");
+        });
+      btn.classList.add("active");
+      btn.setAttribute("aria-selected", "true");
+      activeBundle = btn.dataset.bundle ?? "all";
+      applyFilter();
+    });
+  });
+
+  // Pillar dropdown
+  const pillarSelect = document.getElementById("pillar-select") as HTMLSelectElement | null;
+  pillarSelect?.addEventListener("change", () => {
+    activePillar = pillarSelect.value;
+    applyFilter();
+  });
+</script>

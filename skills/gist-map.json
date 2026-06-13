@@ -5,5 +5,13 @@
   "hitl-compliance-gate": "7230938324b9b3b767b826c264125365",
   "incident-response-logger": "4708e63f8e0761964a899f68b65f7fdd",
   "iso-42001-audit-prep": "a377f2b8d88f81ca49d3a2d133a8bc1e",
-  "nist-ai-rmf-checkpoint": "48b798cba35f7a66ba07b1a99a5ec318"
+  "nist-ai-rmf-checkpoint": "48b798cba35f7a66ba07b1a99a5ec318",
+  "publish-income": "",
+  "publish-update": "",
+  "publish-broadcast": "",
+  "publish-license": "",
+  "publish-provenance": "",
+  "publish-shield": "",
+  "publish-harvest": "",
+  "publish-workflow": ""
 }

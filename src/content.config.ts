@@ -10,6 +10,9 @@ const skills = defineCollection({
     slug: z.string(),
     tagline: z.string(),
 
+    // Product bundle this skill belongs to — used for UI tab filtering
+    bundle: z.enum(['compliance', 'publish']),
+
     // Governance structure
     // One of the three Quirgs governance pillars — used for UI filtering and routing
     pillar: z.enum([
