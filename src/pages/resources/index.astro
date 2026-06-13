@@ -1,0 +1,147 @@
+---
+// src/pages/resources/index.astro
+// Resources index — case studies and technical writeups, rendered in the
+// terminal (TUI) aesthetic shared with /skills/ and /bundles/.
+//
+// New case studies: add a page under src/pages/resources/ and append an entry
+// to the `caseStudies` array below. The listing sorts by `date` (newest first).
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
+
+interface CaseStudy {
+  path: string;
+  title: string;
+  date: string; // ISO yyyy-mm-dd — drives sort + display
+  kind: string; // short label, e.g. "case study"
+  summary: string;
+}
+
+const caseStudies: CaseStudy[] = [
+  {
+    path: "/resources/publish-bundle-stress-test/",
+    title: "PUBLISH Bundle — Stress Test Case Study",
+    date: "2026-06-12",
+    kind: "case study",
+    summary:
+      "A two-phase hybrid test — 93 deterministic checks plus 6 reasoning runs — against a catalog engineered to break the skills' validation logic.",
+  },
+];
+
+const sorted = [...caseStudies].sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<BaseLayout
+  title="Resources | Quirgs Case Studies & Writeups"
+  description="Technical case studies and writeups from Quirgs — how the skills and bundles are validated, governed, and shipped."
+  terminalPath="~/resources"
+>
+  <NavBlock currentPath="/resources/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/resources</span
+    ><span class="text-bright">$</span>&nbsp;ls -lt resources/
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="text-bright">[INDEX]</span>&nbsp;&nbsp;{sorted.length}
+    {sorted.length === 1 ? "entry" : "entries"}
+  </div>
+
+  <div class="resources-table">
+    <div class="resources-header">
+      <span class="col-date text-bright">DATE</span>
+      <span class="col-kind text-bright">TYPE</span>
+      <span class="col-title text-bright">TITLE</span>
+    </div>
+    <div class="divider-row">
+      <span class="divider-line"></span>
+    </div>
+    {
+      sorted.map((cs) => (
+        <div class="resource-row">
+          <span class="col-date text-blue">{cs.date}</span>
+          <span class="col-kind text-yellow">{cs.kind}</span>
+          <div class="col-title">
+            <a href={cs.path}>{cs.title}</a>
+            <p class="resource-summary">{cs.summary}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="line">&nbsp;</div>
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/resources</span
+    ><span class="text-bright">$&nbsp;</span><span class="cursor"></span>
+  </div>
+</BaseLayout>
+
+<style>
+  .resources-table {
+    width: 100%;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    margin: 12px 0 20px;
+  }
+
+  .resources-header,
+  .resource-row {
+    display: grid;
+    grid-template-columns: 12ch 13ch 1fr;
+    gap: 0 8px;
+    align-items: baseline;
+  }
+
+  .resources-header {
+    margin-bottom: 2px;
+  }
+
+  .divider-row {
+    margin-bottom: 6px;
+  }
+
+  .divider-line {
+    display: block;
+    height: 1px;
+    background: var(--term-border);
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .resource-row {
+    padding: 6px 0;
+    transition: background 0.1s;
+    border-radius: 2px;
+  }
+
+  .resource-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .resource-summary {
+    margin: 4px 0 0 0;
+    color: var(--text-main);
+    font-size: 0.82rem;
+    line-height: 1.5;
+    opacity: 0.85;
+  }
+
+  @media (max-width: 600px) {
+    .resources-header,
+    .resource-row {
+      grid-template-columns: 1fr;
+    }
+
+    .resources-header .col-kind,
+    .resources-header .col-title {
+      display: none;
+    }
+
+    .resource-row .col-date {
+      font-size: 0.78rem;
+      opacity: 0.75;
+    }
+  }
+</style>

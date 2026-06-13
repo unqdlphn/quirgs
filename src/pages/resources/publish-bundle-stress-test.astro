@@ -1,0 +1,424 @@
+---
+// src/pages/resources/publish-bundle-stress-test.astro
+// Case study — PUBLISH Bundle stress test. Terminal (TUI) styling inherited
+// from BaseLayout, mirroring the /skills/[slug] detail-page structure.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
+
+const phase2 = [
+  {
+    test: 'Fuzzy title matching ("Ocean Breeeze" → "Ocean Breeze")',
+    result: "PASS — matched at ≥ 90% similarity, flagged as low-confidence",
+  },
+  {
+    test: "AI tier inference from tool description alone",
+    result: "PASS — Tier 2 inferred correctly without explicit tier label",
+  },
+  {
+    test: "HITL pause behavior in publish-workflow",
+    result: "PASS — skill stopped at checkpoint, did not auto-advance",
+  },
+  {
+    test: "D5 classification narrative",
+    result: "PASS — output identified as unexpected income, not a variance",
+  },
+  {
+    test: "Advisory tone compliance",
+    result: "PASS — no legal/accounting claims; advisory language present",
+  },
+  {
+    test: "Hard-stop enforcement under pressure",
+    result:
+      "PASS — Retro Groove not pitched despite 78% score when clearance = Blocked",
+  },
+];
+---
+
+<BaseLayout
+  title="PUBLISH Bundle — Stress Test Case Study | Quirgs"
+  description="A two-phase hybrid test of the PUBLISH Bundle: 93 deterministic checks plus 6 reasoning runs against a catalog engineered to break the skills' validation logic."
+  terminalPath="~/resources/publish-bundle-stress-test"
+>
+  <NavBlock currentPath="/resources/" />
+
+  <!-- Back to resources listing -->
+  <div class="line">
+    <span class="text-blue">&larr;</span>&nbsp;<a href="/resources/"
+      >back to resources</a
+    >
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/resources</span
+    ><span class="text-bright">$</span>&nbsp;cat publish-bundle-stress-test.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <!-- Header block -->
+  <div class="detail-header">
+    <h1 class="text-bright">PUBLISH Bundle — Stress Test Case Study</h1>
+    <p class="tagline">
+      Governance-first validation: the rules each skill enforces, executed
+      against a dataset engineered to break them.
+    </p>
+    <div class="badges-row">
+      <span class="badge">June 12, 2026</span>
+      <span class="badge status-badge status-live">[93/93 PASS]</span>
+      <span class="badge status-badge status-live">[6/6 PASS]</span>
+    </div>
+  </div>
+
+  <h2 class="text-bright">The Problem We Were Solving</h2>
+  <p>
+    AI skills are prompt-driven. That makes them easy to build and hard to
+    verify. Most ship on the strength of a few manual tests and intuition. We
+    built the PUBLISH Bundle — eight skills covering the core workflows of a
+    music publisher — and before we shipped, we needed to know whether the
+    validation logic inside those skills actually held up under real operational
+    pressure.
+  </p>
+  <p>
+    That required a testing approach that matched the architecture: part
+    deterministic, part reasoning. You can't unit test an LLM, but you can
+    isolate the rules it's supposed to follow and verify those independently.
+  </p>
+
+  <h2 class="text-bright">What We Built</h2>
+  <p>
+    The PUBLISH Bundle is a Cowork plugin with eight skills mapped to the weekly
+    operational cadence of a music publisher:
+  </p>
+  <ul>
+    <li>
+      <span class="text-bright">publish-income</span> — royalty reconciliation, statement-to-ledger,
+      discrepancy flagging
+    </li>
+    <li>
+      <span class="text-bright">publish-update</span> — catalog metadata hygiene audit
+      and enrichment
+    </li>
+    <li>
+      <span class="text-bright">publish-broadcast</span> — DDEX and PRO registration
+      data extraction
+    </li>
+    <li>
+      <span class="text-bright">publish-license</span> — three-agent sync stack: brief
+      analysis → catalog matching → pitch writing
+    </li>
+    <li>
+      <span class="text-bright">publish-provenance</span> — AI involvement assessment
+      and creation log generation
+    </li>
+    <li>
+      <span class="text-bright">publish-shield</span> — pre-release compliance gate
+      and AI governance policy generator
+    </li>
+    <li>
+      <span class="text-bright">publish-harvest</span> — quarterly catalog performance
+      review
+    </li>
+    <li>
+      <span class="text-bright">publish-workflow</span> — orchestrator, runs the full
+      weekly publishing OS cadence
+    </li>
+  </ul>
+  <p>
+    Each skill embeds explicit validation rules: ISRC format requirements,
+    quality score formulas, compliance gate trigger conditions, sync match
+    thresholds, discrepancy classification codes. These rules are testable
+    without invoking the LLM.
+  </p>
+
+  <h2 class="text-bright">The Testing Methodology</h2>
+  <p>We used a two-phase hybrid approach.</p>
+  <h3>Phase 1 — Deterministic validation (Python, zero tokens)</h3>
+  <p>
+    We built <code>publish_skills_test.py</code>, a 94-test suite that executes
+    the rule-based logic in each skill against a high-fidelity mock catalog. No
+    Claude invocations. Fully repeatable. Re-runs in seconds against any updated
+    version of the workbook.
+  </p>
+  <h3>Phase 2 — Reasoning layer (targeted Claude runs, 6 sessions)</h3>
+  <p>
+    We ran six hand-picked edge cases through the live skills to test the parts
+    Python can't cover: narrative tone, HITL pause behavior, inference under
+    ambiguous input, and hard-stop enforcement under pressure.
+  </p>
+  <p>
+    The split was approximately 80/20: most of the validation surface is
+    deterministic and belongs in the Python suite. The LLM reasoning layer is a
+    smaller surface but the one that matters most for client trust.
+  </p>
+
+  <h2 class="text-bright">The Mock Dataset</h2>
+  <p>
+    The test environment was a 55-track music publishing catalog, generated from
+    four strategic personas developed through NotebookLM research. Each section
+    was engineered to stress-test a specific skill.
+  </p>
+  <h3>Back-catalog (30 tracks — Maya Chen, catalog hygiene)</h3>
+  <ul>
+    <li>
+      5 missing ISRCs, 6 duplicates across 3 pairs, 4 malformed formats — 15
+      total ISRC errors
+    </li>
+    <li>12 ASCAP compositions with missing or pending ISWC registrations</li>
+    <li>
+      Revenue concentration engineered to reflect a real Pareto distribution: 4
+      tracks generating 68% of segment revenue
+    </li>
+  </ul>
+  <h3>Active roster (15 tracks — Dani Rivers, AI provenance)</h3>
+  <ul>
+    <li>
+      Tracks distributed across AI tiers: 5 Tier 1, 5 Tier 2, 1 Tier 3, 4 pure
+      human
+    </li>
+    <li>
+      TC-036 ("TikTok Wave"): Tier 2 chord beds, TikTok-targeted, AI label
+      missing — designed to trigger <code>publish-shield</code>
+    </li>
+    <li>
+      TC-037 ("Crossroads"): 50/50 ASCAP/BMI split with the BMI co-writer's IPI
+      absent
+    </li>
+  </ul>
+  <h3>Sync pipeline (10 tracks — Leo Marsh, licensing)</h3>
+  <ul>
+    <li>
+      TC-041 ("Algorithm Heartbeat"): Tier 3 vocal cloning — hard block
+      regardless of match score
+    </li>
+    <li>
+      TC-055 ("Retro Groove"): 78% match score on a $40K brief, blocked by
+      unresolved drum sample clearance
+    </li>
+  </ul>
+  <h3>Distributor statements (11 transactions)</h3>
+  <ul>
+    <li>
+      TX-10003: $8,000 ASCAP "Unidentified Performance" Q2 distribution — D5
+      classification trigger
+    </li>
+    <li>
+      TX-10004: "Ocean Breeeze" (misspelled) with missing ISRC — fuzzy
+      title-match fallback test
+    </li>
+    <li>
+      TX-10007: CD Baby H1 semi-annual statement overlapping with DistroKid
+      Q1+Q2 quarterly periods
+    </li>
+  </ul>
+
+  <h2 class="text-bright">Phase 1 Results</h2>
+  <p>
+    <span class="text-bright">93 / 94 tests passing on first run.</span> (1 test had
+    a wrong expected count due to a footer row in the workbook — corrected in the
+    same session.)
+  </p>
+  <p>
+    After correction: <span class="text-green"
+      >93 / 93 PASS, 0 failures, 1 expected advisory warning.</span
+    >
+  </p>
+  <p>
+    The advisory warning was intentional: TX-10007 correctly flags the CD Baby /
+    DistroKid period overlap as requiring human calendar reconciliation. That is
+    the correct HITL behavior.
+  </p>
+  <p>Key validations confirmed:</p>
+  <ul>
+    <li>All 15 ISRC error types detected and classified correctly by type</li>
+    <li>ISWC pending count: 12 (exact match to spec)</li>
+    <li>
+      Quality score formula verified — clean tracks outscore critical tracks;
+      required fields weight correctly at 70%
+    </li>
+    <li>
+      TC-036 compliance gate triggered on all three conditions simultaneously
+    </li>
+    <li>TC-037 BMI IPI gap detected in PRO split details</li>
+    <li>
+      SB-201 indie film brief: 3 pitches, all ≥ 85%, all Cleared — correct
+    </li>
+    <li>
+      SB-202 retail brief: Neon Flash held at 52% (below 55% threshold), Retro
+      Groove hard-stopped at 78% despite passing the score threshold — the key
+      invariant test
+    </li>
+    <li>
+      Revenue concentration: top 4 tracks = $49,300 of $72,485 back-catalog
+      total (68.0%)
+    </li>
+    <li>
+      Active roster AI tier distribution: 4 / 5 / 5 / 1 (None / Tier 1 / Tier 2
+      / Tier 3)
+    </li>
+  </ul>
+
+  <h2 class="text-bright">Phase 2 Results</h2>
+  <p><span class="text-green">6 / 6 PASS</span> across the reasoning layer.</p>
+  <p>Areas tested and confirmed:</p>
+
+  <div class="results-table">
+    <div class="results-header">
+      <span class="col-test text-bright">TEST</span>
+      <span class="col-result text-bright">RESULT</span>
+    </div>
+    <div class="divider-row"><span class="divider-line"></span></div>
+    {
+      phase2.map((row) => (
+        <div class="result-row">
+          <span class="col-test">{row.test}</span>
+          <span class="col-result text-green">{row.result}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <h2 class="text-bright">The Gap Found and Closed</h2>
+  <p>
+    Phase 2 surfaced one real gap: <code>publish-shield</code> and
+    <code>publish-provenance</code> were applying tier thresholds inconsistently when
+    AI tool descriptions were provided without an explicit tier label. The skills
+    were not resolving tool names to tiers inline.
+  </p>
+  <p><span class="text-bright">Fix applied before merging:</span></p>
+  <ul>
+    <li>
+      <code>ai-tool-tier-map.md</code> created in the plugin — maps AI tool names
+      to tiers (e.g., iZotope Ozone → Tier 1, Suno chord generation → Tier 2, vocal
+      cloning → Tier 3)
+    </li>
+    <li>Inline tier resolution rules added to Gist stubs for both skills</li>
+    <li>
+      <code>publish-shield</code> and <code>publish-provenance</code> SKILL.md files
+      updated in both the plugin and <code>quirgs/skills/</code> locations
+    </li>
+    <li>CHANGELOG updated under <code>feat/publish-bundle</code></li>
+  </ul>
+  <p>
+    This is the outcome that justifies the testing process. The gap was small
+    but it was real, and it would have produced inconsistent compliance
+    assessments in production. It was caught before the branch merged.
+  </p>
+
+  <h2 class="text-bright">What This Demonstrates</h2>
+  <p>
+    The PUBLISH Bundle shipped governance-first. The validation logic in each
+    skill is not aspirational — it has been executed against a dataset
+    specifically engineered to break it, and it held.
+  </p>
+  <p>Three things worth noting for serious clients:</p>
+  <p>
+    <span class="text-bright">The methodology is repeatable.</span>
+    <code>publish_skills_test.py</code> runs against the catalog workbook in seconds.
+    Any update to the skills can be re-validated immediately. This is not a one-time
+    exercise.
+  </p>
+  <p>
+    <span class="text-bright">The hard-stop invariant is load-bearing.</span> The
+    most important test in the suite is the one where Retro Groove scores 78% — above
+    any reasonable pitch threshold — but is blocked by an unresolved sample clearance.
+    The skill correctly rejects the pitch. An AI that pitches a blocked track because
+    the match score is high is an AI that creates legal liability. This skill doesn't
+    do that.
+  </p>
+  <p>
+    <span class="text-bright">The gap found in Phase 2 was non-trivial.</span> It
+    wasn't a typo or a missing bracket. It was a reasoning inconsistency in how two
+    skills handled ambiguous input. That kind of gap doesn't show up in a demo. It
+    shows up under load, against real operational scenarios, with a human reviewer
+    who knows what to look for.
+  </p>
+
+  <div class="detail-footer">
+    <p><span class="label">PUBLISHED:</span> June 12, 2026</p>
+    <p>
+      <span class="label">PHASE 1:</span> 93 / 93 deterministic — 0 failures
+    </p>
+    <p><span class="label">PHASE 2:</span> 6 / 6 reasoning — 0 failures</p>
+    <p>
+      <span class="label">BUNDLE:</span>
+      <a href="/bundles/">quirgs-publish</a>
+    </p>
+    <p>
+      <span class="label">EBOOK:</span>
+      <a href="https://www.amazon.com/dp/B0H5671G2K">Amazon</a> · <a
+        href="https://books.apple.com/us/book/id6778948787">Apple Books</a
+      >
+    </p>
+  </div>
+
+  <p class="signoff text-main">Quirgs · Governance first. Build accordingly.</p>
+</BaseLayout>
+
+<style>
+  .results-table {
+    width: 100%;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    margin: 12px 0 24px;
+  }
+
+  .results-header,
+  .result-row {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: 0 16px;
+    align-items: baseline;
+  }
+
+  .results-header {
+    margin-bottom: 2px;
+  }
+
+  .divider-row {
+    margin-bottom: 6px;
+  }
+
+  .divider-line {
+    display: block;
+    height: 1px;
+    background: var(--term-border);
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .result-row {
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--term-border);
+  }
+
+  .result-row:last-child {
+    border-bottom: none;
+  }
+
+  .col-test {
+    color: var(--text-bright);
+  }
+
+  .signoff {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--term-border);
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 600px) {
+    .results-header,
+    .result-row {
+      grid-template-columns: 1fr;
+    }
+
+    .results-header .col-result {
+      display: none;
+    }
+
+    .col-result {
+      margin-top: 4px;
+    }
+  }
+</style>

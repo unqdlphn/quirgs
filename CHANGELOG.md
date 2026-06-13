@@ -9,6 +9,16 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Resources section + first case study (feat/resources-case-studies)
+
+**Branch:** `feat/resources-case-studies` — (2026-06-13)
+
+### Added
+
+- New `resources` nav group in [src/data/routes.ts](src/data/routes.ts) (ordered between `registry` and `docs`) plus a `/resources/` route. Non-`primary`, so it surfaces in the SiteMenu overlay tree only, keeping the inline NavBlock row short.
+- [src/pages/resources/index.astro](src/pages/resources/index.astro) — case-studies listing in the shared terminal (TUI) aesthetic (`ls -lt resources/`), driven by a `caseStudies` array sorted newest-first. Adding a future writeup is one array entry plus one page file.
+- [src/pages/resources/publish-bundle-stress-test.astro](src/pages/resources/publish-bundle-stress-test.astro) — first case study (PUBLISH Bundle stress test), mirroring the `/skills/[slug]` detail-page structure and typography. Internal "Private — client lead use only" handling banner intentionally omitted from the public page body.
+
 ## Fix — Publish skill Gist links (fix/publish-gist-links)
 
 **Branch:** `fix/publish-gist-links` — (2026-06-13)
