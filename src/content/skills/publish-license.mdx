@@ -1,0 +1,81 @@
+---
+title: "Publish License"
+slug: "publish-license"
+tagline: "Three-agent sync pipeline — brief to pitch in one pass"
+bundle: "publish"
+pillar: "Checkpoints"
+framework: ["Sync Licensing Protocol", "Music Publishing Standards", "Master Use Licensing", "Sync Rights Standards"]
+interoperates_with:
+  - "publish-shield"
+  - "publish-update"
+  - "publish-workflow"
+triggers:
+  - "pitch a sync license"
+  - "find tracks for this brief"
+  - "match my catalog to a brief"
+  - "I have a sync opportunity"
+  - "write a sync pitch"
+  - "help me respond to a music supervisor"
+  - "find music for this scene"
+  - "prepare a sync submission"
+example_prompts:
+  - "I have a brief for a national retail campaign — 30-second spot, upbeat, no AI-generated music. Match my catalog."
+  - "This music supervisor wants introspective mid-tempo tracks for an indie film. Score my top candidates."
+  - "Write the pitch for the three tracks I'm submitting for this TV sync."
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-license@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["sync licensing", "sync pitch", "music supervisor", "catalog matching", "music publishing"]
+---
+
+## What it does
+
+Publish License runs a three-agent pipeline — Brief Analyst, Catalog Matcher, Pitch Writer — to take a sync licensing opportunity from brief intake to submission-ready pitch in a single pass.
+
+The Brief Analyst decodes the creative, technical, and rights requirements in the brief: mood, tempo, instrumentation, duration, exclusivity, territory, and any restrictions (no lyrics, no AI-generated content, specific genre exclusions). The Catalog Matcher scores every eligible track in the catalog against those parameters and returns a ranked shortlist with per-criterion scores and a confidence rating. The Pitch Writer converts the shortlist into a polished pitch document formatted for the specific placement type — film, TV, advertising, or game — ready to send directly to the music supervisor.
+
+When the catalog has no strong match for a brief, the skill documents the gap explicitly rather than forcing a low-confidence recommendation.
+
+## Frameworks covered
+
+- Sync licensing protocol — master use and sync rights clearance
+- Music supervisor submission standards
+- Blanket license and per-placement licensing structures
+- AI content restrictions (platform-specific, per brief requirements)
+
+## When to use it
+
+Use Publish License whenever a sync brief arrives. It handles everything from small indie placements to major advertising campaigns. Run publish-shield first if any candidate tracks have unresolved rights questions — the Catalog Matcher enforces a hard stop on tracks with active clearance blocks, regardless of how well they score against the brief. Also use it in reverse: when a supervisor asks for a specific type of track you don't have, the gap analysis output feeds directly into catalog development planning.
+
+## Example output (abbreviated)
+
+```
+SYNC LICENSING REPORT
+─────────────────────────────────────────────────────────────
+Brief: National Retail Campaign — Q3 2026
+Type: :30 spot / upbeat / no AI-generated content / MFN terms
+
+BRIEF ANALYSIS
+  Mood:         Upbeat, optimistic, energetic
+  Tempo:        120–140 BPM preferred
+  Instruments:  Guitar-led or piano-led — no heavy synth
+  Restrictions: No AI-generated content (any tier), no lyrics referencing retail/commerce
+  Rights:       Master + sync, non-exclusive, North America, 1 year
+
+CATALOG MATCH — SHORTLIST
+  Rank  Track                  BPM  Score  Rights    Notes
+  ─────────────────────────────────────────────────────────
+  1     "Gold Standard"        128  91%    Cleared   Strong match — guitar-led, clean metadata
+  2     "Bright Side Up"       134  87%    Cleared   Piano intro, slightly below energy target
+  3     "Neon Flash"           142  52%    BLOCKED   Unresolved sample clearance — hard stop
+       (note: high BPM but blocked — see publish-shield report)
+
+CATALOG GAP NOTE
+  No tracks score above 85% in the 120–128 BPM guitar-led category.
+  Development opportunity: commission 2–3 tracks targeting this brief profile.
+
+PITCH DOCUMENT: ready for tracks #1 and #2
+GATE STATUS: Submit shortlist — track #3 excluded pending clearance
+```

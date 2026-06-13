@@ -9,6 +9,50 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feat — PUBLISH Bundle plugin (feat/publish-bundle)
+
+**Branch:** `feat/publish-bundle` — (2026-06-12)
+
+Eight-skill PUBLISH Bundle for music publishers, targeting the Quirgs Plugin Marketplace. Covers the full PUBLISH Loop: royalty reconciliation, catalog metadata hygiene, DDEX/PRO registration, sync licensing pipeline, AI provenance logging, platform compliance gating, quarterly catalog harvest, and a weekly OS orchestrator.
+
+### Added
+
+- `plugins/quirgs-publish/` — Full plugin directory following the `quirgs-compliance` pattern.
+- `plugins/quirgs-publish/.claude-plugin/plugin.json` — Plugin manifest.
+- `plugins/quirgs-publish/skills/publish-income/` — Royalty reconciliation (Statement-to-Ledger). References: `statement-formats.md`, `reconciliation-logic.md`, `ledger-template.md`.
+- `plugins/quirgs-publish/skills/publish-update/` — Catalog metadata hygiene audit and enrichment. References: `metadata-standards.md`, `hygiene-audit-checklist.md`, `enrichment-sources.md`.
+- `plugins/quirgs-publish/skills/publish-broadcast/` — DDEX ERN + PRO registration data extractor. References: `ddex-ern-fields.md`, `pro-registration-requirements.md`, `broadcast-data-template.md`.
+- `plugins/quirgs-publish/skills/publish-license/` — 3-agent sync licensing pipeline (Brief Analyst → Catalog Matcher → Pitch Writer). References: `brief-analysis-framework.md`, `catalog-matching-criteria.md`, `pitch-writing-guide.md`.
+- `plugins/quirgs-publish/skills/publish-provenance/` — AI involvement assessment + creation log generator (Provenance Triangle). References: `provenance-triangle.md`, `ai-involvement-tiers.md`, `creation-log-template.md`.
+- `plugins/quirgs-publish/skills/publish-shield/` — Pre-release platform compliance gate + AI governance policy generator. References: `platform-ai-policies.md`, `governance-policy-template.md`, `pre-release-compliance-checklist.md`.
+- `plugins/quirgs-publish/skills/publish-harvest/` — Quarterly catalog performance review. References: `performance-metrics.md`, `quarterly-review-template.md`, `trend-signals.md`.
+- `plugins/quirgs-publish/skills/publish-workflow/` — PUBLISH Loop orchestrator (weekly publishing OS entry point).
+- `skills/publish-income/SKILL.md` through `skills/publish-workflow/SKILL.md` — Gist-sync stubs for all 8 skills.
+- `skills/gist-map.json` — Added 8 placeholder entries for publish skill Gist IDs (to be populated by sync pipeline on first run).
+
+### Site — MDX skill pages + skills index UI
+
+- `src/content/skills/publish-*.mdx` (8 files) — Skill detail pages for all PUBLISH Bundle skills, matching the compliance skill format: frontmatter + What it does / Frameworks covered / When to use it / Example output sections. Includes representative example output aligned with the stress test suite.
+- `src/content.config.ts` — Added `bundle: z.enum(['compliance', 'publish'])` field to the skills schema for UI tab filtering.
+- `src/content/skills/*.mdx` (7 compliance files) — Added `bundle: "compliance"` to all existing compliance skill frontmatter.
+- `src/pages/skills/index.astro` — Redesigned for 15-skill scale. TUI-style tab switcher (ALL / COMPLIANCE / PUBLISH), pillar filter dropdown, CSS grid table layout with column headers, bundle-colored labels (blue for compliance, yellow for publish), client-side filter logic via bundled Astro script. Updated meta description and total count from 7 to 15.
+
+### Fixed
+
+- `plugins/quirgs-publish/skills/publish-provenance/references/ai-tool-tier-map.md` — New reference file. Maps ~50 specific AI tools to their default AI Involvement Tier (0–4). Closes a reasoning-layer gap where `publish-shield` relied on LLM model knowledge to classify tools like Suno as Tier 2. Tier assignment is now deterministic from the reference table. Includes usage-condition upgrade rules (e.g., Suno → Tier 2 if modified, Tier 4 if released as-is) and a Tier 4 hard-stop for unauthorized voice cloning regardless of other factors.
+- `plugins/quirgs-publish/skills/publish-shield/SKILL.md` — Step A1 updated: if AI Involvement Tier is not provided, skill now loads `publish-provenance/references/ai-tool-tier-map.md` and infers tier from disclosed tool names rather than assuming Tier 0. Inferred tier is flagged in the compliance report.
+- `plugins/quirgs-publish/skills/publish-provenance/SKILL.md` — Step 3 updated: loads `references/ai-tool-tier-map.md` alongside `ai-involvement-tiers.md` during tier assignment. Tool map takes precedence when Triangle scores and tool-table disagree; discrepancy is noted in the creation log.
+- `public/_headers` — Pinned two new `script-src` SHA-256 hashes for the redesigned `/skills/` (tab + pillar filter) and `/bundle/` (tab switcher) inline scripts. Without them the strict CSP silently blocked both scripts on the Cloudflare preview — tabs and the pillar dropdown rendered but did nothing (worked in `npm run dev`, which does not enforce `_headers`).
+- `keystatic.config.ts` — Added the `bundle` select field to mirror the new `bundle` enum in `content.config.ts`, per the dual-schema rule. (Keystatic remains dormant under Astro 6; this keeps the mirror honest for when support returns.)
+
+### Changed
+
+- **Renamed the `/bundle/` route to `/bundles/`** (directory `src/pages/bundle/` → `src/pages/bundles/`). The original singular name was coined for the single compliance bundle before multi-bundle scaling was considered; with the PUBLISH bundle landing alongside compliance, the plural is correct. Updated `src/data/routes.ts`, `src/pages/index.astro` (boot-sequence link), `NavBlock` `currentPath`, and `README.md`. The `bundle` *frontmatter field* on skills is unchanged — only the route moved.
+- `public/_redirects` — New file. `301` from `/bundle` and `/bundle/` → `/bundles/` so the previously-published (discovered, not indexed) `quirgs.com/bundle` URL does not dead-end.
+- `public/_headers` — Recomputed the pinned landing-terminal-boot `script-src` SHA-256 hash. The `/bundle/` → `/bundles/` href edit lives inside the JS-injected boot string in `index.astro`, which changed the inlined script bytes; the old hash would have CSP-blocked the boot animation. The other five inline-script hashes were verified unchanged.
+
+---
+
 ## Feat — Scalable navigation (V3 prep)
 
 **Branch:** `feat/nav-scale` — (2026-06-10)

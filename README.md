@@ -93,7 +93,7 @@ quirgs/
 │   ├── pages/                  # Astro routes
 │   │   ├── index.astro         # Terminal landing — boot sequence + skill ls
 │   │   ├── skills/             # /skills/ index + dynamic [slug] detail pages
-│   │   ├── bundle/             # /bundle/ — compliance bundle install page
+│   │   ├── bundles/            # /bundles/ — skill bundle install page
 │   │   ├── guides/             # /guides/ — legacy archive index
 │   │   ├── transparency.astro  # AI transparency notice
 │   │   ├── support.astro       # Contact + community
@@ -139,7 +139,7 @@ quirgs/
 | `/` | [src/pages/index.astro](src/pages/index.astro) | Animated terminal boot sequence. JS-injected DOM, no CSS keyframe drift-ins. Lists the seven Skills and links to bundle, guides, and skill detail pages. |
 | `/skills/` | [src/pages/skills/index.astro](src/pages/skills/index.astro) | Skill registry. Reads the `skills` content collection, sorts by drop order, renders an aligned `ls -la` listing. |
 | `/skills/[slug]/` | [src/pages/skills/[slug].astro](src/pages/skills/[slug].astro) | Per-skill detail page rendered from MDX with badges, install block, and interop references. |
-| `/bundle/` | [src/pages/bundle/index.astro](src/pages/bundle/index.astro) | Compliance bundle install page — marketplace install commands for `quirgs-compliance` (7 Skills). |
+| `/bundles/` | [src/pages/bundles/index.astro](src/pages/bundles/index.astro) | Skill bundle install page — marketplace install commands for the `quirgs-compliance` (7 Skills) and `quirgs-publish` (8 Skills) bundles. |
 | `/guides/` | [src/pages/guides/index.astro](src/pages/guides/index.astro) | Index of legacy V1 guides, served verbatim from `/public/guides/`. URLs preserved for SEO. |
 | `/transparency/` | [src/pages/transparency.astro](src/pages/transparency.astro) | AI transparency notice — disclosure of AI-generated content, AI-assisted development, and platform governance posture. |
 | `/support/` | [src/pages/support.astro](src/pages/support.astro) | GitHub Issues + social channels. |

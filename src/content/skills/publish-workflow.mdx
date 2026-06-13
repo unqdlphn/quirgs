@@ -1,0 +1,97 @@
+---
+title: "Publish Workflow"
+slug: "publish-workflow"
+tagline: "Weekly publishing OS — routes tasks to the right skill, in the right order"
+bundle: "publish"
+pillar: "Checkpoints"
+framework: ["PUBLISH Loop", "Music Publishing SOPs", "HITL Protocol", "Weekly Cadence Management"]
+interoperates_with:
+  - "publish-income"
+  - "publish-update"
+  - "publish-broadcast"
+  - "publish-license"
+  - "publish-provenance"
+  - "publish-shield"
+  - "publish-harvest"
+triggers:
+  - "run the publish workflow"
+  - "run the weekly publishing OS"
+  - "start my publishing cadence"
+  - "what should I be working on this week"
+  - "run the PUBLISH Loop"
+  - "orchestrate my publishing tasks"
+  - "what's due in my publishing operation this week"
+example_prompts:
+  - "Run the weekly PUBLISH Loop — here's what I have available this week."
+  - "What's due in my publishing operation? I have two new releases and a sync brief."
+  - "Start the PUBLISH Loop. I have Q1 statements and a catalog update to process."
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-workflow@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["publishing workflow", "PUBLISH Loop", "orchestration", "music publishing", "weekly OS", "HITL"]
+---
+
+## What it does
+
+Publish Workflow is the master entry point for the PUBLISH Bundle. It implements the PUBLISH Loop — a seven-pillar weekly operating cadence for music publishers — assessing what's due in the current period, routing to the appropriate domain skill, and enforcing HITL checkpoints between every stage.
+
+On each run, the workflow asks what data and tasks are available: new royalty statements, catalog updates, registrations pending, sync briefs, new releases, provenance logs, or a quarterly review cycle. It then builds a prioritized task queue, routes each item to the correct domain skill, and tracks completion. Partial data is handled by design — the workflow documents what's missing, proceeds with what's available, and flags deferred items for the next session.
+
+## The PUBLISH Loop
+
+Each pillar maps to a domain skill and runs on its natural cadence:
+
+| Pillar | Skill | Cadence |
+|---|---|---|
+| Income | publish-income | Monthly / per statement |
+| Update | publish-update | Per release / per distribution event |
+| Broadcast | publish-broadcast | Per new release |
+| License | publish-license | Per sync brief |
+| Provenance | publish-provenance | Per release |
+| Shield | publish-shield | Per release / policy review |
+| Harvest | publish-harvest | Quarterly |
+
+## Frameworks covered
+
+- PUBLISH Loop — seven-pillar music publishing operating system
+- HITL checkpoint protocol — human review required between every stage
+- Music publishing SOPs — standard operating procedures for catalog management
+- Weekly cadence management — triage, routing, and deferral handling
+
+## When to use it
+
+Start every publishing session with Publish Workflow. It's the single entry point that prevents the common failure mode of jumping straight into one task while ignoring equally urgent work elsewhere in the operation. Even when only one pillar is active (a sync brief arrives mid-week), routing through the workflow surfaces any dependencies — a brief cannot be pitched if Shield hasn't cleared the candidate tracks, which requires Provenance to have run first.
+
+For owners who want a weekly executive summary rather than task-by-task output, the workflow produces a one-page operating report at the end of each session.
+
+## Example output (abbreviated)
+
+```
+PUBLISH LOOP — WEEKLY SESSION
+─────────────────────────────────────────────────────────────
+Session date: Week of 2026-06-09   Publisher: Neon Sound Publishing
+
+TRIAGE ASSESSMENT
+  Income:     DistroKid May statement available — QUEUE for publish-income
+  Update:     2 new tracks to register — QUEUE for publish-update
+  Broadcast:  New release (EP) requires DDEX + PRO — QUEUE for publish-broadcast
+  License:    1 sync brief received (retail campaign) — QUEUE for publish-license
+  Provenance: New EP tracks undocumented — QUEUE for publish-provenance (before Shield)
+  Shield:     EP pre-release gate — QUEUE after Provenance
+  Harvest:    Q1 not yet closed — DEFER to end of June
+
+TASK QUEUE (prioritized)
+  1. publish-provenance   — EP tracks (required before Shield and Broadcast)
+  2. publish-update       — 2 new tracks (required before Broadcast)
+  3. publish-broadcast    — EP DDEX + PRO registration
+  4. publish-shield       — EP pre-release gate
+  5. publish-income       — DistroKid May statement
+  6. publish-license      — Retail campaign brief
+
+DEFERRED
+  publish-harvest — Q1 not closed; revisit in 2 weeks
+
+HITL CHECKPOINT: Confirm queue before proceeding ↓
+```

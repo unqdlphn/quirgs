@@ -477,6 +477,27 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         color: var(--text-bright);
         font-size: 0.9rem;
       }
+
+      /* ── Large-screen 16:9 layout ───────────────────────────────── */
+      /* At ≥1280px viewport, the terminal window grows to 1280px wide  */
+      /* and locks to a 16:9 aspect ratio. Content scrolls inside the  */
+      /* terminal-body as before; the outer window stays cinematic.    */
+      @media (min-width: 1280px) {
+        .main-wrapper {
+          max-width: 1280px;
+        }
+
+        .site-bottom-row {
+          max-width: 1280px;
+        }
+
+        .terminal-container {
+          max-width: 1280px;
+          aspect-ratio: 16 / 9;
+          /* max-height still applies; at 1280px wide 16:9 = 720px which   */
+          /* is well within calc(100dvh - 120px) on any modern display.   */
+        }
+      }
     </style>
   </head>
   <body>

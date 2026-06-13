@@ -1,0 +1,77 @@
+---
+title: "Publish Update"
+slug: "publish-update"
+tagline: "Catalog metadata hygiene — find gaps, fix errors, enrich records"
+bundle: "publish"
+pillar: "Inventory"
+framework: ["ISRC (ISO 3901)", "UPC/EAN", "DDEX Standards", "MusicBrainz Metadata Schema"]
+interoperates_with:
+  - "publish-broadcast"
+  - "publish-workflow"
+triggers:
+  - "fix my catalog metadata"
+  - "my ISRC is wrong"
+  - "catalog hygiene audit"
+  - "find missing ISRCs"
+  - "metadata enrichment"
+  - "clean up my catalog"
+  - "update my UPCs"
+example_prompts:
+  - "Audit my catalog export — find every track with a missing or malformed ISRC."
+  - "I need to prepare this catalog for re-distribution. Run a full metadata hygiene check."
+  - "We're pitching 40 tracks for sync. What metadata errors do I need to fix first?"
+status: live
+marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
+installCmd: "/plugin install publish-update@quirgs-publish"
+version: "1.0.0"
+lastUpdated: 2026-06-12
+tags: ["catalog metadata", "ISRC", "UPC", "metadata hygiene", "music publishing"]
+---
+
+## What it does
+
+Publish Update audits a music catalog's metadata against ISRC, UPC, DDEX, and distribution requirements. It identifies every gap and error across required fields — ISRCs (missing, malformed, or duplicated), UPCs, title formatting, artist credits, genre classification, ISWC for compositions, and rights ownership data. Each error is classified by type and field priority, with a field-level quality score that shows where the catalog stands overall.
+
+After the audit, the skill enriches incomplete records by inferring or sourcing correct values from authoritative references: ISRC lookup databases, ISWC registry patterns, and standard genre taxonomies. The output is an audit report paired with an import-ready corrected data set, formatted for direct re-upload to a distributor.
+
+## Frameworks covered
+
+- ISRC standard (ISO 3901) — sound recording identifiers
+- ISWC standard (T-000.000.000-C) — composition identifiers
+- UPC/EAN-13 — release identifiers
+- DDEX Data Dictionary — field naming and format conventions
+- MusicBrainz metadata schema — canonical field structure
+
+## When to use it
+
+Run Publish Update before any distribution event — new release, catalog re-delivery, sync pitch submission, or catalog sale. Clean metadata is a prerequisite for all downstream operations: DDEX registration (publish-broadcast), sync licensing (publish-license), and royalty reconciliation (publish-income). Also run it when a new catalog is acquired, since inherited metadata is rarely clean.
+
+## Example output (abbreviated)
+
+```
+CATALOG METADATA AUDIT REPORT
+─────────────────────────────────────────────────────────────
+Catalog: Neon Sound Publishing — Active Roster
+Tracks audited: 47   Fields checked: 12 per track
+
+OVERALL QUALITY SCORE: 71/100
+
+ERROR SUMMARY BY TYPE
+  Missing ISRC:          5 tracks   [CRITICAL — blocks distribution]
+  Malformed ISRC:        4 tracks   [CRITICAL — pattern mismatch]
+  Duplicate ISRC pairs:  3 pairs    [CRITICAL — requires re-issuance]
+  Missing ISWC:         12 compositions [HIGH — blocks PRO registration]
+  Genre mismatch:        6 tracks   [MEDIUM — affects DSP editorial placement]
+  Incomplete credits:    3 tracks   [MEDIUM — co-writer attribution absent]
+
+FIELD SCORES
+  ISRC:        53/100  ████████░░░░░░░░░░░░
+  Title:       94/100  ████████████████████
+  Artist:      91/100  ████████████████████
+  ISWC:        74/100  ██████████████░░░░░░
+  Genre:       88/100  █████████████████░░░
+  Rights:      61/100  ████████████░░░░░░░░
+
+ENRICHED RECORDS: 16 tracks updated and ready for import
+MANUAL REVIEW:     6 tracks require human confirmation before re-delivery
+```

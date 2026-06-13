@@ -1,0 +1,347 @@
+---
+// src/pages/bundles/index.astro
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
+
+const skills = await getCollection("skills");
+
+const complianceOrder = [
+  "ai-transparency-writer",
+  "eu-ai-act-classifier",
+  "hitl-compliance-gate",
+  "incident-response-logger",
+  "iso-42001-audit-prep",
+  "nist-ai-rmf-checkpoint",
+  "pii-exposure-checker",
+];
+
+const publishOrder = [
+  "publish-provenance",
+  "publish-update",
+  "publish-broadcast",
+  "publish-license",
+  "publish-income",
+  "publish-shield",
+  "publish-harvest",
+  "publish-workflow",
+];
+
+const sortBy = (order: string[]) => (a: { id: string }, b: { id: string }) => {
+  const ai = order.indexOf(a.id);
+  const bi = order.indexOf(b.id);
+  return (ai === -1 ? Infinity : ai) - (bi === -1 ? Infinity : bi);
+};
+
+const complianceSkills = skills
+  .filter((s) => s.data.bundle === "compliance")
+  .sort(sortBy(complianceOrder));
+
+const publishSkills = skills
+  .filter((s) => s.data.bundle === "publish")
+  .sort(sortBy(publishOrder));
+---
+
+<BaseLayout
+  title="Quirgs Bundles | AI Governance + Music Publishing Skills"
+  description="Two production-validated skill bundles for Claude Code: Compliance (EU AI Act, NIST, ISO 42001) and Publish (royalty reconciliation, catalog hygiene, sync licensing, AI provenance)."
+  terminalPath="~/install"
+>
+  <NavBlock currentPath="/bundles/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/install</span
+    ><span class="text-bright">$</span>&nbsp;./get-bundle.sh quirgs
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <!-- Bundle tab switcher -->
+  <div class="filter-bar">
+    <div class="tab-group" role="tablist" aria-label="Select bundle">
+      <button
+        class="tab-btn active"
+        data-panel="compliance"
+        role="tab"
+        aria-selected="true"
+      >
+        [ COMPLIANCE&nbsp;·&nbsp;{complianceSkills.length} ]
+      </button>
+      <button
+        class="tab-btn"
+        data-panel="publish"
+        role="tab"
+        aria-selected="false"
+      >
+        [ PUBLISH&nbsp;·&nbsp;{publishSkills.length} ]
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Compliance panel ──────────────────────────────────────── -->
+  <div id="panel-compliance" class="bundle-panel">
+    <div class="line">
+      <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-compliance
+      v1.0 ({complianceSkills.length} skills)
+    </div>
+
+    <div class="skills-table">
+      <div class="skills-header">
+        <span class="col-name text-bright">SKILL</span>
+        <span class="col-pillar text-bright">PILLAR</span>
+        <span class="col-tagline text-bright">TAGLINE</span>
+      </div>
+      <div class="divider-row">
+        <span class="divider-line"></span>
+      </div>
+      {
+        complianceSkills.map((skill) => (
+          <div class="skill-row">
+            <a class="col-name" href={`/skills/${skill.id}/`}>
+              {skill.id}
+            </a>
+            <span class="col-pillar text-blue">{skill.data.pillar}</span>
+            <span class="col-tagline">{skill.data.tagline}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="install-block">
+      <p class="install-step">
+        <span class="label">[STEP 1]</span>
+        <span>Open Claude Code — these are Claude Code plugin commands.</span>
+      </p>
+      <p class="install-cmd-row">
+        <span class="label">[STEP 2]</span>
+        <code>/plugin marketplace add unqdlphn/quirgs</code>
+        <button
+          class="copy-btn"
+          data-copy="/plugin marketplace add unqdlphn/quirgs">Copy</button
+        >
+      </p>
+      <p class="install-cmd-row">
+        <span class="label">[STEP 3]</span>
+        <code>/plugin install quirgs-compliance@quirgs</code>
+        <button
+          class="copy-btn"
+          data-copy="/plugin install quirgs-compliance@quirgs">Copy</button
+        >
+      </p>
+      <p class="install-note">
+        <span class="text-yellow">[NOTE]&nbsp;</span> Auto-update is off by default
+        for third-party marketplaces. To pull new versions:&nbsp;<code
+          >/plugin marketplace update quirgs</code
+        >
+      </p>
+    </div>
+  </div>
+
+  <!-- ── Publish panel ─────────────────────────────────────────── -->
+  <div id="panel-publish" class="bundle-panel" hidden>
+    <div class="line">
+      <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-publish v1.0
+      ({publishSkills.length} skills)
+    </div>
+
+    <div class="skills-table">
+      <div class="skills-header">
+        <span class="col-name text-bright">SKILL</span>
+        <span class="col-pillar text-bright">PILLAR</span>
+        <span class="col-tagline text-bright">TAGLINE</span>
+      </div>
+      <div class="divider-row">
+        <span class="divider-line"></span>
+      </div>
+      {
+        publishSkills.map((skill) => (
+          <div class="skill-row">
+            <a class="col-name" href={`/skills/${skill.id}/`}>
+              {skill.id}
+            </a>
+            <span class="col-pillar text-yellow">{skill.data.pillar}</span>
+            <span class="col-tagline">{skill.data.tagline}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="install-block">
+      <p class="install-step">
+        <span class="label">[STEP 1]</span>
+        <span>Open Claude Code — these are Claude Code plugin commands.</span>
+      </p>
+      <p class="install-cmd-row">
+        <span class="label">[STEP 2]</span>
+        <code>/plugin marketplace add unqdlphn/quirgs</code>
+        <button
+          class="copy-btn"
+          data-copy="/plugin marketplace add unqdlphn/quirgs">Copy</button
+        >
+      </p>
+      <p class="install-cmd-row">
+        <span class="label">[STEP 3]</span>
+        <code>/plugin install quirgs-publish@quirgs</code>
+        <button
+          class="copy-btn"
+          data-copy="/plugin install quirgs-publish@quirgs">Copy</button
+        >
+      </p>
+      <p class="install-note">
+        <span class="text-yellow">[NOTE]&nbsp;</span> Auto-update is off by default
+        for third-party marketplaces. To pull new versions:&nbsp;<code
+          >/plugin marketplace update quirgs</code
+        >
+      </p>
+    </div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/install</span
+    ><span class="text-bright">$&nbsp;</span><span class="cursor"></span>
+  </div>
+</BaseLayout>
+
+<style>
+  /* ── Filter / tab bar ───────────────────────────────────────── */
+  .filter-bar {
+    margin-bottom: 12px;
+  }
+
+  .tab-group {
+    display: flex;
+  }
+
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--term-border);
+    color: var(--text-main);
+    font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+    font-size: 0.78rem;
+    padding: 4px 10px;
+    cursor: pointer;
+    transition:
+      color 0.15s,
+      border-color 0.15s,
+      background 0.15s;
+    letter-spacing: 0.03em;
+    margin-right: -1px;
+  }
+
+  .tab-btn:first-child {
+    border-radius: 3px 0 0 3px;
+  }
+
+  .tab-btn:last-child {
+    border-radius: 0 3px 3px 0;
+    margin-right: 0;
+  }
+
+  .tab-btn:hover {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+    z-index: 1;
+    position: relative;
+  }
+
+  .tab-btn.active {
+    color: var(--accent-green);
+    border-color: var(--accent-green);
+    background: rgba(74, 222, 128, 0.08);
+    z-index: 1;
+    position: relative;
+  }
+
+  /* ── Skills table ───────────────────────────────────────────── */
+  .skills-table {
+    width: 100%;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    margin: 12px 0 20px;
+  }
+
+  .skills-header,
+  .skill-row {
+    display: grid;
+    grid-template-columns: 26ch 16ch 1fr;
+    gap: 0 8px;
+    align-items: baseline;
+  }
+
+  .skills-header {
+    margin-bottom: 2px;
+  }
+
+  .divider-row {
+    margin-bottom: 6px;
+  }
+
+  .divider-line {
+    display: block;
+    height: 1px;
+    background: var(--term-border);
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .skill-row {
+    padding: 1px 0;
+    transition: background 0.1s;
+    border-radius: 2px;
+  }
+
+  .skill-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .col-name,
+  .col-pillar,
+  .col-tagline {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .col-tagline {
+    color: var(--text-main);
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+  @media (max-width: 600px) {
+    .skills-header,
+    .skill-row {
+      grid-template-columns: 1fr;
+    }
+
+    .col-pillar {
+      display: none;
+    }
+
+    .col-tagline {
+      font-size: 0.78rem;
+      opacity: 0.75;
+    }
+  }
+</style>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>(
+    ".tab-btn[data-panel]",
+  );
+  const panels = document.querySelectorAll<HTMLElement>(".bundle-panel");
+
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+      });
+      panels.forEach((p) => p.setAttribute("hidden", ""));
+
+      tab.classList.add("active");
+      tab.setAttribute("aria-selected", "true");
+      const panelId = "panel-" + (tab.dataset.panel ?? "");
+      document.getElementById(panelId)?.removeAttribute("hidden");
+    });
+  });
+</script>
