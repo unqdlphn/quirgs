@@ -15,6 +15,14 @@ export default config({
         title: fields.text({ label: 'Title' }),
         slug: fields.text({ label: 'Slug' }),
         tagline: fields.text({ label: 'Tagline' }),
+        bundle: fields.select({
+          label: 'Bundle',
+          options: [
+            { label: 'Compliance', value: 'compliance' },
+            { label: 'Publish', value: 'publish' },
+          ],
+          defaultValue: 'compliance',
+        }),
         framework: fields.array(
           fields.text({ label: 'Framework' }),
           { label: 'Frameworks' }
