@@ -16,6 +16,7 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 ### Fixed
 
 - Added the missing `quirgs-publish` entry to [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json). The PUBLISH bundle shipped its `plugins/quirgs-publish/` directory (and `plugin.json`) but was never registered in the marketplace manifest, so the bundle did not surface in the Claude Quirgs marketplace. Registered under `category: "productivity"` (music publishing, not security), placed after the `quirgs-compliance` bundle. All 9 `plugins/` directories now have parity with the manifest's `plugins[]` array.
+- Corrected the `installCmd` on all 8 `src/content/skills/publish-*.mdx` files. They advertised `/plugin install <skill>@quirgs-publish` — broken two ways: the `@` segment must name the marketplace (`quirgs`, not `quirgs-publish`), and there is no standalone `publish-*` plugin to install (the skills ship bundle-only inside `quirgs-publish`). All 8 now point at the working bundle install: `/plugin install quirgs-publish@quirgs`.
 
 ## Resources section + first case study (feat/resources-case-studies)
 
