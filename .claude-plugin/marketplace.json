@@ -15,6 +15,13 @@
       "homepage": "https://quirgs.com/skills/"
     },
     {
+      "name": "quirgs-publish",
+      "description": "Bundle — one install, eight music publishing skills: royalty reconciliation, catalog metadata hygiene, DDEX/PRO registration extraction, sync licensing pitch generation, AI provenance logging, platform compliance gating, quarterly catalog harvesting, and a weekly publishing OS orchestrator. Installs as a set; copy any single skill out of the bundle to run it standalone.",
+      "source": "./plugins/quirgs-publish",
+      "category": "productivity",
+      "homepage": "https://quirgs.com/skills/"
+    },
+    {
       "name": "ai-transparency-writer",
       "description": "Draft EU AI Act Article 13 transparency disclosures, user-facing AI notices, and model cards.",
       "source": "./plugins/ai-transparency-writer",
