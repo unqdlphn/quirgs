@@ -9,6 +9,14 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix — Register quirgs-publish in marketplace (fix/marketplace-add-quirgs-publish)
+
+**Branch:** `fix/marketplace-add-quirgs-publish` — (2026-06-13)
+
+### Fixed
+
+- Added the missing `quirgs-publish` entry to [.claude-plugin/marketplace.json](.claude-plugin/marketplace.json). The PUBLISH bundle shipped its `plugins/quirgs-publish/` directory (and `plugin.json`) but was never registered in the marketplace manifest, so the bundle did not surface in the Claude Quirgs marketplace. Registered under `category: "productivity"` (music publishing, not security), placed after the `quirgs-compliance` bundle. All 9 `plugins/` directories now have parity with the manifest's `plugins[]` array.
+
 ## Resources section + first case study (feat/resources-case-studies)
 
 **Branch:** `feat/resources-case-studies` — (2026-06-13)
