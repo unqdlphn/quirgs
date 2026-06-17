@@ -9,6 +9,15 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix — Non-breaking audit cleanup of build tooling (fix/audit-tooling)
+
+**Branch:** `fix/audit-tooling` — (2026-06-16)
+
+### Security
+
+- Ran a non-breaking `npm audit fix` (lockfile-only; `package.json` untouched), clearing 2 of 12 transitive dev/build-tooling advisories: `vite` (high) and `js-yaml` (moderate). Verified post-fix: production build succeeds, all 6 pinned CSP `script-src` hashes in [public/_headers](public/_headers) still match the rebuilt inline scripts (the `vite` bump shifted no inlined-script bytes), and all 39 worker tests pass.
+- The remaining 10 advisories are left intentionally. Six (the `ws` / `miniflare` / `wrangler` / `@cloudflare/vite-plugin` chain) only offer `isSemVerMajor` fixes that would *downgrade* `@astrojs/cloudflare`, `wrangler`, and `@cloudflare/vitest-pool-workers` below the versions set in PR #62 — `npm audit fix --force` is deliberately NOT run. The other four (`yaml` chain under `@astrojs/check`) resolve when Astro ships a `language-server` update. All 10 are dev/build-tooling only — none ships in the static `dist/client` bundle. These will arrive as upstream Dependabot PRs as releases land.
+
 ## Fix — esbuild security vulnerabilities + dependency refresh (fix/esbuild-vulnerabilities)
 
 **Branch:** `fix/esbuild-vulnerabilities-9409481704421424609` — PR #62 (2026-06-16)
