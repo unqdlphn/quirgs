@@ -15,21 +15,24 @@
     "test:hitl": "vitest run --config workers/hitl-gate/vitest.config.js"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.5.4",
+    "@astrojs/cloudflare": "^13.7.0",
     "@astrojs/mdx": "^5.0.6",
     "@astrojs/react": "^5.0.6",
     "@astrojs/sitemap": "^3.7.3",
     "@keystatic/astro": "^5.0.6",
     "@keystatic/core": "^0.5.50",
-    "astro": "^6.3.3",
+    "astro": "^6.4.7",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.2",
-    "@cloudflare/vitest-pool-workers": "^0.16.14",
+    "@cloudflare/vitest-pool-workers": "^0.16.16",
     "typescript": "^5.6.3",
     "vitest": "^4.1.8",
-    "wrangler": "^4.93.1"
+    "wrangler": "^4.101.0"
+  },
+  "overrides": {
+    "esbuild": "0.28.1"
   }
 }

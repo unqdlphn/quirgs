@@ -9,6 +9,18 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix — esbuild security vulnerabilities + dependency refresh (fix/esbuild-vulnerabilities)
+
+**Branch:** `fix/esbuild-vulnerabilities-9409481704421424609` — PR #62 (2026-06-16)
+
+### Security
+
+- Pinned `esbuild` to `0.28.1` via the `overrides` field in [package.json](package.json), resolving two Dependabot-flagged advisories carried transitively through `wrangler` and `@cloudflare/vitest-pool-workers`: GHSA-gv7w-rqvm-qjhr (missing binary integrity verification in the Deno module → RCE via `NPM_CONFIG_REGISTRY`) and GHSA-g7r4-m6w7-qqqr (arbitrary file read via the dev server on Windows). `esbuild` now resolves to `0.28.1` across the entire dependency tree (previously `0.27.x`, inside the vulnerable `0.17.0 – 0.28.0` range). Both are build/dev-tooling dependencies — neither ships in the static `dist/client` bundle.
+
+### Changed
+
+- Refreshed core dependencies for patch compatibility: `astro` `6.3.3 → 6.4.7`, `@astrojs/cloudflare` `13.5.4 → 13.7.0`, `wrangler` `4.93.1 → 4.101.0`, `@cloudflare/vitest-pool-workers` `0.16.14 → 0.16.16`. Verified post-bump: production build succeeds, all 6 pinned CSP `script-src` hashes in [public/_headers](public/_headers) still match the rebuilt inline scripts (no hash drift from the Astro bump), and all 39 worker tests pass.
+
 ## Fix — Register quirgs-publish in marketplace (fix/marketplace-add-quirgs-publish)
 
 **Branch:** `fix/marketplace-add-quirgs-publish` — (2026-06-13)
