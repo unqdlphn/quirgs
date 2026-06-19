@@ -32,7 +32,7 @@ tags: ["HITL", "human-in-the-loop", "compliance gate", "review checkpoint"]
 
 ## What it does
 
-The HITL Compliance Gate generates a structured sign-off checklist that a human reviewer works through before AI-generated output is allowed to proceed — to publication, deployment, user delivery, or any downstream system. It maps each checklist item to a specific control from EU AI Act, NIST AI RMF, or ISO/IEC 42001:2023, so reviewers know exactly what they are confirming and why it matters. Each item carries a pass / fail / pending status and a notes field for the reviewer's observations.
+The HITL Compliance Gate generates a structured sign-off checklist that a human reviewer works through before AI-generated output is allowed to proceed — to publication, deployment, user delivery, or any downstream system. It maps each checklist item to a specific control from EU AI Act, NIST AI RMF, or ISO/IEC 42001:2023, so reviewers know exactly what they are confirming and why it matters. Each item carries a pass / fail / pending status and a notes field for the reviewer's observations. When `QUIRGS_HITL_WRITE_TOKEN` is set, the skill automatically posts the checkpoint to the Quirgs HITL Gate Worker and holds output pending human sign-off before proceeding.
 
 ## Frameworks covered
 
