@@ -9,6 +9,15 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Publish ARD ai-catalog.json at /.well-known/ (feat/ard-catalog)
+
+**Branch:** `feat/ard-catalog` — (2026-06-18)
+
+### Added
+
+- Published an [Agentic Resource Discovery (ARD)](https://agenticresourcediscovery.org) catalog at [public/.well-known/ai-catalog.json](public/.well-known/ai-catalog.json) so any ARD-compliant agent can discover Quirgs capabilities without a prior relationship. The catalog lists 9 entries: the 7 compliance Skills (eu-ai-act-classifier, nist-ai-rmf-checkpoint, iso-42001-audit-prep, hitl-compliance-gate, ai-transparency-writer, pii-exposure-checker, incident-response-logger) each with semantic `representativeQueries`, plus the `quirgs-hitl-gate` and `quirgs-registry-api` Workers. Both Worker URLs verified live (200 at `/events` and `/skills` respectively).
+- Added an isolated `/.well-known/ai-catalog.json` block to [public/_headers](public/_headers) setting `Access-Control-Allow-Origin: *`, `Content-Type: application/json`, and `Cache-Control: public, max-age=3600` — required so ARD crawlers can fetch the catalog cross-origin. This block is JSON-only and does not touch the strict CSP pinned to `/*`.
+
 ## Fix — Non-breaking audit cleanup of build tooling (fix/audit-tooling)
 
 **Branch:** `fix/audit-tooling` — (2026-06-16)

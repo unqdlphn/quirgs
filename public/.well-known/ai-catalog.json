@@ -1,0 +1,220 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Quirgs",
+    "identifier": "did:web:quirgs.com",
+    "documentationUrl": "https://quirgs.com"
+  },
+  "entries": [
+    {
+      "identifier": "urn:ai:quirgs.com:skill:eu-ai-act-classifier",
+      "displayName": "EU AI Act Classifier",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/eu-ai-act-classifier",
+      "description": "Classifies an AI system's risk tier under the EU AI Act (prohibited, high-risk, limited-risk, minimal-risk) and outputs a tailored compliance obligations checklist scoped to the deployer role — provider, deployer, importer, or distributor.",
+      "tags": ["eu-ai-act", "compliance", "risk-classification", "regulation", "governance"],
+      "capabilities": ["RiskTierClassification", "ComplianceObligationsChecklist", "ConformityAssessmentGuidance"],
+      "representativeQueries": [
+        "classify my AI system under the EU AI Act",
+        "is my AI product high-risk under EU AI Act Article 6",
+        "what are my EU AI Act compliance obligations as a deployer",
+        "do I need a conformity assessment for my AI system",
+        "what risk category does my AI fall into under EU regulation"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "framework": "EU AI Act — Regulation (EU) 2024/1689",
+        "installable": "true",
+        "platform": "Claude Cowork"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:nist-ai-rmf-checkpoint",
+      "displayName": "NIST AI RMF Checkpoint",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/nist-ai-rmf-checkpoint",
+      "description": "Walks an AI project team through the NIST AI Risk Management Framework (AI RMF 1.0) at any lifecycle stage. Produces a stage-scoped risk profile with addressed and unaddressed controls across the Govern, Map, Measure, and Manage functions.",
+      "tags": ["nist", "ai-rmf", "risk-management", "governance", "compliance"],
+      "capabilities": ["RiskProfileGeneration", "NISTAIRMFAssessment", "ControlGapAnalysis"],
+      "representativeQueries": [
+        "run a NIST AI RMF risk assessment on my AI system",
+        "what NIST AI RMF controls are we missing for our AI governance program",
+        "check our AI risk management posture against NIST AI RMF 1.0",
+        "build a risk profile for my AI project using the NIST framework",
+        "NIST AI RMF Govern Map Measure Manage function checkpoint"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "framework": "NIST AI RMF 1.0 — NIST AI 100-1",
+        "installable": "true",
+        "platform": "Claude Cowork"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:iso-42001-audit-prep",
+      "displayName": "ISO 42001 Audit Prep",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/iso-42001-audit-prep",
+      "description": "Guides teams through an ISO/IEC 42001:2023 AI Management System clause-by-clause audit readiness check. Produces scoped gap analysis reports, assigns control owners, flags audit evidence requirements, and generates documentation stubs ready for auditor review.",
+      "tags": ["iso-42001", "audit", "ai-management-system", "certification", "compliance"],
+      "capabilities": ["AuditReadinessCheck", "ClauseGapAnalysis", "ControlOwnerAssignment", "EvidenceDocumentation"],
+      "representativeQueries": [
+        "prepare for an ISO 42001 AI management system certification audit",
+        "ISO 42001 clause-by-clause gap analysis for our AI program",
+        "what audit evidence do we need for ISO 42001 certification",
+        "check our AI management system readiness against ISO 42001",
+        "generate documentation stubs for ISO 42001 compliance"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "framework": "ISO/IEC 42001:2023",
+        "installable": "true",
+        "platform": "Claude Cowork"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:hitl-compliance-gate",
+      "displayName": "HITL Compliance Gate",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/hitl-compliance-gate",
+      "description": "Inserts a structured human-in-the-loop compliance review checkpoint into any AI workflow. Generates a sign-off checklist covering EU AI Act, NIST AI RMF, and ISO 42001 obligations that a human reviewer must clear before an AI output is approved to proceed.",
+      "tags": ["hitl", "human-in-the-loop", "compliance-gate", "review-checkpoint", "governance"],
+      "capabilities": ["HITLCheckpointGeneration", "ComplianceSignOffChecklist", "MultiFrameworkReview"],
+      "representativeQueries": [
+        "add a human review checkpoint before my AI output is approved",
+        "run a compliance gate check before shipping AI-generated content",
+        "generate a human sign-off checklist for AI workflow approval",
+        "is this AI output safe to proceed under EU AI Act and NIST",
+        "compliance checkpoint covering EU AI Act NIST and ISO 42001"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "framework": "EU AI Act, NIST AI RMF, ISO 42001",
+        "installable": "true",
+        "platform": "Claude Cowork"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:ai-transparency-writer",
+      "displayName": "AI Transparency Writer",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/ai-transparency-writer",
+      "description": "Generates ready-to-publish AI transparency notices, model cards, and system disclosures. Produces EU AI Act Article 13 notices for high-risk AI deployers and NIST AI RMF-aligned model cards — actual draft documents ready to edit and publish, not checklists.",
+      "tags": ["transparency", "model-card", "disclosure", "eu-ai-act", "documentation"],
+      "capabilities": ["TransparencyNoticeGeneration", "ModelCardGeneration", "Article13Disclosure", "SystemCardDrafting"],
+      "representativeQueries": [
+        "write an EU AI Act Article 13 transparency notice for my AI system",
+        "generate a model card for my AI deployment",
+        "create a transparency disclosure for users of my AI product",
+        "draft an AI system card aligned to NIST AI RMF Govern function",
+        "what do I need to disclose about my AI system under the EU AI Act"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "framework": "EU AI Act Article 13, NIST AI RMF Govern",
+        "installable": "true",
+        "platform": "Claude Cowork"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:pii-exposure-checker",
+      "displayName": "PII Exposure Checker",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/pii-exposure-checker",
+      "description": "Audits AI system data inputs, outputs, training datasets, and pipelines for PII exposure risks under GDPR and EU AI Act Article 10 data governance requirements. Produces a structured exposure report with per-finding risk ratings and specific remediation actions.",
+      "tags": ["pii", "gdpr", "data-governance", "privacy", "eu-ai-act"],
+      "capabilities": ["PIIExposureAudit", "DataGovernanceReview", "GDPRComplianceCheck", "Article10Analysis"],
+      "representativeQueries": [
+        "check my AI training data and pipeline for PII exposure risks",
+        "audit my AI system for personal data under GDPR",
+        "does my dataset contain sensitive personal information I should not be processing",
+        "EU AI Act Article 10 data governance compliance audit",
+        "scan AI inputs and outputs for privacy risks before deployment"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "framework": "GDPR, EU AI Act Article 10",
+        "installable": "true",
+        "platform": "Claude Cowork"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:incident-response-logger",
+      "displayName": "AI Incident Response Logger",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/incident-response-logger",
+      "description": "Structures AI incident reports aligned to NIST SP 800-61 incident response phases and EU AI Act Article 62 serious incident reporting obligations. Identifies whether the incident meets the Article 62 serious incident threshold and routes the report to the correct internal and regulatory stakeholders.",
+      "tags": ["incident-response", "eu-ai-act", "nist", "serious-incident", "audit"],
+      "capabilities": ["IncidentReportStructuring", "Article62SeriousIncidentCheck", "StakeholderRouting", "PostIncidentReview"],
+      "representativeQueries": [
+        "structure an AI incident report for regulatory submission",
+        "does this AI system failure meet the EU AI Act Article 62 serious incident threshold",
+        "generate a post-incident review report for an AI failure aligned to NIST SP 800-61",
+        "log and route an AI bias or harmful output incident for compliance review",
+        "AI incident debrief documentation for internal and regulator review"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "framework": "NIST SP 800-61, EU AI Act Article 62",
+        "installable": "true",
+        "platform": "Claude Cowork"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:worker:hitl-gate",
+      "displayName": "Quirgs HITL Gate API",
+      "type": "application/json",
+      "url": "https://quirgs-hitl-gate.elbrigante9.workers.dev",
+      "description": "REST approval queue that sits between an AI agent and any action requiring human sign-off. Agents POST pending events with context; human reviewers approve or reject via PATCH. Every decision is timestamped and stored for 30 days, creating a verifiable audit trail for EU AI Act Article 14, NIST AI RMF MANAGE 1.2, and ISO 42001 §9.1 human oversight requirements.",
+      "tags": ["hitl", "approval-queue", "human-oversight", "audit-trail", "rest-api"],
+      "capabilities": ["EventQueueManagement", "HumanApprovalWorkflow", "AuditTrailGeneration", "AIDecisionGating"],
+      "representativeQueries": [
+        "queue an AI decision for human approval before the agent proceeds",
+        "REST API to hold AI-generated output pending human review",
+        "approve or reject a pending AI agent action via API",
+        "generate an audit trail for human-in-the-loop AI decisions",
+        "enforce human oversight on AI workflows via approval queue"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-18T00:00:00Z",
+      "metadata": {
+        "protocol": "REST",
+        "endpoints": "POST /events · GET /events · GET /events/:id · PATCH /events/:id",
+        "auth": "Bearer token (write); public read for GET /events",
+        "retention": "30-day TTL with lazy archival",
+        "framework": "EU AI Act Article 14, NIST AI RMF MANAGE 1.2, ISO 42001 §9.1",
+        "infrastructure": "Cloudflare Workers + D1"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:worker:registry-api",
+      "displayName": "Quirgs Skills Registry API",
+      "type": "application/json",
+      "url": "https://quirgs-registry-api.elbrigante9.workers.dev",
+      "description": "KV-backed read API serving structured metadata for the full Quirgs AI compliance skill catalog. Returns identifiers, descriptions, capabilities, and documentation links for all published governance skills.",
+      "tags": ["registry", "skill-catalog", "compliance-skills", "discovery", "api"],
+      "capabilities": ["SkillCatalogQuery", "ComplianceSkillDiscovery", "SkillMetadataRetrieval"],
+      "representativeQueries": [
+        "list all available AI compliance and governance skills from Quirgs",
+        "query the Quirgs skill registry for EU AI Act compliance tools",
+        "find installable AI governance skills and their capabilities",
+        "discover compliance automation tools for AI risk management",
+        "search for AI governance skills covering NIST EU AI Act and ISO 42001"
+      ],
+      "version": "1.0.0",
+      "updatedAt": "2026-05-29T00:00:00Z",
+      "metadata": {
+        "protocol": "REST",
+        "auth": "public read",
+        "infrastructure": "Cloudflare Workers KV"
+      }
+    }
+  ]
+}
