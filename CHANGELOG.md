@@ -9,6 +9,16 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Wire hitl-compliance-gate skill to HITL Gate Worker (feat/hitl-skill-gate)
+
+**Branch:** `feat/hitl-skill-gate` — (2026-06-19)
+
+### Added
+
+- `hitl-compliance-gate` skill now posts pending events to the Quirgs HITL Gate Worker
+  (Step 3.5). Output is held pending human sign-off when `QUIRGS_HITL_WRITE_TOKEN` is set.
+  Graceful degradation when token is absent — skill functions as before with an advisory notice.
+
 ## Feature — Publish ARD ai-catalog.json at /.well-known/ (feat/ard-catalog)
 
 **Branch:** `feat/ard-catalog` — (2026-06-18)
