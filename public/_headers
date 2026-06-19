@@ -37,6 +37,14 @@
 /.well-known/security.txt
   Content-Type: text/plain; charset=utf-8
 
+# ARD (Agentic Resource Discovery) catalog — must be CORS-readable so any
+# ARD-compliant crawler can fetch it cross-origin. JSON file only; this block
+# does not touch the strict CSP pinned to /* (CSP on a JSON response is inert).
+/.well-known/ai-catalog.json
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
 # Legacy SEO guides (public/guides/*) are preserved verbatim and contain their
 # own inline scripts/styles that must not be modified. Detach the strict policy
 # above so the comma-join rule doesn't intersect it onto these pages (which would
