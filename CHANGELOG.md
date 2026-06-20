@@ -14,10 +14,19 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 **Branch:** `feat/hitl-page` — (2026-06-20)
 
 ### Added
+
 - `/hitl/` page — terminal-style documentation for the Quirgs HITL Gate.
   Explains what the gate is, who it's for, and how to wire an agent to it.
   Includes a three-step curl walkthrough to fire a live test event in under
   90 seconds. Route registered in `src/data/routes.ts` (docs group).
+  
+## Security — Dependabot grouped bump: undici + Cloudflare toolchain (dependabot/npm_and_yarn/multi-ee874d03c0)
+
+**Branch:** `dependabot/npm_and_yarn/multi-ee874d03c0` — PR #67 (2026-06-20)
+
+### Security
+
+- Grouped Dependabot bump driven by an `undici` security release (`7.24.8 → 7.28.0`, addressing 7 advisories incl. CVE-2026-12151), pulled in transitively under `miniflare`. Ancestor deps updated together: `wrangler` `4.101.0 → 4.103.0`, `@cloudflare/vitest-pool-workers` `0.16.16 → 0.16.18`, `@cloudflare/vite-plugin` `1.41.0 → 1.42.1`, `miniflare`/`workerd` `…0616 → …0617.1`. All dev/build-tooling — none ships in the static `dist/client` bundle. The nested `esbuild` moves to `0.28.1`, matching the existing `overrides` pin from PR #62 (no conflict). Verified: clean `npm ci` + production build succeed, all 6 pinned CSP `script-src` hashes in [public/_headers](public/_headers) still match the rebuilt inline scripts (no drift), and all 39 worker tests pass (15 registry + 24 hitl-gate). This is the anticipated upstream arrival noted in the `fix/audit-tooling` entry.
 
 ## Feature — Wire hitl-compliance-gate skill to HITL Gate Worker (feat/hitl-skill-gate)
 
