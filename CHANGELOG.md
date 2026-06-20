@@ -9,6 +9,17 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Add /hitl/ page (feat/hitl-page)
+
+**Branch:** `feat/hitl-page` — (2026-06-20)
+
+### Added
+
+- `/hitl/` page — terminal-style documentation for the Quirgs HITL Gate.
+  Explains what the gate is, who it's for, and how to wire an agent to it.
+  Includes a three-step curl walkthrough to fire a live test event in under
+  90 seconds. Route registered in `src/data/routes.ts` (docs group).
+  
 ## Security — Dependabot grouped bump: undici + Cloudflare toolchain (dependabot/npm_and_yarn/multi-ee874d03c0)
 
 **Branch:** `dependabot/npm_and_yarn/multi-ee874d03c0` — PR #67 (2026-06-20)
