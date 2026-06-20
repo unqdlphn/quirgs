@@ -45,7 +45,6 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   </div>
 
   <h2 class="text-bright">WHAT IT IS</h2>
-  <div class="line">──────────</div>
   <p>
     When an AI produces output that requires human sign-off — a compliance
     classification, a risk assessment, a document ready to publish — it posts a
@@ -65,7 +64,6 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <div class="line">&nbsp;</div>
 
   <h2 class="text-bright">WHO IT'S FOR</h2>
-  <div class="line">────────────</div>
   <p>
     Teams that have AI making decisions and need a record that a human reviewed
     and approved those decisions — without relying on Slack messages or email
@@ -85,7 +83,6 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <div class="line">&nbsp;</div>
 
   <h2 class="text-bright">HOW IT WORKS</h2>
-  <div class="line">────────────</div>
   <p>Three operations. One Worker. No SDK required.</p>
   <pre><code>  POST   /events      — AI posts a pending approval request
   GET    /events/:id  — reviewer checks the event status
@@ -102,25 +99,21 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <div class="line">&nbsp;</div>
 
   <h2 class="text-bright">PREREQUISITES</h2>
-  <div class="line">─────────────</div>
   <p>
     To prevent unauthorized access, the gate Worker requires Bearer token
     authentication for all write operations (POST and PATCH). Before testing,
     you must obtain a write token:
   </p>
-  <div class="line">
-    &rarr; Request a token on our <a href="/support/">/support/</a> page or by opening
-    a GitHub Issue.
-  </div>
-  <div class="line">
-    &rarr; Once received, replace <code>&lt;write-token&gt;</code> in the steps below
-    with your token.
+  <div class="line">&nbsp;</div>
+  <div>Request a token &rarr; <a href="/support/">/support/</a></div>
+  <div class="line">&nbsp;</div>
+  <div>
+    Once received, replace 'write-token' in the examples below with your token.
   </div>
 
   <div class="line">&nbsp;</div>
 
   <h2 class="text-bright">90-SECOND TEST</h2>
-  <div class="line">──────────────</div>
   <p>Run these three commands to fire a live event through the gate.</p>
 
   <div class="archive-note hitl-note">
@@ -149,7 +142,8 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <pre><code>{step2Command}</code></pre>
   <div class="line">
     &rarr; Returns: <code
-      >{'{"id":"...","status":"pending","created_at":...}'}</code>
+      >{'{"id":"...","status":"pending","created_at":...}'}</code
+    >
   </div>
 
   <div class="line">&nbsp;</div>
@@ -162,15 +156,8 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <div class="line">&rarr; Returns: <code>{'{"ok":true}'}</code></div>
 
   <div class="line">&nbsp;</div>
-  <p>
-    Events are stored for 30 days. Replace <code>&lt;event-id&gt;</code> with the
-    id from Step 1 and <code>&lt;write-token&gt;</code> with your token.
-  </p>
-
-  <div class="line">&nbsp;</div>
 
   <h2 class="text-bright">WIRE IT TO AN AGENT</h2>
-  <div class="line">───────────────────</div>
   <p>
     Any agent that can run bash or make HTTP requests can use the gate. The
     pattern is always the same:
@@ -192,26 +179,22 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <div class="line">&nbsp;</div>
 
   <h2 class="text-bright">FURTHER READING</h2>
-  <div class="line">───────────────</div>
-  <div class="line">
-    &rarr; <a href="/skills/hitl-compliance-gate/">hitl-compliance-gate skill</a
-    > — compliance gate details
-  </div>
-  <div class="line">
+  <div>
     &rarr; <a
-      href="https://github.com/unqdlphn/quirgs"
+      href="/skills/hitl-compliance-gate/"
       target="_blank"
-      rel="noopener">Worker source</a
-    > — github.com/unqdlphn/quirgs (workers/hitl-gate/)
+      rel="noopener">hitl-compliance-gate skill</a
+    >
+    — compliance gate details
   </div>
-  <div class="line">
+  <div>
     &rarr; <a
       href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
       target="_blank"
       rel="noopener">EU AI Act Article 14</a
     > — human oversight requirements
   </div>
-  <div class="line">
+  <div>
     &rarr; <a
       href="https://www.nist.gov/itl/ai-risk-management-framework"
       target="_blank"
