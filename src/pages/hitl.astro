@@ -3,8 +3,11 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
 
-const step1Command = `curl -s -X POST https://quirgs-hitl-gate.elbrigante9.workers.dev/events \\
-  -H "Authorization: Bearer <write-token>" \\
+const setupCommand = `export HITL_GATE_URL="https://quirgs-hitl-gate.elbrigante9.workers.dev"
+export HITL_GATE_TOKEN="<write-token>"`;
+
+const step1Command = `curl -s -X POST $HITL_GATE_URL/events \\
+  -H "Authorization: Bearer $HITL_GATE_TOKEN" \\
   -H "Content-Type: application/json" \\
   -d '{
     "type": "hitl-test",
@@ -15,10 +18,10 @@ const step1Command = `curl -s -X POST https://quirgs-hitl-gate.elbrigante9.worke
     }
   }'`;
 
-const step2Command = `curl -s https://quirgs-hitl-gate.elbrigante9.workers.dev/events/<event-id>`;
+const step2Command = `curl -s $HITL_GATE_URL/events/<event-id>`;
 
-const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.workers.dev/events/<event-id> \\
-  -H "Authorization: Bearer <write-token>" \\
+const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
+  -H "Authorization: Bearer $HITL_GATE_TOKEN" \\
   -H "Content-Type: application/json" \\
   -d '{"status": "approved"}'`;
 ---
@@ -107,8 +110,21 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <div class="line">&nbsp;</div>
   <div>Request a token &rarr; <a href="/support/">/support/</a></div>
   <div class="line">&nbsp;</div>
-  <div>
-    Once received, replace 'write-token' in the examples below with your token.
+  <p>
+    The examples below read two environment variables —
+    <code>HITL_GATE_URL</code> (the gate endpoint) and
+    <code>HITL_GATE_TOKEN</code> (your write token). Set them once and the
+    commands work as-is. The same two variables configure the
+    <code>hitl-compliance-gate</code> skill, so the gate endpoint stays in one
+    place instead of hard-coded across your workflow.
+  </p>
+  <div class="line">
+    <span class="text-bright">Set your environment</span>
+    <button class="copy-btn" data-copy={setupCommand}>Copy</button>
+  </div>
+  <pre><code>{setupCommand}</code></pre>
+  <div class="line">
+    Replace 'write-token' with the token you received.
   </div>
 
   <div class="line">&nbsp;</div>
