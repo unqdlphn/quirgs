@@ -123,10 +123,7 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
   <div class="line">──────────────</div>
   <p>Run these three commands to fire a live event through the gate.</p>
 
-  <div
-    class="archive-note"
-    style="border-left-color: var(--accent-red); background: rgba(248, 113, 113, 0.03);"
-  >
+  <div class="archive-note hitl-note">
     <span class="text-red">[WARNING]&nbsp;</span> The HITL Gate Worker is a shared
     demonstration queue. Do NOT submit production data, credentials, PII (personally
     identifiable information), or sensitive information during testing.
@@ -228,3 +225,10 @@ const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.work
     ><span class="text-bright">$&nbsp;</span><span class="cursor"></span>
   </div>
 </BaseLayout>
+
+<style>
+  .hitl-note {
+    border-left-color: var(--accent-red);
+    background: rgba(248, 113, 113, 0.03);
+  }
+</style>
