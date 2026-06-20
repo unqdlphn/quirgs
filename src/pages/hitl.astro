@@ -1,0 +1,230 @@
+---
+// src/pages/hitl.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+
+const step1Command = `curl -s -X POST https://quirgs-hitl-gate.elbrigante9.workers.dev/events \\
+  -H "Authorization: Bearer <write-token>" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "type": "hitl-test",
+    "payload": {
+      "item": "my first gate test",
+      "stage": "testing",
+      "status": "pending"
+    }
+  }'`;
+
+const step2Command = `curl -s https://quirgs-hitl-gate.elbrigante9.workers.dev/events/<event-id>`;
+
+const step3Command = `curl -s -X PATCH https://quirgs-hitl-gate.elbrigante9.workers.dev/events/<event-id> \\
+  -H "Authorization: Bearer <write-token>" \\
+  -H "Content-Type: application/json" \\
+  -d '{"status": "approved"}'`;
+---
+
+<BaseLayout
+  title="HITL Gate | Quirgs"
+  description="The Quirgs Human-in-the-Loop Gate — an approval queue that sits between an AI agent and any action it isn't allowed to take on its own."
+  terminalPath="~/hitl"
+>
+  <NavBlock currentPath="/hitl/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/hitl</span
+    ><span class="text-bright">$</span>&nbsp;cat hitl.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">HITL Gate</h1>
+    <p class="tagline">
+      An approval queue that sits between an AI agent and any action it isn't
+      allowed to take on its own.
+    </p>
+  </div>
+
+  <h2 class="text-bright">WHAT IT IS</h2>
+  <div class="line">──────────</div>
+  <p>
+    When an AI produces output that requires human sign-off — a compliance
+    classification, a risk assessment, a document ready to publish — it posts a
+    request to the gate. A human reviews the pending request and approves or
+    rejects. The AI proceeds only on approval. Every decision is timestamped and
+    stored.
+  </p>
+  <p>That's your audit trail.</p>
+  <p>
+    EU AI Act Article 14. NIST AI RMF MANAGE 1.2. ISO 42001 §9.1.<br />
+    All require demonstrable human oversight. The gate makes it demonstrable.
+  </p>
+  <p>
+    Think of it as a pull request review — but for AI decisions instead of code.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">WHO IT'S FOR</h2>
+  <div class="line">────────────</div>
+  <p>
+    Teams that have AI making decisions and need a record that a human reviewed
+    and approved those decisions — without relying on Slack messages or email
+    threads.
+  </p>
+  <div class="line">
+    &rarr; AI governance leads running compliance workflows
+  </div>
+  <div class="line">
+    &rarr; Engineers wiring oversight into agent-based products
+  </div>
+  <div class="line">
+    &rarr; Anyone who has been told they need documented human oversight of AI
+    outputs
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">HOW IT WORKS</h2>
+  <div class="line">────────────</div>
+  <p>Three operations. One Worker. No SDK required.</p>
+  <pre><code>  POST   /events      — AI posts a pending approval request
+  GET    /events/:id  — reviewer checks the event status
+  PATCH  /events/:id  — reviewer approves or rejects</code></pre>
+  <p>
+    The Worker is live at:<br />
+    <a
+      href="https://quirgs-hitl-gate.elbrigante9.workers.dev"
+      target="_blank"
+      rel="noopener">https://quirgs-hitl-gate.elbrigante9.workers.dev</a
+    >
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">PREREQUISITES</h2>
+  <div class="line">─────────────</div>
+  <p>
+    To prevent unauthorized access, the gate Worker requires Bearer token
+    authentication for all write operations (POST and PATCH). Before testing,
+    you must obtain a write token:
+  </p>
+  <div class="line">
+    &rarr; Request a token on our <a href="/support/">/support/</a> page or by opening
+    a GitHub Issue.
+  </div>
+  <div class="line">
+    &rarr; Once received, replace <code>&lt;write-token&gt;</code> in the steps below
+    with your token.
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">90-SECOND TEST</h2>
+  <div class="line">──────────────</div>
+  <p>Run these three commands to fire a live event through the gate.</p>
+
+  <div
+    class="archive-note"
+    style="border-left-color: var(--accent-red); background: rgba(248, 113, 113, 0.03);"
+  >
+    <span class="text-red">[WARNING]&nbsp;</span> The HITL Gate Worker is a shared
+    demonstration queue. Do NOT submit production data, credentials, PII (personally
+    identifiable information), or sensitive information during testing.
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="text-bright">Step 1 — POST a pending event</span>
+    <button class="copy-btn" data-copy={step1Command}>Copy</button>
+  </div>
+  <pre><code>{step1Command}</code></pre>
+  <div class="line">
+    &rarr; Returns: <code>{'{"ok":true,"id":"<event-id>"}'}</code>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="text-bright">Step 2 — Verify the event is pending</span>
+    <button class="copy-btn" data-copy={step2Command}>Copy</button>
+  </div>
+  <pre><code>{step2Command}</code></pre>
+  <div class="line">
+    &rarr; Returns: <code
+      >{'{"id":"...","status":"pending","created_at":...}'}</code>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="text-bright">Step 3 — Approve it</span>
+    <button class="copy-btn" data-copy={step3Command}>Copy</button>
+  </div>
+  <pre><code>{step3Command}</code></pre>
+  <div class="line">&rarr; Returns: <code>{'{"ok":true}'}</code></div>
+
+  <div class="line">&nbsp;</div>
+  <p>
+    Events are stored for 30 days. Replace <code>&lt;event-id&gt;</code> with the
+    id from Step 1 and <code>&lt;write-token&gt;</code> with your token.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">WIRE IT TO AN AGENT</h2>
+  <div class="line">───────────────────</div>
+  <p>
+    Any agent that can run bash or make HTTP requests can use the gate. The
+    pattern is always the same:
+  </p>
+  <div class="line">1. Agent produces output requiring human review</div>
+  <div class="line">2. Agent POSTs event &rarr; receives event ID</div>
+  <div class="line">3. Agent surfaces event ID to user and waits</div>
+  <div class="line">4. Human reviews, PATCHes to approved or rejected</div>
+  <div class="line">5. Human tells agent the outcome</div>
+  <div class="line">6. Agent proceeds on approved, stops on rejected</div>
+  <div class="line">&nbsp;</div>
+  <p>
+    The hitl-compliance-gate Quirgs skill implements this pattern out of the
+    box. Install it and any compliance workflow you run through it is
+    automatically gated.
+  </p>
+  <pre><code>  /plugin install hitl-compliance-gate@quirgs</code></pre>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">FURTHER READING</h2>
+  <div class="line">───────────────</div>
+  <div class="line">
+    &rarr; <a href="/skills/hitl-compliance-gate/">hitl-compliance-gate skill</a
+    > — compliance gate details
+  </div>
+  <div class="line">
+    &rarr; <a
+      href="https://github.com/unqdlphn/quirgs"
+      target="_blank"
+      rel="noopener">Worker source</a
+    > — github.com/unqdlphn/quirgs (workers/hitl-gate/)
+  </div>
+  <div class="line">
+    &rarr; <a
+      href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689"
+      target="_blank"
+      rel="noopener">EU AI Act Article 14</a
+    > — human oversight requirements
+  </div>
+  <div class="line">
+    &rarr; <a
+      href="https://www.nist.gov/itl/ai-risk-management-framework"
+      target="_blank"
+      rel="noopener">NIST AI RMF MANAGE 1.2</a
+    > — risk response and human oversight
+  </div>
+
+  <div class="line">&nbsp;</div>
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/hitl</span
+    ><span class="text-bright">$&nbsp;</span><span class="cursor"></span>
+  </div>
+</BaseLayout>

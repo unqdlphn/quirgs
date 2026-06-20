@@ -9,6 +9,16 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Add /hitl/ page (feat/hitl-page)
+
+**Branch:** `feat/hitl-page` — (2026-06-20)
+
+### Added
+- `/hitl/` page — terminal-style documentation for the Quirgs HITL Gate.
+  Explains what the gate is, who it's for, and how to wire an agent to it.
+  Includes a three-step curl walkthrough to fire a live test event in under
+  90 seconds. Route registered in `src/data/routes.ts` (docs group).
+
 ## Feature — Wire hitl-compliance-gate skill to HITL Gate Worker (feat/hitl-skill-gate)
 
 **Branch:** `feat/hitl-skill-gate` — (2026-06-19)
