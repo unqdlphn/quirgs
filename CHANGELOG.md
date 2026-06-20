@@ -9,6 +9,20 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Env-var abstraction for HITL Gate URL + token (feat/hitl-env-abstraction)
+
+**Branch:** `feat/hitl-env-abstraction` — (2026-06-20)
+
+### Changed
+
+- `hitl-compliance-gate` skill and `/hitl/` page now read the gate endpoint and
+  write token from two environment variables — `HITL_GATE_URL` and
+  `HITL_GATE_TOKEN` — instead of hard-coding the Worker URL and using
+  `QUIRGS_HITL_WRITE_TOKEN`. This abstracts the gate location for external
+  customers during usage validation (Option A); a multi-tenant gate is deferred
+  until real usage justifies it. Graceful degradation now triggers when either
+  variable is unset.
+
 ## Feature — Add /hitl/ page (feat/hitl-page)
 
 **Branch:** `feat/hitl-page` — (2026-06-20)

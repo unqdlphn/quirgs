@@ -111,23 +111,24 @@ scoped to the detected workflow stage and item type.
 After generating the compliance checkpoint in Step 3, do NOT surface it as final output yet.
 Instead, post it to the Quirgs HITL Gate for human sign-off.
 
-### 3.5a — Check for token
+### 3.5a — Check for gate config
 
-Run the following in bash to check for the HITL write token:
+Run the following in bash to check for required env vars:
 
 ```bash
-echo "${QUIRGS_HITL_WRITE_TOKEN:-NOT_SET}"
+echo "${HITL_GATE_URL:-NOT_SET}"
+echo "${HITL_GATE_TOKEN:-NOT_SET}"
 ```
 
-If the result is `NOT_SET`, skip to **3.5d — Graceful Degradation**.
+If either result is `NOT_SET`, skip to **3.5d — Graceful Degradation**.
 
 ### 3.5b — POST the event
 
 Construct and send the approval event:
 
 ```bash
-curl -s -X POST https://quirgs-hitl-gate.elbrigante9.workers.dev/events \
-  -H "Authorization: Bearer $QUIRGS_HITL_WRITE_TOKEN" \
+curl -s -X POST $HITL_GATE_URL/events \
+  -H "Authorization: Bearer $HITL_GATE_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "type": "hitl-compliance-gate",
@@ -160,8 +161,8 @@ Status:   pending
 The compliance checkpoint is held pending reviewer approval.
 
 To review and approve:
-  GET  https://quirgs-hitl-gate.elbrigante9.workers.dev/events/<id>
-  PATCH https://quirgs-hitl-gate.elbrigante9.workers.dev/events/<id>
+  GET  $HITL_GATE_URL/events/<id>
+  PATCH $HITL_GATE_URL/events/<id>
         Body: {"status": "approved"}  OR  {"status": "rejected"}
 
 When the reviewer has acted, tell me:
@@ -174,12 +175,12 @@ Then stop and wait for the user to confirm the reviewer's decision before procee
 
 ### 3.5d — Graceful Degradation (token not set)
 
-If `QUIRGS_HITL_WRITE_TOKEN` is not set, surface the compliance checkpoint directly as in the
+If `HITL_GATE_URL` or `HITL_GATE_TOKEN` is not set, surface the compliance checkpoint directly as in the
 original Step 3 flow, and append this advisory at the top of the output:
 
 ```
 [INFO] HITL gate not configured — outputting compliance checkpoint without gate enforcement.
-To enable: set QUIRGS_HITL_WRITE_TOKEN in your environment and retry.
+To enable: set HITL_GATE_URL and HITL_GATE_TOKEN in your environment and retry.
 ```
 
 This ensures the skill remains functional for users who have not wired the gate yet.
