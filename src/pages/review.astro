@@ -1,0 +1,67 @@
+---
+// src/pages/review.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+
+// Gate endpoint resolved at build time from HITL_GATE_URL (same env var the
+// /hitl/ workflow documents), falling back to the production Worker. Handed to
+// review.js via a data attribute since the script is a static file and cannot
+// read import.meta.env itself. The write token is NOT injected here — it is a
+// secret entered per-session in the browser and must never be baked into the
+// static build.
+const gateUrl =
+  import.meta.env.HITL_GATE_URL ??
+  "https://quirgs-hitl-gate.elbrigante9.workers.dev";
+---
+
+<BaseLayout
+  title="Review Queue | Quirgs"
+  description="HITL Gate review queue — approve or reject pending AI decisions."
+  terminalPath="~/review"
+>
+  <NavBlock currentPath="/review/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/review</span
+    ><span class="text-bright">$</span>&nbsp;cat queue.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">Review Queue</h1>
+    <p class="line">Pending AI decisions awaiting human sign-off.</p>
+  </div>
+
+  <div class="token-block">
+    <div class="line"><span class="text-bright">[WRITE TOKEN]</span></div>
+    <div class="line divider">─────────────</div>
+    <div class="line">Enter your HITL Gate write token to enable Approve / Reject actions.</div>
+    <div class="line">Token is held in sessionStorage for this browser session only.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line token-input-row">
+      <input type="password" id="token-input" placeholder="Enter token..." class="terminal-input" />
+      <button id="set-token-btn" class="terminal-btn">[Set Token]</button>
+    </div>
+    <div class="line">&nbsp;</div>
+    <div class="line" id="token-status-line">Status: <span class="text-yellow">○ No token set</span></div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="queue-block">
+    <div class="line"><span class="text-bright">[QUEUE]</span></div>
+    <div class="line divider">─────────────</div>
+    <div id="queue-container" data-gate-url={gateUrl}>
+      <div class="line">Fetching queue...</div>
+    </div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-footer">
+    <div class="line">&rarr; Gate docs: <a href="/hitl/">/hitl/</a></div>
+    <div class="line">&rarr; Refresh to reload the queue</div>
+  </div>
+</BaseLayout>
+
+<script src="/js/review.js" defer></script>

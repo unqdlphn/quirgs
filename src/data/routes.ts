@@ -34,6 +34,7 @@ export const routes: SiteRoute[] = [
   { path: "/guides/",       label: "guides/",       description: "reference guides",       group: "docs",     primary: true },
   { path: "/transparency/", label: "transparency/", description: "AI transparency notice", group: "docs",     primary: true },
   { path: "/hitl/",         label: "hitl/",         description: "human approval queue",   group: "docs" },
+  { path: "/review/",       label: "review/",       description: "HITL gate review queue", group: "site" },
   { path: "/support/",      label: "support/",      description: "help & contact",         group: "site" },
   { path: "/privacy/",      label: "privacy/",      description: "privacy policy",         group: "site" },
   { path: "/terms/",        label: "terms/",        description: "terms of use",           group: "site" },
