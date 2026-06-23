@@ -4,7 +4,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const tokenStatusLine = document.getElementById("token-status-line");
   const queueContainer = document.getElementById("queue-container");
   
-  const workerUrl = "https://quirgs-hitl-gate.elbrigante9.workers.dev";
+  // Resolved at build time from HITL_GATE_URL and passed in via data-gate-url
+  // on #queue-container (see review.astro). Fallback keeps the script working
+  // if the attribute is ever missing.
+  const workerUrl =
+    queueContainer.dataset.gateUrl ||
+    "https://quirgs-hitl-gate.elbrigante9.workers.dev";
   
   // 1. Initialize token state
   let currentToken = sessionStorage.getItem("hitl_write_token") || "";

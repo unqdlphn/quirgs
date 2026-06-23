@@ -2,6 +2,16 @@
 // src/pages/review.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
+
+// Gate endpoint resolved at build time from HITL_GATE_URL (same env var the
+// /hitl/ workflow documents), falling back to the production Worker. Handed to
+// review.js via a data attribute since the script is a static file and cannot
+// read import.meta.env itself. The write token is NOT injected here — it is a
+// secret entered per-session in the browser and must never be baked into the
+// static build.
+const gateUrl =
+  import.meta.env.HITL_GATE_URL ??
+  "https://quirgs-hitl-gate.elbrigante9.workers.dev";
 ---
 
 <BaseLayout
@@ -41,7 +51,7 @@ import NavBlock from "../components/NavBlock.astro";
   <div class="queue-block">
     <div class="line"><span class="text-bright">[QUEUE]</span></div>
     <div class="line divider">─────────────</div>
-    <div id="queue-container">
+    <div id="queue-container" data-gate-url={gateUrl}>
       <div class="line">Fetching queue...</div>
     </div>
   </div>
@@ -55,104 +65,3 @@ import NavBlock from "../components/NavBlock.astro";
 </BaseLayout>
 
 <script src="/js/review.js" defer></script>
-
-<style>
-  .divider {
-    color: var(--term-border);
-    user-select: none;
-  }
-  .token-block {
-    border: 1px dashed var(--term-border);
-    padding: 16px;
-    border-radius: 6px;
-    background: rgba(255, 255, 255, 0.01);
-  }
-  .token-input-row {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  .terminal-input {
-    background: #09090b;
-    border: 1px solid var(--term-border);
-    color: var(--text-bright);
-    font-family: inherit;
-    font-size: 0.9rem;
-    padding: 6px 12px;
-    border-radius: 4px;
-    width: 320px;
-    max-width: 100%;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .terminal-input:focus {
-    border-color: var(--accent-blue);
-  }
-  .terminal-btn {
-    background: transparent;
-    border: 1px solid var(--accent-blue);
-    color: var(--accent-blue);
-    padding: 6px 12px;
-    font-size: 0.9rem;
-    font-family: inherit;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-  .terminal-btn:hover {
-    background: rgba(96, 165, 250, 0.1);
-    color: var(--text-bright);
-  }
-  .event-card {
-    margin-bottom: 24px;
-  }
-  .event-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 400px;
-  }
-  .card-actions {
-    display: flex;
-    gap: 16px;
-    margin-top: 12px;
-  }
-  .action-btn {
-    background: transparent;
-    border: 1px solid;
-    padding: 4px 10px;
-    font-size: 0.85rem;
-    font-family: inherit;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: all 0.2s;
-  }
-  .approve-btn {
-    border-color: var(--accent-green);
-    color: var(--accent-green);
-  }
-  .approve-btn:hover:not(:disabled) {
-    background: rgba(74, 222, 128, 0.1);
-    color: var(--text-bright);
-  }
-  .reject-btn {
-    border-color: var(--accent-red);
-    color: var(--accent-red);
-  }
-  .reject-btn:hover:not(:disabled) {
-    background: rgba(248, 113, 113, 0.1);
-    color: var(--text-bright);
-  }
-  .action-btn:disabled {
-    border-color: var(--term-border) !important;
-    color: var(--text-main) !important;
-    opacity: 0.5;
-    cursor: not-allowed;
-    background: transparent !important;
-  }
-  .error-line {
-    font-weight: bold;
-  }
-</style>

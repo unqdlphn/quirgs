@@ -19,6 +19,24 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
   provides Approve / Reject actions. Write token entered once per session via token
   input; stored in sessionStorage. Route registered in `src/data/routes.ts` (site group).
 
+### Changed
+- `/review/` no longer hard-codes the gate Worker URL in `review.js`. The endpoint
+  is resolved at build time from `HITL_GATE_URL` (the same env var the `/hitl/`
+  workflow documents), falls back to the production Worker, and is passed to the
+  script via `data-gate-url` on `#queue-container`. The write token stays
+  user-supplied per session — it is never injected into the static build.
+
+### Fixed
+- Approve / Reject buttons on `/review/` rendered with browser-default styling
+  instead of the terminal-UI button language. The styles lived in a page-scoped
+  `<style>` block on `review.astro`, but `review.js` builds the event cards (and
+  their buttons) at runtime via `innerHTML`, so those nodes never received
+  Astro's scoped `data-astro-*` hash and the rules never applied. Moved the
+  review queue styles into the global `<style is:global>` block in
+  `BaseLayout.astro` — alongside the canonical `.copy-btn` / `.help-trigger` TUI
+  button styles — so they reach the JS-injected DOM and stay consistent with the
+  rest of the terminal UI.
+
 ## Feature — Env-var abstraction for HITL Gate URL + token (feat/hitl-env-abstraction)
 
 **Branch:** `feat/hitl-env-abstraction` — (2026-06-20)
