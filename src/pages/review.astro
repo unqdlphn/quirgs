@@ -1,0 +1,158 @@
+---
+// src/pages/review.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="Review Queue | Quirgs"
+  description="HITL Gate review queue — approve or reject pending AI decisions."
+  terminalPath="~/review"
+>
+  <NavBlock currentPath="/review/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/review</span
+    ><span class="text-bright">$</span>&nbsp;cat queue.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">Review Queue</h1>
+    <p class="line">Pending AI decisions awaiting human sign-off.</p>
+  </div>
+
+  <div class="token-block">
+    <div class="line"><span class="text-bright">[WRITE TOKEN]</span></div>
+    <div class="line divider">─────────────</div>
+    <div class="line">Enter your HITL Gate write token to enable Approve / Reject actions.</div>
+    <div class="line">Token is held in sessionStorage for this browser session only.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line token-input-row">
+      <input type="password" id="token-input" placeholder="Enter token..." class="terminal-input" />
+      <button id="set-token-btn" class="terminal-btn">[Set Token]</button>
+    </div>
+    <div class="line">&nbsp;</div>
+    <div class="line" id="token-status-line">Status: <span class="text-yellow">○ No token set</span></div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="queue-block">
+    <div class="line"><span class="text-bright">[QUEUE]</span></div>
+    <div class="line divider">─────────────</div>
+    <div id="queue-container">
+      <div class="line">Fetching queue...</div>
+    </div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-footer">
+    <div class="line">&rarr; Gate docs: <a href="/hitl/">/hitl/</a></div>
+    <div class="line">&rarr; Refresh to reload the queue</div>
+  </div>
+</BaseLayout>
+
+<script src="/js/review.js" defer></script>
+
+<style>
+  .divider {
+    color: var(--term-border);
+    user-select: none;
+  }
+  .token-block {
+    border: 1px dashed var(--term-border);
+    padding: 16px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.01);
+  }
+  .token-input-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .terminal-input {
+    background: #09090b;
+    border: 1px solid var(--term-border);
+    color: var(--text-bright);
+    font-family: inherit;
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 4px;
+    width: 320px;
+    max-width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .terminal-input:focus {
+    border-color: var(--accent-blue);
+  }
+  .terminal-btn {
+    background: transparent;
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .terminal-btn:hover {
+    background: rgba(96, 165, 250, 0.1);
+    color: var(--text-bright);
+  }
+  .event-card {
+    margin-bottom: 24px;
+  }
+  .event-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+  }
+  .card-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .action-btn {
+    background: transparent;
+    border: 1px solid;
+    padding: 4px 10px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+  }
+  .approve-btn {
+    border-color: var(--accent-green);
+    color: var(--accent-green);
+  }
+  .approve-btn:hover:not(:disabled) {
+    background: rgba(74, 222, 128, 0.1);
+    color: var(--text-bright);
+  }
+  .reject-btn {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+  }
+  .reject-btn:hover:not(:disabled) {
+    background: rgba(248, 113, 113, 0.1);
+    color: var(--text-bright);
+  }
+  .action-btn:disabled {
+    border-color: var(--term-border) !important;
+    color: var(--text-main) !important;
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: transparent !important;
+  }
+  .error-line {
+    font-weight: bold;
+  }
+</style>

@@ -9,6 +9,16 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Add /review/ page — HITL Gate review UI (feat/hitl-review-ui)
+
+**Branch:** `feat/hitl-review-ui` — (2026-06-22)
+
+### Added
+- `/review/` page — client-side HITL Gate review queue. Loads pending events from
+  the gate Worker, displays context (type, item, stage, frameworks, timestamp), and
+  provides Approve / Reject actions. Write token entered once per session via token
+  input; stored in sessionStorage. Route registered in `src/data/routes.ts` (site group).
+
 ## Feature — Env-var abstraction for HITL Gate URL + token (feat/hitl-env-abstraction)
 
 **Branch:** `feat/hitl-env-abstraction` — (2026-06-20)

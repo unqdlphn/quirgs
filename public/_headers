@@ -31,7 +31,7 @@
 #   # then hash each unique inline <script> body, e.g.:
 #   printf '%s' '<exact script body>' | openssl dgst -sha256 -binary | openssl base64
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-RG2Vl9/CWuC4bLS0RKUEC98FHboSICAr9i2TuJ3w2Z4=' 'sha256-sy+NlX3/5NYwUsKigdRyElmS+uifUtFtdE4zC31wiFg=' 'sha256-o6syoIy/8TVskZPnPiYVhZ54gs6eixrEjsqxWx61PAE=' 'sha256-S8s+X/FJ4ibhybJfgQjbbBcRVuCbKYZDIibrDSD1Fog=' 'sha256-K3WQfIpq5i+nUZQlbYhqhnfF1V5tlfhW8w4hIHGDxu4=' 'sha256-2KVSZiRgqdRonyS5HJv4I6hG+Qxx62pZjisFjjM3JeM=' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-RG2Vl9/CWuC4bLS0RKUEC98FHboSICAr9i2TuJ3w2Z4=' 'sha256-sy+NlX3/5NYwUsKigdRyElmS+uifUtFtdE4zC31wiFg=' 'sha256-o6syoIy/8TVskZPnPiYVhZ54gs6eixrEjsqxWx61PAE=' 'sha256-S8s+X/FJ4ibhybJfgQjbbBcRVuCbKYZDIibrDSD1Fog=' 'sha256-K3WQfIpq5i+nUZQlbYhqhnfF1V5tlfhW8w4hIHGDxu4=' 'sha256-2KVSZiRgqdRonyS5HJv4I6hG+Qxx62pZjisFjjM3JeM=' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://quirgs-hitl-gate.elbrigante9.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
 
 # RFC 9116 security contact — serve as plain text so scanners/parsers accept it.
 /.well-known/security.txt
