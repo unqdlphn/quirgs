@@ -9,6 +9,31 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Keystatic-managed guides collection, Track 1 (feat/guides-keystatic)
+
+**Branch:** `feat/guides-keystatic` — (2026-06-24)
+
+Track 1 of the guides → Keystatic migration (see
+`_v2/_v3/guides-keystatic-migration-plan.md`): stand up net-new guides as
+Keystatic-managed MDX at clean `/guides/<slug>/` URLs, the same proven pattern
+skills use. The 6 legacy `public/guides/*.html` archive entries are untouched —
+they migrate later, one at a time, gated on Search Console.
+
+### Added
+- `guides` content collection in `src/content.config.ts` (lean schema: `title`,
+  optional `slug`, `description`, `status`, `lastUpdated`, `tags`). `slug` stays
+  optional for the same `slugField`-strips-frontmatter reason as skills.
+- Matching `guides` collection in `keystatic.config.ts`, field-for-field in
+  lockstep with the content schema.
+- `src/pages/guides/[slug].astro` — renders MDX guides in the terminal UI via
+  `BaseLayout`; drafts are excluded from `getStaticPaths`.
+- `src/content/guides/example-guide.mdx` — scaffold guide exercising the pipeline
+  end-to-end. Replace or delete once a real guide ships.
+
+### Changed
+- `src/pages/guides/index.astro` now lists current MDX guides (newest first) in a
+  `[GUIDES] Current` section above the existing `[ARCHIVE]` legacy listing.
+
 ## Feature — Keystatic Cloud storage mode (feat/keystatic-cloud)
 
 **Branch:** `feat/keystatic-cloud` — (2026-06-24)

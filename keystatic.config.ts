@@ -72,5 +72,33 @@ export default config({
         content: fields.mdx({ label: 'Content' }),
       },
     }),
+    guides: collection({
+      label: 'Guides',
+      slugField: 'slug',
+      path: 'src/content/guides/*',
+      format: { contentField: 'content' },
+      // Must stay field-for-field in lockstep with the `guides` schema in
+      // src/content.config.ts, or Keystatic refuses to open entries.
+      schema: {
+        title: fields.text({ label: 'Title' }),
+        slug: fields.text({ label: 'Slug' }),
+        description: fields.text({ label: 'Description' }),
+        status: fields.select({
+          label: 'Status',
+          options: [
+            { label: 'Live', value: 'live' },
+            { label: 'Draft', value: 'draft' },
+            { label: 'Deprecated', value: 'deprecated' },
+          ],
+          defaultValue: 'draft',
+        }),
+        lastUpdated: fields.date({ label: 'Last Updated' }),
+        tags: fields.array(
+          fields.text({ label: 'Tag' }),
+          { label: 'Tags' }
+        ),
+        content: fields.mdx({ label: 'Content' }),
+      },
+    }),
   },
 });

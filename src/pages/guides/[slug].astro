@@ -1,0 +1,76 @@
+---
+// src/pages/guides/[slug].astro
+// Renders net-new MDX guides (the `guides` content collection) in the terminal
+// UI via BaseLayout — same proven pattern as src/pages/skills/[slug].astro.
+// Clean /guides/<slug>/ URLs; no collision with the legacy public/guides/*.html
+// archive (those keep their literal .html extension).
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
+
+export async function getStaticPaths() {
+  const guides = await getCollection("guides");
+  return guides
+    // Drafts never get a built page.
+    .filter((entry) => entry.data.status !== "draft")
+    .map((entry) => ({
+      params: { slug: entry.id },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
+---
+
+<BaseLayout
+  title={`${entry.data.title} | Quirgs Guides`}
+  description={entry.data.description}
+  terminalPath={`~/guides/${entry.id}`}
+>
+  <!-- Site navigation -->
+  <NavBlock currentPath="/guides/" />
+
+  <!-- Back to guides listing -->
+  <div class="line">
+    <span class="text-blue">&larr;</span>&nbsp;<a href="/guides/"
+      >back to guides</a
+    >
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <!-- cat command -->
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/guides</span
+    ><span class="text-bright">$</span> cat {entry.id}.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <!-- Header block -->
+  <div class="detail-header">
+    <h1 class="text-bright">{entry.data.title}</h1>
+    <p class="tagline">{entry.data.description}</p>
+    <div class="badges-row">
+      <span class={`badge status-badge status-${entry.data.status}`}
+        >[{entry.data.status}]</span
+      >
+    </div>
+  </div>
+
+  <!-- MDX body -->
+  <div class="mdx-content">
+    <Content />
+  </div>
+
+  <!-- Metadata footer -->
+  <div class="detail-footer">
+    {
+      entry.data.tags.length > 0 && (
+        <p><span class="label">TAGS:</span> {entry.data.tags.join(", ")}</p>
+      )
+    }
+    <p><span class="label">LAST UPDATED:</span> {lastUpdatedFormatted}</p>
+  </div>
+</BaseLayout>

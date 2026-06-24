@@ -1,9 +1,18 @@
 ---
 // src/pages/guides/index.astro
+import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NavBlock from "../../components/NavBlock.astro";
 
-const guides = [
+// Net-new, Keystatic-managed MDX guides (clean /guides/<slug>/ URLs). Listed
+// separately, above the legacy .html archive. Drafts are excluded; newest first.
+const currentGuides = (await getCollection("guides"))
+  .filter((entry) => entry.data.status !== "draft")
+  .sort(
+    (a, b) => b.data.lastUpdated.valueOf() - a.data.lastUpdated.valueOf(),
+  );
+
+const legacyGuides = [
   { file: "ai_prompt_engineering.html", name: "AI Prompt Engineering" },
   {
     file: "copilot_commands_reference.html",
@@ -17,8 +26,8 @@ const guides = [
 ---
 
 <BaseLayout
-  title="Guides Archive | Quirgs"
-  description="Legacy reference guides from Quirgs V1 — preserved at original URLs."
+  title="Guides | Quirgs"
+  description="Reference guides from Quirgs — current MDX guides plus the preserved V1 archive."
   terminalPath="~/guides"
 >
   <NavBlock currentPath="/guides/" />
@@ -28,23 +37,42 @@ const guides = [
   </div>
   <div class="line">&nbsp;</div>
 
+  {
+    currentGuides.length > 0 && (
+      <>
+        <div class="line">
+          <span class="text-green">[GUIDES]</span> Current
+        </div>
+        <div class="line">&nbsp;</div>
+        {currentGuides.map((guide) => {
+          const dir = `${guide.id}/`;
+          return (
+            <div class="line">
+              <span>drwxr-xr-x guides </span>
+              <a href={`/guides/${guide.id}/`}>{dir}</a>
+              <span>{" ".repeat(Math.max(1, 34 - dir.length))}</span>
+              <span>{guide.data.title}</span>
+            </div>
+          );
+        })}
+        <div class="line">&nbsp;</div>
+      </>
+    )
+  }
+
   <div class="line">
     <span class="text-yellow">[ARCHIVE]</span> Legacy reference guides
   </div>
   <div class="line">&nbsp;</div>
   {
-    guides.map((guide) => {
-      // Pad filename to 34 chars for alignment
-      const filePadded = guide.file.padEnd(34, " ");
-      return (
-        <div class="line">
-          <span>-rw-r--r-- guides </span>
-          <a href={`/guides/${guide.file}`}>{guide.file}</a>
-          <span>{" ".repeat(34 - guide.file.length)}</span>
-          <span>{guide.name}</span>
-        </div>
-      );
-    })
+    legacyGuides.map((guide) => (
+      <div class="line">
+        <span>-rw-r--r-- guides </span>
+        <a href={`/guides/${guide.file}`}>{guide.file}</a>
+        <span>{" ".repeat(Math.max(1, 34 - guide.file.length))}</span>
+        <span>{guide.name}</span>
+      </div>
+    ))
   }
 
   <div class="archive-note">
