@@ -55,4 +55,23 @@ const skills = defineCollection({
   }),
 });
 
-export const collections = { skills };
+// Track 1 of the guides → Keystatic migration: net-new guides authored as MDX,
+// Keystatic-managed, rendered at clean /guides/<slug>/ URLs (no collision with the
+// 6 legacy public/guides/*.html archive entries). Legacy guides migrate later,
+// one at a time, gated on Search Console — see _v2/_v3/guides-keystatic-migration-plan.md.
+const guides = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/guides' }),
+  schema: z.object({
+    title: z.string(),
+    // Optional for the same reason as skills: Keystatic's slugField stores the slug
+    // as the filename and strips `slug:` from frontmatter on save. Canonical slug is
+    // entry.id. Do not re-require this.
+    slug: z.string().optional(),
+    description: z.string(),
+    status: z.enum(['live', 'draft', 'deprecated']),
+    lastUpdated: z.coerce.date(),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { skills, guides };
