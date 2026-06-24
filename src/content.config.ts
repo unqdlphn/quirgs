@@ -7,7 +7,10 @@ const skills = defineCollection({
   schema: z.object({
     // Core identity
     title: z.string(),
-    slug: z.string(),
+    // Optional: the canonical slug is the file id (filename), which all site code
+    // already uses via entry.id. Keystatic owns `slug` as the *filename* (slugField)
+    // and strips it from frontmatter on every save, so it must not be required here.
+    slug: z.string().optional(),
     tagline: z.string(),
 
     // Product bundle this skill belongs to — used for UI tab filtering

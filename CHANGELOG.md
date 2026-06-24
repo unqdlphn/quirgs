@@ -31,6 +31,12 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
   live skill frontmatter and in `src/content.config.ts`. Keystatic's strict parser
   rejected every skill (`Field validation failed: ... "pillar" is not allowed`).
   Added the four fields to the Keystatic schema, mirroring the Zod enum/array types.
+- Keystatic/`slugField` vs. content-schema conflict: Keystatic's `slugField: 'slug'`
+  stores the slug as the *filename* and strips `slug:` from frontmatter on every save,
+  but `src/content.config.ts` required `slug` in frontmatter — so the first Keystatic
+  edit broke the production build (`InvalidContentEntryDataError: slug: Required`).
+  Made `slug` optional in the Zod schema; the canonical slug is `entry.id` (the
+  filename), which all site code already uses. No rendered output changes.
 
 ### Notes
 - The `module is not defined` 500 seen under `astro dev` is a Vite SSR-runner
