@@ -274,8 +274,7 @@ maintained by hand. See [Updating skills](#updating-skills--two-pipelines) for t
 full pipeline split.
 
 Cloudflare builds the Astro site on push and posts a preview URL per branch.
-PR validation against the preview is documented in
-[MAINTENANCE.md](MAINTENANCE.md).
+Validate against the branch preview URL, never against production.
 
 ---
 
@@ -339,7 +338,6 @@ are in `brand/style guide/Quirgs Brand Style Guide.md`.
 - **YouTube:** [@quirgs](https://youtube.com/@quirgs)
 - **Issues:** [github.com/unqdlphn/quirgs/issues](https://github.com/unqdlphn/quirgs/issues)
 - **License:** see [LICENSE](LICENSE)
-- **Maintenance / PR validation:** [MAINTENANCE.md](MAINTENANCE.md)
 - **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
 ---
