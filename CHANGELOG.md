@@ -26,6 +26,11 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
   Added `patch-package` (`patches/@keystatic+astro+5.1.0.patch`) wrapping that read
   in the file's existing `tryOrUndefined` helper; values resolve to `undefined`
   harmlessly in cloud mode. `postinstall: patch-package` re-applies on every build.
+- Keystatic schema drift: `keystatic.config.ts` was missing `pillar`,
+  `interoperates_with`, `triggers`, and `example_prompts` — fields present in the
+  live skill frontmatter and in `src/content.config.ts`. Keystatic's strict parser
+  rejected every skill (`Field validation failed: ... "pillar" is not allowed`).
+  Added the four fields to the Keystatic schema, mirroring the Zod enum/array types.
 
 ### Notes
 - The `module is not defined` 500 seen under `astro dev` is a Vite SSR-runner
