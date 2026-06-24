@@ -2,8 +2,10 @@ import { config, fields, collection } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'github',
-    repo: 'unqdlphn/quirgs',
+    kind: 'cloud',
+  },
+  cloud: {
+    project: 'quirgs-admin/quirgs',
   },
   collections: {
     skills: collection({
@@ -23,9 +25,31 @@ export default config({
           ],
           defaultValue: 'compliance',
         }),
+        pillar: fields.select({
+          label: 'Pillar',
+          // Must mirror the enum in src/content.config.ts exactly.
+          options: [
+            { label: 'Inventory', value: 'Inventory' },
+            { label: 'Checkpoints', value: 'Checkpoints' },
+            { label: 'Standards Alignment', value: 'Standards Alignment' },
+          ],
+          defaultValue: 'Inventory',
+        }),
         framework: fields.array(
           fields.text({ label: 'Framework' }),
           { label: 'Frameworks' }
+        ),
+        interoperates_with: fields.array(
+          fields.text({ label: 'Skill slug' }),
+          { label: 'Interoperates With' }
+        ),
+        triggers: fields.array(
+          fields.text({ label: 'Trigger phrase' }),
+          { label: 'Triggers' }
+        ),
+        example_prompts: fields.array(
+          fields.text({ label: 'Example prompt' }),
+          { label: 'Example Prompts' }
         ),
         status: fields.select({
           label: 'Status',

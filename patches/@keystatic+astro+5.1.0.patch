@@ -1,0 +1,13 @@
+diff --git a/node_modules/@keystatic/astro/dist/keystatic-astro-api.js b/node_modules/@keystatic/astro/dist/keystatic-astro-api.js
+index 80131fe..160af37 100644
+--- a/node_modules/@keystatic/astro/dist/keystatic-astro-api.js
++++ b/node_modules/@keystatic/astro/dist/keystatic-astro-api.js
+@@ -4,7 +4,7 @@ import { parseString } from 'set-cookie-parser';
+ function makeHandler(_config) {
+   return async function keystaticAPIRoute(context) {
+     var _context$locals, _ref, _config$clientId, _ref2, _config$clientSecret, _ref3, _config$secret;
+-    const envVarsForCf = (_context$locals = context.locals) === null || _context$locals === void 0 || (_context$locals = _context$locals.runtime) === null || _context$locals === void 0 ? void 0 : _context$locals.env;
++    const envVarsForCf = tryOrUndefined(() => (_context$locals = context.locals) === null || _context$locals === void 0 || (_context$locals = _context$locals.runtime) === null || _context$locals === void 0 ? void 0 : _context$locals.env);
+     const handler = makeGenericAPIRouteHandler({
+       ..._config,
+       clientId: (_ref = (_config$clientId = _config.clientId) !== null && _config$clientId !== void 0 ? _config$clientId : envVarsForCf === null || envVarsForCf === void 0 ? void 0 : envVarsForCf.KEYSTATIC_GITHUB_CLIENT_ID) !== null && _ref !== void 0 ? _ref : tryOrUndefined(() => {

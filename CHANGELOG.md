@@ -9,6 +9,41 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Keystatic Cloud storage mode (feat/keystatic-cloud)
+
+**Branch:** `feat/keystatic-cloud` — (2026-06-24)
+
+### Changed
+- `keystatic.config.ts` storage switched from `github` to `cloud` mode
+  (`cloud.project: 'quirgs-admin/quirgs'`). Auth is offloaded to Keystatic Cloud;
+  the Worker no longer needs `KEYSTATIC_GITHUB_CLIENT_ID` / `_SECRET`.
+- Bumped `@keystatic/astro` `5.0.6 → 5.1.0` (adds Astro 6 to peer deps).
+
+### Fixed
+- `/api/keystatic/*` 500 on Astro 6 + Cloudflare. The adapter's API handler reads
+  `context.locals.runtime.env` unconditionally (every request, all storage modes),
+  and Astro 6's removed-getter throws on access — `cloud` mode does not avoid it.
+  Added `patch-package` (`patches/@keystatic+astro+5.1.0.patch`) wrapping that read
+  in the file's existing `tryOrUndefined` helper; values resolve to `undefined`
+  harmlessly in cloud mode. `postinstall: patch-package` re-applies on every build.
+- Keystatic schema drift: `keystatic.config.ts` was missing `pillar`,
+  `interoperates_with`, `triggers`, and `example_prompts` — fields present in the
+  live skill frontmatter and in `src/content.config.ts`. Keystatic's strict parser
+  rejected every skill (`Field validation failed: ... "pillar" is not allowed`).
+  Added the four fields to the Keystatic schema, mirroring the Zod enum/array types.
+- Keystatic/`slugField` vs. content-schema conflict: Keystatic's `slugField: 'slug'`
+  stores the slug as the *filename* and strips `slug:` from frontmatter on every save,
+  but `src/content.config.ts` required `slug` in frontmatter — so the first Keystatic
+  edit broke the production build (`InvalidContentEntryDataError: slug: Required`).
+  Made `slug` optional in the Zod schema; the canonical slug is `entry.id` (the
+  filename), which all site code already uses. No rendered output changes.
+
+### Notes
+- The `module is not defined` 500 seen under `astro dev` is a Vite SSR-runner
+  artifact only; the bundled production Worker (`npm run preview` on workerd) serves
+  the keystatic API route cleanly. Validate the full auth + edit→PR round-trip on the
+  Cloudflare preview URL, not `astro dev`.
+
 ## Feature — Add /review/ page — HITL Gate review UI (feat/hitl-review-ui)
 
 **Branch:** `feat/hitl-review-ui` — (2026-06-22)
