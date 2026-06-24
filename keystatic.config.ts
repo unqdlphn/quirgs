@@ -2,8 +2,10 @@ import { config, fields, collection } from '@keystatic/core';
 
 export default config({
   storage: {
-    kind: 'github',
-    repo: 'unqdlphn/quirgs',
+    kind: 'cloud',
+  },
+  cloud: {
+    project: 'quirgs-admin/quirgs',
   },
   collections: {
     skills: collection({
