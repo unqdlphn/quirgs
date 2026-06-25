@@ -1,0 +1,30 @@
+---
+// src/pages/demo.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="HITL Gate Demo | Quirgs"
+  description="HITL Gate Live Demo Queue (Stub)"
+  terminalPath="~/demo"
+>
+  <NavBlock currentPath="/demo/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/demo</span
+    ><span class="text-bright">$</span>&nbsp;cat demo.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">HITL Gate Demo</h1>
+    <p class="tagline">
+      Live demo queue for the Quirgs HITL Gate (Stub).
+    </p>
+  </div>
+
+  <p>
+    This is a stub for the live demo queue. The full interactive demo is part of T3.2 and will be merged soon.
+  </p>
+</BaseLayout>
