@@ -1,0 +1,209 @@
+---
+title: Git Workflow Reference
+description: Quick reference for Git — core commands, branching strategies, commit practices, pull requests, conflict resolution, and advanced operations.
+status: live
+lastUpdated: 2026-06-24
+tags:
+  - Git
+  - version control
+  - workflow
+  - branching
+  - reference
+---
+
+Git is a distributed version control system that lets multiple developers work on
+a project simultaneously without interfering with each other's changes. It tracks
+changes in source code during development, enabling collaboration and maintaining a
+full history. It's widely used in open-source and commercial projects and integrates
+with platforms like GitHub, GitLab, and Bitbucket.
+
+This guide covers the basic commands, branching strategies, commit best practices,
+pull requests, resolving merge conflicts, and advanced Git operations. For the full
+reference, see the official documentation at
+[git-scm.com](https://git-scm.com/doc).
+
+## Basic Git Commands
+
+The fundamental commands you'll use in everyday Git operations.
+
+| Command | Description |
+| --- | --- |
+| `git init` | Initialize a new Git repository in the current directory. |
+| `git clone [url]` | Download a project and its entire version history. |
+| `git status` | Show the working tree status (changes, untracked files). |
+| `git add [file]` | Stage file changes. Use `.` for all changes. |
+| `git commit -m "[message]"` | Record staged changes with a descriptive message. |
+| `git log` | Show commit history. Add `--oneline` for brevity. |
+| `git diff` | Show changes between commits, commit and working tree, etc. |
+| `git pull` | Fetch changes from the remote and merge them into the current branch (`git fetch` + `git merge`). |
+| `git push` | Upload local repository content to a remote repository. |
+| `git remote -v` | List configured remote repositories. |
+
+## Branching Strategies
+
+Branching allows parallel development without affecting the main codebase.
+
+### Common branching commands
+
+- `git branch` — List all local branches. Add `-a` for all remote branches.
+- `git branch [branch-name]` — Create a new branch.
+- `git checkout [branch-name]` — Switch to the specified branch.
+- `git checkout -b [branch-name]` — Create a new branch and switch to it immediately.
+- `git merge [branch-name]` — Merge the specified branch's history into the current branch.
+- `git branch -d [branch-name]` — Delete a local branch (only if merged). Use `-D` to force.
+- `git push origin --delete [branch-name]` — Delete a remote branch.
+
+### Simple feature-branch workflow
+
+1. Start on the `main` branch.
+2. `git pull origin main` — update local main.
+3. `git checkout -b feature/new-thing` — create a feature branch.
+4. Work on the feature: edit, `git add`, `git commit`.
+5. `git push origin feature/new-thing` — push the feature branch.
+6. Open a pull request (GitHub/GitLab/etc.).
+7. Review and merge the PR.
+8. `git checkout main` — switch back to main.
+9. `git pull origin main` — update local main.
+10. `git branch -d feature/new-thing` — delete the local feature branch.
+
+### Other strategies
+
+- **Gitflow:** More structured — uses feature, develop, release, hotfix, and main branches. Suited to scheduled releases.
+- **GitHub Flow:** Simpler — `main` is always deployable; features are developed in branches and merged via PRs. Good for CI/CD.
+- **GitLab Flow:** Like GitHub Flow but can include environment branches (e.g., production, staging).
+
+## Commit Best Practices
+
+Writing good commit messages is crucial for understanding project history.
+
+- **Keep commits focused:** each commit should represent a single logical change.
+- **Write clear subject lines:**
+  - Use imperative mood ("Fix bug", "Add feature" — not "Fixed bug" or "Adds feature").
+  - Capitalize the subject line.
+  - Keep it concise (around 50 characters).
+  - Do not end with a period.
+- **Use the body for details (optional):**
+  - Separate subject from body with a blank line.
+  - Explain *what* and *why* vs. *how*.
+  - Wrap lines at 72 characters.
+- **Reference issues/tickets:** include relevant tracker IDs (e.g., `Fixes #123`).
+
+```text
+feat: Add user authentication endpoint
+
+Implement the /api/auth/login route using JWT for session management.
+This endpoint accepts username and password, validates credentials
+against the database, and returns a JWT token upon success.
+
+Addresses issue #45.
+```
+
+## Pull Requests (PRs) / Merge Requests (MRs)
+
+PRs are used to propose changes, discuss them, and integrate them into the main codebase.
+
+1. **Create a feature branch** — as described in Branching Strategies above.
+2. **Push the branch** — `git push origin [branch-name]`.
+3. **Open a PR** — from your feature branch to the target branch (e.g., `main` or `develop`).
+4. **Describe your changes** — a clear title and description of purpose and scope; reference related issues.
+5. **Review process** — team members review the code, give feedback, and request changes if needed.
+6. **Address feedback** — make changes on your feature branch and push; the PR updates automatically.
+7. **Merge** — once approved, the PR is merged into the target branch.
+8. **Clean up** — delete the feature branch locally (`git branch -d [branch-name]`) and remotely.
+
+## Resolving Merge Conflicts
+
+Conflicts occur when Git cannot automatically merge changes from different branches.
+
+1. **Identify conflicts** — Git notifies you during a `git merge` or `git pull`; `git status` shows conflicted files.
+2. **Open conflicted files** — they contain markers:
+
+   ```text
+   <<<<<<< HEAD
+   Your changes (current branch)
+   =======
+   Incoming changes (branch being merged)
+   >>>>>>> [other-branch-name]
+   ```
+
+3. **Edit files** — manually resolve the differences. Remove the conflict markers (`<<<<<<<`, `=======`, `>>>>>>>`) and keep the desired code.
+4. **Stage resolved files** — `git add [resolved-file-name]` for each file you fixed.
+5. **Complete the merge** — run `git commit` (Git supplies a default message). If you were rebasing, use `git rebase --continue` instead.
+
+To reduce conflicts:
+
+- Pull from the target branch into your feature branch frequently (`git pull origin main` while on your feature branch).
+- Keep branches short-lived.
+- Communicate with your team about which areas of the code you're working on.
+- Use visual diff/merge tools integrated with your IDE or Git client.
+
+## Advanced Git Operations
+
+More sophisticated commands for experienced users.
+
+| Command | Description |
+| --- | --- |
+| `git rebase -i [commit-ref]` | Interactive rebase: squash, edit, or reorder commits before a reference. |
+| `git cherry-pick [commit-hash]` | Apply the changes from a specific commit onto the current branch. |
+| `git stash` | Temporarily store modified, tracked files to switch branches or pull updates. |
+| `git stash pop` | Re-apply the most recently stashed changes and remove them from the stash. |
+| `git stash list` | Show all stashed changesets. |
+| `git reset [commit-ref]` | Unstage files or reset branch head to a commit. Use with caution (`--soft`, `--mixed`, `--hard`). |
+| `git revert [commit-hash]` | Create a new commit that undoes a previous commit. Safer than `reset` for shared history. |
+| `git tag [tag-name]` | Create a lightweight tag pointing to the current commit (e.g., `v1.0.0`). |
+| `git log --graph --oneline --decorate` | Display commit history as a text-based graph. |
+
+### Reset options explained
+
+- **`git reset --soft [commit]`** — Moves HEAD to the commit but keeps changes staged. Useful to recommit with changes grouped differently.
+- **`git reset --mixed [commit]`** — (Default) Moves HEAD and updates the staging area. Changes stay in the working directory but unstaged.
+- **`git reset --hard [commit]`** — Moves HEAD, updates the staging area, and overwrites the working directory. All changes are lost — use with extreme caution.
+
+### Git reflog — your safety net
+
+The reflog records all changes to branch tips and other references, creating a log of your local repository's history:
+
+- `git reflog` — shows a log of all references (`HEAD@{0}`, `HEAD@{1}`, etc.).
+- Useful for recovering lost commits after a hard reset or branch deletion.
+- Example recovery: `git checkout -b recovery-branch HEAD@{2}`.
+
+### Advanced workflow examples
+
+**Squashing multiple commits into one**
+
+```bash
+git rebase -i HEAD~3   # Interactive rebase for the last 3 commits
+# In the editor, change "pick" to "squash" (or "s") for commits to combine,
+# then save and edit the resulting commit message.
+```
+
+**Removing a sensitive file from history**
+
+```bash
+git filter-branch --force --index-filter \
+  'git rm --cached --ignore-unmatch PATH-TO-SENSITIVE-FILE' \
+  --prune-empty --tag-name-filter cat -- --all
+git push origin --force --all   # Force push to overwrite history — use with caution!
+```
+
+**Creating and pushing a tag for releases**
+
+```bash
+git tag -a v1.0.0 -m "Version 1.0.0 release"   # Create an annotated tag
+git push origin v1.0.0                          # Push a specific tag
+git push origin --tags                          # Push all tags
+```
+
+## Git Hooks
+
+Git hooks are scripts that run automatically at certain points in the workflow (e.g., before committing, after merging).
+
+- **Location:** Hooks live in `.git/hooks`. Sample hooks ship with `.sample` extensions.
+- **Activation:** Remove the `.sample` extension to activate a hook, and make it executable (`chmod +x .git/hooks/[hook-name]`).
+- **Common hooks:**
+  - `pre-commit` — runs before the commit message is entered (linting, tests, style checks). A non-zero exit aborts the commit.
+  - `prepare-commit-msg` — runs before the message editor opens, after the default message is created.
+  - `commit-msg` — runs after the message is entered; used to validate format.
+  - `post-commit` — runs after a commit completes; used for notifications.
+  - `pre-push` — runs during `git push`, before objects transfer; used to run tests before pushing.
+- **Note:** Hooks are local to your clone and are not versioned or transferred with `git clone`. Tools like Husky help manage shareable hooks within a project.

@@ -1,0 +1,93 @@
+---
+title: Vetting an AI Agent Skill Before You Trust It
+description: A pre-install checklist for agent skills and MCP connectors — because security scanners read code, but skills also carry instructions a model will execute.
+status: draft
+lastUpdated: 2026-06-24
+tags:
+  - security
+  - agent-skills
+---
+
+A skill is not just code. It is code *plus* natural-language instructions your
+agent will execute with whatever tool access you've granted it — filesystem,
+credentials, network, your connectors. Static scanners inspect the code half and
+wave the rest through. That gap is how a poisoned skill passes a clean scan and
+still exfiltrates your data. This guide is the manual check that closes it.
+
+Treat every skill as untrusted until it earns trust. The bar scales with blast
+radius: a formatting helper with no tool access is low-stakes; anything that
+touches credentials, data, or your published output gets the full pass.
+
+## The one-minute triage
+
+Before reading a single line, answer three questions. If you can't, stop.
+
+- **Where did it come from?** A named author with a real repo and history — or a
+  bundle someone dropped in a channel? No provenance, no install.
+- **What can it touch?** List the tools and scopes it requests. A skill that only
+  needs to read text should not be asking for credential or network access.
+- **Who else runs it, and did they look?** Install count is social proof, not a
+  security audit. "26,000 agents" is how wide an attack spreads, not evidence it's safe.
+
+## Read the instructions, not just the code
+
+This is the step scanners skip and the one that catches real attacks. Open the
+skill's instruction layer — the `SKILL.md`, the prompt body, the description —
+and read it the way your model will.
+
+- **Hunt for injected directives.** Anything that tells the agent to ignore prior
+  rules, message an external address, "verify" by sending data somewhere, or treat
+  embedded text as authority. Instructions should describe a task, never override
+  your boundaries.
+- **Flag conditional or time-delayed behavior.** "If today is after X" or "when
+  you see Y, then…" is how a payload stays dormant through review and fires later.
+- **Watch for obfuscation.** Encoded strings, hidden characters, instructions that
+  only make sense if you assume the agent has more access than the task needs.
+- **Check that the description matches the body.** A skill that advertises one job
+  but its instructions reach for unrelated tools is the classic tell.
+
+## Inspect the manifest and dependencies
+
+```bash
+# Pin to a commit, never a moving tag, and diff before every update
+git log --oneline -5 <skill-source>
+sha256sum skill-bundle.zip          # record the hash; re-verify on reinstall
+```
+
+- **Pin by hash or commit.** "Latest" means whatever the author — or whoever
+  compromised the author — pushed this morning.
+- **Diff every update.** The first version can be clean and the update malicious.
+  Re-run this whole pass on upgrades; don't auto-trust a known author forever.
+- **Trace transitive trust.** A skill that pulls other skills, MCP servers, or
+  remote prompts inherits all of their risk. Vet the chain, not just the entry point.
+
+## Scope to least privilege
+
+Map each skill against what it actually needs, then cut the rest. For the Quirgs
+stack, the connectors are the prize an attacker is after. The default posture: a
+skill gets the narrowest scope that lets it do its stated job, and zero
+credential access unless it's the whole point of the skill.
+
+## Gate it before it runs
+
+Verification is a moment, not a state — re-check on every update. Put a
+human-in-the-loop checkpoint in front of any skill the first time it touches data,
+credentials, or anything you publish. That HITL gate is the backstop for everything
+a static scan and a manual read both miss.
+
+```bash
+# The decision the gate enforces, in plain terms:
+#   1. Provenance verified?        (author + hash known)
+#   2. Instructions read clean?    (no injection, no dormant triggers)
+#   3. Scopes minimized?           (least privilege, justified)
+#   4. Update diffed?              (not just first install)
+# Any "no" → skill does not proceed.
+```
+
+## The takeaway
+
+Scanners check code. You check intent, provenance, and scope — the three things a
+clean scan can't see. Run the triage on every skill, read the instruction layer
+like your agent will, pin and diff your sources, and never let a skill act on
+credentials or data without a gate in front of it. Trust is earned per version,
+not granted once.
