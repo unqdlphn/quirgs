@@ -9,6 +9,36 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feat — Security & About pages (feat/trust-about-pages)
+
+**Branch:** `feat/trust-about-pages` — (2026-06-25)
+
+Closes two enterprise-readiness trust gaps surfaced by a cold (no-context)
+external assessment of quirgs.com: no published security posture, and no
+company/builder identity. Both gaps were "invisible work" — the posture and the
+maintainer already existed but weren't surfaced anywhere a first-time reviewer
+could see them.
+
+### Added
+- **`src/pages/security.astro` (`/security/`)** — Security & Trust page
+  surfacing the existing posture: no-PII data handling, strict hash-pinned CSP,
+  null-MX email anti-spoof config, source-previewable + auto-update-off skill
+  distribution, human-checkpoint platform governance, and the RFC 9116
+  vulnerability-reporting path. Grouped under `docs` in the sitemap, next to the
+  transparency notice.
+- **`src/pages/about.astro` (`/about/`)** — About / credibility page: the
+  governance-first thesis, what the platform distributes, the named maintainer
+  (Torrey Adams / unqdlphn), how the platform is operated, and an honest-scope
+  disclaimer. Grouped under `site`.
+- **Two route entries in `src/data/routes.ts`** — `/security/` and `/about/`
+  registered in the single source of truth. `/about/` is `primary` (promoted
+  into the inline NavBlock row, replacing `transparency/`, which drops to the
+  SiteMenu overlay); `/security/` stays in the overlay.
+
+Terminal-UI conventions followed (BaseLayout + NavBlock, `cat <file>.md`
+prompt, `text-bright` headings). Static-only, no new inline scripts — no CSP
+hash impact.
+
 ## Fix — HITL page mobile overflow (feat/hitl-mobile-overflow)
 
 **Branch:** `feat/hitl-mobile-overflow` — (2026-06-24)

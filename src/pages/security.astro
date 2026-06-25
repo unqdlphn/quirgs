@@ -1,0 +1,136 @@
+---
+// src/pages/security.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="Security & Trust | Quirgs"
+  description="Quirgs security posture — content security policy, data handling, skill distribution, vulnerability reporting, and the governance controls applied to the platform itself."
+  terminalPath="~/security"
+>
+  <NavBlock currentPath="/security/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/security</span
+    ><span class="text-bright">$</span>&nbsp;cat security.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">Security &amp; Trust</h1>
+    <p class="tagline">
+      How the platform is secured, what it collects, and how to report an issue.
+    </p>
+  </div>
+
+  <p>
+    Quirgs is a governance-first platform. The same posture it teaches is
+    applied to its own operation. This page documents the security and data
+    controls in force on quirgs.com and the skills it distributes.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Data Handling</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Quirgs collects no personal data. There are no user accounts, no login, and
+    no server-side database of visitors. The site is statically rendered and
+    served from the edge. Aggregate, privacy-preserving analytics (Cloudflare
+    Web Analytics and Google Analytics 4) record traffic patterns only — no
+    advertising or cross-site tracking cookies are set. Full detail is on the
+    <a href="/privacy/">privacy policy</a>.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Content Security Policy</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Every page ships a strict Content-Security-Policy with no
+    <code>'unsafe-inline'</code> for scripts or styles. The only inline scripts
+    permitted are pinned individually by SHA-256 hash; everything else loads
+    from <code>'self'</code>. Framing is denied (<code>frame-ancestors 'none'</code>),
+    the base URI is locked, and HTTP is upgraded to HTTPS. This closes the most
+    common injection and clickjacking vectors at the browser level.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Email Authentication</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    The quirgs.com domain publishes a strict anti-spoofing configuration: a
+    null-MX record (the domain sends and receives no mail), an SPF record that
+    authorizes no senders, a reject-mode DMARC policy, and a DKIM record that
+    refuses all keys. Nobody can send mail that appears to come from quirgs.com.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Skill Distribution &amp; Supply Chain</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Skills are distributed as open, inspectable source — not opaque binaries.
+    Each skill's full instruction text is viewable as a public GitHub Gist
+    before you install it. Installing a skill loads its instructions into your
+    agent's context, so review the source first; the
+    <a href="/transparency/">transparency notice</a> and each skill page link
+    directly to that source.
+  </p>
+  <div class="line">&nbsp;</div>
+  <p>
+    Auto-update is off by default. Once installed, a skill does not change
+    underneath you unless you explicitly update it. This is deliberate — you
+    control when new instructions enter your environment.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Platform Governance Controls</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    No code or content reaches quirgs.com without explicit human sign-off at a
+    defined checkpoint. Every change is reviewed on a feature branch and merged
+    by pull request — production is never written to directly. AI assistance
+    used in building the platform is disclosed in full on the
+    <a href="/transparency/">transparency notice</a>.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Reporting a Vulnerability</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Quirgs publishes a machine-readable security contact under RFC 9116 at
+    <a href="/.well-known/security.txt">/.well-known/security.txt</a>. To
+    report a security issue, open a private advisory:
+  </p>
+  <div class="line">&nbsp;</div>
+  <div>
+    Security advisory &rarr; <a
+      href="https://github.com/unqdlphn/quirgs/security/advisories/new"
+      target="_blank"
+      rel="noopener">Report privately on GitHub</a
+    >
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">What Quirgs Is Not</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Quirgs is governance tooling, not a certified compliance authority. The
+    skills produce structured analysis, checklists, and draft documents — they
+    are not legal advice and not a substitute for qualified counsel or a
+    certified auditor. There is no SLA or warranty attached to the free
+    registry. Treat skill output as a reviewed draft, not a final determination.
+    See the <a href="/terms/">terms of use</a>.
+  </p>
+
+  <div class="line">&nbsp;</div>
+  <div>
+    Questions? See <a href="/support/">/support/</a>.
+  </div>
+</BaseLayout>
