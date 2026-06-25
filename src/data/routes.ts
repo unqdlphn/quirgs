@@ -28,11 +28,13 @@ export const GROUP_ORDER = ["registry", "resources", "docs", "site"] as const;
 
 export const routes: SiteRoute[] = [
   { path: "/",              label: "/",             description: "main landing page",      group: "site",     primary: true },
+  { path: "/about/",        label: "about/",        description: "what quirgs is & who builds it", group: "site",     primary: true },
   { path: "/skills/",       label: "skills/",       description: "skills registry",        group: "registry", primary: true },
-  { path: "/bundles/",      label: "bundles/",      description: "skill bundles",          group: "registry", primary: true },
   { path: "/resources/",    label: "resources/",    description: "case studies & writeups", group: "resources" },
   { path: "/guides/",       label: "guides/",       description: "reference guides",       group: "docs",     primary: true },
-  { path: "/transparency/", label: "transparency/", description: "AI transparency notice", group: "docs",     primary: true },
+  { path: "/bundles/",      label: "bundles/",      description: "skill bundles",          group: "registry", primary: true },
+  { path: "/transparency/", label: "transparency/", description: "AI transparency notice", group: "docs" },
+  { path: "/security/",     label: "security/",     description: "security & trust posture", group: "docs" },
   { path: "/hitl/",         label: "hitl/",         description: "human approval queue",   group: "docs" },
   { path: "/review/",       label: "review/",       description: "HITL gate review queue", group: "site" },
   { path: "/support/",      label: "support/",      description: "help & contact",         group: "site" },

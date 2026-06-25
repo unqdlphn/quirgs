@@ -1,0 +1,112 @@
+---
+// src/pages/about.astro
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBlock from "../components/NavBlock.astro";
+---
+
+<BaseLayout
+  title="About | Quirgs"
+  description="What Quirgs is, the governance-first thesis behind it, who builds it, and how the platform is operated and maintained."
+  terminalPath="~/about"
+>
+  <NavBlock currentPath="/about/" />
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/about</span
+    ><span class="text-bright">$</span>&nbsp;cat about.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-header">
+    <h1 class="text-bright">About Quirgs</h1>
+    <p class="tagline">Governance first. Build accordingly.</p>
+  </div>
+
+  <p>
+    Quirgs is a governance-first AI product platform. It exists to make
+    responsible AI development practical — turning standards like the EU AI Act,
+    the NIST AI Risk Management Framework, and ISO/IEC 42001 into tooling a
+    builder can actually run, rather than documents a team reads once and
+    shelves.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">The Thesis</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Most AI governance arrives too late — bolted on after a system ships, when
+    changing it is expensive. Quirgs takes the opposite position: governance is
+    a build-time concern. Inventory what your AI systems do, place human
+    checkpoints where AI output drives decisions, and align to recognized
+    standards from the start. The platform packages those three pillars —
+    Inventory, Checkpoints, and Standards Alignment — into installable tools.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">What Quirgs Distributes</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    The platform delivers governance work in three formats: <span
+      class="text-bright">Skills</span
+    > (installable agent tools that produce structured compliance analysis and
+    draft documents), <span class="text-bright">Guides</span> (reference
+    material for builders), and <span class="text-bright">Tools</span>
+    (governance utilities like the human-in-the-loop approval gate). The skills
+    registry is free, open-source, and inspectable before install.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Who Builds It</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Quirgs is built and operated by Torrey Adams (<a
+      href="https://torreyladams.com"
+      target="_blank"
+      rel="noopener">unqdlphn</a
+    >), an independent builder focused on AI governance and responsible product
+    development. The platform is run as an independent project — small,
+    transparent about its scope, and deliberate about what it claims. Quirgs
+    also publishes educational content on building AI products responsibly via
+    its <a href="https://youtube.com/@quirgs" target="_blank" rel="noopener"
+      >YouTube channel</a
+    > and <a href="https://x.com/QuirgsAI" target="_blank" rel="noopener"
+      >@QuirgsAI</a
+    >.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">How It's Operated</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    The platform governs its own AI use through the same framework it teaches.
+    AI assistance used in content and development is disclosed in full on the
+    <a href="/transparency/">transparency notice</a>, every change ships through
+    human-reviewed checkpoints, and the security posture is documented openly on
+    the <a href="/security/">security page</a>. Source is on
+    <a href="https://github.com/unqdlphn/quirgs" target="_blank" rel="noopener"
+      >GitHub</a
+    >.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Honest Scope</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    Quirgs accelerates governance work; it does not replace professional
+    judgment. The skills are governance support tools, not legal advice, and not
+    a substitute for qualified counsel or a certified auditor. They are built to
+    get a team from a blank page to a reviewable draft faster — the review still
+    belongs to you.
+  </p>
+
+  <div class="line">&nbsp;</div>
+  <div>
+    Get started &rarr; <a href="/skills/">/skills/</a> &middot; Questions? See
+    <a href="/support/">/support/</a>.
+  </div>
+</BaseLayout>
