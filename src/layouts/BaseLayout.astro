@@ -602,6 +602,29 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         font-size: 0.9rem;
       }
 
+      /* MDX tables (e.g. command-reference guides). Skills don't use tables;    */
+      /* guides are the first MDX content that does, so these live here.         */
+      .terminal-body table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0;
+        font-size: 0.9rem;
+      }
+
+      .terminal-body th,
+      .terminal-body td {
+        border: 1px solid var(--term-border);
+        padding: 8px 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .terminal-body th {
+        color: var(--text-bright);
+        background: rgba(255, 255, 255, 0.03);
+        font-weight: bold;
+      }
+
       /* ── Large-screen 16:9 layout ───────────────────────────────── */
       /* At ≥1280px viewport, the terminal window grows to 1280px wide  */
       /* and locks to a 16:9 aspect ratio. Content scrolls inside the  */
