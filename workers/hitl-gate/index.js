@@ -125,6 +125,27 @@ export default {
           "INSERT INTO events (id, type, payload, status, created_at, updated_at) VALUES (?, ?, ?, 'pending', ?, ?)"
         ).bind(id, body.type, payloadStr, now, now).run();
 
+        // Fire webhook notification if configured (non-blocking)
+        const webhookUrl = env.WEBHOOK_URL;
+        if (webhookUrl) {
+          ctx.waitUntil(
+            fetch(webhookUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                event_id: id,
+                type: body.type,
+                item: body.payload?.item ?? null,
+                stage: body.payload?.stage ?? null,
+                frameworks: body.payload?.frameworks ?? null,
+                status: 'pending',
+                review_url: `${url.origin}/events/${id}`,
+                timestamp: now,
+              }),
+            }).catch(() => {}) // fire-and-forget — webhook errors must not fail the event POST
+          );
+        }
+
         return jsonResponse({ ok: true, id }, 201);
       } catch (err) {
         return jsonResponse({ error: `Internal server error: ${err.message}` }, 500);

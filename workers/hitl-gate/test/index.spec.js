@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { env, createExecutionContext, waitOnExecutionContext } from 'cloudflare:test';
 import worker from '../index.js';
 
@@ -200,6 +200,120 @@ describe('lazy 30-day TTL', () => {
     const events = await (await request('/events')).json();
     expect(events.map((e) => e.id)).toEqual([id]);
     expect(events[0].status).toBe('pending');
+  });
+});
+
+// The webhook fires via the global `fetch` inside ctx.waitUntil. This pool
+// version (@cloudflare/vitest-pool-workers 0.16.x) does not expose the newer
+// `fetchMock` MockAgent, but the worker and the test share one workerd isolate,
+// so stubbing globalThis.fetch intercepts the outbound webhook call directly.
+describe('POST /events — webhook fire', () => {
+  const WEBHOOK_URL = 'https://webhook.example.com/hook';
+  let fetchSpy;
+
+  // POST an event through a fresh execution context, draining ctx.waitUntil
+  // (where the webhook fires) before returning. Pass extra env to toggle WEBHOOK_URL.
+  async function postEvent(body, extraEnv = {}) {
+    const req = new Request('https://hitl.test/events', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', ...AUTH },
+      body: JSON.stringify(body),
+    });
+    const ctx = createExecutionContext();
+    const res = await worker.fetch(req, { ...env, ...extraEnv }, ctx);
+    await waitOnExecutionContext(ctx); // drains the webhook waitUntil promise
+    return res;
+  }
+
+  beforeEach(() => {
+    fetchSpy = vi.spyOn(globalThis, 'fetch');
+  });
+
+  afterEach(() => {
+    fetchSpy.mockRestore();
+  });
+
+  it('fires the webhook when WEBHOOK_URL is set and receiver returns 200', async () => {
+    fetchSpy.mockResolvedValue(new Response('ok', { status: 200 }));
+
+    const res = await postEvent(
+      { type: 'test.event', payload: { item: 'foo', stage: 'draft' } },
+      { WEBHOOK_URL }
+    );
+    expect(res.status).toBe(201);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+
+    const [calledUrl, calledInit] = fetchSpy.mock.calls[0];
+    expect(calledUrl).toBe(WEBHOOK_URL);
+    expect(calledInit.method).toBe('POST');
+    expect(calledInit.headers['Content-Type']).toBe('application/json');
+    const sent = JSON.parse(calledInit.body);
+    expect(sent).toMatchObject({
+      type: 'test.event',
+      item: 'foo',
+      stage: 'draft',
+      status: 'pending',
+    });
+    expect(sent.review_url).toMatch(/\/events\/.+$/);
+  });
+
+  it('returns 201 when receiver returns 500 — error does not surface', async () => {
+    fetchSpy.mockResolvedValue(new Response('error', { status: 500 }));
+
+    const res = await postEvent(
+      { type: 'test.event', payload: { item: 'bar' } },
+      { WEBHOOK_URL }
+    );
+    expect(res.status).toBe(201);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+
+    // Event was still persisted despite the webhook receiver erroring.
+    const { id } = await res.json();
+    const event = await (await request(`/events/${id}`)).json();
+    expect(event.status).toBe('pending');
+  });
+
+  it('returns 201 when the receiver is unreachable — fetch rejection is swallowed', async () => {
+    fetchSpy.mockRejectedValue(new Error('connection refused'));
+
+    const res = await postEvent(
+      { type: 'test.event', payload: { item: 'qux' } },
+      { WEBHOOK_URL }
+    );
+    expect(res.status).toBe(201);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+
+    const { id } = await res.json();
+    const event = await (await request(`/events/${id}`)).json();
+    expect(event.status).toBe('pending');
+  });
+
+  it('returns 201 with no webhook fire when WEBHOOK_URL is not set', async () => {
+    const res = await postEvent({ type: 'test.event', payload: { item: 'baz' } });
+    expect(res.status).toBe(201);
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it('serializes missing optional fields as null, not undefined', async () => {
+    fetchSpy.mockResolvedValue(new Response('ok', { status: 200 }));
+
+    // payload has no item, stage, or frameworks
+    const res = await postEvent(
+      { type: 'test.event', payload: { custom: 'data' } },
+      { WEBHOOK_URL }
+    );
+    expect(res.status).toBe(201);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+
+    const sentBody = fetchSpy.mock.calls[0][1].body;
+    const parsed = JSON.parse(sentBody);
+    expect(parsed.item).toBeNull();
+    expect(parsed.stage).toBeNull();
+    expect(parsed.frameworks).toBeNull();
+    expect(parsed.status).toBe('pending');
+    expect(parsed.review_url).toMatch(/^https?:\/\/.+\/events\/.+/);
+    // No undefined values leak into the serialized payload.
+    expect(sentBody).not.toContain('undefined');
   });
 });
 

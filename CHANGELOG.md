@@ -9,6 +9,18 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feat — HITL Gate outbound webhook (feat/hitl-webhook)
+
+**Branch:** `feat/hitl-webhook` — (2026-06-25)
+
+### Added
+
+- HITL Gate Worker now fires an outbound webhook on every successful `POST /events`.
+  Configurable via `WEBHOOK_URL` Worker secret (set with `wrangler secret put`).
+  Webhook payload includes event ID, type, item, stage, frameworks, status, review URL,
+  and timestamp. Non-blocking (`ctx.waitUntil`) — webhook errors do not affect event
+  creation. When `WEBHOOK_URL` is unset, behavior is unchanged.
+
 ## Feat — Security & About pages (feat/trust-about-pages)
 
 **Branch:** `feat/trust-about-pages` — (2026-06-25)
