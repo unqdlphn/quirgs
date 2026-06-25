@@ -9,6 +9,33 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — Guides Track 2: first legacy migration + new guide (feat/new-guide)
+
+**Branch:** `feat/new-guide` — (2026-06-24)
+
+First Track 2 legacy-guide migration (Option B: migrate to MDX + 301), plus a new
+authored guide. See `_v2/_v3/guides-keystatic-migration-plan.md`.
+
+### Added
+- `src/content/guides/git-workflow-reference.mdx` — `git_workflow_reference.html`
+  migrated to managed MDX at `/guides/git-workflow-reference/`. Legacy chrome
+  (hamburger nav, in-page search, read-more expandables, footer) dropped; BaseLayout
+  provides the shell. Content preserved (tables → GFM, flowchart → ordered steps).
+- `src/content/guides/vetting-ai-agent-skills.mdx` — new guide (currently `draft`,
+  so not yet built/listed).
+- 301 in `public/_redirects`: `/guides/git_workflow_reference.html` →
+  `/guides/git-workflow-reference/`.
+
+### Removed
+- `public/guides/git_workflow_reference.html` — replaced by the MDX guide above
+  (intentional, sanctioned exception to the "never modify public/guides/" guardrail;
+  verify in Search Console post-deploy). Its per-path canonical `Link` in
+  `public/_headers` is dropped — the MDX page self-references via BaseLayout `<head>`.
+
+### Changed
+- `src/pages/guides/index.astro` — dropped `git_workflow_reference.html` from the
+  `[ARCHIVE]` list; it now surfaces in `[GUIDES] Current` from the collection.
+
 ## Feature — Keystatic-managed guides collection, Track 1 (feat/guides-keystatic)
 
 **Branch:** `feat/guides-keystatic` — (2026-06-24)
