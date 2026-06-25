@@ -11,7 +11,11 @@ export default defineConfig({
   output: 'static',
   adapter: cloudflare(),
   site: 'https://quirgs.com',
-  integrations: [react(), mdx(), keystatic(), sitemap()],
+  // @astrojs/mdx only adds remark-gfm when `gfm` is truthy (smartypants, by
+  // contrast, is on unless explicitly false). With `markdown.gfm` left unset it
+  // resolves undefined for MDX, so GFM tables in guides render as literal pipes.
+  // Set it explicitly so tables/strikethrough/etc. parse in .mdx content.
+  integrations: [react(), mdx({ gfm: true }), keystatic(), sitemap()],
   build: {
     // Emit all component styles as external stylesheets (never inline <style>)
     // so the CSP can use `style-src 'self'` with no 'unsafe-inline'.

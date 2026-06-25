@@ -9,6 +9,25 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix — GFM tables in MDX guides (feat/guides-table-styling)
+
+**Branch:** `feat/guides-table-styling` — (2026-06-25)
+
+The `git-workflow-reference` guide's tables rendered as literal `| pipe |` text.
+
+### Fixed
+- **MDX GFM was off.** `@astrojs/mdx` only adds `remark-gfm` when `gfm` is truthy
+  (smartypants, by contrast, is on unless explicitly `false`), so with
+  `markdown.gfm` unset it resolved `undefined` for `.mdx` and tables didn't parse.
+  Set `mdx({ gfm: true })` in `astro.config.mjs`. (Skills MDX unaffected — none
+  used tables.)
+
+### Added
+- `.terminal-body table/th/td` styling in `BaseLayout.astro` — guides are the
+  first MDX content to use tables; matches the terminal theme (dashed
+  `--term-border`, header row in `--text-bright`). CSS-only, external stylesheet,
+  no CSP impact.
+
 ## Feature — Guides Track 2: first legacy migration + new guide (feat/new-guide)
 
 **Branch:** `feat/new-guide` — (2026-06-24)
