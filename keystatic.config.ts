@@ -7,6 +7,15 @@ export default config({
   cloud: {
     project: 'quirgs-admin/quirgs',
   },
+  // Sidebar reminder: Keystatic commits to the branch selected in the sidebar.
+  // Editing `main` commits directly to production. The section heading is the
+  // note. NOTE: setting `navigation` means only listed collections render in the
+  // sidebar — list every collection here when adding one.
+  ui: {
+    navigation: {
+      '⚠ Edit on a branch — never main': ['skills', 'guides'],
+    },
+  },
   collections: {
     skills: collection({
       label: 'Compliance Skills',

@@ -29,6 +29,10 @@ they migrate later, one at a time, gated on Search Console.
   `BaseLayout`; drafts are excluded from `getStaticPaths`.
 - `src/content/guides/example-guide.mdx` — scaffold guide exercising the pipeline
   end-to-end. Replace or delete once a real guide ships.
+- Keystatic sidebar `ui.navigation` section heading "⚠ Edit on a branch — never
+  main" as a persistent reminder (Keystatic commits to the selected branch).
+  Lists both `skills` and `guides` — required, since setting `navigation` renders
+  only listed collections.
 
 ### Changed
 - `src/pages/guides/index.astro` now lists current MDX guides (newest first) in a
