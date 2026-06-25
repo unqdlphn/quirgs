@@ -9,6 +9,20 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix — HITL page mobile overflow (feat/hitl-mobile-overflow)
+
+**Branch:** `feat/hitl-mobile-overflow` — (2026-06-24)
+
+Step 2's "Returns:" JSON string overflowed the viewport in mobile view on `/hitl`.
+
+### Fixed
+- **Long inline `<code>` couldn't shrink inside the flex `.line`.** `.line` is
+  `display:flex`, and flex items default to `min-width:auto`, so the unbreakable
+  `{"id":"...","status":"pending","created_at":...}` response refused to shrink
+  below its content width and ran past the screen edge. Added a page-scoped
+  `.line code` rule (`min-width:0` + `overflow-wrap:anywhere`) in `hitl.astro` so
+  the JSON wraps. Scoped to the page; CSS-only, no CSP impact.
+
 ## Fix — GFM tables in MDX guides (feat/guides-table-styling)
 
 **Branch:** `feat/guides-table-styling` — (2026-06-25)

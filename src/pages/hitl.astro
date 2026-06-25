@@ -231,4 +231,14 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
     border-left-color: var(--accent-red);
     background: rgba(248, 113, 113, 0.03);
   }
+
+  /* The "Returns:" JSON responses are long, unbreakable inline <code> strings
+     inside a flex .line. Flex items default to min-width:auto and refuse to
+     shrink below their content, so on narrow screens they overflow the
+     viewport. Let them shrink and wrap. */
+  .line code {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
 </style>
