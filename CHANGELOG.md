@@ -9,6 +9,17 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Feature — HITL Gate landing page (feat/hitl-gate-landing)
+
+**Branch:** `feat/hitl-gate-landing` — (2026-06-25)
+
+### Added
+- **`src/pages/gate.astro` (`/gate/`)** — Stakeholder pitch page for the Quirgs HITL Gate.
+  Covers what the gate is, why it exists (EU AI Act / NIST AI RMF / ISO 42001 audit trail
+  requirement), how it works (3-step flow), and an early access CTA (mailto: link).
+  Positioning line: "Skills teach governance. The gate enforces it." Grouped under resources
+  in the sitemap. No inline scripts, no CSP impact.
+
 ## Feat — HITL Gate outbound webhook (feat/hitl-webhook)
 
 **Branch:** `feat/hitl-webhook` — (2026-06-25)
