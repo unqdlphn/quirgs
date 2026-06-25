@@ -1,13 +1,14 @@
 ---
 title: Vetting an AI Agent Skill Before You Trust It
-description: A pre-install checklist for agent skills and MCP connectors — because security scanners read code, but skills also carry instructions a model will execute.
-status: draft
+description: >-
+  A pre-install checklist for agent skills and MCP connectors — because security
+  scanners read code, but skills also carry instructions a model will execute.
+status: live
 lastUpdated: 2026-06-24
 tags:
   - security
   - agent-skills
 ---
-
 A skill is not just code. It is code *plus* natural-language instructions your
 agent will execute with whatever tool access you've granted it — filesystem,
 credentials, network, your connectors. Static scanners inspect the code half and
@@ -22,11 +23,11 @@ touches credentials, data, or your published output gets the full pass.
 
 Before reading a single line, answer three questions. If you can't, stop.
 
-- **Where did it come from?** A named author with a real repo and history — or a
+* **Where did it come from?** A named author with a real repo and history — or a
   bundle someone dropped in a channel? No provenance, no install.
-- **What can it touch?** List the tools and scopes it requests. A skill that only
+* **What can it touch?** List the tools and scopes it requests. A skill that only
   needs to read text should not be asking for credential or network access.
-- **Who else runs it, and did they look?** Install count is social proof, not a
+* **Who else runs it, and did they look?** Install count is social proof, not a
   security audit. "26,000 agents" is how wide an attack spreads, not evidence it's safe.
 
 ## Read the instructions, not just the code
@@ -35,15 +36,15 @@ This is the step scanners skip and the one that catches real attacks. Open the
 skill's instruction layer — the `SKILL.md`, the prompt body, the description —
 and read it the way your model will.
 
-- **Hunt for injected directives.** Anything that tells the agent to ignore prior
+* **Hunt for injected directives.** Anything that tells the agent to ignore prior
   rules, message an external address, "verify" by sending data somewhere, or treat
   embedded text as authority. Instructions should describe a task, never override
   your boundaries.
-- **Flag conditional or time-delayed behavior.** "If today is after X" or "when
+* **Flag conditional or time-delayed behavior.** "If today is after X" or "when
   you see Y, then…" is how a payload stays dormant through review and fires later.
-- **Watch for obfuscation.** Encoded strings, hidden characters, instructions that
+* **Watch for obfuscation.** Encoded strings, hidden characters, instructions that
   only make sense if you assume the agent has more access than the task needs.
-- **Check that the description matches the body.** A skill that advertises one job
+* **Check that the description matches the body.** A skill that advertises one job
   but its instructions reach for unrelated tools is the classic tell.
 
 ## Inspect the manifest and dependencies
@@ -54,11 +55,11 @@ git log --oneline -5 <skill-source>
 sha256sum skill-bundle.zip          # record the hash; re-verify on reinstall
 ```
 
-- **Pin by hash or commit.** "Latest" means whatever the author — or whoever
+* **Pin by hash or commit.** "Latest" means whatever the author — or whoever
   compromised the author — pushed this morning.
-- **Diff every update.** The first version can be clean and the update malicious.
+* **Diff every update.** The first version can be clean and the update malicious.
   Re-run this whole pass on upgrades; don't auto-trust a known author forever.
-- **Trace transitive trust.** A skill that pulls other skills, MCP servers, or
+* **Trace transitive trust.** A skill that pulls other skills, MCP servers, or
   remote prompts inherits all of their risk. Vet the chain, not just the entry point.
 
 ## Scope to least privilege
