@@ -23,20 +23,17 @@ import NavBlock from "../components/NavBlock.astro";
   </div>
 
   <p class="text-bright positioning-line">
-    Skills teach governance.<br />
-    The gate enforces it.
+    Skills teach governance. The gate enforces it.
   </p>
 
   <div class="line">&nbsp;</div>
 
-  <h2 class="text-bright">[WHAT IT IS]</h2>
+  <h2 class="text-bright">WHAT IT IS</h2>
+  <p>A lightweight checkpoint API backed by Cloudflare D1.</p>
   <p>
-    A lightweight checkpoint API backed by Cloudflare D1.
-  </p>
-  <p>
-    When an AI agent produces output that requires human sign-off,
-    it POSTs to the gate. The event sits as pending until a
-    reviewer approves or rejects it at <a href="/review/">quirgs.com/review</a>.
+    When an AI agent produces output that requires human sign-off, it POSTs to
+    the gate. The event sits as pending until a reviewer approves or rejects it
+    at <a href="/review/">quirgs.com/review</a>.
   </p>
   <p>
     Every decision is logged. Every approval is timestamped.<br />
@@ -45,20 +42,21 @@ import NavBlock from "../components/NavBlock.astro";
 
   <div class="line">&nbsp;</div>
 
-  <h2 class="text-bright">[WHY IT EXISTS]</h2>
+  <h2 class="text-bright">WHY IT EXISTS</h2>
   <p>
-    EU AI Act, NIST AI RMF, and ISO 42001 all require demonstrable
-    human oversight — not claimed. Demonstrable.
+    EU AI Act, NIST AI RMF, and ISO 42001 all require demonstrable human
+    oversight — not claimed.
   </p>
   <p>
-    <code>PATCH /events/{'{id}'} {'{"status":"approved"}'}</code> is the proof.<br />
+    <code>PATCH /events/{"{id}"} {'{"status":"approved"}'}</code> is the proof.<br
+    />
     A timestamp is not a policy.<br />
     A timestamp in a queryable log is an audit trail.
   </p>
 
   <div class="line">&nbsp;</div>
 
-  <h2 class="text-bright">[HOW IT WORKS]</h2>
+  <h2 class="text-bright">HOW IT WORKS</h2>
   <ol>
     <li>AI agent POSTs a pending event to the gate</li>
     <li>Reviewer sees it at <a href="/review/">quirgs.com/review</a></li>
@@ -72,29 +70,37 @@ import NavBlock from "../components/NavBlock.astro";
 
   <div class="line">&nbsp;</div>
 
-  <h2 class="text-bright">[EARLY ACCESS]</h2>
+  <h2 class="text-bright">EARLY ACCESS</h2>
   <p>The gate is in early access.</p>
 
-  <div class="line">Request credentials:  <a href="mailto:torrey.adams@gmail.com?subject=HITL%20Gate%20%E2%80%94%20early%20access%20request">torrey.adams@gmail.com</a></div>
-  <div class="line">Subject line:         HITL Gate — early access request</div>
+  <div class="line">Request credentials: <a href="/support">/support</a></div>
+  <div class="line">Subject line: HITL Gate — early access request</div>
 
   <div class="line">&nbsp;</div>
   <p>
-    Or self-host. Deploy your own instance from the <a href="https://github.com/unqdlphn/quirgs" target="_blank" rel="noopener">repo</a> in under 10 minutes.
+    Or self-host. Deploy your own instance from the <a
+      href="https://github.com/unqdlphn/quirgs"
+      target="_blank"
+      rel="noopener">repo</a
+    >
   </p>
 
   <div class="line">&nbsp;</div>
-  <div class="line divider">────────────────────────────────────────────────────────────</div>
+  <div class="line divider">
+    ────────────────────────────────────────────────────────────
+  </div>
   <div class="line">&nbsp;</div>
 
-  <div class="line">
-    &rarr; <a href="/hitl/">/hitl/</a>   docs and integration walkthrough
+  <div>
+    &rarr; <a href="/hitl/">/hitl/</a> docs and integration walkthrough
   </div>
-  <div class="line">
+  <div>&nbsp;</div>
+  <div>
     &rarr; <a href="/review/">/review/</a> human review queue (requires write token)
   </div>
-  <div class="line">
-    &rarr; <a href="/demo/">/demo/</a>   see a live demo queue
+  <div>&nbsp;</div>
+  <div>
+    &rarr; <a href="/demo/">/demo/</a> see a live demo queue
   </div>
 
   <div class="line">&nbsp;</div>
