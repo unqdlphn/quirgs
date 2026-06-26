@@ -28,19 +28,30 @@ import NavBlock from "../components/NavBlock.astro";
 
   <div class="token-block">
     <div class="line"><span class="text-bright">[DEMO]</span></div>
-    <div class="line divider">────────────────────────────────────────────────────────────</div>
-    <div class="line">This is a demonstration queue with synthetic compliance events.</div>
-    <div class="line">Approve and Reject are interactive — actions are not saved.</div>
+    <div class="line">
+      This is a demonstration queue with synthetic compliance events.
+    </div>
+    <div class="line">
+      Approve and Reject are interactive — actions are not saved.
+    </div>
     <div class="line">&nbsp;</div>
-    <div class="line">&rarr; <a href="/review/">/review/</a>  live queue (requires write token)</div>
-    <div class="line">&rarr; <a href="/hitl/">/hitl/</a>    wire your own agent to the gate</div>
+    <div>
+      &rarr; <a href="/review/">/review/</a> live queue (requires write token)
+    </div>
+    <div class="line">&nbsp;</div>
+    <div>
+      &rarr; <a href="/hitl/">/hitl/</a> wire your own agent to the gate
+    </div>
+    <div class="line">&nbsp;</div>
+    <div>
+      &rarr; <a href="/gate/">/gate/</a> what the gate is
+    </div>
   </div>
 
   <div class="line">&nbsp;</div>
 
   <div class="queue-block">
     <div class="line"><span class="text-bright">[QUEUE]</span></div>
-    <div class="line divider">─────────────</div>
     <div id="demo-queue-container">
       <div class="line">Loading demo queue...</div>
     </div>
@@ -48,10 +59,9 @@ import NavBlock from "../components/NavBlock.astro";
 
   <div class="line">&nbsp;</div>
 
-  <div class="detail-footer">
-    <div class="line">&rarr; <a href="/review/">/review/</a>  live review queue (requires write token)</div>
-    <div class="line">&rarr; <a href="/hitl/">/hitl/</a>    gate docs and integration walkthrough</div>
-    <div class="line">&rarr; <a href="/gate/">/gate/</a>    what the gate is</div>
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/demo</span
+    ><span class="text-bright">$&nbsp;</span><span class="cursor"></span>
   </div>
 </BaseLayout>
 
