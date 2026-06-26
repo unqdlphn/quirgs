@@ -9,6 +9,15 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Policy & modal refresh (feat/policy-modal-refresh)
+
+**Branch:** `feat/policy-modal-refresh` — (2026-06-26)
+
+### Changed
+- HelpModal: replaced "all seven" with "an entire bundle"; added `quirgs-publish@quirgs` bundle install command; added HITL GATE section with links to /gate/, /demo/, /hitl/
+- Terms of Service: effective date June 25, 2026; added HITL Gate service description (Section 2); added two prohibited-use bullets for gate payloads (Section 3); updated Section 4 to describe marketplace + Gist dual distribution
+- Privacy Policy: effective date June 25, 2026; added HITL Gate D1 disclosure (Section 2); removed all GA4 references (cookie table, Section 4, Section 6, Section 7); added HITL Gate 30-day TTL to Section 6; updated Section 7 rights paragraph
+
 ## Docs — README sync (feat/readme-t3.3)
 
 **Branch:** `feat/readme-t3.3` — (2026-06-25)
