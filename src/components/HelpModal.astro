@@ -56,18 +56,29 @@
       <div class="help-line">&nbsp;</div>
 
       <div class="help-line">
+        <span class="text-bright help-section-label">SITE LAYOUT</span>
+      </div>
+      <div class="help-line help-indent">
+        Press&nbsp;<span class="text-bright">[≡]</span> &nbsp;in the terminal header
+        or&nbsp;
+        <span class="text-bright">[+ more]</span>in the navagation for the full
+        site map.
+      </div>
+      <div class="help-line">&nbsp;</div>
+
+      <div class="help-line">
         <span class="text-bright help-section-label"
           >READING THE SKILLS LIST</span
         >
       </div>
       <div class="help-line help-indent">
-        The Skills registry displays like a Unix file listing:
+        The Skills registry displays like the following example:
       </div>
       <div class="help-line">&nbsp;</div>
       <div class="help-line help-indent help-example">
-        -rwxr--r--&nbsp;&nbsp;compliance&nbsp;&nbsp;<span class="text-blue"
-          >eu-ai-act-classifier</span
-        >&nbsp;&nbsp;<span class="text-green">v1.0</span>&nbsp;&nbsp;<span
+        <span class="text-blue">compliance</span>&nbsp;&nbsp;<span
+          class="text-blue">hitl-compliance-gate</span
+        >&nbsp;&nbsp;<span class="text-green">v1.0.0</span>&nbsp;&nbsp;<span
           class="text-green">[live]</span
         >
       </div>
@@ -113,14 +124,21 @@
       </div>
       <div class="help-line help-indent">
         <span class="text-yellow">2.&nbsp;</span>
-        <span class="text-bright">Install&nbsp;</span> a single skill, or all seven
-        at once:
+        <span class="text-bright">Install&nbsp;</span> a single skill, or an entire
+        bundle:
       </div>
       <div class="help-line help-indent-2 help-example">
         /plugin install eu-ai-act-classifier@quirgs
       </div>
       <div class="help-line help-indent-2 help-example">
-        /plugin install quirgs-compliance@quirgs
+        /plugin install quirgs-compliance@quirgs&nbsp;&nbsp;<span
+          style="color:var(--text-main)"># 7 compliance skills</span
+        >
+      </div>
+      <div class="help-line help-indent-2 help-example">
+        /plugin install quirgs-publish@quirgs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
+          style="color:var(--text-main)"># 8 publish skills</span
+        >
       </div>
       <div class="help-line">&nbsp;</div>
       <div class="help-line help-indent">
@@ -140,11 +158,18 @@
       <div class="help-line">&nbsp;</div>
 
       <div class="help-line">
-        <span class="text-bright help-section-label">SITE LAYOUT</span>
+        <span class="text-bright help-section-label">HITL GATE</span>
       </div>
       <div class="help-line help-indent">
-        Press <span class="text-bright">[≡]</span> in the terminal header for
-        the full site map — every page, grouped, one keystroke away.
+        The gate enforces governance at runtime. AI agents POST compliance
+        decisions; a human reviewer approves or rejects at
+        <a href="/review/">/review/</a>.
+      </div>
+      <div class="help-line">&nbsp;</div>
+      <div class="help-line help-indent">
+        &rarr;&nbsp; <a href="/gate/">what it is</a>&nbsp;&nbsp; &rarr;&nbsp;<a
+          href="/demo/">live demo</a
+        >&nbsp;&nbsp; &rarr;&nbsp;<a href="/hitl/">integration docs</a>
       </div>
       <div class="help-line">&nbsp;</div>
 

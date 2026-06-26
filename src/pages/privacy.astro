@@ -3,7 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
 
-const effectiveDate = "June 2, 2026";
+const effectiveDate = "June 25, 2026";
 ---
 
 <BaseLayout
@@ -37,19 +37,28 @@ const effectiveDate = "June 2, 2026";
     <h2>2. What we collect</h2>
     <p>
       We do not collect personal data through forms, accounts, or sign-ups.
-      quirgs.com has no authentication layer and no user-submitted content.
+      quirgs.com has no user registration or persistent login system.
     </p>
     <p>
-      We do collect anonymous, aggregated usage data through the analytics tools
-      described in Section 4. This data cannot be used to identify you
-      personally.
+      We collect anonymous, aggregated usage data through Cloudflare Web
+      Analytics (described in Section 4). This data cannot be used to identify
+      you personally.
+    </p>
+    <p>
+      Quirgs operates the <strong class="text-bright">HITL Gate</strong>, a
+      human-in-the-loop checkpoint API at a Cloudflare Workers endpoint. When AI
+      agents POST compliance events to the gate, the submitted payload (event
+      type, item description, workflow stage, and framework tags) is stored in
+      Cloudflare D1. This data is automatically deleted after 30 days. Gate
+      payloads are governance metadata — users must not submit personal data,
+      credentials, or sensitive information via the gate.
     </p>
 
     <h2>3. Cookies</h2>
     <p>
       The following cookies may be set when you visit quirgs.com. All are
-      functional or analytics in nature. No advertising or cross-site tracking
-      cookies are set.
+      functional in nature. No advertising or cross-site tracking cookies are
+      set. Cloudflare Web Analytics does not set cookies.
     </p>
 
     <table class="cookie-table">
@@ -62,18 +71,6 @@ const effectiveDate = "June 2, 2026";
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td><code>_ga</code></td>
-          <td>Google Analytics 4</td>
-          <td>Registers a unique ID to generate statistical data on how you use the site.</td>
-          <td>2 years</td>
-        </tr>
-        <tr>
-          <td><code>_ga_&lt;ID&gt;</code></td>
-          <td>Google Analytics 4</td>
-          <td>Used by Google Analytics to persist session state.</td>
-          <td>2 years</td>
-        </tr>
         <tr>
           <td><code>__cf_bm</code></td>
           <td>Cloudflare</td>
@@ -90,34 +87,19 @@ const effectiveDate = "June 2, 2026";
     </table>
 
     <p>
-      Google Analytics data is processed by Google LLC under Google's privacy
-      policy (<a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>).
       Cloudflare cookies are set by Cloudflare, Inc. and governed by Cloudflare's
       privacy policy (<a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">cloudflare.com/privacypolicy/</a>).
-    </p>
-    <p>
-      Cloudflare Web Analytics is also active on this site. Unlike traditional
-      analytics, it does not set cookies or collect personal data — it uses
-      edge-side aggregation only.
     </p>
 
     <h2>4. Analytics</h2>
     <p>
-      We use two analytics tools to understand site usage:
-    </p>
-    <p>
-      <strong class="text-bright">Google Analytics 4</strong> — Collects
-      anonymized page view, session, and interaction data. IP addresses are
-      anonymized. Data is retained for 14 months. You can opt out via the
-      <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google Analytics Opt-out Browser Add-on</a>.
-    </p>
-    <p>
       <strong class="text-bright">Cloudflare Web Analytics</strong> — A
       privacy-first, cookieless analytics tool. Collects aggregate page view
-      data at the network edge. No personal data or cookies are used.
+      data at the network edge. No personal data or cookies are used. Data is
+      retained per Cloudflare's standard policy.
     </p>
     <p>
-      This site is also registered with <strong class="text-bright">Google Search Console</strong>,
+      This site is registered with <strong class="text-bright">Google Search Console</strong>,
       which provides search performance data (e.g., which queries surface
       quirgs.com in Google Search). Search Console does not set cookies on your
       browser — it only processes data on Google's servers.
@@ -133,18 +115,19 @@ const effectiveDate = "June 2, 2026";
 
     <h2>6. Data retention</h2>
     <p>
-      We do not store personal data on our own servers. Google Analytics data
-      is retained for 14 months per Google's default setting. Cloudflare Web
-      Analytics data is retained per Cloudflare's standard policy.
+      We do not store personal data on our own servers. Cloudflare Web Analytics
+      data is retained per Cloudflare's standard policy. HITL Gate event payloads
+      are stored in Cloudflare D1 and automatically deleted after 30 days.
     </p>
 
     <h2>7. Your rights</h2>
     <p>
       If you are located in the European Economic Area, UK, or California, you
       may have rights to access, correct, or delete data held about you under
-      GDPR, UK GDPR, or CCPA. Because we do not directly store personal data,
-      requests relating to Google Analytics data should be directed to Google.
-      Contact us at <a href="/support/">/support/</a> with any questions.
+      GDPR, UK GDPR, or CCPA. We do not directly store personal data. HITL Gate
+      event data is automatically deleted after 30 days; early deletion requests
+      can be made via <a href="/support/">/support/</a>. Contact us there with
+      any privacy questions.
     </p>
 
     <h2>8. Changes to this policy</h2>
