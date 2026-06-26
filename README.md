@@ -98,10 +98,14 @@ quirgs/
 │   │   ├── index.astro         # Terminal landing — boot sequence + skill ls
 │   │   ├── skills/             # /skills/ index + dynamic [slug] detail pages
 │   │   ├── bundles/            # /bundles/ — skill bundle install page
-│   │   ├── guides/             # /guides/ — legacy archive index
+│   │   ├── guides/             # /guides/ — archive index + [slug].astro MDX detail pages
 │   │   ├── resources/          # /resources/ — resource pages
+│   │   ├── gate.astro          # /gate/ — HITL Gate stakeholder pitch
+│   │   ├── demo.astro          # /demo/ — fully static HITL Gate demo queue
 │   │   ├── hitl.astro          # /hitl/ — HITL Gate docs + 90-second test
 │   │   ├── review.astro        # /review/ — HITL Gate review queue UI
+│   │   ├── about.astro         # /about/ — what Quirgs is + who builds it
+│   │   ├── security.astro      # /security/ — security & trust posture
 │   │   ├── transparency.astro  # AI transparency notice
 │   │   ├── support.astro       # Contact + community
 │   │   ├── privacy.astro       # Privacy notice
@@ -114,8 +118,9 @@ quirgs/
 │   │   ├── Footer.astro        # Footer block
 │   │   └── HelpModal.astro     # [?] help dialog
 │   ├── content/
-│   │   └── skills/             # 15 .mdx skill entries — SITE pipeline source
-│   └── content.config.ts       # Zod schema for the skills collection
+│   │   ├── skills/             # 15 .mdx skill entries — SITE pipeline source
+│   │   └── guides/             # net-new .mdx guides — Keystatic-managed, rendered at /guides/<slug>/
+│   └── content.config.ts       # Zod schema for the skills + guides collections
 ├── .claude-plugin/
 │   └── marketplace.json        # Plugin marketplace catalog (name: quirgs) — manual
 ├── plugins/                    # Installable Claude Code plugins (9: 2 bundles + 7 single)
@@ -126,6 +131,8 @@ quirgs/
 │   ├── assets/                 # Logos, favicon assets
 │   ├── css/                    # Static stylesheets
 │   ├── guides/                 # Legacy V1 HTML guides (SEO URLs preserved)
+│   ├── demo.js                 # External script powering the /demo/ static queue
+│   ├── _headers                # Cloudflare headers — strict hash-pinned CSP (see note below)
 │   └── .well-known/            # ai-catalog.json (ARD), security.txt
 ├── workers/
 │   ├── registry-api/           # KV-backed skill catalog API
@@ -135,6 +142,7 @@ quirgs/
 ├── .github/
 │   ├── workflows/sync-gists.yml
 │   └── scripts/sync-gists.js
+├── .jules/                     # Tracked validation briefs + agent rules for this repo
 ├── keystatic.config.ts         # CMS config — collections + Keystatic Cloud storage
 ├── astro.config.mjs            # Static output + Cloudflare adapter
 ├── wrangler.jsonc              # Workers deployment config for the site
@@ -157,9 +165,14 @@ quirgs/
 | `/skills/[slug]/` | [src/pages/skills/[slug].astro](src/pages/skills/[slug].astro) | Per-skill detail page rendered from MDX with badges, install block, and interop references. |
 | `/bundles/` | [src/pages/bundles/index.astro](src/pages/bundles/index.astro) | Skill bundle install page — marketplace install commands for the `quirgs-compliance` (7 Skills) and `quirgs-publish` (8 Skills) bundles. |
 | `/guides/` | [src/pages/guides/index.astro](src/pages/guides/index.astro) | Index of legacy V1 guides, served verbatim from `/public/guides/`. URLs preserved for SEO. |
+| `/guides/[slug]/` | [src/pages/guides/[slug].astro](src/pages/guides/[slug].astro) | Per-guide detail page rendered from the `guides` MDX collection (Keystatic-managed). Clean URLs — no collision with the legacy `.html` archive. |
+| `/gate/` | [src/pages/gate.astro](src/pages/gate.astro) | HITL Gate stakeholder pitch — the case for human oversight infrastructure between an AI agent and any action it cannot take autonomously. |
+| `/demo/` | [src/pages/demo.astro](src/pages/demo.astro) | Fully static HITL Gate demo queue. No Worker/D1 dependency — three events hardcoded in [public/demo.js](public/demo.js), rendered client-side. Approve/Reject fire a demo-mode message only, never a fetch. |
 | `/hitl/` | [src/pages/hitl.astro](src/pages/hitl.astro) | HITL Gate docs + 90-second test. Backed by the `hitl-gate` Worker. |
 | `/review/` | [src/pages/review.astro](src/pages/review.astro) | HITL Gate review queue — loads pending events, Approve/Reject. Write token entered per session. |
 | `/resources/` | [src/pages/resources/index.astro](src/pages/resources/index.astro) | Resource pages. |
+| `/about/` | [src/pages/about.astro](src/pages/about.astro) | What Quirgs is, the governance-first thesis, who builds it, and how the platform is operated. |
+| `/security/` | [src/pages/security.astro](src/pages/security.astro) | Security & trust posture — CSP, data handling, skill distribution, vulnerability reporting, and the governance controls applied to the platform itself. |
 | `/transparency/` | [src/pages/transparency.astro](src/pages/transparency.astro) | AI transparency notice — disclosure of AI-generated content, AI-assisted development, and platform governance posture. |
 | `/support/` | [src/pages/support.astro](src/pages/support.astro) | GitHub Issues + social channels. |
 | `/privacy/`, `/terms/` | [src/pages/privacy.astro](src/pages/privacy.astro), [src/pages/terms.astro](src/pages/terms.astro) | Legal. |
@@ -193,6 +206,21 @@ Keystatic refuses to open entries.
 > **`slug` is intentionally optional** in `content.config.ts`. Keystatic's
 > `slugField: 'slug'` stores the slug as the *filename* and strips `slug:` from
 > frontmatter on save; the canonical slug is `entry.id`. Do not re-require it.
+
+### The `guides` collection
+
+A second collection — `guides` — is defined in the same
+[src/content.config.ts](src/content.config.ts) and lives in
+[src/content/guides/](src/content/guides/). These are net-new MDX guides
+(Track 1 of the guides → Keystatic migration), rendered at clean
+`/guides/<slug>/` URLs with no collision against the legacy `public/guides/*.html`
+archive. Frontmatter contract: `title`, `slug` (optional — same Keystatic
+`slugField` caveat as skills), `description`, `status` (`live` / `draft` /
+`deprecated` — drafts get no built page), `lastUpdated`, `tags[]`.
+
+Like `skills`, the `guides` schema is Keystatic-managed and must stay
+field-for-field in lockstep with [keystatic.config.ts](keystatic.config.ts), and
+`slug` must remain optional for the same reason.
 
 ---
 
@@ -254,7 +282,13 @@ list and per-skill metadata to clients that need it outside the static build.
 ### `workers/hitl-gate`
 D1-backed (`HITL_DB`) event log for human-in-the-loop review checkpoints. Lazy
 30-day TTL on rows. Stores `id`, `type`, `payload`, `status`, `created_at`,
-`updated_at`.
+`updated_at`. Exposes `POST` / `GET` / `PATCH /events`.
+
+On every successful `POST /events` it also fires an outbound webhook to the
+`WEBHOOK_URL` Worker secret (if set), carrying the event id, type, item, stage,
+frameworks, status, and a `review_url`. The webhook is non-blocking
+(`ctx.waitUntil`) and fire-and-forget — a webhook failure never fails the event
+POST.
 
 Both workers are scaffolded as plain ES modules (`index.js`) with CORS
 preflight, JSON response helpers, and table bootstrapping on first hit.
@@ -293,6 +327,19 @@ is served by Workers per [wrangler.jsonc](wrangler.jsonc).
 Workers are developed and deployed from their own subdirectories with the
 `wrangler` CLI — they do not share the Astro build pipeline.
 
+### Tests
+
+The Workers are covered by [Vitest](https://vitest.dev) (39 tests across both).
+Run them before opening a Worker PR:
+
+```bash
+npm test              # both Worker suites
+npm run test:registry # registry-api only
+npm run test:hitl     # hitl-gate only
+```
+
+There are no tests for the Astro site itself — the suites cover the two Workers.
+
 ---
 
 ## Design system
@@ -317,6 +364,14 @@ substitute alternate values.
 Typography stack: `'JetBrains Mono', 'Courier New', Courier, monospace` for
 the terminal interface; system UI for `/guides/` long-form. Full conventions
 are in `brand/style guide/Quirgs Brand Style Guide.md`.
+
+> **CSP is hash-pinned — [public/_headers](public/_headers).** The site ships a
+> strict Content-Security-Policy with **no `'unsafe-inline'`** for `script-src`;
+> the bundled inline scripts are pinned by SHA-256 hash. Changing any bundled
+> script (or bumping Astro/Vite, which can rewrite the inline wrapper) goes
+> stale silently with no build error — the affected script just gets CSP-blocked.
+> Recompute the hashes per the instructions at the top of `public/_headers`
+> whenever that happens.
 
 ---
 
