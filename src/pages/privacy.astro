@@ -24,7 +24,7 @@ const effectiveDate = "June 25, 2026";
     <p class="tagline">How we handle information on quirgs.com.</p>
   </div>
 
-  <div class="terminal-body" style="padding: 0;">
+  <div class="terminal-body flush">
     <p><strong class="text-bright">Effective date:</strong> {effectiveDate}</p>
 
     <h2>1. Who we are</h2>
@@ -146,6 +146,10 @@ const effectiveDate = "June 25, 2026";
 </BaseLayout>
 
 <style>
+  .terminal-body.flush {
+    padding: 0;
+  }
+
   .cookie-table {
     width: 100%;
     border-collapse: collapse;

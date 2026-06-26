@@ -146,7 +146,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
       })
     }
 
-    <div class="no-results" style="display:none;">
+    <div class="no-results">
       <span class="text-yellow">[WARN]</span> No skills match the current filter.
     </div>
   </div>
@@ -320,6 +320,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   }
 
   .no-results {
+    display: none;
     padding: 8px 0;
     color: var(--text-main);
     font-size: 0.88rem;
