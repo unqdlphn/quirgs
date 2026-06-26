@@ -22,6 +22,19 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
   No auth required, no Worker dependency, no D1 reads. Grouped under resources. External
   script (`public/demo.js`) avoids CSP hash changes.
 
+### Changed
+
+- **`src/pages/index.astro`** — Rephrased the landing boot sequence to highlight
+  concrete platform functions: replaced the generic "Classify risk. Gate decisions.
+  Audit for standards. Stay transparent." line with two declarative lines naming
+  EU AI Act risk classification, NIST AI RMF / ISO 42001 audit, HITL gate review,
+  transparency notices, and incident logging. The `Featuring` block is unchanged.
+  Added `NavBlock` to the landing terminal so the site menu is discoverable on first
+  paint. Minor copy tweaks on `demo.astro` and `gate.astro`.
+- **`public/_headers`** — Regenerated the pinned landing-boot inline-script SHA-256
+  (`sy+NlX3…` → `MCF6EEFZ…`) since the boot script bytes changed. No other CSP hashes
+  affected.
+
 ### Removed
 
 - Removed seperator line in `gate.astro` which caused mobile overflow.
