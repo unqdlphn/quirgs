@@ -32,6 +32,7 @@ export const routes: SiteRoute[] = [
   { path: "/skills/",       label: "skills/",       description: "skills registry",        group: "registry", primary: true },
   { path: "/resources/",    label: "resources/",    description: "case studies & writeups", group: "resources" },
   { path: "/gate/",         label: "gate/",         description: "HITL Gate — human oversight infrastructure", group: "resources" },
+  { path: "/demo/",         label: "demo/",         description: "HITL Gate demo queue",   group: "resources" },
   { path: "/guides/",       label: "guides/",       description: "reference guides",       group: "docs",     primary: true },
   { path: "/bundles/",      label: "bundles/",      description: "skill bundles",          group: "registry", primary: true },
   { path: "/transparency/", label: "transparency/", description: "AI transparency notice", group: "docs" },

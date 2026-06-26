@@ -1,30 +1,58 @@
 ---
 // src/pages/demo.astro
+// Fully static HITL Gate demo queue. No API calls, no Worker dependency, no D1
+// reads, no TTL expiry risk. The three events are hardcoded in public/demo.js
+// and rendered client-side into #demo-queue-container. Approve/Reject are
+// interactive but only fire a client-side demo-mode message — never a fetch.
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
 ---
 
 <BaseLayout
-  title="HITL Gate Demo | Quirgs"
-  description="HITL Gate Live Demo Queue (Stub)"
+  title="Demo Queue | Quirgs"
+  description="See the Quirgs HITL Gate in action — a live demo review queue with realistic compliance events."
   terminalPath="~/demo"
 >
   <NavBlock currentPath="/demo/" />
 
   <div class="line">
     <span class="prompt">admin@quirgs</span><span class="path">~/demo</span
-    ><span class="text-bright">$</span>&nbsp;cat demo.md
+    ><span class="text-bright">$</span>&nbsp;cat queue.md
   </div>
   <div class="line">&nbsp;</div>
 
   <div class="detail-header">
-    <h1 class="text-bright">HITL Gate Demo</h1>
-    <p class="tagline">
-      Live demo queue for the Quirgs HITL Gate (Stub).
-    </p>
+    <h1 class="text-bright">Demo Queue</h1>
+    <p class="line">Pre-populated review queue — no credentials required.</p>
   </div>
 
-  <p>
-    This is a stub for the live demo queue. The full interactive demo is part of T3.2 and will be merged soon.
-  </p>
+  <div class="token-block">
+    <div class="line"><span class="text-bright">[DEMO]</span></div>
+    <div class="line divider">────────────────────────────────────────────────────────────</div>
+    <div class="line">This is a demonstration queue with synthetic compliance events.</div>
+    <div class="line">Approve and Reject are interactive — actions are not saved.</div>
+    <div class="line">&nbsp;</div>
+    <div class="line">&rarr; <a href="/review/">/review/</a>  live queue (requires write token)</div>
+    <div class="line">&rarr; <a href="/hitl/">/hitl/</a>    wire your own agent to the gate</div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="queue-block">
+    <div class="line"><span class="text-bright">[QUEUE]</span></div>
+    <div class="line divider">─────────────</div>
+    <div id="demo-queue-container">
+      <div class="line">Loading demo queue...</div>
+    </div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
+  <div class="detail-footer">
+    <div class="line">&rarr; <a href="/review/">/review/</a>  live review queue (requires write token)</div>
+    <div class="line">&rarr; <a href="/hitl/">/hitl/</a>    gate docs and integration walkthrough</div>
+    <div class="line">&rarr; <a href="/gate/">/gate/</a>    what the gate is</div>
+  </div>
 </BaseLayout>
+
+<script src="/demo.js" defer></script>
