@@ -9,6 +9,22 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Docs — README sync (feat/readme-t3.3)
+
+**Branch:** `feat/readme-t3.3` — (2026-06-25)
+
+### Changed
+
+- **`README.md`** — Brought the README current with routes and structure added since
+  the last update (T3.3). Added the `/gate/`, `/demo/`, `/about/`, `/security/`, and
+  `/guides/[slug]/` routes to the routes table; added `gate.astro`, `demo.astro`,
+  `about.astro`, `security.astro`, `guides/[slug].astro`, `src/content/guides/`,
+  `public/demo.js`, `public/_headers`, and `.jules/` to the repository layout tree.
+  Documented the `hitl-gate` Worker's outbound webhook (`WEBHOOK_URL`, non-blocking via
+  `ctx.waitUntil`); added a `guides` content-collection subsection to the content model;
+  added a Tests subsection covering `npm test` (39 Vitest tests across both Workers);
+  and added a hash-pinned CSP / `public/_headers` note to the design system section; Moved T3.2-demo-queue-validation from .jules to untracked. (Clean up)
+
 ## Feature — HITL Gate demo queue (feat/hitl-demo-queue)
 
 **Branch:** `feat/hitl-demo-queue` — (2026-06-25)
