@@ -34,12 +34,14 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 - **`public/_headers`** — Regenerated the pinned landing-boot inline-script SHA-256
   (`sy+NlX3…` → `MCF6EEFZ…`) since the boot script bytes changed. No other CSP hashes
   affected.
-- **`/demo/` mobile overflow + layout** (Jules validation) — Moved the `/hitl/`,
-  `/review/`, `/gate/` CTAs out of the `[DEMO]` block to a `ctas-block` below the
-  queue. Replaced the per-card `━`×39 glyph dividers (an unbreakable run that
-  overflowed narrow viewports) with a `border-top` CSS rule scoped to
-  `#demo-queue-container .event-card`, so the separator can't overflow and `/review/`
-  is untouched.
+- **Queue card mobile overflow + `/demo/` layout** (Jules validation) — Moved the
+  `/hitl/`, `/review/`, `/gate/` CTAs out of the `[DEMO]` block to a `ctas-block`
+  below the queue. Replaced the per-card `━`×39 glyph dividers (an unbreakable run
+  that overflowed narrow viewports) with a `border-top` on the shared global
+  `.event-card` rule in `BaseLayout.astro` — a border can never overflow. This fixes
+  both `/demo/` (`demo.js`) and the same latent overflow on `/review/` (`review.js`),
+  whose glyph rows are removed. The bug was only ever visible on `/demo/` because
+  `/review/` renders cards only when the live gate queue has pending events.
 
 ### Removed
 

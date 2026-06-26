@@ -69,16 +69,4 @@ import NavBlock from "../components/NavBlock.astro";
   </div>
 </BaseLayout>
 
-<style is:global>
-  /* Demo cards separate with a CSS rule instead of a glyph divider: the old
-     "━"×39 run was a single unbreakable token wider than a phone viewport and
-     overflowed horizontally. A border can never overflow. Scoped to the demo
-     queue via #demo-queue-container so /review/ is untouched. Cards are injected
-     by demo.js without Astro's scope hash, so this must be is:global. */
-  #demo-queue-container .event-card {
-    border-top: 1px solid var(--term-border);
-    padding-top: 16px;
-  }
-</style>
-
 <script src="/demo.js" defer></script>
