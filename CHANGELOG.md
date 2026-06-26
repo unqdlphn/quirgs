@@ -18,6 +18,7 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
   - HelpModal (global, every page): two `style="color:var(--text-main)"` spans → new scoped `.text-main` class
   - Terms & Privacy (`feat/policy-modal-refresh`): `style="padding: 0;"` on `.terminal-body` → scoped `.terminal-body.flush` modifier
   - Skills index: `style="display:none;"` on `.no-results` → initial state moved into the scoped `.no-results` rule (JS still toggles `.style.display` at runtime, unaffected by CSP)
+- Skills index: replaced the `<select>` dropdown-arrow `data:image/svg+xml` background (blocked by `img-src 'self'`) with a self-hosted `/icons/select-arrow.svg` — keeps `img-src` tight rather than adding `data:`
 - Note: remaining `[Report Only]` console entries for `static.cloudflareinsights.com/beacon.min.js` and `/cdn-cgi/rum` originate from a **Cloudflare-injected Report-Only CSP** (Web Analytics), not our `_headers` policy — they block nothing and are resolved at the Cloudflare edge, not in this repo.
 
 ## Policy & modal refresh (feat/policy-modal-refresh)
