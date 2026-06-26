@@ -77,7 +77,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const receivedStr = formatCreatedDate(event.created_at);
 
     card.innerHTML = `
-      <div class="line divider">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
       <div class="line event-title-row">
         <span>EVENT  <span class="text-bright">${event.id.slice(0, 8)}...</span></span>
         <span class="status-label status-pending text-yellow">pending</span>
@@ -87,7 +86,6 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="line">Stage: <span class="text-bright">${stage}</span></div>
       <div class="line">Frameworks: <span class="text-bright">${frameworks}</span></div>
       <div class="line">Received: <span class="text-bright">${receivedStr}</span></div>
-      <div class="line divider">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</div>
 
       <div class="card-actions" id="actions-${event.id}">
         <button class="action-btn approve-btn" data-id="${event.id}">[ Approve ]</button>
