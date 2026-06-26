@@ -3,7 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
 
-const effectiveDate = "June 2, 2026";
+const effectiveDate = "June 25, 2026";
 ---
 
 <BaseLayout
@@ -41,6 +41,15 @@ const effectiveDate = "June 2, 2026";
       Claude, Cowork).
     </p>
     <p>
+      Quirgs also operates the <strong class="text-bright">HITL Gate</strong> — a
+      human-in-the-loop checkpoint API backed by Cloudflare D1. The gate allows
+      AI agents to post pending decisions for human review. Event payloads are
+      stored for a maximum of 30 days and then automatically deleted. Do not
+      submit personal data, credentials, or sensitive information via the gate.
+      The gate is provided for governance workflow evaluation — it is not a
+      production data store.
+    </p>
+    <p>
       Nothing on quirgs.com constitutes legal, compliance, or regulatory advice.
       Governance skills are reference implementations — you are responsible for
       validating their suitability for your specific regulatory context before
@@ -64,14 +73,26 @@ const effectiveDate = "June 2, 2026";
         Represent Quirgs skills as your own original work for commercial
         redistribution without modification.
       </li>
+      <li>
+        Submit personal data, credentials, health information, or any other
+        sensitive content as HITL Gate event payloads. Gate payloads are
+        governance metadata — not a data storage service.
+      </li>
+      <li>
+        Flood, stress-test, or attempt to exfiltrate data from the HITL Gate
+        endpoint.
+      </li>
     </ul>
 
     <h2>4. Skill licenses</h2>
     <p>
-      Each skill published on quirgs.com is distributed via a public GitHub
-      Gist. The applicable license is specified in the Gist. Where no license is
-      specified, skills are provided for personal and organizational evaluation
-      use only — redistribution requires written permission.
+      Skills are distributed through two channels: the <strong class="text-bright">quirgs
+      plugin marketplace</strong> (the primary install path, via Claude Code) and
+      public <strong class="text-bright">GitHub Gists</strong> (read-only previews
+      for discovery). The applicable license for each skill is specified in its
+      Gist. Where no license is specified, skills are provided for personal and
+      organizational evaluation use only — redistribution requires written
+      permission.
     </p>
     <p>
       Skills may be integrated into your own AI workflows and agent
