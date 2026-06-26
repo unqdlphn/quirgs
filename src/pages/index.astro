@@ -3,6 +3,7 @@
 import HelpModal from "../components/HelpModal.astro";
 import SiteMenu from "../components/SiteMenu.astro";
 import Footer from "../components/Footer.astro";
+import NavBlock from "../components/NavBlock.astro";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
@@ -286,6 +287,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           >
         </div>
         <div class="terminal-body" id="terminal">
+          <NavBlock currentPath="/" />
           <!-- Content will be injected by JavaScript -->
         </div>
       </div>
@@ -322,7 +324,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         },
         {
           type: "output",
-          text: "Classify risk. Gate decisions. Audit for standards. Stay transparent.",
+          text: "Classify AI risk under the EU AI Act. Audit against NIST AI RMF and ISO 42001.",
+          delay: 400,
+        },
+        {
+          type: "output",
+          text: "Gate decisions behind human review. Draft transparency notices. Log incidents.",
           delay: 400,
         },
         { type: "blank", delay: 300 },
@@ -339,16 +346,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         { type: "blank", delay: 400 },
         {
           type: "output",
-          text: '<span class="text-yellow">[ARCHIVE]&nbsp;</span> legacy guides v1:&nbsp;<a href="guides/index.html">quirgs.com/guides</a>',
+          text: '<span class="text-green">[GUIDES]&nbsp;</span>Current and V1 legacy guides:&nbsp;<a href="guides/">View guides &rarr;</a>',
           delay: 0,
         },
         { type: "blank", delay: 500 },
 
-        {
-          type: "output",
-          text: '<span class="text-bright"></span><a href="/skills/">/skills/</a>&nbsp;|&nbsp;<a href="/transparency/">/transparency/</a>',
-          delay: 500,
-        },
         { type: "prompt-only" },
       ];
 

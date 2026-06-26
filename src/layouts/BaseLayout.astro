@@ -472,8 +472,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         color: var(--text-bright);
       }
 
+      /* Cards (review.js + demo.js) separate with a CSS rule, not a glyph
+         divider. A "━"×39 run is a single unbreakable token wider than a phone
+         viewport and overflowed horizontally; a border can never overflow. */
       .event-card {
         margin-bottom: 24px;
+        border-top: 1px solid var(--term-border);
+        padding-top: 16px;
       }
 
       .event-title-row {
