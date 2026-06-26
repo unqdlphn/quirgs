@@ -34,6 +34,12 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 - **`public/_headers`** — Regenerated the pinned landing-boot inline-script SHA-256
   (`sy+NlX3…` → `MCF6EEFZ…`) since the boot script bytes changed. No other CSP hashes
   affected.
+- **`/demo/` mobile overflow + layout** (Jules validation) — Moved the `/hitl/`,
+  `/review/`, `/gate/` CTAs out of the `[DEMO]` block to a `ctas-block` below the
+  queue. Replaced the per-card `━`×39 glyph dividers (an unbreakable run that
+  overflowed narrow viewports) with a `border-top` CSS rule scoped to
+  `#demo-queue-container .event-card`, so the separator can't overflow and `/review/`
+  is untouched.
 
 ### Removed
 

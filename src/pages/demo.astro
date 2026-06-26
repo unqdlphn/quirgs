@@ -34,18 +34,6 @@ import NavBlock from "../components/NavBlock.astro";
     <div class="line">
       Approve and Reject are interactive — actions are not saved.
     </div>
-    <div class="line">&nbsp;</div>
-    <div>
-      &rarr; <a href="/review/">/review/</a> live queue (requires write token)
-    </div>
-    <div class="line">&nbsp;</div>
-    <div>
-      &rarr; <a href="/hitl/">/hitl/</a> wire your own agent to the gate
-    </div>
-    <div class="line">&nbsp;</div>
-    <div>
-      &rarr; <a href="/gate/">/gate/</a> what the gate is
-    </div>
   </div>
 
   <div class="line">&nbsp;</div>
@@ -59,10 +47,38 @@ import NavBlock from "../components/NavBlock.astro";
 
   <div class="line">&nbsp;</div>
 
+  <div class="ctas-block">
+    <div>
+      &rarr; <a href="/hitl/">/hitl/</a> wire your own agent to the gate
+    </div>
+    <div class="line">&nbsp;</div>
+    <div>
+      &rarr; <a href="/review/">/review/</a> live queue (requires write token)
+    </div>
+    <div class="line">&nbsp;</div>
+    <div>
+      &rarr; <a href="/gate/">/gate/</a> what the gate is
+    </div>
+  </div>
+
+  <div class="line">&nbsp;</div>
+
   <div class="line">
     <span class="prompt">admin@quirgs</span><span class="path">~/demo</span
     ><span class="text-bright">$&nbsp;</span><span class="cursor"></span>
   </div>
 </BaseLayout>
+
+<style is:global>
+  /* Demo cards separate with a CSS rule instead of a glyph divider: the old
+     "━"×39 run was a single unbreakable token wider than a phone viewport and
+     overflowed horizontally. A border can never overflow. Scoped to the demo
+     queue via #demo-queue-container so /review/ is untouched. Cards are injected
+     by demo.js without Astro's scope hash, so this must be is:global. */
+  #demo-queue-container .event-card {
+    border-top: 1px solid var(--term-border);
+    padding-top: 16px;
+  }
+</style>
 
 <script src="/demo.js" defer></script>
