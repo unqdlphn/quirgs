@@ -31,7 +31,7 @@ export const routes: SiteRoute[] = [
   { path: "/about/",        label: "about/",        description: "what quirgs is & who builds it", group: "site",     primary: true },
   { path: "/skills/",       label: "skills/",       description: "skills registry",        group: "registry", primary: true },
   { path: "/resources/",    label: "resources/",    description: "case studies & writeups", group: "resources" },
-  { path: "/gate/",         label: "gate/",         description: "HITL Gate — human oversight infrastructure", group: "resources" },
+  { path: "/gate/",         label: "gate/",         description: "HITL Gate infrastructure", group: "resources" },
   { path: "/demo/",         label: "demo/",         description: "HITL Gate demo queue",   group: "resources" },
   { path: "/guides/",       label: "guides/",       description: "reference guides",       group: "docs",     primary: true },
   { path: "/bundles/",      label: "bundles/",      description: "skill bundles",          group: "registry", primary: true },
