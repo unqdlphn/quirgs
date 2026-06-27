@@ -1,6 +1,10 @@
 # quirgs.com — robots policy
-# Search indexing is allowed site-wide. AI-training-bot policy is enforced
-# at the Cloudflare edge (Security -> Bots), not here.
+# Search indexing is allowed site-wide. AI agents and assistants are welcome:
+# the platform is built to be agent-legible. Any AI-bot access policy is
+# enforced at the Cloudflare edge (Security -> Bots), not here — keep the edge
+# rules aligned with this allow stance.
+#
+# Agent-facing site map: https://quirgs.com/llms.txt
 
 User-agent: *
 Allow: /

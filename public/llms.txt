@@ -1,0 +1,54 @@
+# Quirgs
+
+> Governance-first AI skills for Claude Code. Quirgs publishes a catalog of installable Skills (governance SOPs an agent can run), Guides, and a human-in-the-loop approval Gate. Governance first. Build accordingly.
+
+Quirgs is a governance-first AI product platform. A **quirg** is a unit of agent-legible governance — distributed in three formats: **Skill**, **Guide**, and **Tool**.
+
+Skills install into Claude Code via the plugin marketplace and run as structured procedures. Every skill's source is viewable as a public GitHub Gist before install, and auto-update is off by default. The skills are governance *scaffolding* for education and drafting — they are not legal advice or a formal compliance determination.
+
+Install any skill in two commands:
+
+```
+/plugin marketplace add unqdlphn/quirgs
+/plugin install <skill-name>@quirgs
+```
+
+## Compliance bundle (Skills)
+
+- [EU AI Act Classifier](https://quirgs.com/skills/eu-ai-act-classifier/): Classify an AI system's risk tier under the EU AI Act and output a role-scoped obligations checklist.
+- [HITL Compliance Gate](https://quirgs.com/skills/hitl-compliance-gate/): Insert a structured human-review checkpoint into any AI workflow (EU AI Act, NIST AI RMF, ISO 42001).
+- [NIST AI RMF Checkpoint](https://quirgs.com/skills/nist-ai-rmf-checkpoint/): Walk the Govern / Map / Measure / Manage functions and produce a stage-scoped risk profile.
+- [ISO 42001 Audit Prep](https://quirgs.com/skills/iso-42001-audit-prep/): Clause-by-clause ISO/IEC 42001:2023 AI Management System audit-readiness and gap analysis.
+- [PII Exposure Checker](https://quirgs.com/skills/pii-exposure-checker/): Audit AI data pipelines for PII exposure under GDPR and EU AI Act Article 10.
+- [AI Transparency Writer](https://quirgs.com/skills/ai-transparency-writer/): Draft transparency notices, model cards, and Article 13 system disclosures.
+- [Incident Response Logger](https://quirgs.com/skills/incident-response-logger/): Structure AI incident reports aligned to NIST SP 800-61 and EU AI Act Article 62.
+
+## Publish bundle (Skills)
+
+- [Publish Workflow](https://quirgs.com/skills/publish-workflow/): Weekly publishing OS — routes tasks to the right skill, in the right order.
+- [Publish Provenance](https://quirgs.com/skills/publish-provenance/): Creation log and AI-involvement assessment for every release.
+- [Publish Update](https://quirgs.com/skills/publish-update/): Catalog metadata hygiene — find gaps, fix errors, enrich records.
+- [Publish Broadcast](https://quirgs.com/skills/publish-broadcast/): DDEX ERN + PRO registration packets, ready for submission.
+- [Publish License](https://quirgs.com/skills/publish-license/): Three-agent sync pipeline — brief to pitch in one pass.
+- [Publish Income](https://quirgs.com/skills/publish-income/): Reconcile royalty statements against your catalog ledger.
+- [Publish Shield](https://quirgs.com/skills/publish-shield/): Pre-release platform compliance + AI governance policy for music publishers.
+- [Publish Harvest](https://quirgs.com/skills/publish-harvest/): Quarterly catalog performance review — tiers, gaps, and next actions.
+
+## Platform
+
+- [Skills registry](https://quirgs.com/skills/): Full catalog with status, frameworks, and per-skill install commands.
+- [Bundles](https://quirgs.com/bundles/): Skill bundles grouped by use case.
+- [HITL Gate](https://quirgs.com/hitl/): Human-in-the-loop approval queue that sits between an AI agent and any action requiring sign-off. A pull request review, but for AI decisions. Includes curl examples to post and approve an event.
+- [Guides](https://quirgs.com/guides/): Long-form references on agent skills and governance workflow.
+
+## Governance & trust
+
+- [Transparency](https://quirgs.com/transparency/): How Quirgs operates, what the skills are and are not, and the educational-use disclaimer.
+- [Security](https://quirgs.com/security/): Security posture and contact. See also /.well-known/security.txt (RFC 9116).
+- [Privacy](https://quirgs.com/privacy/): No personal-data collection; analytics-only posture.
+- [Terms](https://quirgs.com/terms/): Terms of use.
+
+## Optional
+
+- [Agent catalog (ARD)](https://quirgs.com/.well-known/ai-catalog.json): Machine-readable Agentic Resource Discovery catalog of installable skills.
+- [Sitemap](https://quirgs.com/sitemap-index.xml): Full URL index.
