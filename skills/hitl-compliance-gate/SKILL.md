@@ -109,7 +109,14 @@ scoped to the detected workflow stage and item type.
 ## Step 3.5 — Post to HITL Gate Worker
 
 After generating the compliance checkpoint in Step 3, do NOT surface it as final output yet.
-Instead, post it to the Quirgs HITL Gate for human sign-off.
+Instead, post it to the configured HITL Gate for human sign-off.
+
+The gate endpoint is whatever you point `HITL_GATE_URL` at — it is **your** gate, not a
+Quirgs-operated one. Run your own copy of the `hitl-gate` Worker (the source is open at
+`workers/hitl-gate` in the Quirgs repo) and set `HITL_GATE_URL` to your deployment so that
+compliance events stay inside your own infrastructure. The shared `quirgs-hitl-gate`
+Worker is a public demonstration queue for the 90-second test only — never send real,
+production, or PII-bearing checkpoint data to it.
 
 ### 3.5a — Check for gate config
 
@@ -153,7 +160,7 @@ Do NOT output the full compliance checkpoint. Instead display:
 ⏳ COMPLIANCE GATE — PENDING HUMAN SIGN-OFF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Event posted to the Quirgs HITL Gate.
+Event posted to your HITL Gate ($HITL_GATE_URL).
 Event ID: <id>
 Type:     hitl-compliance-gate
 Status:   pending

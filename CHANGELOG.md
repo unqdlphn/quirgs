@@ -9,6 +9,27 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## HITL endpoint abstraction (feat/hitl-endpoint-abstraction)
+
+**Branch:** `feat/hitl-endpoint-abstraction` — (2026-06-27)
+
+Makes clear, in both the skill and the docs, that the HITL Gate endpoint is the
+user's own — never Quirgs infrastructure. The `hitl-compliance-gate` skill and
+the `/hitl/` examples already read `HITL_GATE_URL`/`HITL_GATE_TOKEN` from the
+environment, but the surrounding copy presented the shared `quirgs-hitl-gate`
+Worker as *the* gate, so an external install following the docs would POST its
+compliance events into the shared demonstration queue.
+
+### Changed
+- `skills/hitl-compliance-gate/SKILL.md` (Gist-sync source): Step 3.5 now frames the gate as "your configured HITL Gate" rather than "the Quirgs HITL Gate." Added an explicit note that `HITL_GATE_URL` points at the user's own `hitl-gate` Worker deployment (source at `workers/hitl-gate`), and that the shared `quirgs-hitl-gate` Worker is a public demo queue for the 90-second test only — never for production or PII-bearing data. The pending-state output now echoes `$HITL_GATE_URL` instead of naming Quirgs.
+- `src/pages/hitl.astro`: split the setup into a **demo Worker** path (the 90-second test against the shared queue) and a new **RUN YOUR OWN GATE** section covering deploying the open-source Worker and pointing `HITL_GATE_URL` at it. Reframed the "HOW IT WORKS" Worker callout as a *shared demonstration* Worker and clarified that env-var indirection means switching to your own gate is a single `HITL_GATE_URL` change — nothing else points at Quirgs.
+
+### Why
+- External installs should keep their compliance event data inside their own infrastructure. The fix is documentation/framing: surface the gate as user-owned and the shared Worker as demo-only, so following the docs no longer routes real data through Quirgs.
+
+### Also
+- Ported the (now endpoint-agnostic) Step 3.5 into **both plugin copies** — `plugins/hitl-compliance-gate/` and the bundled `plugins/quirgs-compliance/`. Previously Step 3.5 lived only in the Gist-sync source, so `/plugin install hitl-compliance-gate@quirgs` produced an *ungated* skill (Step 3 → Step 4 with no gate POST), contradicting the `/hitl/` claim that installing it gates any workflow "out of the box." Both plugin SKILL.md copies are now byte-identical in the Step 3.5 block; graceful degradation (3.5d) keeps the skill working for users who never wire a gate. Bumped both plugin manifests `1.0.0` → `1.1.0`.
+
 ## Crawler-facing trust posture (feat/crawler-trust-posture)
 
 **Branch:** `feat/crawler-trust-posture` — (2026-06-27)
