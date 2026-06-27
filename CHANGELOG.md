@@ -9,6 +9,24 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## llms.txt + agent-discovery posture (feat/llms-txt-agent-discovery)
+
+**Branch:** `feat/llms-txt-agent-discovery` — (2026-06-27)
+
+Agent-readiness pass ahead of hard launch, prompted by a zero-context Copilot
+assessment of quirgs.com. Goal: make the site legible and reachable to AI agents
+that index and vouch for it.
+
+### Added
+- `public/llms.txt` — agent-facing site map in the [llmstxt.org](https://llmstxt.org) format. H1 + summary blockquote, the two-command install flow, both skill bundles (compliance ×7, publish ×8) with links and taglines, the HITL Gate, Guides, and the governance/trust pages. Complements the existing `/.well-known/ai-catalog.json` (ARD) discovery surface.
+- `public/_headers` — `/llms.txt` block serving `text/plain; charset=utf-8`, `Access-Control-Allow-Origin: *` (cross-origin agent fetch), and `Cache-Control: public, max-age=3600`. CSP on a text/plain response is inert, mirroring the `security.txt` / `ai-catalog.json` blocks.
+
+### Changed
+- `public/robots.txt` — reworded the header comment from the old "AI-training-bot policy is enforced at the edge" stance to an explicit **agents-welcome** stance, and added an `# Agent-facing site map: https://quirgs.com/llms.txt` pointer. `Allow: /` and the `/keystatic/` disallow are unchanged.
+
+### Notes (Cloudflare edge — dashboard, not in repo)
+- **Stance: verified bots only (first definition of "agent ready").** Major AI platforms may index and cite Quirgs; unverified custom agents remain challenged. Sitemap (`sitemap-index.xml`) was already healthy and is unchanged. Edge changes made out-of-band: managed **"Block AI training bots" → Do not block**; **"Instruct AI bot traffic with robots.txt" beta → off** (it was auto-overwriting `robots.txt` at the edge). Super Bot Fight Mode left **on** (Definitely automated → Managed Challenge, Static Resource Protection on) — verified AI crawlers are exempt and pass; this is the intended posture. A spoofed-UA `curl` will hit the Managed Challenge and is **not** a valid test of real (IP-verified) crawler access — use `Security → Events` filtered by crawler UA instead. Custom rule #1 ("Block scanners and bad user agents": sqlmap/nikto/masscan/zgrab/nuclei + blank UA) confirmed clean — no AI crawler sends a blank UA.
+
 ## CSP inline-style sweep (feat/csp-inline-style-sweep)
 
 **Branch:** `feat/csp-inline-style-sweep` — (2026-06-26)

@@ -37,6 +37,13 @@
 /.well-known/security.txt
   Content-Type: text/plain; charset=utf-8
 
+# llms.txt — agent-facing site map (llmstxt.org). Plain text + CORS-readable so
+# any LLM/agent can fetch it cross-origin. CSP on a text/plain response is inert.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=3600
+
 # ARD (Agentic Resource Discovery) catalog — must be CORS-readable so any
 # ARD-compliant crawler can fetch it cross-origin. JSON file only; this block
 # does not touch the strict CSP pinned to /* (CSP on a JSON response is inert).
