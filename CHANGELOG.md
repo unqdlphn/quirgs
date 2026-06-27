@@ -9,6 +9,20 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Crawler-facing trust posture (feat/crawler-trust-posture)
+
+**Branch:** `feat/crawler-trust-posture` — (2026-06-27)
+
+### Added
+- New `src/components/Seo.astro`: emits Open Graph + Twitter Card meta and a static JSON-LD `Organization` graph on every page. The JSON-LD surfaces the published security posture (`contactPoint` `contactType: "security"` → `/.well-known/security.txt`) and the transparency notice (`publishingPrinciples` → `/transparency/`) so an agent reading only the page HTML finds them without running the JS boot sequence. Wired into `BaseLayout.astro` (all subpages) and the standalone `index.astro`.
+- Footer now links **Security** and **Transparency** alongside Privacy/Terms/Support, so the trust pages are reachable from the static HTML of every page (previously they existed but nothing on the homepage linked them).
+
+### Changed
+- `public/_headers`: pinned the JSON-LD block's SHA-256 (`sha256-0luhRzwYBCNWM+bAZHyYyfEmlrY4A7B/kihyfIeWxMc=`) in `script-src` (7th hash). CSP `script-src` applies to `<script type="application/ld+json">` even though it is not executed; the bytes are static, so the single hash covers all pages.
+
+### Why
+- A Copilot agent-readiness assessment concluded "no published security posture" despite `security.txt` + a strict CSP existing — it only saw the homepage `title`/`meta-description` (no structured data, JS-injected body) and couldn't reach the trust pages. These changes put the security/transparency posture where a non-JS crawler actually reads it.
+
 ## HITL gate read-path hardening (feat/hitl-gate-read-hardening)
 
 **Branch:** `feat/hitl-gate-read-hardening` — (2026-06-27)
