@@ -18,7 +18,8 @@ const step1Command = `curl -s -X POST $HITL_GATE_URL/events \\
     }
   }'`;
 
-const step2Command = `curl -s $HITL_GATE_URL/events/<event-id>`;
+const step2Command = `curl -s $HITL_GATE_URL/events/<event-id> \\
+  -H "Authorization: Bearer $HITL_GATE_TOKEN"`;
 
 const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
   -H "Authorization: Bearer $HITL_GATE_TOKEN" \\
@@ -88,6 +89,7 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
   <h2 class="text-bright">HOW IT WORKS</h2>
   <p>Three operations. One Worker. No SDK required.</p>
   <pre><code>  POST   /events      — AI posts a pending approval request
+  GET    /events      — reviewer lists the pending queue
   GET    /events/:id  — reviewer checks the event status
   PATCH  /events/:id  — reviewer approves or rejects</code></pre>
   <p>
@@ -104,8 +106,9 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
   <h2 class="text-bright">PREREQUISITES</h2>
   <p>
     To prevent unauthorized access, the gate Worker requires Bearer token
-    authentication for all write operations (POST and PATCH). Before testing,
-    you must obtain a write token:
+    authentication for every operation — reads (GET) as well as writes (POST and
+    PATCH). The event payloads are not world-readable. Before testing, you must
+    obtain a token:
   </p>
   <div class="line">&nbsp;</div>
   <div>Request a token &rarr; <a href="/support/">/support/</a></div>
