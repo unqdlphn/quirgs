@@ -104,6 +104,94 @@ scoped to the detected workflow stage and item type.
 
 ---
 
+## Step 3.5 — Post to HITL Gate Worker
+
+After generating the compliance checkpoint in Step 3, do NOT surface it as final output yet.
+Instead, post it to the configured HITL Gate for human sign-off.
+
+The gate endpoint is whatever you point `HITL_GATE_URL` at — it is **your** gate, not a
+Quirgs-operated one. Run your own copy of the `hitl-gate` Worker (the source is open at
+`workers/hitl-gate` in the Quirgs repo) and set `HITL_GATE_URL` to your deployment so that
+compliance events stay inside your own infrastructure. The shared `quirgs-hitl-gate`
+Worker is a public demonstration queue for the 90-second test only — never send real,
+production, or PII-bearing checkpoint data to it.
+
+### 3.5a — Check for gate config
+
+Run the following in bash to check for required env vars:
+
+```bash
+echo "${HITL_GATE_URL:-NOT_SET}"
+echo "${HITL_GATE_TOKEN:-NOT_SET}"
+```
+
+If either result is `NOT_SET`, skip to **3.5d — Graceful Degradation**.
+
+### 3.5b — POST the event
+
+Construct and send the approval event:
+
+```bash
+curl -s -X POST $HITL_GATE_URL/events \
+  -H "Authorization: Bearer $HITL_GATE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "type": "hitl-compliance-gate",
+    "payload": {
+      "item": "<item under review from Step 1>",
+      "stage": "<workflow stage from Step 1>",
+      "frameworks": ["<frameworks loaded in Step 2>"],
+      "checkpoint_summary": "<mandatory sign-off questions only — do not include full checklist>",
+      "status": "pending"
+    }
+  }'
+```
+
+On HTTP 201: extract the `id` from the response JSON.
+
+### 3.5c — Surface the pending state
+
+Do NOT output the full compliance checkpoint. Instead display:
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⏳ COMPLIANCE GATE — PENDING HUMAN SIGN-OFF
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Event posted to your HITL Gate ($HITL_GATE_URL).
+Event ID: <id>
+Type:     hitl-compliance-gate
+Status:   pending
+
+The compliance checkpoint is held pending reviewer approval.
+
+To review and approve:
+  GET  $HITL_GATE_URL/events/<id>
+  PATCH $HITL_GATE_URL/events/<id>
+        Body: {"status": "approved"}  OR  {"status": "rejected"}
+
+When the reviewer has acted, tell me:
+  "The gate was approved" → I will proceed with the APPROVED path in Step 4.
+  "The gate was rejected" → I will proceed with the BLOCKED path in Step 4.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+Then stop and wait for the user to confirm the reviewer's decision before proceeding to Step 4.
+
+### 3.5d — Graceful Degradation (token not set)
+
+If `HITL_GATE_URL` or `HITL_GATE_TOKEN` is not set, surface the compliance checkpoint directly as in the
+original Step 3 flow, and append this advisory at the top of the output:
+
+```
+[INFO] HITL gate not configured — outputting compliance checkpoint without gate enforcement.
+To enable: set HITL_GATE_URL and HITL_GATE_TOKEN in your environment and retry.
+```
+
+This ensures the skill remains functional for users who have not wired the gate yet.
+
+---
+
 ## Step 4 — Post-Review Handling
 
 After the human completes the checklist:

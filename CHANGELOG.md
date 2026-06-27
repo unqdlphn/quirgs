@@ -27,6 +27,9 @@ compliance events into the shared demonstration queue.
 ### Why
 - External installs should keep their compliance event data inside their own infrastructure. The fix is documentation/framing: surface the gate as user-owned and the shared Worker as demo-only, so following the docs no longer routes real data through Quirgs.
 
+### Also
+- Ported the (now endpoint-agnostic) Step 3.5 into **both plugin copies** — `plugins/hitl-compliance-gate/` and the bundled `plugins/quirgs-compliance/`. Previously Step 3.5 lived only in the Gist-sync source, so `/plugin install hitl-compliance-gate@quirgs` produced an *ungated* skill (Step 3 → Step 4 with no gate POST), contradicting the `/hitl/` claim that installing it gates any workflow "out of the box." Both plugin SKILL.md copies are now byte-identical in the Step 3.5 block; graceful degradation (3.5d) keeps the skill working for users who never wire a gate. Bumped both plugin manifests `1.0.0` → `1.1.0`.
+
 ## Crawler-facing trust posture (feat/crawler-trust-posture)
 
 **Branch:** `feat/crawler-trust-posture` — (2026-06-27)
