@@ -17,21 +17,23 @@ document.addEventListener("DOMContentLoaded", () => {
     tokenInput.value = currentToken;
   }
   updateTokenState(currentToken);
-  
-  // 2. Fetch and render queue
+
+  // 2. Fetch and render queue (requires a token — the gate authenticates reads)
   loadQueue();
-  
+
   // 3. Event listeners
   setTokenBtn.addEventListener("click", () => {
     const token = tokenInput.value.trim();
     updateTokenState(token);
+    loadQueue();
   });
-  
+
   // Also handle Enter key in token input
   tokenInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       const token = tokenInput.value.trim();
       updateTokenState(token);
+      loadQueue();
     }
   });
 
@@ -66,10 +68,23 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   async function loadQueue() {
+    // Reads are authenticated — without a token the gate returns 401, so don't
+    // even attempt the fetch. Prompt for the token instead.
+    if (!currentToken) {
+      queueContainer.innerHTML = '<div class="line"><span class="text-yellow">○ Set a token above to view the review queue.</span></div>';
+      return;
+    }
+
     queueContainer.innerHTML = '<div class="line">Fetching queue...</div>';
-    
+
     try {
-      const response = await fetch(`${workerUrl}/events`);
+      const response = await fetch(`${workerUrl}/events`, {
+        headers: { "Authorization": `Bearer ${currentToken}` }
+      });
+      if (response.status === 401) {
+        queueContainer.innerHTML = '<div class="line text-red">[ERR] Unauthorized — check the token and try again.</div>';
+        return;
+      }
       if (!response.ok) {
         throw new Error(`Failed to fetch events: ${response.statusText}`);
       }

@@ -9,6 +9,34 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## HITL gate read-path hardening (feat/hitl-gate-read-hardening)
+
+**Branch:** `feat/hitl-gate-read-hardening` — (2026-06-27)
+
+Closes the unauthenticated-read exposure on the `hitl-gate` Worker. `GET /events`
+was world-readable (`Access-Control-Allow-Origin: *`, no auth), so anyone could
+enumerate and read every non-archived event payload — and the `/review`
+dashboard fetched it that way. Each GET also did two writes (per-request
+`CREATE TABLE` + lazy TTL `UPDATE`) and an unbounded `SELECT *`.
+
+### Changed
+- `workers/hitl-gate/index.js`:
+  - **Auth on all reads.** `GET /events` and `GET /events/:id` now require the same `HITL_WRITE_TOKEN` Bearer token that already gated `POST`/`PATCH`. No anonymous read path remains. `checkAuth` also now fails closed when the token env var is unset.
+  - **Pagination.** `GET /events` takes `?limit=` (default 100, max 500) and a `?before=<created_at>` keyset cursor; the query is `LIMIT`-bound instead of unbounded.
+  - **Reads no longer write.** Removed per-request `CREATE TABLE IF NOT EXISTS` (schema now lives in a migration) and the lazy write-on-read TTL. The 30-day archive sweep moved to a `scheduled()` Cron Trigger.
+  - **CORS tightened.** Responses reflect an allow-listed `Origin` (`ALLOWED_ORIGINS` env, default `quirgs.com`/`www.quirgs.com`) with `Vary: Origin` instead of `Access-Control-Allow-Origin: *`. Non-browser (no-Origin) callers like agents/curl are unaffected.
+- `public/js/review.js` — sends `Authorization: Bearer <token>` on the queue fetch, and gates queue load behind a token (prompts to set one; reloads on set). Surfaces 401 distinctly.
+
+### Added
+- `workers/hitl-gate/migrations/0001_init.sql` — baseline `events` schema + indexes on `(status, created_at)` and `(created_at)`. Replaces runtime DDL. Idempotent against the existing prod DB.
+- `workers/hitl-gate/wrangler.toml` — `[triggers] crons = ["0 3 * * *"]` for the daily TTL sweep, `migrations_dir`, and `ALLOWED_ORIGINS` var.
+
+### Deploy notes (out-of-band, in order)
+1. `wrangler d1 migrations apply quirgs-hitl-db --remote --config workers/hitl-gate/wrangler.toml` (no-op on the existing table; creates the indexes).
+2. Confirm the `HITL_WRITE_TOKEN` secret is set on the Worker (`wrangler secret put HITL_WRITE_TOKEN --config workers/hitl-gate/wrangler.toml`) — reads now 401 without it.
+3. `wrangler deploy --config workers/hitl-gate/wrangler.toml`.
+4. The `/review` dashboard now shows the queue only after an operator sets the token. Public anonymous viewing of the queue is intentionally gone.
+
 ## llms.txt + agent-discovery posture (feat/llms-txt-agent-discovery)
 
 **Branch:** `feat/llms-txt-agent-discovery` — (2026-06-27)
