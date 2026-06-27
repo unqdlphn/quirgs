@@ -1,0 +1,37 @@
+---
+// src/components/Seo.astro
+// Crawler-facing semantics: Open Graph, Twitter Card, and a JSON-LD
+// Organization graph. The JSON-LD surfaces the security contact
+// (security.txt) and transparency notice (publishingPrinciples) so an
+// agent reading only the page HTML can find the published trust posture
+// without executing the JS boot sequence.
+//
+// The JSON-LD bytes are STATIC and identical on every page — its SHA-256 is
+// pinned in `public/_headers` script-src. If you edit `orgJsonLd` below,
+// recompute the hash (see _headers header) or the block is CSP-blocked.
+interface Props {
+  title: string;
+  description: string;
+  canonical: string | URL;
+  ogType?: string;
+}
+
+const { title, description, canonical, ogType = "website" } = Astro.props;
+const canonicalHref = canonical.toString();
+
+const orgJsonLd =
+  '{"@context":"https://schema.org","@type":"Organization","name":"Quirgs","url":"https://quirgs.com","logo":"https://quirgs.com/favicon.svg","description":"Governance-first AI product platform. Installable governance Skills, Guides, and a human-in-the-loop approval Gate for Claude Code.","slogan":"Governance first. Build accordingly.","sameAs":["https://github.com/unqdlphn/quirgs"],"publishingPrinciples":"https://quirgs.com/transparency/","contactPoint":[{"@type":"ContactPoint","contactType":"security","url":"https://quirgs.com/.well-known/security.txt"}]}';
+---
+
+<meta property="og:site_name" content="Quirgs" />
+<meta property="og:type" content={ogType} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalHref} />
+<meta property="og:image" content="https://quirgs.com/favicon.svg" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content="https://quirgs.com/favicon.svg" />
+
+<script type="application/ld+json" is:inline set:html={orgJsonLd} />

@@ -4,8 +4,11 @@ import HelpModal from "../components/HelpModal.astro";
 import SiteMenu from "../components/SiteMenu.astro";
 import Footer from "../components/Footer.astro";
 import NavBlock from "../components/NavBlock.astro";
+import Seo from "../components/Seo.astro";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const pageDescription =
+  "Quirgs — AI governance compliance skills for teams building with AI. Classify risk, gate decisions, audit for standards, and stay transparent.";
 ---
 
 <!doctype html>
@@ -16,15 +19,17 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <meta
-      name="description"
-      content="Quirgs — AI governance compliance skills for teams building with AI. Classify risk, gate decisions, audit for standards, and stay transparent."
-    />
+    <meta name="description" content={pageDescription} />
     <title>Quirgs | AI Governance Skills</title>
     <link rel="canonical" href={canonicalURL} />
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="icon" href="/favicon.svg" sizes="any" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
+    <Seo
+      title="Quirgs | AI Governance Skills"
+      description={pageDescription}
+      canonical={canonicalURL}
+    />
     <style is:global>
       :root {
         --bg-color: #09090b;
