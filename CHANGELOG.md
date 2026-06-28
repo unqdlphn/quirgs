@@ -24,6 +24,22 @@ A `PATCH /events/:id` updated the top-level `status` column but never touched a 
 ### Notes
 - Code-only fix; rows created before this deploy still carry the embedded `payload.status`. The demo D1 store can be left as-is (new events are clean) or swept with a one-off `UPDATE` if a clean read-back is wanted for a demo.
 
+## Shared-gate safety warning (fix/hitl-shared-gate-warning)
+
+**Branch:** `fix/hitl-shared-gate-warning` — (2026-06-28)
+
+The `hitl-compliance-gate` skill posted compliance checkpoints to whatever `HITL_GATE_URL` resolved to without warning the user when that was the **shared public demonstration gate**. The gate's own docs say never to send real/PII-bearing data there, but nothing surfaced that at POST time — so a tester running a real scenario could leak production or PII data to a queue any token-holder can read. The site (`/hitl/`) already carried a `[WARNING]` block; the skill did not.
+
+### Changed
+- `skills/hitl-compliance-gate/SKILL.md`, `plugins/hitl-compliance-gate/skills/hitl-compliance-gate/SKILL.md`, `plugins/quirgs-compliance/skills/hitl-compliance-gate/SKILL.md` — added **Step 3.5a.1 — Guard the shared public demo gate**: before posting, the skill detects whether `HITL_GATE_URL` is a shared demo host (`gate.quirgs.com` or `quirgs-hitl-gate.*.workers.dev`), warns the user, and requires confirmation that the checkpoint is synthetic/demo data before sending — otherwise it falls through to graceful degradation (local output). The guard is forward-compatible with the upcoming `gate.quirgs.com` custom domain. All three SKILL.md copies kept byte-identical in the guard block.
+
+### Version
+- `plugins/hitl-compliance-gate` and `plugins/quirgs-compliance` bumped `1.1.0 → 1.1.1` so installed users receive the safety guard on the next marketplace refresh.
+
+### Notes
+- No demo-gate URL swap is needed in `SKILL.md`: the prose refers to the gate Worker by its **name** (`quirgs-hitl-gate`), which is unchanged by the custom-domain work — only the Worker's hostname gains `gate.quirgs.com`. The site/catalog hostname swaps live in `feat/worker-custom-domains` (PR #98); SKILL.md needs no change there. This branch's guard already lists both the `workers.dev` host and `gate.quirgs.com`, so it is correct before and after that cutover.
+- The 3 SKILL.md files are hand-maintained and had already drifted (the `skills/` Gist source differs from the two plugin copies outside the Step 3.5 block). Worth a follow-up to single-source them.
+
 ## ARD catalog completeness — publish bundle (feat/ai-catalog-publish-bundle)
 
 **Branch:** `feat/ai-catalog-publish-bundle` — (2026-06-27)

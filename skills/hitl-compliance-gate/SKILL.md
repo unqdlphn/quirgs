@@ -129,6 +129,32 @@ echo "${HITL_GATE_TOKEN:-NOT_SET}"
 
 If either result is `NOT_SET`, skip to **3.5d — Graceful Degradation**.
 
+### 3.5a.1 — Guard the shared public demo gate (required)
+
+Before posting, check whether `HITL_GATE_URL` points at a **shared, publicly
+reachable demonstration gate**. The known shared demo hosts are:
+
+- `https://gate.quirgs.com`
+- `https://quirgs-hitl-gate.*.workers.dev`
+
+If `HITL_GATE_URL` matches one of these, STOP and warn the user before sending
+anything:
+
+```
+⚠️  HITL_GATE_URL is the SHARED PUBLIC demo gate (<resolved url>).
+    It is a demonstration queue — anyone holding a token can read what you post.
+    Do NOT send real, production, customer, or PII-bearing checkpoint data to it.
+    For real work, deploy your own hitl-gate Worker (source: workers/hitl-gate)
+    and re-point HITL_GATE_URL at it.
+```
+
+Then ask the user to confirm the checkpoint contains only synthetic / demo data.
+- If they confirm → continue to 3.5b.
+- If they decline or do not respond → do NOT post; fall through to
+  **3.5d — Graceful Degradation** and surface the checkpoint locally instead.
+
+If `HITL_GATE_URL` is a private / self-hosted gate, skip this guard and continue.
+
 ### 3.5b — POST the event
 
 Construct and send the approval event:
