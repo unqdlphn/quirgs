@@ -9,6 +9,21 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix stale payload.status after approval (fix/hitl-gate-payload-status)
+
+**Branch:** `fix/hitl-gate-payload-status` — (2026-06-28)
+
+A `PATCH /events/:id` updated the top-level `status` column but never touched a `status` field embedded inside the event `payload`. Since the demo flow (and the `hitl-compliance-gate` skill) POST a payload that includes `"status": "pending"`, approving an event left `payload.status` reading `pending` forever — so any API consumer reading `payload.status` saw a cleared gate as still pending. The `/review` dashboard was unaffected (it reads the top-level column), but the API response was internally inconsistent.
+
+### Changed
+- `workers/hitl-gate/index.js` — on `POST /events`, strip any client-supplied `status` from the payload before persisting. The top-level `status` column is now the single source of truth; the payload can no longer carry a divergent copy. Array payloads are left untouched.
+
+### Added
+- `workers/hitl-gate/test/index.spec.js` — three regression tests: status stripped from payload on POST, array payloads preserved, and approval no longer leaves a stale `payload.status` (the original bug). Suite: 39 passing.
+
+### Notes
+- Code-only fix; rows created before this deploy still carry the embedded `payload.status`. The demo D1 store can be left as-is (new events are clean) or swept with a one-off `UPDATE` if a clean read-back is wanted for a demo.
+
 ## ARD catalog completeness — publish bundle (feat/ai-catalog-publish-bundle)
 
 **Branch:** `feat/ai-catalog-publish-bundle` — (2026-06-27)
