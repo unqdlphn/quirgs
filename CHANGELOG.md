@@ -37,7 +37,7 @@ The `hitl-compliance-gate` skill posted compliance checkpoints to whatever `HITL
 - `plugins/hitl-compliance-gate` and `plugins/quirgs-compliance` bumped `1.1.0 → 1.1.1` so installed users receive the safety guard on the next marketplace refresh.
 
 ### Notes
-- The demo-gate **URL swap** (`workers.dev` → `gate.quirgs.com`) is intentionally NOT done here — it rides with `feat/worker-custom-domains` (PR #98) so the docs only point at the custom domain once it is actually deployed. This branch's guard already recognizes both hosts.
+- No demo-gate URL swap is needed in `SKILL.md`: the prose refers to the gate Worker by its **name** (`quirgs-hitl-gate`), which is unchanged by the custom-domain work — only the Worker's hostname gains `gate.quirgs.com`. The site/catalog hostname swaps live in `feat/worker-custom-domains` (PR #98); SKILL.md needs no change there. This branch's guard already lists both the `workers.dev` host and `gate.quirgs.com`, so it is correct before and after that cutover.
 - The 3 SKILL.md files are hand-maintained and had already drifted (the `skills/` Gist source differs from the two plugin copies outside the Step 3.5 block). Worth a follow-up to single-source them.
 
 ## ARD catalog completeness — publish bundle (feat/ai-catalog-publish-bundle)
