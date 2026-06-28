@@ -56,6 +56,26 @@ The `hitl-compliance-gate` skill posted compliance checkpoints to whatever `HITL
 - No demo-gate URL swap is needed in `SKILL.md`: the prose refers to the gate Worker by its **name** (`quirgs-hitl-gate`), which is unchanged by the custom-domain work — only the Worker's hostname gains `gate.quirgs.com`. The site/catalog hostname swaps live in `feat/worker-custom-domains` (PR #98); SKILL.md needs no change there. This branch's guard already lists both the `workers.dev` host and `gate.quirgs.com`, so it is correct before and after that cutover.
 - The 3 SKILL.md files are hand-maintained and had already drifted (the `skills/` Gist source differs from the two plugin copies outside the Step 3.5 block). Worth a follow-up to single-source them.
 
+## Worker custom domains (feat/worker-custom-domains)
+
+**Branch:** `feat/worker-custom-domains` — (2026-06-28)
+
+Moves both standalone Workers off their `*.workers.dev` hostnames onto first-party custom domains: `quirgs-registry-api` → `api.quirgs.com`, `quirgs-hitl-gate` → `gate.quirgs.com`. Cloudflare auto-provisions the DNS records and TLS certs on `wrangler deploy`. The `*.workers.dev` hostnames keep resolving alongside the custom domains, so there is no hard cutover.
+
+> **Deploy ordering (required):** `wrangler deploy --config` both Workers FIRST and confirm `https://api.quirgs.com/skills` + `https://gate.quirgs.com/events` return 200 (cert issuance can take ~1 min), THEN build/deploy the site. The site browser-calls `gate.quirgs.com`, so deploying the site before the Worker domain is live would point the review queue at a non-resolving host. Validate on the branch preview URL and purge cache after deploy (CSP `connect-src` changed).
+
+### Changed
+- `workers/registry-api/wrangler.toml` — added `routes = [{ pattern = "api.quirgs.com", custom_domain = true }]`.
+- `workers/hitl-gate/wrangler.toml` — added `routes = [{ pattern = "gate.quirgs.com", custom_domain = true }]`.
+- `public/_headers` — added `https://gate.quirgs.com` to CSP `connect-src` (kept the `quirgs-hitl-gate.*.workers.dev` entry for transition safety; remove once fully cut over). `script-src` hashes are unaffected — no recompute needed.
+- `public/js/review.js`, `src/pages/review.astro` — switched the hardcoded gate-URL fallback from `quirgs-hitl-gate.*.workers.dev` to `https://gate.quirgs.com`.
+- `src/pages/hitl.astro` — switched the demo `HITL_GATE_URL` setup command and the live demo-gate link to `https://gate.quirgs.com`.
+- `public/.well-known/ai-catalog.json` — updated both Worker `url` fields to the custom domains (`gate.quirgs.com`, `api.quirgs.com`).
+
+### Notes
+- No `SKILL.md` change is needed for the hostname move: the skill refers to the gate Worker by its **name** (`quirgs-hitl-gate`), which is unchanged — only the Worker's hostname gains `gate.quirgs.com`. (The shared-gate safety warning added in `fix/hitl-shared-gate-warning` already lists both hosts.)
+- `CHANGELOG.md` lines referencing the old `*.workers.dev` URLs are dated historical records and are left unchanged.
+
 ## ARD catalog completeness — publish bundle (feat/ai-catalog-publish-bundle)
 
 **Branch:** `feat/ai-catalog-publish-bundle` — (2026-06-27)

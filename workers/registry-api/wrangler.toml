@@ -2,6 +2,12 @@ name = "quirgs-registry-api"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
+# Custom domain — Cloudflare auto-provisions the DNS record and TLS cert on deploy.
+# The *.workers.dev hostname keeps working alongside this.
+routes = [
+  { pattern = "api.quirgs.com", custom_domain = true }
+]
+
 [[kv_namespaces]]
 binding = "QUIRGS_REGISTRY"
 id = "ab23c8017bc846ae96253e1c2207d716"

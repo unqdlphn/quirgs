@@ -3,7 +3,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
 
-const demoSetupCommand = `export HITL_GATE_URL="https://quirgs-hitl-gate.elbrigante9.workers.dev"
+const demoSetupCommand = `export HITL_GATE_URL="https://gate.quirgs.com"
 export HITL_GATE_TOKEN="<write-token>"`;
 
 const ownSetupCommand = `export HITL_GATE_URL="https://your-hitl-gate.example.workers.dev"
@@ -98,9 +98,9 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
   <p>
     A shared demonstration Worker is live at:<br />
     <a
-      href="https://quirgs-hitl-gate.elbrigante9.workers.dev"
+      href="https://gate.quirgs.com"
       target="_blank"
-      rel="noopener">https://quirgs-hitl-gate.elbrigante9.workers.dev</a
+      rel="noopener">https://gate.quirgs.com</a
     >
   </p>
   <p>
