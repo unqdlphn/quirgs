@@ -25,6 +25,24 @@ The `eu-ai-act-classifier` skill's Step 1 said only "if critical information is 
 ### Notes
 - Depends on PR #100 merging first (it takes `quirgs-compliance` to 1.1.1). If merge order changes, reconcile the bundle version.
 
+## Align Article 73 incident-reporting timing across references (fix/art73-reference-drift)
+
+**Branch:** `fix/art73-reference-drift` — (2026-06-28)
+
+The serious-incident reporting deadline (EU AI Act Article 73) was stated inconsistently across skills: the `eu-ai-act-classifier` reference said "without undue delay" while the `hitl-compliance-gate` reference said "within 15 days." Neither was complete. Both now carry the precise statutory timeline, identically.
+
+### Changed
+- `plugins/eu-ai-act-classifier/.../references/obligations-high-risk.md` + the `quirgs-compliance` bundle copy — replaced "without undue delay" with the full Article 73 timeline.
+- `plugins/hitl-compliance-gate/.../references/eu-ai-act.md` + the `quirgs-compliance` bundle copy — replaced "within 15 days" with the same timeline.
+- Canonical wording: report immediately after establishing a causal link, and no later than **15 days** after becoming aware — **10 days** if a person died, **2 days** for a widespread infringement or serious disruption to critical infrastructure. Both reference families now match.
+
+### Version
+- `plugins/eu-ai-act-classifier` `→ 1.0.2`, `plugins/hitl-compliance-gate` `→ 1.1.2`, `plugins/quirgs-compliance` `→ 1.1.3`. These assume PR #101 merges first (it takes the classifier to 1.0.1 and the bundle to 1.1.2); the bumps here skip those.
+
+### Notes
+- **Follow-up (out of scope here):** `incident-response-logger`'s `references/article-62-thresholds.md` has its own separate issues — it labels the provider serious-incident obligation as "Article 62" (final regulation numbers it Article 73), says "15 *working* days" (the Act says 15 days), and is internally inconsistent on the death deadline (says "immediately" in one place, "2 days" in a table). Worth a dedicated cleanup pass.
+- Merge order: depends on #101 first. On rebase against a post-#101 `main`, resolve the `eu-ai-act-classifier` and `quirgs-compliance` version lines to **1.0.2** and **1.1.3** respectively.
+
 ## Fix stale payload.status after approval (fix/hitl-gate-payload-status)
 
 **Branch:** `fix/hitl-gate-payload-status` — (2026-06-28)
