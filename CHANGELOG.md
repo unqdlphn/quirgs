@@ -9,6 +9,18 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## ARD catalog completeness — publish bundle (feat/ai-catalog-publish-bundle)
+
+**Branch:** `feat/ai-catalog-publish-bundle` — (2026-06-27)
+
+Closes the last open item from the agent-readiness assessment (a machine-readable, programmatically enumerable skills feed). The ARD catalog previously listed only the 7 compliance skills, so an agent reading `/.well-known/ai-catalog.json` couldn't discover the 8 publish-bundle skills without scraping the HTML registry or GitHub.
+
+### Added
+- `public/.well-known/ai-catalog.json` — added all 8 publish-bundle skills (publish-workflow, publish-provenance, publish-update, publish-broadcast, publish-license, publish-income, publish-shield, publish-harvest) as ARD entries, matching the existing skill-entry shape (identifier, displayName, type, url, description, tags, capabilities, representativeQueries, version, updatedAt, metadata). Descriptions, frameworks, and representative queries are drawn from each skill's MDX frontmatter. Catalog now enumerates the full 15-skill surface (7 compliance + 8 publish) + 2 workers.
+
+### Changed
+- `public/.well-known/ai-catalog.json` — corrected `metadata.platform` from the legacy `"Claude Cowork"` to `"Claude Code"` across all 15 skill entries (the actual install target — skills install via the Claude Code plugin marketplace).
+
 ## Content provenance — agent-visible authority signal (feat/content-provenance)
 
 **Branch:** `feat/content-provenance` — (2026-06-27)

@@ -39,7 +39,7 @@
       "metadata": {
         "framework": "EU AI Act — Regulation (EU) 2024/1689",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -62,7 +62,7 @@
       "metadata": {
         "framework": "NIST AI RMF 1.0 — NIST AI 100-1",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -85,7 +85,7 @@
       "metadata": {
         "framework": "ISO/IEC 42001:2023",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -108,7 +108,7 @@
       "metadata": {
         "framework": "EU AI Act, NIST AI RMF, ISO 42001",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -131,7 +131,7 @@
       "metadata": {
         "framework": "EU AI Act Article 13, NIST AI RMF Govern",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -154,7 +154,7 @@
       "metadata": {
         "framework": "GDPR, EU AI Act Article 10",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -177,7 +177,143 @@
       "metadata": {
         "framework": "NIST SP 800-61, EU AI Act Article 62",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-workflow",
+      "displayName": "Publish Workflow",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-workflow",
+      "description": "Weekly publishing operating system for music publishers — orchestrates the PUBLISH Loop by routing each task to the right skill in the right order, with human-in-the-loop checkpoints across the weekly cadence.",
+      "tags": ["music-publishing", "workflow-orchestration", "publish-loop", "cadence", "hitl"],
+      "capabilities": ["WorkflowOrchestration", "TaskRouting", "WeeklyCadenceManagement"],
+      "representativeQueries": ["run the weekly publishing OS", "what should I be working on this week", "run the PUBLISH Loop", "orchestrate my publishing tasks", "what is due in my publishing operation this week"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "PUBLISH Loop — Music Publishing SOPs + HITL Protocol",
+        "installable": "true",
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-provenance",
+      "displayName": "Publish Provenance",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-provenance",
+      "description": "Creates a creation log and AI-involvement assessment for every music release — documenting how a work was made for copyright declaration and platform AI disclosure under the Provenance Triangle framework.",
+      "tags": ["music-publishing", "provenance", "ai-disclosure", "copyright", "transparency"],
+      "capabilities": ["CreationLogging", "AIInvolvementAssessment", "CopyrightDeclarationSupport"],
+      "representativeQueries": ["document my AI use for a release", "create a provenance record for my music", "how do I disclose AI in my music", "copyright declaration for AI music", "is my music copyrightable if I used AI"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "Copyright Act (17 U.S.C. §102) — EU AI Act Article 13",
+        "installable": "true",
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-update",
+      "displayName": "Publish Update",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-update",
+      "description": "Catalog metadata hygiene for music publishers — finds gaps, fixes errors, and enriches records against ISRC, UPC/EAN, DDEX, and MusicBrainz metadata standards.",
+      "tags": ["music-publishing", "metadata", "catalog-hygiene", "isrc", "ddex"],
+      "capabilities": ["MetadataAudit", "CatalogEnrichment", "IdentifierValidation"],
+      "representativeQueries": ["fix my catalog metadata", "find missing ISRCs", "catalog hygiene audit", "clean up my catalog", "update my UPCs"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "ISRC (ISO 3901), UPC/EAN, DDEX Standards",
+        "installable": "true",
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-broadcast",
+      "displayName": "Publish Broadcast",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-broadcast",
+      "description": "Prepares DDEX ERN and PRO registration packets ready for submission — assembling performance-rights and sound-recording registration data for ASCAP, BMI, SESAC, PRS for Music, and SOCAN.",
+      "tags": ["music-publishing", "ddex", "pro-registration", "performance-rights", "ern"],
+      "capabilities": ["DDEXPacketGeneration", "PRORegistrationPrep", "RegistrationDataAssembly"],
+      "representativeQueries": ["prepare DDEX registration", "register my release with ASCAP", "PRO registration packet", "submit my compositions for performance rights", "register my sound recordings"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "DDEX ERN 4.1; ASCAP/BMI/SESAC/PRS/SOCAN",
+        "installable": "true",
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-license",
+      "displayName": "Publish License",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-license",
+      "description": "Three-agent sync-licensing pipeline that takes a music supervisor brief to a finished pitch in one pass — matching catalog tracks to the brief and drafting the sync submission.",
+      "tags": ["music-publishing", "sync-licensing", "catalog-matching", "pitch", "master-use"],
+      "capabilities": ["BriefToCatalogMatching", "SyncPitchGeneration", "SyncSubmissionPrep"],
+      "representativeQueries": ["pitch a sync license", "match my catalog to a brief", "write a sync pitch", "help me respond to a music supervisor", "find music for this scene"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "Sync Licensing Protocol — Master Use & Sync Rights Standards",
+        "installable": "true",
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-income",
+      "displayName": "Publish Income",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-income",
+      "description": "Reconciles royalty statements against your catalog ledger — flagging discrepancies between PRO and DSP distribution reporting and expected payouts across ASCAP, BMI, and SESAC.",
+      "tags": ["music-publishing", "royalties", "reconciliation", "dsp", "pro"],
+      "capabilities": ["RoyaltyReconciliation", "DiscrepancyDetection", "StatementToLedgerAudit"],
+      "representativeQueries": ["reconcile my royalty statements", "check my DSP payments", "why do my streams not match my payment", "flag royalty discrepancies", "check my distributor payout"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "PRO Distribution & DSP Royalty Statement Standards",
+        "installable": "true",
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-shield",
+      "displayName": "Publish Shield",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-shield",
+      "description": "Pre-release platform compliance gate and AI governance policy generator for music publishers — checks a release against DSP content and AI-disclosure policies (DistroKid, TikTok, YouTube) and the EU AI Act before distribution.",
+      "tags": ["music-publishing", "platform-compliance", "ai-governance", "dsp-policy", "pre-release-gate"],
+      "capabilities": ["PlatformComplianceCheck", "AIGovernancePolicyGeneration", "PreReleaseGating"],
+      "representativeQueries": ["platform compliance check", "is my release compliant", "check platform policies for AI music", "can I distribute AI-generated music", "does YouTube allow AI music"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "DSP Content Policies, EU AI Act, platform AI-disclosure standards",
+        "installable": "true",
+        "platform": "Claude Code"
+      }
+    },
+    {
+      "identifier": "urn:ai:quirgs.com:skill:publish-harvest",
+      "displayName": "Publish Harvest",
+      "type": "application/x-claude-skill+json",
+      "url": "https://quirgs.com/skills/publish-harvest",
+      "description": "Quarterly catalog performance review for music publishers — tiers tracks by performance, surfaces gaps, and recommends next actions using PRO distribution, sync revenue, and DSP streaming metrics.",
+      "tags": ["music-publishing", "catalog-analytics", "performance-review", "quarterly", "streaming-metrics"],
+      "capabilities": ["CatalogPerformanceAnalysis", "TrackTiering", "NextActionRecommendation"],
+      "representativeQueries": ["quarterly catalog performance review", "how is my catalog performing", "which tracks are underperforming", "catalog health check", "review my publishing income for the quarter"],
+      "version": "1.0.0",
+      "updatedAt": "2026-06-27T00:00:00Z",
+      "metadata": {
+        "framework": "Catalog Performance Analytics; PRO & DSP metrics",
+        "installable": "true",
+        "platform": "Claude Code"
       }
     },
     {
