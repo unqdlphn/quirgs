@@ -33,7 +33,21 @@ Collect the following before classifying. Infer from conversation where possible
 5. **What is the user's role?** — provider (develops/places on market), deployer (uses in own context), importer, or distributor?
 6. **Is it a general-purpose AI model?** (e.g., a foundation model or LLM)
 
-If critical information is missing, ask before classifying. A wrong tier is worse than a delayed answer.
+**Role (item 5) and EU scope (item 4) are load-bearing — never silently assume them.**
+They change the obligations more than anything else: provider duties are far heavier than
+a deployer's, and the Act only applies where the system is placed on the EU market or its
+outputs are used in the EU. If either is missing or ambiguous from the conversation, **ask
+before classifying — do not guess:**
+
+- Role: *"Are you the provider (you build it / place it on the market), the deployer (you
+  use it in your own context), or an importer/distributor?"*
+- Scope: *"Is the system placed on the EU market, or are any of its users or outputs in the EU?"*
+
+Only if the user genuinely cannot or will not answer: classify against the
+**higher-obligation** assumption (provider, in-scope), and state at the very top of the
+output that role and/or scope were *assumed* and that the result changes if that is wrong.
+Never present an assumed role as if it were established. A wrong tier is worse than a
+delayed answer.
 
 ---
 

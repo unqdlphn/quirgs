@@ -9,6 +9,22 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Classifier asks for role/scope instead of assuming (fix/classifier-ask-role)
+
+**Branch:** `fix/classifier-ask-role` — (2026-06-28)
+
+The `eu-ai-act-classifier` skill's Step 1 said only "if critical information is missing, ask before classifying," which in practice it skipped — silently assuming a `provider` role when none was given. Role and EU-market scope change the obligation set more than any other input (provider duties dwarf a deployer's; the Act only applies where outputs are used in the EU), so a silent assumption can produce a confidently wrong checklist.
+
+### Changed
+- `skills/eu-ai-act-classifier/SKILL.md`, `plugins/eu-ai-act-classifier/skills/eu-ai-act-classifier/SKILL.md`, `plugins/quirgs-compliance/skills/eu-ai-act-classifier/SKILL.md` — rewrote the close of Step 1 to name **role (item 5)** and **EU scope (item 4)** as load-bearing and require the skill to *ask* (with concrete example questions) before classifying when either is missing. Only if the user cannot/will not answer may it fall back to the higher-obligation assumption (provider, in-scope) — and then it must flag at the top of the output that role/scope were assumed. All three SKILL.md copies kept byte-identical in the edited block.
+
+### Version
+- `plugins/eu-ai-act-classifier` bumped `1.0.0 → 1.0.1`.
+- `plugins/quirgs-compliance` bumped `1.1.0 → 1.1.2` — clears the `1.1.1` from `fix/hitl-shared-gate-warning` (PR #100), which lands first, so this and #100 don't collide on the bundle version.
+
+### Notes
+- Depends on PR #100 merging first (it takes `quirgs-compliance` to 1.1.1). If merge order changes, reconcile the bundle version.
+
 ## Fix stale payload.status after approval (fix/hitl-gate-payload-status)
 
 **Branch:** `fix/hitl-gate-payload-status` — (2026-06-28)
