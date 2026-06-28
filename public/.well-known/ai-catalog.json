@@ -320,7 +320,7 @@
       "identifier": "urn:ai:quirgs.com:worker:hitl-gate",
       "displayName": "Quirgs HITL Gate API",
       "type": "application/json",
-      "url": "https://quirgs-hitl-gate.elbrigante9.workers.dev",
+      "url": "https://gate.quirgs.com",
       "description": "REST approval queue that sits between an AI agent and any action requiring human sign-off. Agents POST pending events with context; human reviewers approve or reject via PATCH. Every decision is timestamped and stored for 30 days, creating a verifiable audit trail for EU AI Act Article 14, NIST AI RMF MANAGE 1.2, and ISO 42001 §9.1 human oversight requirements.",
       "tags": ["hitl", "approval-queue", "human-oversight", "audit-trail", "rest-api"],
       "capabilities": ["EventQueueManagement", "HumanApprovalWorkflow", "AuditTrailGeneration", "AIDecisionGating"],
@@ -336,7 +336,7 @@
       "metadata": {
         "protocol": "REST",
         "endpoints": "POST /events · GET /events · GET /events/:id · PATCH /events/:id",
-        "auth": "Bearer token (write); public read for GET /events",
+        "auth": "Bearer token required for all endpoints (read and write)",
         "retention": "30-day TTL with lazy archival",
         "framework": "EU AI Act Article 14, NIST AI RMF MANAGE 1.2, ISO 42001 §9.1",
         "infrastructure": "Cloudflare Workers + D1"
@@ -346,7 +346,7 @@
       "identifier": "urn:ai:quirgs.com:worker:registry-api",
       "displayName": "Quirgs Skills Registry API",
       "type": "application/json",
-      "url": "https://quirgs-registry-api.elbrigante9.workers.dev",
+      "url": "https://api.quirgs.com",
       "description": "KV-backed read API serving structured metadata for the full Quirgs AI compliance skill catalog. Returns identifiers, descriptions, capabilities, and documentation links for all published governance skills.",
       "tags": ["registry", "skill-catalog", "compliance-skills", "discovery", "api"],
       "capabilities": ["SkillCatalogQuery", "ComplianceSkillDiscovery", "SkillMetadataRetrieval"],

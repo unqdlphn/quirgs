@@ -74,6 +74,29 @@ The `hitl-compliance-gate` skill posted compliance checkpoints to whatever `HITL
 - No demo-gate URL swap is needed in `SKILL.md`: the prose refers to the gate Worker by its **name** (`quirgs-hitl-gate`), which is unchanged by the custom-domain work — only the Worker's hostname gains `gate.quirgs.com`. The site/catalog hostname swaps live in `feat/worker-custom-domains` (PR #98); SKILL.md needs no change there. This branch's guard already lists both the `workers.dev` host and `gate.quirgs.com`, so it is correct before and after that cutover.
 - The 3 SKILL.md files are hand-maintained and had already drifted (the `skills/` Gist source differs from the two plugin copies outside the Step 3.5 block). Worth a follow-up to single-source them.
 
+## Worker custom domains (feat/worker-custom-domains)
+
+**Branch:** `feat/worker-custom-domains` — (2026-06-28)
+
+Moves both standalone Workers off their `*.workers.dev` hostnames onto first-party custom domains: `quirgs-registry-api` → `api.quirgs.com`, `quirgs-hitl-gate` → `gate.quirgs.com`. Cloudflare auto-provisions the DNS records and TLS certs on `wrangler deploy`. The `*.workers.dev` hostnames keep resolving alongside the custom domains, so there is no hard cutover.
+
+> **Status (2026-06-28):** ✅ Ready to merge. Both Workers are **deployed** with custom domains bound + valid TLS (`api.quirgs.com`, `gate.quirgs.com`), `*.workers.dev` preserved (`workers_dev = true`), and the WAF carve-out is **live and verified**. End-to-end POST/GET through `gate.quirgs.com` confirmed (also confirmed the deployed payload.status fix strips the embedded status). After merge: site auto-deploys against the live domains — purge cache (CSP `connect-src` changed).
+
+> **WAF carve-out (done):** Both custom domains sit on the `quirgs.com` zone and inherited its bot posture (Super Bot Fight Mode + the existing `/events` Managed-Challenge custom rule), so `curl`/agents/XHR initially got a Managed Challenge (`cf-mitigated: challenge`, 403) instead of the Worker. Resolved by a WAF **Skip** custom rule scoped to `http.host in {"api.quirgs.com","gate.quirgs.com"}` (skips Super Bot Fight Mode + all remaining custom rules), ordered above the `/events` rule. Justified narrowly: both hosts are Bearer-authed, so the token is the real gate and bot-challenge there was redundant — this does not relax the verified-only stance for the public docs/site. Verified post-rule: `api → 200`, `gate → 401 (application/json)`, no `cf-mitigated` header.
+
+### Changed
+- `workers/registry-api/wrangler.toml` — added `routes = [{ pattern = "api.quirgs.com", custom_domain = true }]` + `workers_dev = true`.
+- `workers/hitl-gate/wrangler.toml` — added `routes = [{ pattern = "gate.quirgs.com", custom_domain = true }]` + `workers_dev = true`.
+- **`workers_dev = true` is load-bearing:** adding a `custom_domain` route makes wrangler disable `workers.dev` by default. Without this flag the first deploy silently took the `*.workers.dev` hosts offline — a hard cutover that breaks every existing `workers.dev` reference (including the live shared demo gate) mid-transition. Setting it keeps both hostnames live.
+- `public/_headers` — added `https://gate.quirgs.com` to CSP `connect-src` (kept the `quirgs-hitl-gate.*.workers.dev` entry for transition safety; remove once fully cut over). `script-src` hashes are unaffected — no recompute needed.
+- `public/js/review.js`, `src/pages/review.astro` — switched the hardcoded gate-URL fallback from `quirgs-hitl-gate.*.workers.dev` to `https://gate.quirgs.com`.
+- `src/pages/hitl.astro` — switched the demo `HITL_GATE_URL` setup command and the live demo-gate link to `https://gate.quirgs.com`.
+- `public/.well-known/ai-catalog.json` — updated both Worker `url` fields to the custom domains (`gate.quirgs.com`, `api.quirgs.com`); also corrected the stale hitl-gate `metadata.auth` claim from `"Bearer token (write); public read for GET /events"` to `"Bearer token required for all endpoints (read and write)"` — the read-hardening work made every endpoint return 401 without the token, so the public-read claim was inaccurate in a public discovery catalog.
+
+### Notes
+- No `SKILL.md` change is needed for the hostname move: the skill refers to the gate Worker by its **name** (`quirgs-hitl-gate`), which is unchanged — only the Worker's hostname gains `gate.quirgs.com`. (The shared-gate safety warning added in `fix/hitl-shared-gate-warning` already lists both hosts.)
+- `CHANGELOG.md` lines referencing the old `*.workers.dev` URLs are dated historical records and are left unchanged.
+
 ## ARD catalog completeness — publish bundle (feat/ai-catalog-publish-bundle)
 
 **Branch:** `feat/ai-catalog-publish-bundle` — (2026-06-27)

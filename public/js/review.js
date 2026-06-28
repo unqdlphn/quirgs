@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // if the attribute is ever missing.
   const workerUrl =
     queueContainer.dataset.gateUrl ||
-    "https://quirgs-hitl-gate.elbrigante9.workers.dev";
+    "https://gate.quirgs.com";
   
   // 1. Initialize token state
   let currentToken = sessionStorage.getItem("hitl_write_token") || "";
