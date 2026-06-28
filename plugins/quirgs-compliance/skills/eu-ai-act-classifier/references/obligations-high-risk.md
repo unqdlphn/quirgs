@@ -79,7 +79,7 @@ Providers bear the heaviest obligations. These apply before placing the system o
 - Document findings; report serious incidents and corrective actions
 
 ### Serious Incident Reporting (Article 73)
-- Report serious incidents to market surveillance authorities without undue delay
+- Report serious incidents to the market surveillance authority immediately after establishing a causal link, and no later than 15 days after becoming aware — 10 days if the incident involved a person's death, 2 days for a widespread infringement or serious disruption to critical infrastructure
 - Serious incident = death, serious health damage, serious breach of fundamental rights,
   or other serious harm including property damage
 

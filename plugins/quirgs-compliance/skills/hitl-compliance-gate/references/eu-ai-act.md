@@ -39,7 +39,7 @@ It classifies AI systems into four tiers and assigns obligations accordingly.
 
 ### Post-Deployment / Monitoring Stage
 - Implement a **post-market monitoring system** (Article 72)
-- Log incidents and near-misses; report serious incidents to authorities within 15 days (Article 73)
+- Log incidents and near-misses; report serious incidents to the market surveillance authority immediately, and no later than 15 days after becoming aware — 10 days for a death, 2 days for widespread or critical-infrastructure incidents (Article 73)
 - Maintain technical documentation for 10 years (high-risk)
 - Conduct periodic reviews when the system is substantially modified
 
