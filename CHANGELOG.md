@@ -70,7 +70,7 @@ Moves both standalone Workers off their `*.workers.dev` hostnames onto first-par
 - `public/_headers` — added `https://gate.quirgs.com` to CSP `connect-src` (kept the `quirgs-hitl-gate.*.workers.dev` entry for transition safety; remove once fully cut over). `script-src` hashes are unaffected — no recompute needed.
 - `public/js/review.js`, `src/pages/review.astro` — switched the hardcoded gate-URL fallback from `quirgs-hitl-gate.*.workers.dev` to `https://gate.quirgs.com`.
 - `src/pages/hitl.astro` — switched the demo `HITL_GATE_URL` setup command and the live demo-gate link to `https://gate.quirgs.com`.
-- `public/.well-known/ai-catalog.json` — updated both Worker `url` fields to the custom domains (`gate.quirgs.com`, `api.quirgs.com`).
+- `public/.well-known/ai-catalog.json` — updated both Worker `url` fields to the custom domains (`gate.quirgs.com`, `api.quirgs.com`); also corrected the stale hitl-gate `metadata.auth` claim from `"Bearer token (write); public read for GET /events"` to `"Bearer token required for all endpoints (read and write)"` — the read-hardening work made every endpoint return 401 without the token, so the public-read claim was inaccurate in a public discovery catalog.
 
 ### Notes
 - No `SKILL.md` change is needed for the hostname move: the skill refers to the gate Worker by its **name** (`quirgs-hitl-gate`), which is unchanged — only the Worker's hostname gains `gate.quirgs.com`. (The shared-gate safety warning added in `fix/hitl-shared-gate-warning` already lists both hosts.)

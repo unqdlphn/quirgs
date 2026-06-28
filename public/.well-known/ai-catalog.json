@@ -336,7 +336,7 @@
       "metadata": {
         "protocol": "REST",
         "endpoints": "POST /events · GET /events · GET /events/:id · PATCH /events/:id",
-        "auth": "Bearer token (write); public read for GET /events",
+        "auth": "Bearer token required for all endpoints (read and write)",
         "retention": "30-day TTL with lazy archival",
         "framework": "EU AI Act Article 14, NIST AI RMF MANAGE 1.2, ISO 42001 §9.1",
         "infrastructure": "Cloudflare Workers + D1"
