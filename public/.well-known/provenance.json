@@ -1,0 +1,114 @@
+{
+  "specVersion": "1.0",
+  "publisher": "Quirgs",
+  "publisherUrl": "https://quirgs.com",
+  "contact": "https://quirgs.com/security/",
+  "transparency": "https://quirgs.com/transparency/",
+  "lastReviewed": "2026-06-27",
+
+  "primarySources": [
+    {
+      "name": "EU AI Act",
+      "citation": "Regulation (EU) 2024/1689 of the European Parliament and of the Council of 13 June 2024 laying down harmonised rules on artificial intelligence",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32024R1689",
+      "version": "2024/1689",
+      "skillsCovering": [
+        "eu-ai-act-classifier",
+        "hitl-compliance-gate",
+        "ai-transparency-writer",
+        "pii-exposure-checker",
+        "incident-response-logger"
+      ],
+      "articlesReferenced": [
+        "Article 6 (Classification of high-risk AI systems)",
+        "Article 9 (Risk management system)",
+        "Article 10 (Data and data governance)",
+        "Article 13 (Transparency and provision of information to deployers)",
+        "Article 14 (Human oversight)",
+        "Article 62 (Reporting of serious incidents)"
+      ]
+    },
+    {
+      "name": "NIST AI RMF 1.0",
+      "citation": "NIST AI 100-1: Artificial Intelligence Risk Management Framework, National Institute of Standards and Technology, January 2023",
+      "url": "https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf",
+      "version": "1.0 (January 2023)",
+      "skillsCovering": [
+        "nist-ai-rmf-checkpoint",
+        "hitl-compliance-gate",
+        "ai-transparency-writer",
+        "incident-response-logger"
+      ],
+      "sectionsReferenced": [
+        "Govern function",
+        "Map function",
+        "Measure function",
+        "Manage function — MANAGE 1.2 (human oversight)",
+        "AI RMF Playbook subcategories"
+      ]
+    },
+    {
+      "name": "ISO/IEC 42001:2023",
+      "citation": "ISO/IEC 42001:2023 — Information technology — Artificial intelligence — Management system",
+      "url": "https://www.iso.org/standard/81230.html",
+      "version": "2023 edition",
+      "skillsCovering": [
+        "iso-42001-audit-prep",
+        "hitl-compliance-gate"
+      ],
+      "sectionsReferenced": [
+        "§4 Context of the organization",
+        "§6 Planning",
+        "§8 Operation",
+        "§9 Performance evaluation (§9.1 monitoring and measurement)",
+        "§10 Improvement"
+      ]
+    },
+    {
+      "name": "GDPR",
+      "citation": "Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 (General Data Protection Regulation)",
+      "url": "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32016R0679",
+      "version": "2016/679",
+      "skillsCovering": ["pii-exposure-checker"],
+      "articlesReferenced": [
+        "Article 5 (Principles relating to processing of personal data)",
+        "Article 25 (Data protection by design and by default)",
+        "Article 35 (Data protection impact assessment)"
+      ]
+    },
+    {
+      "name": "NIST SP 800-61 Rev. 2",
+      "citation": "NIST SP 800-61 Rev. 2: Computer Security Incident Handling Guide, National Institute of Standards and Technology, August 2012",
+      "url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r2.pdf",
+      "version": "Rev. 2 (August 2012)",
+      "skillsCovering": ["incident-response-logger"],
+      "sectionsReferenced": [
+        "§3.1 Preparation",
+        "§3.2 Detection and Analysis",
+        "§3.3 Containment, Eradication, and Recovery",
+        "§3.4 Post-Incident Activity"
+      ]
+    }
+  ],
+
+  "authorshipProcess": "Skills are practitioner-authored by the Quirgs team directly against primary regulatory and standards text. Each skill maps named articles, sections, and clauses from the sources listed above. No content is synthesised from secondary interpretations alone; claims are traced to the primary source.",
+
+  "validationProcess": "Production-tested through operational use on the Quirgs platform itself — each skill in the compliance bundle has been exercised in live governance workflows before distribution. Human-in-the-loop review is applied at every authoring stage: no skill reaches the catalog without explicit human approval at a defined checkpoint.",
+
+  "notValidatedBy": [
+    "Third-party compliance body audit",
+    "Qualified legal counsel review",
+    "Certified auditor review",
+    "Accreditation body (e.g. national market surveillance authority)"
+  ],
+
+  "limitations": [
+    "Not legal advice.",
+    "Not a substitute for qualified legal counsel, a licensed compliance professional, or a certified auditor with jurisdiction-specific expertise.",
+    "Framework guidance only — skill outputs structure analysis and surface obligations; they require professional review before use in formal compliance determinations.",
+    "Reflects primary sources as of the lastReviewed date above. Regulatory frameworks evolve; verify currency of any specific obligation against the current primary text.",
+    "EU AI Act Omnibus amendments may alter article numbering or applicability thresholds; monitor https://eur-lex.europa.eu for updates."
+  ],
+
+  "disclaimer": "Quirgs compliance skills are governance scaffolding for education and structured drafting. They are not legal advice and not a substitute for qualified professional judgment. Every skill output carries this disclaimer explicitly. Use them to accelerate governance work — not to replace the professional review that compliance decisions require."
+}

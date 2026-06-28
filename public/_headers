@@ -55,6 +55,13 @@
   Content-Type: application/json
   Cache-Control: public, max-age=3600
 
+# Content provenance — machine-readable authority/limitation disclosure for agents.
+# CORS-readable so any agent can fetch cross-origin. Mirrors ai-catalog.json pattern.
+/.well-known/provenance.json
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
 # Legacy SEO guides (public/guides/*) are preserved verbatim and contain their
 # own inline scripts/styles that must not be modified. Detach the strict policy
 # above so the comma-join rule doesn't intersect it onto these pages (which would

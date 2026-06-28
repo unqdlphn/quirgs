@@ -41,6 +41,22 @@ Install any skill in two commands:
 - [HITL Gate](https://quirgs.com/hitl/): Human-in-the-loop approval queue that sits between an AI agent and any action requiring sign-off. A pull request review, but for AI decisions. Includes curl examples to post and approve an event.
 - [Guides](https://quirgs.com/guides/): Long-form references on agent skills and governance workflow.
 
+## Content provenance
+
+The compliance skills (eu-ai-act-classifier, nist-ai-rmf-checkpoint, iso-42001-audit-prep, hitl-compliance-gate, ai-transparency-writer, pii-exposure-checker, incident-response-logger) are derived directly from primary regulatory and standards text:
+
+- **EU AI Act** — Regulation (EU) 2024/1689 (Articles 6, 9, 10, 13, 14, 62)
+- **NIST AI RMF 1.0** — NIST AI 100-1, January 2023 (Govern / Map / Measure / Manage functions)
+- **ISO/IEC 42001:2023** — AI Management System standard (§4, §6, §8, §9, §10)
+- **GDPR** — Regulation (EU) 2016/679 (Articles 5, 25, 35)
+- **NIST SP 800-61 Rev. 2** — Computer Security Incident Handling Guide (§3.1–§3.4)
+
+Each skill maps named articles, sections, and clauses from these sources. Skills are practitioner-authored and production-tested through operational use on the Quirgs platform. Human-in-the-loop review is applied at every authoring stage.
+
+Not audited by a third-party compliance body. Not reviewed by legal counsel. These are governance scaffolding tools — not legal advice and not a substitute for qualified professional judgment. Every skill output carries this disclaimer explicitly.
+
+Machine-readable provenance (primary sources, article mapping, limitations): [/.well-known/provenance.json](https://quirgs.com/.well-known/provenance.json)
+
 ## Governance & trust
 
 - [Transparency](https://quirgs.com/transparency/): How Quirgs operates, what the skills are and are not, and the educational-use disclaimer.

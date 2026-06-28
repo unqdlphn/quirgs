@@ -9,6 +9,23 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Content provenance — agent-visible authority signal (feat/content-provenance)
+
+**Branch:** `feat/content-provenance` — (2026-06-27)
+
+Adds a structured provenance/credibility signal across all agent-facing discovery surfaces. Previously, the only agent-readable limitation statement was a single sentence in `llms.txt` ("governance scaffolding for education and drafting — not legal advice"). There was no machine-readable disclosure of what primary sources the compliance content rests on, how it was validated, or what it explicitly has not been audited by. This was the ceiling on agent trust.
+
+### Added
+- `public/.well-known/provenance.json` — new structured provenance document. For each of the five primary sources (EU AI Act, NIST AI RMF 1.0, ISO/IEC 42001:2023, GDPR, NIST SP 800-61 Rev. 2): full citation, canonical URL, which skills draw from it, and which articles/sections are referenced. Also documents authorship process (practitioner-authored against primary text), validation process (production-tested + HITL sign-off), explicit `notValidatedBy` list (third-party audit, legal counsel, accreditation body), and a structured `limitations` array. CORS-readable; served with `Access-Control-Allow-Origin: *`.
+- `public/_headers` — added route block for `/.well-known/provenance.json` (plain JSON, CORS, 1-hour cache) matching the `ai-catalog.json` pattern.
+
+### Changed
+- `public/llms.txt` — added `## Content provenance` section immediately before `## Governance & trust`. Lists all five primary sources with article/section references, states authorship and validation process honestly, names what has not been reviewed (third-party audit, legal counsel), and links to `provenance.json` for the machine-readable version. Agents reading `llms.txt` now find the authority basis without a second fetch.
+- `public/.well-known/ai-catalog.json` — added top-level `"provenance"` object (between `"host"` and `"entries"`) containing the `provenance.json` URL, `lastReviewed` date, `primarySources` array, `validationProcess` string, and `disclaimer`. Agents consuming the ARD catalog get the provenance claim inline.
+
+### Why
+- A zero-context agent assessment identified "no published provenance for compliance content" as the single gap with zero coverage — the ceiling on trust for any agent evaluating whether to cite or act on Quirgs outputs. The fix puts the authority claim where agents already look: `llms.txt` (first read), `ai-catalog.json` (structured catalog), and `provenance.json` (canonical machine-readable anchor).
+
 ## HITL endpoint abstraction (feat/hitl-endpoint-abstraction)
 
 **Branch:** `feat/hitl-endpoint-abstraction` — (2026-06-27)

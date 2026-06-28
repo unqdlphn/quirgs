@@ -5,6 +5,19 @@
     "identifier": "did:web:quirgs.com",
     "documentationUrl": "https://quirgs.com"
   },
+  "provenance": {
+    "url": "https://quirgs.com/.well-known/provenance.json",
+    "lastReviewed": "2026-06-27",
+    "primarySources": [
+      "Regulation (EU) 2024/1689 — EU AI Act",
+      "NIST AI 100-1 — NIST AI RMF 1.0 (January 2023)",
+      "ISO/IEC 42001:2023 — AI Management System",
+      "Regulation (EU) 2016/679 — GDPR",
+      "NIST SP 800-61 Rev. 2 — Incident Handling Guide"
+    ],
+    "validationProcess": "Practitioner-authored against primary regulatory text; production-tested in live governance workflows; human-in-the-loop review at every authoring stage. Not audited by a third-party compliance body. Not reviewed by legal counsel.",
+    "disclaimer": "Governance scaffolding for education and drafting. Not legal advice. Not a substitute for qualified professional judgment."
+  },
   "entries": [
     {
       "identifier": "urn:ai:quirgs.com:skill:eu-ai-act-classifier",
