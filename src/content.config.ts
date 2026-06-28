@@ -31,7 +31,7 @@ const skills = defineCollection({
     // References sibling skill slugs — used to render interoperation graph in UI
     interoperates_with: z.array(z.string()).default([]),
 
-    // Exact phrases that trigger this skill in Cowork — used in skills reference artifact
+    // Exact phrases that trigger this skill in Claude Code — used in skills reference artifact
     triggers: z.array(z.string()).default([]),
 
     // Short, concrete example prompts shown in the skill detail drawer
