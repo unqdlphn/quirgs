@@ -196,6 +196,20 @@ describe('POST /events', () => {
     expect(event.created_at).toBeTypeOf('number');
     expect(event.updated_at).toBe(event.created_at);
   });
+
+  it('strips a client-supplied status from the payload (column is the source of truth)', async () => {
+    const id = await createEvent({ item: 'x', status: 'pending' }, 'hitl.gate');
+    const event = await (await authGet(`/events/${id}`)).json();
+    expect(event.status).toBe('pending');
+    expect(event.payload).toEqual({ item: 'x' });
+    expect(event.payload).not.toHaveProperty('status');
+  });
+
+  it('preserves an array payload untouched (no status stripping)', async () => {
+    const id = await createEvent(['a', 'b'], 'hitl.list');
+    const event = await (await authGet(`/events/${id}`)).json();
+    expect(event.payload).toEqual(['a', 'b']);
+  });
 });
 
 describe('GET /events/:id', () => {
@@ -251,6 +265,18 @@ describe('PATCH /events/:id', () => {
     const readBack = await (await authGet(`/events/${id}`)).json();
     expect(readBack.status).toBe(status);
     expect(readBack.updated_at).toBeGreaterThanOrEqual(readBack.created_at);
+  });
+
+  it('approval does not leave a stale status inside the payload', async () => {
+    // Regression: a PATCH updated the top-level status column but a status
+    // embedded in payload stayed 'pending', so a consumer reading payload.status
+    // saw a cleared gate as still pending. With status stripped on POST, the
+    // payload carries no status to go stale.
+    const id = await createEvent({ item: 'ship it', status: 'pending' });
+    await sendJSON('PATCH', `/events/${id}`, { status: 'approved' }, AUTH);
+    const event = await (await authGet(`/events/${id}`)).json();
+    expect(event.status).toBe('approved');
+    expect(event.payload).not.toHaveProperty('status');
   });
 
   it('rejects a second transition once no longer pending', async () => {

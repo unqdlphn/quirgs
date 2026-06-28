@@ -154,7 +154,17 @@ export default {
 
         const id = crypto.randomUUID();
         const now = Math.floor(Date.now() / 1000);
-        const payloadStr = JSON.stringify(body.payload);
+        // `status` is gate-managed on the top-level column. Strip any client-
+        // supplied copy from the payload so the two can't diverge: a PATCH updates
+        // the column, never the embedded JSON, so a retained payload.status would
+        // go stale on the first approval. Single source of truth = the column.
+        // (Arrays pass the object check above; leave those untouched.)
+        let payloadToStore = body.payload;
+        if (!Array.isArray(body.payload) && 'status' in body.payload) {
+          const { status: _gateManaged, ...rest } = body.payload;
+          payloadToStore = rest;
+        }
+        const payloadStr = JSON.stringify(payloadToStore);
 
         await env.HITL_DB.prepare(
           "INSERT INTO events (id, type, payload, status, created_at, updated_at) VALUES (?, ?, ?, 'pending', ?, ?)"
