@@ -39,7 +39,7 @@
       "metadata": {
         "framework": "EU AI Act — Regulation (EU) 2024/1689",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -62,7 +62,7 @@
       "metadata": {
         "framework": "NIST AI RMF 1.0 — NIST AI 100-1",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -85,7 +85,7 @@
       "metadata": {
         "framework": "ISO/IEC 42001:2023",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -108,7 +108,7 @@
       "metadata": {
         "framework": "EU AI Act, NIST AI RMF, ISO 42001",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -131,7 +131,7 @@
       "metadata": {
         "framework": "EU AI Act Article 13, NIST AI RMF Govern",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -154,7 +154,7 @@
       "metadata": {
         "framework": "GDPR, EU AI Act Article 10",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -177,7 +177,7 @@
       "metadata": {
         "framework": "NIST SP 800-61, EU AI Act Article 62",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -194,7 +194,7 @@
       "metadata": {
         "framework": "PUBLISH Loop — Music Publishing SOPs + HITL Protocol",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -211,7 +211,7 @@
       "metadata": {
         "framework": "Copyright Act (17 U.S.C. §102) — EU AI Act Article 13",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -228,7 +228,7 @@
       "metadata": {
         "framework": "ISRC (ISO 3901), UPC/EAN, DDEX Standards",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -245,7 +245,7 @@
       "metadata": {
         "framework": "DDEX ERN 4.1; ASCAP/BMI/SESAC/PRS/SOCAN",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -262,7 +262,7 @@
       "metadata": {
         "framework": "Sync Licensing Protocol — Master Use & Sync Rights Standards",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -279,7 +279,7 @@
       "metadata": {
         "framework": "PRO Distribution & DSP Royalty Statement Standards",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -296,7 +296,7 @@
       "metadata": {
         "framework": "DSP Content Policies, EU AI Act, platform AI-disclosure standards",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
@@ -313,7 +313,7 @@
       "metadata": {
         "framework": "Catalog Performance Analytics; PRO & DSP metrics",
         "installable": "true",
-        "platform": "Claude Cowork"
+        "platform": "Claude Code"
       }
     },
     {
