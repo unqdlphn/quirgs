@@ -3,10 +3,14 @@ main = "index.js"
 compatibility_date = "2024-01-01"
 
 # Custom domain — Cloudflare auto-provisions the DNS record and TLS cert on deploy.
-# The *.workers.dev hostname keeps working alongside this.
 routes = [
   { pattern = "api.quirgs.com", custom_domain = true }
 ]
+
+# Keep the *.workers.dev hostname live alongside the custom domain. Without this,
+# adding a custom_domain route makes wrangler DISABLE workers.dev by default — a
+# hard cutover that breaks any existing *.workers.dev references during transition.
+workers_dev = true
 
 [[kv_namespaces]]
 binding = "QUIRGS_REGISTRY"

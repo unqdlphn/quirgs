@@ -62,11 +62,14 @@ The `hitl-compliance-gate` skill posted compliance checkpoints to whatever `HITL
 
 Moves both standalone Workers off their `*.workers.dev` hostnames onto first-party custom domains: `quirgs-registry-api` → `api.quirgs.com`, `quirgs-hitl-gate` → `gate.quirgs.com`. Cloudflare auto-provisions the DNS records and TLS certs on `wrangler deploy`. The `*.workers.dev` hostnames keep resolving alongside the custom domains, so there is no hard cutover.
 
-> **Deploy ordering (required):** `wrangler deploy --config` both Workers FIRST and confirm `https://api.quirgs.com/skills` + `https://gate.quirgs.com/events` return 200 (cert issuance can take ~1 min), THEN build/deploy the site. The site browser-calls `gate.quirgs.com`, so deploying the site before the Worker domain is live would point the review queue at a non-resolving host. Validate on the branch preview URL and purge cache after deploy (CSP `connect-src` changed).
+> **Status (2026-06-28):** Both Workers are **deployed** with their custom domains bound and valid TLS (`api.quirgs.com`, `gate.quirgs.com`), and `*.workers.dev` preserved (`workers_dev = true`). **The site changes in this PR are NOT yet safe to merge** — see the WAF blocker below.
+
+> **🚧 MERGE BLOCKER — zone Managed Challenge:** Both custom domains sit on the `quirgs.com` zone and inherit its bot posture, which issues a Cloudflare **Managed Challenge** (`cf-mitigated: challenge`) to API/XHR traffic. `curl`, agents, and the `/review` dashboard's `fetch()` cannot solve a JS challenge, so they get `403` instead of reaching the Worker (the `workers.dev` hosts are unaffected — different zone). **Before merging the site changes,** add a Cloudflare WAF **Skip** / Configuration Rule for `http.host in {"api.quirgs.com","gate.quirgs.com"}` that skips Managed Challenge + Bot Fight Mode (Security Level → Essentially Off for those hosts). Until then, the gate/registry remain fully usable via their `workers.dev` hosts.
 
 ### Changed
-- `workers/registry-api/wrangler.toml` — added `routes = [{ pattern = "api.quirgs.com", custom_domain = true }]`.
-- `workers/hitl-gate/wrangler.toml` — added `routes = [{ pattern = "gate.quirgs.com", custom_domain = true }]`.
+- `workers/registry-api/wrangler.toml` — added `routes = [{ pattern = "api.quirgs.com", custom_domain = true }]` + `workers_dev = true`.
+- `workers/hitl-gate/wrangler.toml` — added `routes = [{ pattern = "gate.quirgs.com", custom_domain = true }]` + `workers_dev = true`.
+- **`workers_dev = true` is load-bearing:** adding a `custom_domain` route makes wrangler disable `workers.dev` by default. Without this flag the first deploy silently took the `*.workers.dev` hosts offline — a hard cutover that breaks every existing `workers.dev` reference (including the live shared demo gate) mid-transition. Setting it keeps both hostnames live.
 - `public/_headers` — added `https://gate.quirgs.com` to CSP `connect-src` (kept the `quirgs-hitl-gate.*.workers.dev` entry for transition safety; remove once fully cut over). `script-src` hashes are unaffected — no recompute needed.
 - `public/js/review.js`, `src/pages/review.astro` — switched the hardcoded gate-URL fallback from `quirgs-hitl-gate.*.workers.dev` to `https://gate.quirgs.com`.
 - `src/pages/hitl.astro` — switched the demo `HITL_GATE_URL` setup command and the live demo-gate link to `https://gate.quirgs.com`.
