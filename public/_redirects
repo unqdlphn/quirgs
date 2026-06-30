@@ -2,4 +2,6 @@
 /bundle/   /bundles/    301
 
 # Track 2 guide migrations: legacy .html → managed MDX guide (clean directory URL).
+# Cover both the indexed .html form and the extensionless variant (crawlers strip .html).
+/guides/git_workflow_reference        /guides/git-workflow-reference/   301
 /guides/git_workflow_reference.html   /guides/git-workflow-reference/   301
