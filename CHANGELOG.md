@@ -18,6 +18,19 @@ Worker logs showed an AI crawler hitting `/guides/git_workflow_reference` (exten
 ### Changed
 - `public/_redirects` — added a 301 for the extensionless `/guides/git_workflow_reference` → `/guides/git-workflow-reference/` alongside the existing `.html` rule.
 
+## Unauthenticated /health endpoint on hitl-gate (feat/hitl-gate-health-endpoint)
+
+**Branch:** `feat/hitl-gate-health-endpoint` — (2026-06-30)
+
+`quirgs-hitl-gate` had no unauthenticated route — every endpoint required the `HITL_WRITE_TOKEN` Bearer token, so an external health/uptime check couldn't run without exposing the write token. Added a `GET /health` route that returns `{ "ok": true, "ts": <unix_ts> }` with HTTP 200 and no auth, letting monitoring (and the daily maintenance task) confirm the worker is alive without credentials.
+
+### Added
+- `workers/hitl-gate/index.js` — `GET /health` route, placed immediately after the OPTIONS preflight handler and before the auth gate. Returns no event data, only liveness. CORS headers still apply.
+- `workers/hitl-gate/test/index.spec.js` — tests covering the 200 `{ ok, ts }` response, that `/events` still 401s (auth unweakened), and that non-GET `/health` falls through to 404.
+
+### Notes
+- The task's reference snippet was written against a divergent bundle (OPTIONS keyed on a pre-declared `method`/`path`, plus an `outputs/hitl-gate-index.js` full-file replacement). Applied instead as a targeted insertion against the real source — where `path`/`method` are declared after the OPTIONS block, so the route sits just below them — per the task's own "apply the targeted insertion, don't replace the file" guidance.
+
 ## Classifier asks for role/scope instead of assuming (fix/classifier-ask-role)
 
 **Branch:** `fix/classifier-ask-role` — (2026-06-28)

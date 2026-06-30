@@ -92,6 +92,12 @@ export default {
     const path = url.pathname;
     const method = request.method;
 
+    // Health check — no auth required. Lets monitoring confirm the worker is
+    // alive without exposing HITL_WRITE_TOKEN.
+    if (path === '/health' && method === 'GET') {
+      return jsonResponse({ ok: true, ts: Math.floor(Date.now() / 1000) }, 200, cors);
+    }
+
     // Single Bearer token gates every data operation (read and write).
     const checkAuth = () => {
       const authHeader = request.headers.get('Authorization');

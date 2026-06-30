@@ -448,6 +448,29 @@ describe('POST /events — webhook fire', () => {
   });
 });
 
+describe('GET /health', () => {
+  it('returns 200 with { ok, ts } and no auth required', async () => {
+    const res = await request('/health');
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.ok).toBe(true);
+    expect(body.ts).toBeTypeOf('number');
+    // CORS headers still ride along.
+    expect(res.headers.get('Access-Control-Allow-Origin')).toBe('https://quirgs.com');
+  });
+
+  it('does not weaken auth on the data routes', async () => {
+    // The unauthenticated health route must not open up /events.
+    const res = await request('/events');
+    expect(res.status).toBe(401);
+  });
+
+  it('only answers GET — other methods fall through to 404', async () => {
+    const res = await request('/health', { method: 'POST' });
+    expect(res.status).toBe(404);
+  });
+});
+
 describe('routing', () => {
   it('returns 404 for unknown paths', async () => {
     const res = await request('/nope');
