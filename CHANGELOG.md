@@ -9,6 +9,15 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Redirect extensionless legacy guide slug (fix/guide-redirect-extensionless)
+
+**Branch:** `fix/guide-redirect-extensionless` — (2026-06-30)
+
+Worker logs showed an AI crawler hitting `/guides/git_workflow_reference` (extensionless, old underscore slug) and getting a 404 instead of redirecting. The Track 2 migration redirect in `public/_redirects` was keyed only to the `.html` form, and Cloudflare `_redirects` matches paths exactly — so the extensionless variant fell through to 404. A repo-wide grep confirmed no live internal link uses the old slug (only historical CHANGELOG entries), so this is crawler-side `.html` stripping, not a broken link.
+
+### Changed
+- `public/_redirects` — added a 301 for the extensionless `/guides/git_workflow_reference` → `/guides/git-workflow-reference/` alongside the existing `.html` rule.
+
 ## Classifier asks for role/scope instead of assuming (fix/classifier-ask-role)
 
 **Branch:** `fix/classifier-ask-role` — (2026-06-28)
