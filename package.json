@@ -13,7 +13,8 @@
     "postinstall": "patch-package",
     "test": "npm run test:registry && npm run test:hitl",
     "test:registry": "vitest run --config workers/registry-api/vitest.config.js",
-    "test:hitl": "vitest run --config workers/hitl-gate/vitest.config.js"
+    "test:hitl": "vitest run --config workers/hitl-gate/vitest.config.js",
+    "seed:registry": "node scripts/seed-registry.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
@@ -32,7 +33,8 @@
     "patch-package": "^8.0.1",
     "typescript": "^5.6.3",
     "vitest": "^4.1.8",
-    "wrangler": "^4.103.0"
+    "wrangler": "^4.103.0",
+    "yaml": "^1.10.3"
   },
   "overrides": {
     "esbuild": "0.28.1"

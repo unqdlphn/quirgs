@@ -39,7 +39,11 @@ const skills = defineCollection({
 
     // Publication state
     status: z.enum(['live', 'draft', 'deprecated']),
-    version: z.string(),
+    // NOTE: there is no `version` field. The skill version is derived at build
+    // time from the plugin manifest (plugins/<name>/.claude-plugin/plugin.json)
+    // via src/data/skill-version.ts — a hand-copied frontmatter version drifted
+    // from the published plugin, so it was removed. Do not reintroduce it here
+    // (or in keystatic.config.ts — the two schemas must stay in lockstep).
     lastUpdated: z.coerce.date(),
 
     // Distribution — hand-maintained (not auto-populated). sync-gists.yml only
