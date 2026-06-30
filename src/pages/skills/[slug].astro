@@ -3,6 +3,7 @@
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NavBlock from "../../components/NavBlock.astro";
+import { resolveSkillVersion } from "../../data/skill-version";
 
 export async function getStaticPaths() {
   const skills = await getCollection("skills");
@@ -16,6 +17,9 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 
 const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
+// Version is derived from the plugin manifest at build time — see
+// src/data/skill-version.ts.
+const version = resolveSkillVersion(entry.data.installCmd);
 ---
 
 <BaseLayout
@@ -46,7 +50,7 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
     <h1 class="text-bright">{entry.data.title}</h1>
     <p class="tagline">{entry.data.tagline}</p>
     <div class="badges-row">
-      <span class="badge version-badge">v{entry.data.version}</span>
+      {version && <span class="badge version-badge">v{version}</span>}
       <span class={`badge status-badge status-${entry.data.status}`}
         >[{entry.data.status}]</span
       >

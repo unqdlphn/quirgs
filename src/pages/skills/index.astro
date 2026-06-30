@@ -3,6 +3,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NavBlock from "../../components/NavBlock.astro";
+import { resolveSkillVersion } from "../../data/skill-version";
 
 const skills = await getCollection("skills");
 
@@ -117,10 +118,10 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
 
     {
       sortedSkills.map((skill) => {
-        const rawVersion = skill.data.version;
-        const version = rawVersion.startsWith("v")
-          ? rawVersion
-          : `v${rawVersion}`;
+        // Version is derived from the plugin manifest at build time, never the
+        // frontmatter — see src/data/skill-version.ts.
+        const rawVersion = resolveSkillVersion(skill.data.installCmd);
+        const version = rawVersion ? `v${rawVersion}` : "—";
 
         return (
           <div

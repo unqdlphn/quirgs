@@ -9,6 +9,37 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Derive skill version from plugin manifest (feat/derive-skill-version)
+
+**Branch:** `feat/derive-skill-version` — (2026-06-30)
+
+The skill `version` shown on the site was a hand-copied value in each MDX
+frontmatter, decoupled from the plugin manifest (`plugins/<name>/.claude-plugin/plugin.json`)
+that actually defines the installed version. It silently drifted: pages showed
+`v1.0.0` for `hitl-compliance-gate` (plugin was `1.1.2`) and `eu-ai-act-classifier`
+(plugin was `1.0.2`). `version` is now derived at build time from the plugin
+manifest, resolved via the skill's `installCmd`, so the page can never drift from
+the published plugin again. Also added a source-of-truth reseed script for the
+public registry API so its `version` (and the previously-null compliance
+`gistUrl`/`installCmd`) stay in sync.
+
+### Added
+- `src/data/skill-version.ts` — resolves a skill's version from its plugin
+  manifest (via `import.meta.glob`, inlined at build time; `node:fs` cannot read
+  the real filesystem inside the Cloudflare adapter's miniflare prerender worker).
+- `scripts/seed-registry.mjs` + `npm run seed:registry` — rebuilds every
+  `api.quirgs.com` registry entry from MDX frontmatter + plugin manifest versions.
+- `yaml` declared as a devDependency (was transitive; the seed script imports it).
+
+### Changed
+- `src/pages/skills/index.astro`, `src/pages/skills/[slug].astro` — render the
+  derived version instead of `skill.data.version`.
+- `src/content.config.ts`, `keystatic.config.ts` — removed the `version` field
+  (kept in lockstep); the 15 skill MDX files no longer carry `version:`.
+- Reseeded the registry: corrected `eu-ai-act-classifier` (1.0.2) and
+  `hitl-compliance-gate` (1.1.2) versions, and backfilled compliance
+  `gistUrl`/`installCmd` that were stored as `null`.
+
 ## Redirect extensionless legacy guide slug (fix/guide-redirect-extensionless)
 
 **Branch:** `fix/guide-redirect-extensionless` — (2026-06-30)

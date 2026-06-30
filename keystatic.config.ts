@@ -69,7 +69,9 @@ export default config({
           ],
           defaultValue: 'draft',
         }),
-        version: fields.text({ label: 'Version' }),
+        // No `version` field — the skill version is derived at build time from
+        // the plugin manifest (see src/data/skill-version.ts). Kept out of the
+        // schema to stay in lockstep with src/content.config.ts; do not re-add.
         lastUpdated: fields.date({ label: 'Last Updated' }),
         gistUrl: fields.url({ label: 'Gist URL' }),
         marketplaceCmd: fields.text({ label: 'Marketplace Add Command' }),
