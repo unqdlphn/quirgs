@@ -9,6 +9,21 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Add About link to site footer (feat/footer-about-link)
+
+**Branch:** `feat/footer-about-link` — (2026-07-01)
+
+The site footer was legal/trust-only (Security · Transparency · Privacy · Terms ·
+Support) and omitted About, even though `/about/` is a primary nav route. Added
+About to the footer and reordered the links so the row reads About · Terms ·
+Privacy · Transparency · Security · Support. About in the footer is a conventional
+discoverability path (footer links appear site-wide) and gives `/about/` a second
+internal link route beyond the NavBlock.
+
+### Changed
+- `src/components/Footer.astro` — added `<a href="/about/">About</a>`; reordered
+  footer links to About, Terms, Privacy, Transparency, Security, Support.
+
 ## Derive bundle version from bundle plugin manifest (feat/derive-bundle-version)
 
 **Branch:** `feat/derive-bundle-version` — (2026-06-30)
