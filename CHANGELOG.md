@@ -9,6 +9,28 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Derive bundle version from bundle plugin manifest (feat/derive-bundle-version)
+
+**Branch:** `feat/derive-bundle-version` — (2026-06-30)
+
+Follow-up to feat/derive-skill-version: the `/bundles/` page hardcoded `v1.0` for
+both bundles, so `quirgs-compliance` (plugin was `1.1.3`) displayed as v1.0. The
+bundle version is a *distinct* number from the per-skill versions — a bundle is
+its own marketplace plugin (`quirgs-compliance` / `quirgs-publish`), separately
+versioned. (Publish skills install only via the bundle so their version already
+equals it; compliance skills each have a standalone plugin, so the bundle carries
+its own version that no single-skill installCmd points at.) The bundle version is
+now derived at build time from the bundle plugin manifest.
+
+### Added
+- `resolveBundleVersion(bundle)` in `src/data/skill-version.ts` — maps a bundle to
+  its bundle plugin (`compliance` → `quirgs-compliance`, `publish` → `quirgs-publish`)
+  and returns that manifest's version. Shared lookup factored out of `resolveSkillVersion`.
+
+### Changed
+- `src/pages/bundles/index.astro` — both `[FETCHING]` headers now render the
+  derived bundle version instead of a hardcoded `v1.0`.
+
 ## Derive skill version from plugin manifest (feat/derive-skill-version)
 
 **Branch:** `feat/derive-skill-version` — (2026-06-30)

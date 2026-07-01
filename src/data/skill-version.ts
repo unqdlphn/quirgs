@@ -51,6 +51,28 @@ function pluginNameFromInstallCmd(installCmd: string | undefined): string | null
   return match ? match[1] : null;
 }
 
+// A bundle is its own marketplace plugin, separately versioned from the per-skill
+// plugins. Publish skills install *only* via the bundle, so a publish skill's
+// version already equals the bundle version; compliance skills each have their
+// own standalone plugin, so the `quirgs-compliance` bundle carries a distinct
+// version (e.g. 1.1.3) that no single-skill installCmd points at. Hence this map.
+const BUNDLE_PLUGIN: Record<string, string> = {
+  compliance: 'quirgs-compliance',
+  publish: 'quirgs-publish',
+};
+
+/** Look up a plugin's version by name, throwing if its manifest is missing. */
+function versionForPlugin(pluginName: string, context: string): string {
+  const version = versionByPlugin.get(pluginName);
+  if (!version) {
+    throw new Error(
+      `${context}: no plugins/${pluginName}/.claude-plugin/plugin.json version was ` +
+        `found. Add the plugin manifest or fix the reference.`
+    );
+  }
+  return version;
+}
+
 /**
  * Resolve the authoritative version for a skill from its plugin manifest.
  *
@@ -63,13 +85,20 @@ function pluginNameFromInstallCmd(installCmd: string | undefined): string | null
 export function resolveSkillVersion(installCmd: string | undefined): string | null {
   const pluginName = pluginNameFromInstallCmd(installCmd);
   if (!pluginName) return null;
-  const version = versionByPlugin.get(pluginName);
-  if (!version) {
-    throw new Error(
-      `resolveSkillVersion: installCmd "${installCmd}" names plugin "${pluginName}", ` +
-        `but no plugins/${pluginName}/.claude-plugin/plugin.json version was found. ` +
-        `Add the plugin manifest or fix the installCmd.`
-    );
+  return versionForPlugin(pluginName, `resolveSkillVersion("${installCmd}")`);
+}
+
+/**
+ * Resolve the version for a bundle (compliance/publish) from its bundle plugin
+ * manifest — NOT from any per-skill plugin. The bundle is installed as a single
+ * plugin (`quirgs-compliance` / `quirgs-publish`) and versioned independently.
+ *
+ * @throws if the bundle is unknown or its plugin manifest is missing.
+ */
+export function resolveBundleVersion(bundle: 'compliance' | 'publish'): string {
+  const pluginName = BUNDLE_PLUGIN[bundle];
+  if (!pluginName) {
+    throw new Error(`resolveBundleVersion: unknown bundle "${bundle}".`);
   }
-  return version;
+  return versionForPlugin(pluginName, `resolveBundleVersion("${bundle}")`);
 }
