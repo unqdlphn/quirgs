@@ -3,8 +3,15 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import NavBlock from "../../components/NavBlock.astro";
+import { resolveBundleVersion } from "../../data/skill-version";
 
 const skills = await getCollection("skills");
+
+// Bundle version is derived at build time from the bundle plugin manifest
+// (quirgs-compliance / quirgs-publish) — see src/data/skill-version.ts. Note this
+// is the *bundle* plugin's version, distinct from the per-skill plugin versions.
+const complianceVersion = resolveBundleVersion("compliance");
+const publishVersion = resolveBundleVersion("publish");
 
 const complianceOrder = [
   "ai-transparency-writer",
@@ -81,7 +88,7 @@ const publishSkills = skills
   <div id="panel-compliance" class="bundle-panel">
     <div class="line">
       <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-compliance
-      v1.0 ({complianceSkills.length} skills)
+      v{complianceVersion} ({complianceSkills.length} skills)
     </div>
 
     <div class="skills-table">
@@ -139,8 +146,9 @@ const publishSkills = skills
   <!-- ── Publish panel ─────────────────────────────────────────── -->
   <div id="panel-publish" class="bundle-panel" hidden>
     <div class="line">
-      <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-publish v1.0
-      ({publishSkills.length} skills)
+      <span class="text-bright">[FETCHING]</span>&nbsp;&nbsp;quirgs-publish v{
+        publishVersion
+      } ({publishSkills.length} skills)
     </div>
 
     <div class="skills-table">
