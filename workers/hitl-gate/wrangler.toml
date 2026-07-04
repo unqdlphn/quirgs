@@ -19,7 +19,9 @@ workers_dev = true
 [vars]
 ALLOWED_ORIGINS = "https://quirgs.com,https://www.quirgs.com"
 
-# Daily 30-day TTL archive sweep (replaces the old write-on-read TTL).
+# Daily sweep: archive events older than 30 days, then hard-delete rows archived
+# more than 60 days ago (bounded retention — see risk R-007 in the governance
+# risk register before changing).
 [triggers]
 crons = ["0 3 * * *"]
 

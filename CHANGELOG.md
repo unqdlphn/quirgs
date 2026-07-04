@@ -9,6 +9,31 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Bounded retention for hitl-gate archived events (feat/hitl-gate-retention)
+
+**Branch:** `feat/hitl-gate-retention` — (2026-07-03)
+
+The daily archive cron flipped events to `status='archived'` after 30 days but
+never deleted them, so archived rows — whose payloads can carry review material —
+accumulated in D1 indefinitely. Unbounded retention was flagged as the open gap
+on risk R-007 (governance risk register) during the R-005 acceptance tripwire
+review, and matters more with the Phase 4 customer-facing gate on the roadmap.
+The sweep now hard-deletes rows archived more than 60 days ago. Full lifecycle:
+~30 days active → 60 days archived → deleted (~90 days total). Archiving stamps
+`updated_at`, so a row archived by a sweep is never deleted in that same sweep.
+
+### Changed
+- `workers/hitl-gate/index.js` — `scheduled()` now runs a second step deleting
+  `archived` rows with `updated_at` older than `RETENTION_SECONDS` (60 days);
+  header comment documents the lifecycle and the R-007 linkage.
+- `workers/hitl-gate/wrangler.toml` — cron trigger comment updated to describe
+  the archive + delete sweep.
+
+### Added
+- `workers/hitl-gate/test/index.spec.js` — 4 retention tests: deletes >60-day
+  archived rows; keeps <60-day archived rows; never deletes a row in the same
+  sweep that archives it; never deletes non-archived rows regardless of age.
+
 ## Add About link to site footer (feat/footer-about-link)
 
 **Branch:** `feat/footer-about-link` — (2026-07-01)

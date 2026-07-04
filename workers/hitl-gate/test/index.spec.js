@@ -334,6 +334,68 @@ describe('scheduled 30-day TTL', () => {
   });
 });
 
+describe('scheduled 60-day archived-row retention', () => {
+  // Force a row into archived state with a chosen archive timestamp.
+  async function archiveAt(id, updatedAt) {
+    await env.HITL_DB.prepare("UPDATE events SET status = 'archived', updated_at = ? WHERE id = ?")
+      .bind(updatedAt, id)
+      .run();
+  }
+
+  it('hard-deletes rows archived more than 60 days ago', async () => {
+    const id = await createEvent({ n: 'stale-archived' });
+    const sixtyOneDaysAgo = Math.floor(Date.now() / 1000) - 61 * 24 * 60 * 60;
+    await archiveAt(id, sixtyOneDaysAgo);
+
+    await runScheduled();
+
+    const res = await authGet(`/events/${id}`);
+    expect(res.status).toBe(404);
+  });
+
+  it('keeps rows archived less than 60 days ago', async () => {
+    const id = await createEvent({ n: 'recent-archived' });
+    const fiftyNineDaysAgo = Math.floor(Date.now() / 1000) - 59 * 24 * 60 * 60;
+    await archiveAt(id, fiftyNineDaysAgo);
+
+    await runScheduled();
+
+    const event = await (await authGet(`/events/${id}`)).json();
+    expect(event.status).toBe('archived');
+  });
+
+  it('does not delete a row in the same sweep that archives it', async () => {
+    // Created 100 days ago but never archived (e.g., cron was down): the sweep
+    // archives it with updated_at = now, so deletion cannot occur for 60 more days.
+    const id = await createEvent({ n: 'old-never-archived' });
+    const hundredDaysAgo = Math.floor(Date.now() / 1000) - 100 * 24 * 60 * 60;
+    await env.HITL_DB.prepare('UPDATE events SET created_at = ?, updated_at = ? WHERE id = ?')
+      .bind(hundredDaysAgo, hundredDaysAgo, id)
+      .run();
+
+    await runScheduled();
+
+    const event = await (await authGet(`/events/${id}`)).json();
+    expect(event.status).toBe('archived');
+  });
+
+  it('never deletes non-archived rows regardless of age', async () => {
+    const id = await createEvent({ n: 'ancient-pending' });
+    const twoHundredDaysAgo = Math.floor(Date.now() / 1000) - 200 * 24 * 60 * 60;
+    // Age the row far past every cutoff but leave status pending; the sweep
+    // archives it (created_at is old) — it must still exist afterwards.
+    await env.HITL_DB.prepare('UPDATE events SET created_at = ? WHERE id = ?')
+      .bind(twoHundredDaysAgo, id)
+      .run();
+
+    await runScheduled();
+
+    const res = await authGet(`/events/${id}`);
+    expect(res.status).toBe(200);
+    expect((await res.json()).status).toBe('archived');
+  });
+});
+
 // The webhook fires via the global `fetch` inside ctx.waitUntil. This pool
 // version (@cloudflare/vitest-pool-workers 0.16.x) does not expose the newer
 // `fetchMock` MockAgent, but the worker and the test share one workerd isolate,
