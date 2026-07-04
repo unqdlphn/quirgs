@@ -11,7 +11,7 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## Bounded retention for hitl-gate archived events (feat/hitl-gate-retention)
 
-**Branch:** `feat/hitl-gate-retention` — (2026-07-03)
+**Branch:** `feat/hitl-gate-retention` — PR #108 (2026-07-03)
 
 The daily archive cron flipped events to `status='archived'` after 30 days but
 never deleted them, so archived rows — whose payloads can carry review material —
