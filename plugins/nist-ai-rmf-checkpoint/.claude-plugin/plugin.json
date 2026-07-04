@@ -1,7 +1,7 @@
 {
   "name": "nist-ai-rmf-checkpoint",
   "description": "Run an AI system through the NIST AI RMF 1.0 Govern, Map, Measure, and Manage functions and surface gaps. Ships with reference material for each of the four functions.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Quirgs",
     "url": "https://quirgs.com"
