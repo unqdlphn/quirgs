@@ -14,6 +14,12 @@
  * (migrations/0001_init.sql), NOT by runtime DDL. The 30-day archive sweep runs
  * on a Cron Trigger (see scheduled() and [triggers] in wrangler.toml), so reads
  * never perform writes.
+ *
+ * Retention: archived rows are hard-deleted 60 days after archiving (same cron).
+ * Full lifecycle: ~30 days active → 60 days archived → deleted (~90 days total).
+ * Payloads can carry review material, so retention is deliberately bounded —
+ * do not remove the delete step without re-assessing risk R-007 in the
+ * governance risk register.
  */
 
 // Default origins allowed to call the gate from a browser. Overridable via the
@@ -24,7 +30,8 @@ const DEFAULT_ALLOWED_ORIGINS = [
   'https://www.quirgs.com',
 ];
 
-const TTL_SECONDS = 30 * 24 * 60 * 60; // 30 days
+const TTL_SECONDS = 30 * 24 * 60 * 60; // 30 days active before archiving
+const RETENTION_SECONDS = 60 * 24 * 60 * 60; // 60 days archived before hard delete
 const DEFAULT_LIMIT = 100;
 const MAX_LIMIT = 500;
 
@@ -271,13 +278,22 @@ export default {
     return jsonResponse({ error: 'not found' }, 404, cors);
   },
 
-  // Cron Trigger: archive events older than 30 days. Replaces the lazy
-  // write-on-read TTL so GET requests never mutate the table.
+  // Cron Trigger: archive events older than 30 days, then hard-delete rows
+  // archived more than 60 days ago. Archiving stamps updated_at, so a row
+  // archived by this sweep is not eligible for deletion until RETENTION_SECONDS
+  // later — the two steps never touch the same row in one run.
   async scheduled(controller, env, ctx) {
     const now = Math.floor(Date.now() / 1000);
-    const cutoff = now - TTL_SECONDS;
+    const archiveCutoff = now - TTL_SECONDS;
     await env.HITL_DB.prepare(
       "UPDATE events SET status = 'archived', updated_at = ? WHERE status != 'archived' AND created_at < ?"
-    ).bind(now, cutoff).run();
+    ).bind(now, archiveCutoff).run();
+
+    // Bounded retention (risk R-007): payloads can carry review material, so
+    // archived rows must not accumulate indefinitely.
+    const deleteCutoff = now - RETENTION_SECONDS;
+    await env.HITL_DB.prepare(
+      "DELETE FROM events WHERE status = 'archived' AND updated_at < ?"
+    ).bind(deleteCutoff).run();
   },
 };
