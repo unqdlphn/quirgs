@@ -9,6 +9,54 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix broken reference pointers in eu-ai-act-classifier and nist-ai-rmf-checkpoint (fix/ref-accuracy)
+
+**Branch:** `fix/ref-accuracy` (2026-07-04)
+
+Two published Skills had SKILL.md pointing at reference files that were never created —
+`eu-ai-act-classifier` referenced a nonexistent `references/obligations-gpai.md`, and
+`nist-ai-rmf-checkpoint` referenced a nonexistent `references/playbook-actions.md`. In
+both cases the intended content already existed elsewhere (GPAI obligations are covered
+in `obligations-limited-risk.md`; playbook actions live in a "Playbook Actions — [FUNCTION]
+Gaps" table at the end of each function's own reference file), so the fix corrects the
+pointers rather than duplicating content. Also added a missing **OUT OF SCOPE** risk tier
+to `eu-ai-act-classifier` — the Act's territorial scope (Article 2) was previously not
+checked before running tier classification logic, so a system entirely outside EU
+jurisdiction had no way to be classified as such.
+
+### Changed
+- `eu-ai-act-classifier` (standalone + `quirgs-compliance` bundle, all 3 SKILL.md copies) —
+  added Step 2a "Check EU Territorial Scope (Article 2)" ahead of the existing tier checks;
+  added OUT OF SCOPE to the classification output template; Step 4 now skips the obligations
+  checklist for OUT OF SCOPE and points GPAI/MINIMAL RISK at `obligations-limited-risk.md`
+  instead of the nonexistent `obligations-gpai.md`. Plugin version 1.0.2 → 1.1.0.
+- `nist-ai-rmf-checkpoint` (standalone + `quirgs-compliance` bundle, all 3 SKILL.md copies) —
+  Recommended Actions step now points at each function's own embedded Playbook Actions
+  table instead of the nonexistent `references/playbook-actions.md`. Plugin version
+  1.0.0 → 1.0.1.
+- `quirgs-compliance` bundle version 1.1.3 → 1.2.0 (bundles the above plus the PR #109
+  retention fix noted below).
+
+## Add ISO 42001 Annex B reference and reformat Annex A (fix/iso-annex-reference)
+
+**Branch:** `fix/iso-annex-reference` — PR #109 (2026-07-04)
+
+Retroactive entry — this PR merged without a plugin version bump or changelog note.
+`iso-42001-audit-prep` gained an Annex B reference file and reformatted Annex A's control
+table for audit-prep readability, but the standalone plugin's `plugin.json` was left at
+`1.0.0`. Bumped to `1.1.0` as part of the ref-accuracy pass above so installed users pick
+up the new Annex B material on marketplace refresh.
+
+### Changed
+- `plugins/iso-42001-audit-prep/skills/iso-42001-audit-prep/references/annex-a.md` and
+  `plugins/quirgs-compliance/skills/iso-42001-audit-prep/references/annex-a.md` — improved
+  table formatting.
+
+### Added
+- `plugins/iso-42001-audit-prep/skills/iso-42001-audit-prep/references/annex-b.md` and
+  `plugins/quirgs-compliance/skills/iso-42001-audit-prep/references/annex-b.md` — new
+  Annex B reference material.
+
 ## Bounded retention for hitl-gate archived events (feat/hitl-gate-retention)
 
 **Branch:** `feat/hitl-gate-retention` — PR #108 (2026-07-03)

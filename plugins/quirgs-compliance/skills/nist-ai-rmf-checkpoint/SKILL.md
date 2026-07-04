@@ -91,7 +91,8 @@ GAPS IDENTIFIED
 
 RECOMMENDED ACTIONS
 ───────────────────
-[Playbook-aligned next steps from references/playbook-actions.md]
+[Playbook-aligned next steps from the "Playbook Actions — [FUNCTION] Gaps" table at the
+end of this function's own reference file, e.g. references/govern.md]
 
 RISK SIGNAL
 ───────────

@@ -57,12 +57,22 @@ delayed answer.
 
 Work through the classification logic in order. The first match wins.
 
-### 2a. Check for Prohibited Practices (Article 5)
+### 2a. Check EU Territorial Scope (Article 2)
+
+This check comes before all others — the Act does not apply at all outside its territorial
+scope, regardless of what the system does. If the system is **not** placed on the EU market,
+and **none** of its users, deployers, or outputs are in the EU → classify as **OUT OF SCOPE**
+and stop. Do not proceed to further classification.
+
+Do not confuse this with MINIMAL RISK (2f) — MINIMAL RISK means the Act applies but imposes
+no mandatory obligations; OUT OF SCOPE means the Act does not apply at all.
+
+### 2b. Check for Prohibited Practices (Article 5)
 
 Load `references/prohibited.md`. If the system matches any prohibited practice → output
 **PROHIBITED** and stop. Do not proceed to further classification.
 
-### 2b. Check for High-Risk Classification (Annex III + Article 6)
+### 2c. Check for High-Risk Classification (Annex III + Article 6)
 
 Load `references/high-risk.md`. Check both pathways:
 
@@ -71,7 +81,7 @@ Load `references/high-risk.md`. Check both pathways:
 
 If either pathway matches → classify as **HIGH-RISK**.
 
-### 2c. Check for General-Purpose AI (GPAI) (Articles 51–56)
+### 2d. Check for General-Purpose AI (GPAI) (Articles 51–56)
 
 Load `references/gpai.md`. If the system is a general-purpose AI model (trained on broad
 data, usable across many tasks) → classify as **GPAI** and determine if it is a
@@ -80,12 +90,12 @@ data, usable across many tasks) → classify as **GPAI** and determine if it is 
 GPAI classification can overlap with other tiers — a GPAI model embedded in a high-risk
 system carries both sets of obligations.
 
-### 2d. Check for Limited Risk (Articles 50)
+### 2e. Check for Limited Risk (Articles 50)
 
 If the system involves: chatbots, deepfakes, emotion recognition, or biometric categorisation
 → classify as **LIMITED RISK** (transparency obligations apply).
 
-### 2e. Default: Minimal Risk
+### 2f. Default: Minimal Risk
 
 If none of the above apply → classify as **MINIMAL RISK** (no mandatory obligations,
 voluntary codes of conduct encouraged).
@@ -111,7 +121,7 @@ professional, or a certified auditor. Review all outputs with appropriate human
 expertise before taking compliance action.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-RISK TIER: [PROHIBITED / HIGH-RISK / GPAI / LIMITED RISK / MINIMAL RISK]
+RISK TIER: [OUT OF SCOPE / PROHIBITED / HIGH-RISK / GPAI / LIMITED RISK / MINIMAL RISK]
 
 LEGAL BASIS
 ────────────
@@ -134,7 +144,14 @@ NOTES / EDGE CASES
 
 ## Step 4 — Output the Obligations Checklist
 
-Load `references/obligations-[tier].md` for the relevant tier and role, then generate:
+If the tier is **OUT OF SCOPE**, skip this step — there is no obligations checklist to
+generate. State plainly that the EU AI Act does not apply given the stated deployment
+scope, and note that other jurisdictions' AI regulations may still apply if the system
+is used outside the EU.
+
+Otherwise, load `references/obligations-[tier].md` for the relevant tier and role
+(GPAI and MINIMAL RISK obligations are both covered in `obligations-limited-risk.md` —
+see the reference list below), then generate:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -164,9 +181,8 @@ RECOMMENDED NEXT STEPS
 
 Reference files for obligations:
 
-- `references/obligations-high-risk.md`
-- `references/obligations-gpai.md`
-- `references/obligations-limited-risk.md`
+- `references/obligations-high-risk.md` — HIGH-RISK tier
+- `references/obligations-limited-risk.md` — LIMITED RISK, GPAI (incl. systemic risk), and MINIMAL RISK tiers
 
 ---
 
@@ -187,5 +203,5 @@ After classification and obligations output, offer:
 - **Classify conservatively** — when in doubt between two tiers, flag the higher one
 - **Role matters** — provider obligations are the heaviest; deployer obligations depend on use case
 - **GPAI is additive** — GPAI obligations stack on top of any other applicable tier
-- **Jurisdictional scope** — the Act applies if the AI output is used in the EU, regardless of where the provider is based
+- **Jurisdictional scope** — the Act applies if the AI output is used in the EU, regardless of where the provider is based; if it genuinely is not, classify OUT OF SCOPE rather than forcing a tier
 - **Always flag legal review** for Medium/Low confidence classifications — this tool supports compliance work but is not a substitute for qualified legal advice
