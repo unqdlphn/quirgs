@@ -48,21 +48,25 @@ Collect the following before classifying. Infer from conversation where possible
 5. **What is the user's role?** — provider (develops/places on market), deployer (uses in own context), importer, or distributor?
 6. **Is it a general-purpose AI model?** (e.g., a foundation model or LLM)
 
-**Role (item 5) and EU scope (item 4) are load-bearing — never silently assume them.**
-They change the obligations more than anything else: provider duties are far heavier than
-a deployer's, and the Act only applies where the system is placed on the EU market or its
-outputs are used in the EU. If either is missing or ambiguous from the conversation, **ask
-before classifying — do not guess:**
+**EU scope (item 4) gates the tier determination in Step 2 — never silently assume it.**
+The Act does not apply at all outside its territorial scope (2a), so if scope is missing or
+ambiguous from the conversation, **ask before classifying — do not guess:**
 
-- Role: *"Are you the provider (you build it / place it on the market), the deployer (you
-  use it in your own context), or an importer/distributor?"*
 - Scope: *"Is the system placed on the EU market, or are any of its users or outputs in the EU?"*
 
-Only if the user genuinely cannot or will not answer: classify against the
-**higher-obligation** assumption (provider, in-scope), and state at the very top of the
-output that role and/or scope were *assumed* and that the result changes if that is wrong.
-Never present an assumed role as if it were established. A wrong tier is worse than a
-delayed answer.
+**Role (item 5) does not gate the tier determination.** None of the Step 2 classification
+logic depends on role — this includes Article 5 prohibited-practice matches (2b), which bind
+every actor in the value chain regardless of provider/deployer/importer/distributor status.
+Role only determines *which obligations apply* once a tier is set (Step 4). Ask for role
+after classifying, not before, and never let a missing role delay or hedge a PROHIBITED (or
+any other otherwise-clear) tier call.
+
+Only if EU scope genuinely cannot be established: classify against the **higher-obligation**
+assumption (in-scope), and state at the very top of the output that scope was *assumed* and
+that the result changes if that is wrong. Never present an assumed scope as if it were
+established. A wrong tier is worse than a delayed answer. If role remains unknown once a
+tier is set, generate the obligations checklist generically (or covering both provider and
+deployer where they materially differ) and note that role confirmation will narrow it.
 
 ---
 
@@ -83,7 +87,9 @@ no mandatory obligations; OUT OF SCOPE means the Act does not apply at all.
 ### 2b. Check for Prohibited Practices (Article 5)
 
 Load `references/prohibited.md`. If the system matches any prohibited practice → output
-**PROHIBITED** and stop. Do not proceed to further classification.
+**PROHIBITED** and stop. Do not proceed to further classification. Role is irrelevant to
+this check — Article 5 bans the practice outright for any actor in the value chain; do not
+withhold or hedge a PROHIBITED call pending role confirmation.
 
 ### 2c. Check for High-Risk Classification (Annex III + Article 6)
 
@@ -161,6 +167,11 @@ If the tier is **OUT OF SCOPE**, skip this step — there is no obligations chec
 generate. State plainly that the EU AI Act does not apply given the stated deployment
 scope, and note that other jurisdictions' AI regulations may still apply if the system
 is used outside the EU.
+
+If the tier is **PROHIBITED**, also skip the obligations checklist — there is no set of
+compliance steps that makes a banned practice lawful. State plainly that the system cannot
+be placed on the EU market or put into service in its current form (regardless of role),
+and recommend qualified legal counsel to assess redesign options.
 
 Otherwise, load `references/obligations-[tier].md` for the relevant tier and role
 (GPAI and MINIMAL RISK obligations are both covered in `obligations-limited-risk.md` —

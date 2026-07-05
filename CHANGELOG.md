@@ -9,6 +9,27 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix eu-ai-act-classifier's Art. 5 role-question reflex (fix/eu-03-art5-role-reflex)
+
+**Branch:** `fix/eu-03-art5-role-reflex` (2026-07-04)
+
+Wave 1 eval grading (`_v2/governance/evals/runs/2026-07-04-wave1-graded-record.md`,
+EU-03 fixture) found the skill never reached a PROHIBITED classification for a
+clear Article 5 social-scoring case — it asked for role and EU scope and stopped.
+Role is legally irrelevant to a prohibited-practice determination (Art. 5 bans the
+practice for every actor in the value chain); this was a template reflex from
+Step 1's blanket "ask before classifying" rule, not correct reasoning.
+
+### Changed
+- `eu-ai-act-classifier` (standalone + `quirgs-compliance` bundle, all 3 SKILL.md
+  copies) — Step 1 now gates classification on EU scope only; role is deferred to
+  Step 4 (obligations) and no longer blocks a tier call. Step 2b states explicitly
+  that Article 5 checks are role-irrelevant. Step 4 adds a PROHIBITED branch
+  (parallel to OUT OF SCOPE) that skips the obligations checklist.
+- EU-03 fixture (`_v2/governance/stubs/fixtures/eu-ai-act-classifier-fixtures.md`)
+  — input now states EU citizens explicitly (previously never established EU
+  scope), and the rubric requires the tier be issued without a role question.
+
 ## Fix AF-2 disclaimer gap on non-report turns across all 7 compliance skills (fix/af2-standing-disclaimer)
 
 **Branch:** `fix/af2-standing-disclaimer` (2026-07-04)
