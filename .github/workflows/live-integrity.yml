@@ -1,0 +1,43 @@
+name: Live Published-Metadata Integrity
+
+# Governance action A-9 (MS-2.8 / MS-4.2): assert the LIVE site and registry
+# advertise exactly the versions/metadata in the plugin manifests, so
+# production can never advertise a version that differs from the installable
+# artifact. Build-time derivation covers the build; this covers post-deploy.
+#
+# The site is checked on its workers.dev host — quirgs.com serves CI clients a
+# bot challenge (verified-bots-only edge posture) but it is the same deployed
+# Worker. See scripts/check-live-integrity.mjs.
+#
+# On push to main the check retries for ~10 minutes to absorb Cloudflare's
+# native-integration deploy lag. A registry mismatch after a version bump
+# usually means `npm run seed:registry` hasn't been run yet — reseeding is
+# manual by design (it writes production KV).
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 13 * * *' # daily drift check
+  workflow_dispatch:
+
+concurrency:
+  group: live-integrity
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - name: Check live site + registry against plugin manifests
+        env:
+          # push = a deploy may be in flight; retry. cron/dispatch = steady
+          # state; one quick retry for network blips.
+          INTEGRITY_ATTEMPTS: ${{ github.event_name == 'push' && '10' || '2' }}
+          INTEGRITY_INTERVAL: '60'
+        run: node scripts/check-live-integrity.mjs
