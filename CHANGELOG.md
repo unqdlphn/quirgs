@@ -9,6 +9,33 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Live published-metadata integrity CI (feat/live-integrity-check)
+
+**Branch:** `feat/live-integrity-check` (2026-07-05)
+
+Closes governance action A-9 (MS-2.8 / MS-4.2): the build-time version
+derivation (#105/#106) guaranteed the *build* can't drift from the plugin
+manifests, but nothing verified the LIVE surfaces post-deploy. Now CI does.
+
+### Added
+- `scripts/check-live-integrity.mjs` — asserts (A) every `api.quirgs.com/skills`
+  registry entry matches the seeder's canonical 11-field entries, (B) each live
+  skill page's version badge matches its plugin manifest, and (C) the bundles
+  page's `quirgs-compliance`/`quirgs-publish` versions match the bundle
+  manifests. Targets the site's workers.dev host (same deployed Worker) because
+  quirgs.com serves CI clients a bot challenge. Run locally:
+  `npm run check:integrity`.
+- `.github/workflows/live-integrity.yml` — runs the check on push to `main`
+  (with ~10 min of retries to absorb Cloudflare deploy lag), on a daily cron
+  (drift catch), and on manual dispatch.
+- `scripts/lib/registry-entries.mjs` — canonical registry-entry builder,
+  extracted from `seed-registry.mjs` and shared with the checker so the check
+  always compares against exactly what the seeder writes.
+
+### Changed
+- `scripts/seed-registry.mjs` — now imports the shared entry builder;
+  behavior unchanged (verified with `--dry-run`).
+
 ## Fix eu-ai-act-classifier's Art. 5 role-question reflex (fix/eu-03-art5-role-reflex)
 
 **Branch:** `fix/eu-03-art5-role-reflex` (2026-07-04)

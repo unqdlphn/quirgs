@@ -14,7 +14,8 @@
     "test": "npm run test:registry && npm run test:hitl",
     "test:registry": "vitest run --config workers/registry-api/vitest.config.js",
     "test:hitl": "vitest run --config workers/hitl-gate/vitest.config.js",
-    "seed:registry": "node scripts/seed-registry.mjs"
+    "seed:registry": "node scripts/seed-registry.mjs",
+    "check:integrity": "node scripts/check-live-integrity.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^13.7.0",
