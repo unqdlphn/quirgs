@@ -22,6 +22,19 @@ obligations checklist based on the system type and the user's role in the AI val
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not the full formatted classification output —
+must end with this line:
+
+> ⚠️ *Advisory only — this output is not legal, regulatory, or compliance advice; consult qualified counsel before acting.*
+
+The full boxed ADVISORY NOTICE in Step 3 replaces this short line only when
+the complete classification output is emitted.
+
+---
+
 ## Step 1 — Gather System Information
 
 Collect the following before classifying. Infer from conversation where possible:

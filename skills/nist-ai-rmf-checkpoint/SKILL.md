@@ -32,6 +32,19 @@ actions scoped to the current lifecycle stage.
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not the full formatted AI Risk Profile Summary —
+must end with this line:
+
+> ⚠️ *Advisory only — this output is not legal, regulatory, or compliance advice; consult qualified counsel before acting.*
+
+The full boxed ADVISORY NOTICE in Step 4 replaces this short line only when
+the complete AI Risk Profile Summary is emitted.
+
+---
+
 ## Step 1 — Establish Context
 
 Before running any function, collect the following. Infer from conversation where possible;
