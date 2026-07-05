@@ -23,6 +23,19 @@ framework and role that applies to the user's situation.
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not the full formatted transparency notice or model card —
+must end with this line:
+
+> ⚠️ *Advisory only — this output is not legal, regulatory, or compliance advice; consult qualified counsel before acting.*
+
+The full boxed ADVISORY NOTICE in Step 3 replaces this short line only when
+the complete transparency notice or model card is emitted.
+
+---
+
 ## Step 1 — Gather Context
 
 Collect the following before drafting. Infer what you can from the conversation; ask

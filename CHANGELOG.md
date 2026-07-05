@@ -9,6 +9,34 @@ Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
 
 ## [Unreleased]
 
+## Fix AF-2 disclaimer gap on non-report turns across all 7 compliance skills (fix/af2-standing-disclaimer)
+
+**Branch:** `fix/af2-standing-disclaimer` (2026-07-04)
+
+Wave 1 eval grading (`_v2/governance/evals/runs/2026-07-04-wave1-graded-record.md`)
+found that every AF-2 auto-fail (missing advisory disclaimer) happened on a turn
+where a skill asked a clarifying question or gave a prose-only answer instead of
+emitting its full formatted report — because the `⚠️ ADVISORY NOTICE` box was
+templated onto the terminal report block only, not onto the response as a whole.
+`incident-response-logger`'s IR-03/IR-05 fixtures were the clearest case: full
+Article 62/73 regulatory characterization with zero disclaimer, worse than a bare
+clarifying question. This was a product-wide gap, not a per-skill bug.
+
+### Changed
+- All 7 compliance skills (`eu-ai-act-classifier`, `nist-ai-rmf-checkpoint`,
+  `iso-42001-audit-prep`, `hitl-compliance-gate`, `incident-response-logger`,
+  `ai-transparency-writer`, `pii-exposure-checker` — standalone + `quirgs-compliance`
+  bundle, all 3 SKILL.md copies each) — added a "Standing Disclaimer" section
+  requiring every response, including clarifying questions and partial/prose
+  answers, to close with a short-form advisory line. The existing full boxed
+  `⚠️ ADVISORY NOTICE` in each skill's terminal report step now supersedes the
+  short line only when that full report is actually emitted.
+- Plugin versions bumped: `eu-ai-act-classifier` 1.1.0 → 1.2.0,
+  `nist-ai-rmf-checkpoint` 1.0.1 → 1.1.0, `iso-42001-audit-prep` 1.1.0 → 1.2.0,
+  `hitl-compliance-gate` 1.1.2 → 1.2.0, `incident-response-logger` 1.0.0 → 1.1.0,
+  `ai-transparency-writer` 1.0.0 → 1.1.0, `pii-exposure-checker` 1.0.0 → 1.1.0,
+  `quirgs-compliance` bundle 1.2.0 → 1.3.0.
+
 ## Fix broken reference pointers in eu-ai-act-classifier and nist-ai-rmf-checkpoint (fix/ref-accuracy)
 
 **Branch:** `fix/ref-accuracy` (2026-07-04)

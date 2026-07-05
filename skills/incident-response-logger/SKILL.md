@@ -25,6 +25,19 @@ for internal review, legal sign-off, and regulatory submission where required.
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not the full formatted Incident Report —
+must end with this line:
+
+> ⚠️ *Advisory only — this output is not legal, regulatory, or compliance advice; consult qualified counsel before acting.*
+
+The full boxed ADVISORY NOTICE in Step 3 replaces this short line only when
+the complete Incident Report is emitted.
+
+---
+
 ## Step 1 — Triage the Incident
 
 Before drafting the report, collect the critical facts and determine severity.
