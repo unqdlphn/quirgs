@@ -40,7 +40,11 @@ version are the same number by construction.
 ### Changed
 - `src/pages/transparency.astro` — added "Release Provenance" section (releases
   feed link + version-derivation/integrity explanation) ahead of the support
-  footer line.
+  footer line; retired the legacy "Claude Cowork" name in the development-tools
+  paragraph (now "Claude and Claude Code"). The remaining Cowork mention in
+  `index.astro` is deliberately NOT in this PR — it sits inside the CSP-pinned
+  boot-sequence inline script and belongs to the pre-marketing sweep with its
+  hash-recompute step.
 
 ## Add SECURITY.md — two-lane reporting policy (feat/security-md)
 
