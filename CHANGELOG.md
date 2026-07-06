@@ -24,6 +24,24 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Surface release provenance on /transparency/ (feat/transparency-releases-link)
+
+**Branch:** `feat/transparency-releases-link` (2026-07-06)
+
+Trust-surfacing follow-up from the release plan: the `/transparency/` page gains
+a "Release Provenance" section linking the GitHub Releases feed — CalVer
+provenance visible to humans and crawlers on the site itself, not just on
+GitHub. The section also states the existing version-integrity chain in plain
+terms: skill/bundle versions on `/skills/` derive at build time from the plugin
+manifests (PRs #105/#106) and are verified against the live site and registry by
+the scheduled integrity check (PR #113) — the displayed, installed, and released
+version are the same number by construction.
+
+### Changed
+- `src/pages/transparency.astro` — added "Release Provenance" section (releases
+  feed link + version-derivation/integrity explanation) ahead of the support
+  footer line.
+
 ## Add SECURITY.md — two-lane reporting policy (feat/security-md)
 
 **Branch:** `feat/security-md` — PR #115 (2026-07-06)
