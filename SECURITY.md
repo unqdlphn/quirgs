@@ -5,10 +5,10 @@ things you might need to report, and they are triaged differently. Pick your lan
 
 - **Lane A — Security vulnerability.** A flaw in the site, the Workers, or the skill
   distribution pipeline.
-  → [Report privately via a GitHub security advisory](https://github.com/unqdlphn/quirgs/security/advisories/new)
+  - → [Report privately via a GitHub security advisory](https://github.com/unqdlphn/quirgs/security/advisories/new)
 - **Lane B — Skill-output issue.** A Quirgs Skill produced wrong, outdated, or misleading
   guidance.
-  → [Open a skill-output issue](https://github.com/unqdlphn/quirgs/issues/new?template=skill-output-issue.yml)
+  - → [Open a skill-output issue](https://github.com/unqdlphn/quirgs/issues/new?template=skill-output-issue.yml)
 
 ---
 
