@@ -26,7 +26,7 @@ practice and roll up into those two releases.
 
 ## Add SECURITY.md — two-lane reporting policy (feat/security-md)
 
-**Branch:** `feat/security-md` (2026-07-06)
+**Branch:** `feat/security-md` — PR #115 (2026-07-06)
 
 Governance action A-8 (user feedback/error channel), step 1 of 2: the repo gains
 a root `SECURITY.md` (surfaced in GitHub's Security tab) that routes reports down
