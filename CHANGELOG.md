@@ -26,7 +26,7 @@ practice and roll up into those two releases.
 
 ## Surface release provenance on /transparency/ (feat/transparency-releases-link)
 
-**Branch:** `feat/transparency-releases-link` (2026-07-06)
+**Branch:** `feat/transparency-releases-link` — PR #116 (2026-07-06)
 
 Trust-surfacing follow-up from the release plan: the `/transparency/` page gains
 a "Release Provenance" section linking the GitHub Releases feed — CalVer
