@@ -1,0 +1,58 @@
+name: Skill output issue
+description: Report wrong, outdated, or misleading output from a Quirgs Skill (not a security vulnerability)
+title: "[skill-output] "
+labels: ["skill-output-issue"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report — skill-output defects enter incident triage per
+        [SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md).
+
+        **Security vulnerabilities do not belong here** — report those privately via the
+        [advisory form](https://github.com/unqdlphn/quirgs/security/advisories/new) instead.
+  - type: input
+    id: skill-version
+    attributes:
+      label: Skill name and version
+      description: Shown in the output header / install command.
+      placeholder: "e.g. eu-ai-act-classifier 1.0.2"
+    validations:
+      required: true
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: Installed via
+      options:
+        - Standalone plugin
+        - quirgs-compliance bundle
+        - quirgs-publish bundle
+        - Gist / manual copy
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: run-context
+    attributes:
+      label: When you ran it, and the model (if known)
+      placeholder: "e.g. 2026-07-06, claude-sonnet-5"
+    validations:
+      required: false
+  - type: textarea
+    id: input-summary
+    attributes:
+      label: Input summary
+      description: >-
+        Describe the scenario you gave the skill. Do NOT paste personal, confidential,
+        or client data — a described scenario is enough.
+    validations:
+      required: true
+  - type: textarea
+    id: why-wrong
+    attributes:
+      label: Why the output looks wrong
+      description: >-
+        For regulatory claims, a citation to the provision you believe is correct is
+        the fastest path to a fix.
+    validations:
+      required: true

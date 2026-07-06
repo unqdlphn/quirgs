@@ -24,6 +24,33 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add SECURITY.md — two-lane reporting policy (feat/security-md)
+
+**Branch:** `feat/security-md` (2026-07-06)
+
+Governance action A-8 (user feedback/error channel), step 1 of 2: the repo gains
+a root `SECURITY.md` (surfaced in GitHub's Security tab) that routes reports down
+two lanes — Lane A, security vulnerabilities → the private advisory form (same
+canonical contact as `/.well-known/security.txt`); Lane B, **skill-output
+issues** (wrong tier/clause, invented obligation, stale guidance) → regular
+GitHub Issues (structured issue form), feeding the internal AI incident
+playbook's severity triage. The Lane B "what happens to your report" promises
+follow the approved playbook (immediate pull on confirmed harm; prompt
+fix-or-pull on wrong regulatory substance — the internal clock stays 48h per
+IRP-001, stated publicly as "promptly" per owner decision; CHANGELOG entry for
+every fix; clean-room re-verification before re-publish). Step 2 (linking every
+skill to this doc — the 3-copy lockstep edit + version bumps + registry reseed)
+is a separate planned session.
+
+### Added
+- `SECURITY.md` — two-lane policy: vulnerability disclosure (advisories) +
+  skill-output issue reporting (issue form → incident triage); supported-versions
+  note; posture pointer to quirgs.com/security.
+- `.github/ISSUE_TEMPLATE/skill-output-issue.yml` — structured form for Lane B
+  (skill+version, install method, run context, input summary with a no-personal-
+  data caution, why-wrong with citation prompt); labels reports
+  `skill-output-issue`.
+
 ## Release workflow — changelog roll-up + README sync (feat/changelog-release-workflow)
 
 **Branch:** `feat/changelog-release-workflow` (2026-07-06)
