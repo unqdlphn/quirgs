@@ -57,7 +57,7 @@ import NavBlock from "../components/NavBlock.astro";
   <div class="line">&nbsp;</div>
   <p>
     The quirgs.com site and the skills it distributes were built with AI coding
-    assistance. Development tools include Claude Cowork and Claude Code (prompt
+    assistance. Development tools include Claude and Claude Code (prompt
     assistance, component and logic generation, bug fixes, integration
     assistance), Gemini via Antigravity (scaffolding and integration), and Jules
     (build validation). All structural decisions — architecture, component
@@ -119,6 +119,33 @@ import NavBlock from "../components/NavBlock.astro";
     under the EU AI Act, NIST AI RMF, and ISO/IEC 42001 and applies relevant controls
     to its own operations. The compliance bundle distributed by Quirgs was used in
     building and governing this platform.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Release Provenance</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    The platform is versioned with calendar-based releases (<span class="text-bright"
+    >YYYY.MM</span>), tagged in the public repository and published as GitHub
+    Releases. Each release compiles the changelog entries for everything merged
+    that month, including skill and bundle version bumps — nothing ships
+    untracked. The full feed:
+  </p>
+  <div class="line">&nbsp;</div>
+  <p>
+    <a href="https://github.com/unqdlphn/quirgs/releases"
+      >github.com/unqdlphn/quirgs/releases</a
+    >
+  </p>
+  <div class="line">&nbsp;</div>
+  <p>
+    Skill and bundle versions shown on <a href="/skills/">/skills/</a> are not
+    hand-maintained — they derive at build time from the same plugin manifests
+    the install commands fetch, and a scheduled integrity check verifies the
+    live site and registry against those manifests. Releases close that loop:
+    the version you see, the version you install, and the version in the release
+    notes are the same number by construction.
   </p>
 
   <div class="line">&nbsp;</div>
