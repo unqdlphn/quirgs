@@ -83,8 +83,8 @@ a Gist cannot deliver a Skill's `references/` directory.
 | Adapter | `@astrojs/cloudflare` → Cloudflare Workers |
 | Content | Astro Content Collections + MDX, edited via [Keystatic](https://keystatic.com) (Keystatic **Cloud** storage) at `/keystatic/` |
 | Hosting | Cloudflare (production domain: `quirgs.com`) |
-| Backend services | Cloudflare Workers — KV + D1 |
-| CI | GitHub Actions (`sync-gists.yml`) |
+| Backend services | Cloudflare Workers — KV + D1 (`api.quirgs.com`, `gate.quirgs.com`) |
+| CI | GitHub Actions (`sync-gists.yml`, `live-integrity.yml`) |
 | Node | `>=22.12.0` (see [package.json](package.json)) |
 
 ---
@@ -114,9 +114,14 @@ quirgs/
 │   ├── layouts/
 │   │   └── BaseLayout.astro    # Terminal-frame shell + design tokens
 │   ├── components/
-│   │   ├── NavBlock.astro      # Terminal-style site nav (ls listing)
+│   │   ├── NavBlock.astro      # Terminal-style site nav (tab-completion row)
+│   │   ├── SiteMenu.astro      # [≡] sitemap overlay — full route tree
 │   │   ├── Footer.astro        # Footer block
-│   │   └── HelpModal.astro     # [?] help dialog
+│   │   ├── HelpModal.astro     # [?] help dialog
+│   │   └── Seo.astro           # OG/Twitter meta + JSON-LD Organization graph
+│   ├── data/
+│   │   ├── routes.ts           # Single source of truth for site routes
+│   │   └── skill-version.ts    # Build-time skill/bundle version derivation from plugin manifests
 │   ├── content/
 │   │   ├── skills/             # 15 .mdx skill entries — SITE pipeline source
 │   │   └── guides/             # net-new .mdx guides — Keystatic-managed, rendered at /guides/<slug>/
@@ -132,15 +137,24 @@ quirgs/
 │   ├── css/                    # Static stylesheets
 │   ├── guides/                 # Legacy V1 HTML guides (SEO URLs preserved)
 │   ├── demo.js                 # External script powering the /demo/ static queue
+│   ├── js/review.js            # External script powering the /review/ queue
+│   ├── llms.txt                # Agent-facing site map (llmstxt.org format)
+│   ├── robots.txt              # Crawl allow + sitemap pointer
+│   ├── _redirects              # Cloudflare redirects (legacy slugs, /bundle → /bundles)
 │   ├── _headers                # Cloudflare headers — strict hash-pinned CSP (see note below)
-│   └── .well-known/            # ai-catalog.json (ARD), security.txt
+│   └── .well-known/            # ai-catalog.json (ARD), provenance.json, security.txt
 ├── workers/
-│   ├── registry-api/           # KV-backed skill catalog API
-│   └── hitl-gate/              # D1-backed HITL review event log
+│   ├── registry-api/           # KV-backed skill catalog API — api.quirgs.com
+│   └── hitl-gate/              # D1-backed HITL review event log — gate.quirgs.com
 ├── skills/                     # DISTRIBUTION pipeline — SKILL.md sources synced to Gists
 │   └── gist-map.json           # slug → Gist id map (auto-updated by sync-gists)
+├── scripts/
+│   ├── seed-registry.mjs       # Rebuilds api.quirgs.com entries from MDX + plugin manifests
+│   ├── check-live-integrity.mjs# Asserts live surfaces match plugin manifests (CI + local)
+│   └── lib/registry-entries.mjs# Canonical registry-entry builder shared by both
 ├── .github/
 │   ├── workflows/sync-gists.yml
+│   ├── workflows/live-integrity.yml
 │   └── scripts/sync-gists.js
 ├── .jules/                     # Tracked validation briefs + agent rules for this repo
 ├── keystatic.config.ts         # CMS config — collections + Keystatic Cloud storage
@@ -160,7 +174,7 @@ quirgs/
 
 | Path | Source | Purpose |
 | --- | --- | --- |
-| `/` | [src/pages/index.astro](src/pages/index.astro) | Animated terminal boot sequence. JS-injected DOM, no CSS keyframe drift-ins. Lists the seven Skills and links to bundle, guides, and skill detail pages. |
+| `/` | [src/pages/index.astro](src/pages/index.astro) | Animated terminal boot sequence. JS-injected DOM, no CSS keyframe drift-ins. Declarative platform intro linking the registry, bundles, and docs (it intentionally does not enumerate the skills — the registry does that). |
 | `/skills/` | [src/pages/skills/index.astro](src/pages/skills/index.astro) | Skill registry. Reads the `skills` content collection, sorts by drop order, renders an aligned `ls -la` listing. |
 | `/skills/[slug]/` | [src/pages/skills/[slug].astro](src/pages/skills/[slug].astro) | Per-skill detail page rendered from MDX with badges, install block, and interop references. |
 | `/bundles/` | [src/pages/bundles/index.astro](src/pages/bundles/index.astro) | Skill bundle install page — marketplace install commands for the `quirgs-compliance` (7 Skills) and `quirgs-publish` (8 Skills) bundles. |
@@ -191,8 +205,12 @@ typed frontmatter contract:
 - **Governance structure** — `pillar` (Inventory, Checkpoints, Standards
   Alignment), `framework[]`, `interoperates_with[]`
 - **Invocation** — `triggers[]`, `example_prompts[]`
-- **Publication state** — `status` (`live` / `draft` / `deprecated`), `version`,
-  `lastUpdated`
+- **Publication state** — `status` (`live` / `draft` / `deprecated`),
+  `lastUpdated`. There is **no `version` field** — the displayed skill version
+  is derived at build time from the plugin manifest
+  (`plugins/<name>/.claude-plugin/plugin.json`, resolved via the skill's
+  `installCmd` in [src/data/skill-version.ts](src/data/skill-version.ts));
+  bundle versions on `/bundles/` derive the same way. Do not re-add one.
 - **Distribution** — `gistUrl` (read-only Gist preview), `marketplaceCmd` and
   `installCmd` (the two-step `/plugin` install rendered on the detail page)
 - **Discovery** — `tags[]`
@@ -243,28 +261,41 @@ What is and isn't automated:
   `skills/gist-map.json`; it never writes back to MDX frontmatter.
 - **`marketplace.json` is NOT automated** — no workflow touches it. New plugins are
   added by hand.
-- **`version` / `lastUpdated` in MDX frontmatter is site-display only.** It does not
-  propagate to `SKILL.md`, the Gist, or the marketplace. The two will drift unless
-  you update both.
+- **`lastUpdated` in MDX frontmatter is site-display only** and hand-maintained.
+  The skill **version is automated**: pages derive it at build time from the
+  plugin manifest, so the site can never drift from the published plugin. The
+  public registry (`api.quirgs.com`) is **not** build-coupled — reseed it with
+  `npm run seed:registry` after version-affecting merges (the `live-integrity`
+  CI goes red until you do; that's the reminder).
 
 ### Checklist — updating an existing skill
 
-1. **Edit `skills/<slug>/SKILL.md`** (the real skill body) on a branch → merge to
-   `main` fires `sync-gists.yml` automatically.
-2. **Edit `src/content/skills/<slug>.mdx` frontmatter** in Keystatic (bump `version`,
-   `lastUpdated`, and anything else changed) — **on a branch in Keystatic, never
-   `main`.** Keep `version`/`lastUpdated` matched with step 1.
-3. Distribution fields (`gistUrl`, `marketplaceCmd`, `installCmd`) are **hand-maintained**
+1. **Edit every copy of the skill body** on a branch. Each skill's `SKILL.md`
+   (and `references/`) exists in up to three hand-maintained copies with no
+   sync between them: `skills/<slug>/` (Gist source), `plugins/<slug>/` (the
+   standalone plugin, compliance skills only), and the bundle copy under
+   `plugins/quirgs-compliance/` or `plugins/quirgs-publish/`. Merge to `main`
+   fires `sync-gists.yml` for the Gist copy automatically.
+2. **Bump the plugin manifest version(s)** — the standalone plugin's and/or the
+   bundle's `.claude-plugin/plugin.json`. The site's version badges derive from
+   these at build time.
+3. **Edit `src/content/skills/<slug>.mdx` frontmatter** in Keystatic (bump
+   `lastUpdated` and anything else changed) — **on a branch in Keystatic, never
+   `main`.**
+4. Distribution fields (`gistUrl`, `marketplaceCmd`, `installCmd`) are **hand-maintained**
    — update them in the MDX frontmatter if the Gist/install changes.
+5. **After merge, run `npm run seed:registry`** to push the new versions to
+   `api.quirgs.com` — the `live-integrity` workflow fails until the registry
+   matches the manifests.
 
 ### Checklist — adding a new skill
 
-In addition to the two steps above:
+In addition to the steps above:
 
-4. Add the skill to the `dropOrder` array in
+6. Add the skill to the `dropOrder` array in
    [src/pages/skills/index.astro](src/pages/skills/index.astro) (it is not derived
    from frontmatter — missing skills sort to position `-1`).
-5. Register the new plugin in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json)
+7. Register the new plugin in [`.claude-plugin/marketplace.json`](.claude-plugin/marketplace.json)
    and add its `plugins/<slug>/` directory (both manual).
 
 ---
@@ -273,16 +304,24 @@ In addition to the two steps above:
 
 Two Cloudflare Workers run alongside the site as independent services. Each has
 its own `wrangler.toml` under [workers/](workers/) and is deployed separately
-from the Astro build.
+from the Astro build. Both are bound to first-party custom domains (with their
+`*.workers.dev` hostnames kept alive alongside).
 
-### `workers/registry-api`
+### `workers/registry-api` — `api.quirgs.com`
 KV-backed (`QUIRGS_REGISTRY`) read API for the skill catalog. Exposes the skill
 list and per-skill metadata to clients that need it outside the static build.
+Writes are Bearer-token gated. Entries are seeded/reseeded from MDX frontmatter
++ plugin manifests via `npm run seed:registry`.
 
-### `workers/hitl-gate`
-D1-backed (`HITL_DB`) event log for human-in-the-loop review checkpoints. Lazy
-30-day TTL on rows. Stores `id`, `type`, `payload`, `status`, `created_at`,
-`updated_at`. Exposes `POST` / `GET` / `PATCH /events`.
+### `workers/hitl-gate` — `gate.quirgs.com`
+D1-backed (`HITL_DB`) event log for human-in-the-loop review checkpoints.
+Stores `id`, `type`, `payload`, `status`, `created_at`, `updated_at`; schema
+lives in `workers/hitl-gate/migrations/` (no runtime DDL). Exposes
+`POST` / `GET` / `PATCH /events` — **all** of them Bearer-token gated, reads
+included — plus an unauthenticated `GET /health` liveness check. `GET /events`
+is paginated (`?limit=`, `?before=` keyset cursor). A daily cron archives
+events after ~30 days and hard-deletes archived rows 60 days later (~90-day
+total lifecycle). CORS reflects an allow-listed `Origin` only.
 
 On every successful `POST /events` it also fires an outbound webhook to the
 `WEBHOOK_URL` Worker secret (if set), carrying the event id, type, item, stage,
@@ -290,22 +329,33 @@ frameworks, status, and a `review_url`. The webhook is non-blocking
 (`ctx.waitUntil`) and fire-and-forget — a webhook failure never fails the event
 POST.
 
-Both workers are scaffolded as plain ES modules (`index.js`) with CORS
-preflight, JSON response helpers, and table bootstrapping on first hit.
+Both workers are plain ES modules (`index.js`) with CORS preflight and JSON
+response helpers, covered by the Vitest suites below.
 
 ---
 
 ## CI
 
+Two GitHub Actions workflows:
+
 [`.github/workflows/sync-gists.yml`](.github/workflows/sync-gists.yml) watches
 `skills/*/SKILL.md` on `main` and publishes each changed skill to its
 corresponding public Gist via `.github/scripts/sync-gists.js`, auto-committing
 [`skills/gist-map.json`](skills/gist-map.json) (with `[skip ci]`) when a new Gist
-is created. It is the **only** workflow in the repo. Note that it does **not** fire
-on Keystatic/MDX frontmatter edits — only on `SKILL.md` changes — and the `gistUrl`,
-`marketplaceCmd`, and `installCmd` fields in each skill's MDX frontmatter are
-maintained by hand. See [Updating skills](#updating-skills--two-pipelines) for the
-full pipeline split.
+is created. Note that it does **not** fire on Keystatic/MDX frontmatter edits —
+only on `SKILL.md` changes — and the `gistUrl`, `marketplaceCmd`, and
+`installCmd` fields in each skill's MDX frontmatter are maintained by hand. See
+[Updating skills](#updating-skills--two-pipelines) for the full pipeline split.
+
+[`.github/workflows/live-integrity.yml`](.github/workflows/live-integrity.yml)
+runs [`scripts/check-live-integrity.mjs`](scripts/check-live-integrity.mjs) on
+every push to `main` (with retries to absorb Cloudflare deploy lag), on a daily
+cron, and on manual dispatch. It asserts the **live** surfaces match the plugin
+manifests: every `api.quirgs.com/skills` registry entry matches the seeder's
+canonical output, each live skill page's version badge matches its plugin
+manifest, and the bundles page's versions match the bundle manifests. Run it
+locally with `npm run check:integrity`. A version-bump merge goes **red by
+design** until `npm run seed:registry` updates the registry.
 
 Cloudflare builds the Astro site on push and posts a preview URL per branch.
 Validate against the branch preview URL, never against production.
@@ -329,8 +379,8 @@ Workers are developed and deployed from their own subdirectories with the
 
 ### Tests
 
-The Workers are covered by [Vitest](https://vitest.dev) (39 tests across both).
-Run them before opening a Worker PR:
+The Workers are covered by [Vitest](https://vitest.dev) (61 tests: 15
+registry-api + 46 hitl-gate). Run them before opening a Worker PR:
 
 ```bash
 npm test              # both Worker suites
@@ -384,6 +434,16 @@ are in `brand/style guide/Quirgs Brand Style Guide.md`.
 - HITL review is required at every stage where AI output influences a
   published deliverable. No AI-generated code or content reaches `main` without
   explicit human sign-off.
+- Every `feat/*` / `fix/*` branch adds its entry to
+  [CHANGELOG.md](CHANGELOG.md) under `## [Unreleased]` as part of the feature
+  commit.
+- Releases: the site/repo is versioned with CalVer (`YYYY.MM`) via git tags
+  and [GitHub Releases](https://github.com/unqdlphn/quirgs/releases) — a
+  monthly roll-up of the changelog's `[Unreleased]` entries. Plugins and
+  bundles keep their own SemVer in `plugins/*/.claude-plugin/plugin.json`
+  (surfaced on the site at build time); plugin version bumps are called out in
+  the monthly release notes. `v2.0.0` is a retroactive baseline tag marking
+  the V2 launch (2026-05-27); release tagging began July 2026.
 
 ---
 
@@ -392,6 +452,7 @@ are in `brand/style guide/Quirgs Brand Style Guide.md`.
 - **Production site:** [quirgs.com](https://quirgs.com)
 - **YouTube:** [@quirgs](https://youtube.com/@quirgs)
 - **Issues:** [github.com/unqdlphn/quirgs/issues](https://github.com/unqdlphn/quirgs/issues)
+- **Releases:** [github.com/unqdlphn/quirgs/releases](https://github.com/unqdlphn/quirgs/releases)
 - **License:** see [LICENSE](LICENSE)
 - **Changelog:** [CHANGELOG.md](CHANGELOG.md)
 
