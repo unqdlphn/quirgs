@@ -1,13 +1,61 @@
-# Changelog — Quirgs V2 Build
+# Changelog — Quirgs
 
-All notable changes to the Quirgs V2 Astro migration are documented here.
-Each entry maps to a feature branch and PR merge into the build pipeline.
+All notable changes to Quirgs are documented here. Each entry maps to a
+feature branch and PR merged into `main`.
 
-Format: `[Branch Name] — PR #N (YYYY-MM-DD)`
+Per-branch entry format: `[Branch Name] — PR #N (YYYY-MM-DD)`
+
+**Release roll-up.** The site/repo is versioned with CalVer (`YYYY.MM`, with a
+`.N` patch suffix if more than one release lands in a month). Plugins and
+bundles keep their own SemVer — source of truth is
+`plugins/*/.claude-plugin/plugin.json`. New per-branch entries accumulate
+under `## [Unreleased]`. At monthly release time the `[Unreleased]` block is
+retitled to `## [YYYY.MM] — YYYY-MM-DD`, a fresh empty `[Unreleased]` header
+is added above it, the merge commit is tagged `YYYY.MM`, and a GitHub Release
+is published with themed notes — including any plugin/bundle version bumps
+since the last release. Historical entries are never rewritten.
+
+Release tagging began July 2026: a retroactive `v2.0.0` baseline tag marks the
+V2 launch (2026-05-27), and the first CalVer release, `2026.07`, covers
+everything merged since. All entries below `[Unreleased]` predate the tagging
+practice and roll up into those two releases.
 
 ---
 
 ## [Unreleased]
+
+## Release workflow — changelog roll-up + README sync (feat/changelog-release-workflow)
+
+**Branch:** `feat/changelog-release-workflow` (2026-07-06)
+
+Phase B of the release & versioning plan: the repo adopts CalVer releases
+(`YYYY.MM`) for the site/repo with monthly roll-ups of this changelog,
+alongside the existing plugin/bundle SemVer. Also brings the README current —
+it was last synced 2026-06-25 and predated the version-derivation, custom
+domains, hitl-gate hardening/retention, and live-integrity CI work.
+Documentation only — no code changes.
+
+### Changed
+- `CHANGELOG.md` — header retitled from "Quirgs V2 Build" and now documents
+  the release roll-up workflow: entries accumulate under `## [Unreleased]`,
+  are retitled to `## [YYYY.MM] — date` at monthly release time, and the merge
+  commit is tagged with a GitHub Release published from it. Historical entries
+  unchanged.
+- `README.md` — release/versioning: "Working in this repo" documents the
+  versioning model (CalVer site releases, SemVer plugins/bundles) and the
+  changelog `[Unreleased]` convention; "Related" links the GitHub Releases feed.
+- `README.md` — staleness sync: content model no longer claims a `version`
+  frontmatter field (derived at build time from plugin manifests since
+  #105/#106); skill-update checklists cover the three hand-maintained skill
+  copies, plugin-manifest version bumps, and the post-merge
+  `npm run seed:registry` step; workers section reflects custom domains
+  (`api.quirgs.com`/`gate.quirgs.com`), full Bearer auth incl. reads,
+  `/health`, pagination, migrations, and the 30-day archive / 60-day delete
+  retention cron; CI section documents `live-integrity.yml` alongside
+  `sync-gists.yml` (no longer "the only workflow"); repository layout adds
+  `src/data/`, `scripts/`, `Seo.astro`/`SiteMenu.astro`, `llms.txt`,
+  `provenance.json`, `_redirects`; landing-page route description no longer
+  says it lists the seven skills; test count corrected 39 → 61.
 
 ## Live published-metadata integrity CI (feat/live-integrity-check)
 
