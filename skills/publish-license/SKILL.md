@@ -185,3 +185,18 @@ Compile the pitches into a single submission document. Offer to save as `.md` or
 - **Score honestly.** If the top match scores below 60, flag it. A low-confidence submission wastes the supervisor's time.
 - **Match the brief's language.** Supervisors describe what they need in specific ways — echo their vocabulary back in the pitch.
 - **Advisory notice applies to licensing.** This skill does not produce a legal license agreement. All license terms must be formalized through a sync licensing agreement.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

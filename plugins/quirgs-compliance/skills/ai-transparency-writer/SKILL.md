@@ -193,3 +193,18 @@ After presenting the draft and compliance note, offer:
   reviewed by an officer before a final lending decision" is actionable
 - **Role determines scope** — deployers disclose use-context, purpose, and human oversight
   contacts; providers disclose model characteristics, training data categories, and limitations
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

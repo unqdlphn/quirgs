@@ -201,3 +201,18 @@ After presenting the report, offer:
   is actionable. Use `references/remediation-actions.md` for specifics
 - **This audit supports, not replaces, a DPIA** — for high-risk processing, a formal Data
   Protection Impact Assessment conducted with the DPO is required under GDPR Article 35
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

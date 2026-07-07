@@ -199,3 +199,18 @@ After generating the creation log:
 - **Never assign a tier without asking the questions.** Assumptions about AI involvement are not provenance — they're guesses.
 - **Advisory notice is mandatory.** Copyright law is actively changing. This skill provides a framework, not a legal determination.
 - **Tier 4 doesn't mean worthless.** Fully AI-generated content can still be commercially released and licensed — it just may not carry the same copyright protections as human-authored work. Licensing terms and disclosure requirements still apply.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

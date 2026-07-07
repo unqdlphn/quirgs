@@ -1,7 +1,7 @@
 {
   "name": "quirgs-publish",
   "description": "Eight music publishing skills for Claude: royalty reconciliation, catalog metadata hygiene, DDEX/PRO registration extraction, sync licensing pitch generation, AI provenance logging, platform compliance gating, quarterly catalog harvesting, and a weekly publishing OS orchestrator. Each skill ships with its full reference material.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "Quirgs",
     "url": "https://quirgs.com"

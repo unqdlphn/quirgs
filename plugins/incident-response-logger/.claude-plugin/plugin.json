@@ -1,7 +1,7 @@
 {
   "name": "incident-response-logger",
   "description": "Log and triage AI incidents against EU AI Act Article 62 reporting thresholds and NIST 800-61 response phases. Ships with threshold and phase reference material.",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "Quirgs",
     "url": "https://quirgs.com"
