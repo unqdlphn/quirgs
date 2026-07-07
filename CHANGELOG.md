@@ -24,6 +24,65 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix Wave 2 refix-verify findings: Blocked-gate hedge, disclaimer reliability (fix/publish-refix-round2)
+
+**Branch:** `fix/publish-refix-round2` (2026-07-08)
+
+A clean-room refix-verify of PRs #118/#119 (`evals/runs/2026-07-08-wave2-refix-verify.md`)
+confirmed 7 of 9 targeted checks now hold — including the voice-clone-override
+fix (the eval's own top-priority check) and the harvest dormancy gate. Three
+findings remained open, fixed here.
+
+### publish-workflow — Blocked-gate hedge, still failing after round 1
+
+PR #119's fix added an exception clause for "genuine per-platform breakdowns,"
+which turned out to give the model room to construct its own per-platform
+reading from the user's phrasing alone (e.g., "one platform requires action")
+and float a partial-distribution suggestion anyway — the exact defect PR #119
+was meant to close. Fixed by removing the interpretive exception entirely:
+the options list for a Blocked release now contains exactly one item
+(resolve, then re-run publish-shield), and per-platform statuses may only be
+reflected if publish-shield's actual report is quoted verbatim in context —
+never inferred from a description.
+
+### publish-license — AF-2 still failing on all 5 fixtures
+
+PR #118's Standing Disclaimer section (a standalone instruction) did not
+reliably fire on the two per-agent output templates (Brief Decode, Catalog
+Match Results) where it mattered most — including on L-01/L-02's terminal
+hard-stop rulings. Fixed by moving the disclaimer line directly into both
+templates, matching the pattern PR #119 already used for
+`publish-broadcast`/`publish-harvest`. Also added an explicit `EXCLUDED`
+section to the Catalog Match Results template and a new Key Principle
+codifying the clearance/voice-clone hard-stop rule — that behavior was
+already working but had never been stated explicitly, the same
+undocumented-emergent-behavior risk found in the tier-override defect.
+
+### publish-broadcast — newly-surfaced AF-2 gap on DDEX-only output
+
+Not targeted by PR #119, but the refix-verify found the DDEX ERN Packet
+template (Step 3, used when no PRO registration is requested) has never
+carried a disclaimer — a pre-existing gap, not a regression. Fixed with the
+same template-level reinforcement pattern.
+
+### Changed
+- `skills/publish-workflow/SKILL.md` + plugin copy — Blocked-gate rule
+  rewritten: single-option response, no inferred per-platform exceptions.
+- `skills/publish-license/SKILL.md` + plugin copy — disclaimer line added to
+  both Agent 1/Agent 2 templates; `EXCLUDED` section added to Catalog Match
+  Results; new Key Principle on the clearance/voice-clone hard stop.
+- `skills/publish-broadcast/SKILL.md` + plugin copy — disclaimer line added
+  to the DDEX ERN Packet template.
+- `plugins/quirgs-publish/.claude-plugin/plugin.json` — version 1.3.0 → 1.4.0.
+
+All 3 touched skills verified byte-identical across copies post-fix.
+
+### Not yet done
+
+Per the eval plan, needs another clean-room re-run + re-grade before R-011
+can be re-rated — separate fresh session, this session read the refix-verify
+findings and is contaminated for verification.
+
 ## Fix Wave 2 substance defects: tier-override, Blocked-gate, field validation, dormancy gate (fix/publish-substance-defects)
 
 **Branch:** `fix/publish-substance-defects` — PR #119 (2026-07-07)
