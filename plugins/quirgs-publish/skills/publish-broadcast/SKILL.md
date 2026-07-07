@@ -84,7 +84,17 @@ Gather the following for each track in the release:
 
 Load `references/ddex-ern-fields.md` for the required field schema.
 
-Validate that all required fields are present. Flag any missing required fields — these will cause DDEX ingestion rejection.
+Validate that all required fields are present. **The release-level required fields
+are: UPC, release title, release date (exact ISO 8601 calendar date — a relative
+description like "next month" does not satisfy this), release type, P-line, C-line,
+label name, and territory. The track-level required fields are: ISRC (a literal
+value — "present" or "confirmed" without the actual code does not satisfy this),
+track title, duration, artist name, and language.** Every one of these — including
+P-line and C-line, which are easy to overlook because they appear inside the output
+template rather than the validation prose — blocks submission if missing or
+malformed; list each missing required field explicitly under "❌ Required fields
+missing" rather than folding it silently into the displayed template with a "None"
+or "Not provided" note and no corresponding blocking flag.
 
 Output the DDEX ERN data as a structured table (not XML, unless the user requests it) that the user's distributor or direct DDEX implementation can ingest:
 

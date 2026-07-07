@@ -113,7 +113,7 @@ Rate how well-documented the AI tool usage is:
 
 Load `references/ai-involvement-tiers.md` for tier definitions and copyright implications.
 
-Load `references/ai-tool-tier-map.md` and cross-check each tool named in Step 1 against the table. The tool map provides a default tier per tool and flags usage-dependent upgrades (e.g., Suno → Tier 2 if modified, Tier 4 if released as-is). Use the **highest tier** across all tools listed. If Triangle scores and tool map disagree, use the higher of the two and note the discrepancy in the log.
+Load `references/ai-tool-tier-map.md`. **Do Step 0 in that file FIRST, before anything else in this step** — it is a mandatory voice-clone override check that must be answered before consulting any per-tool default tier. If Step 0 triggers, assign Tier 4 immediately and skip the rest of this step for that tool. Only after Step 0 clears, cross-check each remaining tool named in Step 1 against the Tool Reference Table. The tool map provides a default tier per tool and flags usage-dependent upgrades (e.g., Suno → Tier 2 if modified, Tier 4 if released as-is). Use the **highest tier** across all tools listed. If Triangle scores and tool map disagree, use the higher of the two and note the discrepancy in the log.
 
 Based on the Provenance Triangle scores, assign one of five tiers:
 
