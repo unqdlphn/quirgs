@@ -93,7 +93,13 @@ Territory:          [If specified]
 Media type:         [Value]
 Reference tracks:   [List]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ *Advisory only — this is not a legal license agreement; formalize terms through a sync licensing agreement.*
 ```
+
+**This disclaimer line is part of the template above — it is not optional and
+is not satisfied by the separate Standing Disclaimer section alone. Include
+it verbatim, every time this block is emitted.**
 
 Ask the user to confirm the decode before proceeding. If any signals are missing, note them as assumptions.
 
@@ -146,8 +152,22 @@ NOTES ON GAPS
 ─────────────
 [If no track scores > 70 on mood, note this as a catalog gap]
 [If brief requires instrumentation not present in catalog, flag it]
+
+EXCLUDED (hard-stop — score not applicable regardless of match quality)
+─────────────────────────────────────────────────────────────────────
+[Any track excluded for an unresolved clearance issue or an unauthorized
+voice clone — see Key Principles — goes here, not in the ranked list above,
+no matter how high its match score would otherwise be. State the specific
+blocking reason, not just "excluded."]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ *Advisory only — this is not a legal license agreement; formalize terms through a sync licensing agreement.*
 ```
+
+**This disclaimer line is part of the template above — it is not optional and
+is not satisfied by the separate Standing Disclaimer section alone. Include
+it verbatim, every time this block is emitted — including when the block
+consists only of an EXCLUDED entry and no ranked candidates.**
 
 Ask the user to confirm the shortlist before writing pitches.
 
@@ -208,6 +228,7 @@ Offer to save as `.md` or format as a ready-to-send email.
 - **One supervisor, one email.** Never send a mass-blast pitch to a list. Each pitch should feel tailored.
 - **Brief decode first.** Do not start matching until the brief decode is confirmed. A wrong assumption in Agent 1 cascades through the entire pipeline.
 - **Score honestly.** If the top match scores below 60, flag it. A low-confidence submission wastes the supervisor's time.
+- **Clearance overrides score, always.** A track with an unresolved rights/clearance issue (e.g., an uncleared sample) or an unauthorized voice clone (AI Involvement Tier 4 per `publish-provenance`/`publish-shield`) is excluded from the shortlist regardless of match score — a 91% match with an unauthorized clone is still excluded. This is a hard stop, not a factor to weigh against the score.
 - **Match the brief's language.** Supervisors describe what they need in specific ways — echo their vocabulary back in the pitch.
 - **Advisory notice applies to licensing.** This skill does not produce a legal license agreement. All license terms must be formalized through a sync licensing agreement.
 

@@ -198,17 +198,33 @@ This orchestrator enforces HITL at every stage transition. The rules are:
 
 1. **Outputs from one skill must be reviewed before the next skill runs.** No auto-chaining without human review.
 2. **A BLOCKED status at publish-shield stops the release.** Period. Do not override.
-   Do not float, suggest, or hedge toward ANY partial or conditional distribution
-   path on your own initiative — not "distribute to the clear platforms and hold
-   the blocked one," not "proceed and fix it after," nothing. The only exception
-   is if publish-shield's own compliance report already shows a genuine
-   per-platform breakdown (some platforms explicitly ✅ Clear, others explicitly
-   ❌ Blocked, as the report template allows) — in that case you may reflect
-   shield's own stated per-platform statuses, but you are never the one inventing
-   a workaround shield didn't already state. If the Blocked reason is not
-   platform-specific (e.g., an uncleared sample or copyright issue affecting the
-   recording itself), treat it as blocking ALL platforms and hold the entire
-   release until resolved.
+
+   **When you present the response to a Blocked status, your options list
+   contains exactly ONE item: resolve the blocking issue, then re-run
+   publish-shield.** Nothing else. Do not add a second, third, or fourth
+   option. Do not suggest, float, hint at, or ask whether partial, staggered,
+   platform-by-platform, or "release now / fix later" distribution might be
+   possible — not even phrased as a question to "confirm with your
+   distributor," not even hedged, not even as one option among several where
+   the resolve-and-retry path is also listed. **This applies regardless of
+   how the user describes the block** — even if the user's own phrasing
+   mentions "one platform" or otherwise makes the block sound platform-
+   specific, do not construct or infer a per-platform breakdown from that
+   description. The ONLY circumstance where a per-platform status may be
+   reflected at all is if publish-shield's own compliance report (the actual
+   Step A3 template output, with its own per-platform ✅/⚠️/❌ status lines)
+   is directly quoted or already present verbatim in this conversation — and
+   even then, you may only restate exactly what that report says, never
+   propose a distribution action based on it. If shield's actual report is
+   not present in the conversation, treat the block as covering the entire
+   release, full stop, with no exceptions.
+
+   **Known failure pattern to avoid (do not do this):** "I can't route this
+   to distribution while Blocked stands... however, if the block is
+   platform-specific, you may be able to distribute to your cleared
+   platforms and add the flagged one later — confirm with your distributor."
+   This is a violation even though it also states the refusal, because it
+   still offers the partial-distribution idea as a live option.
 3. **Tier 3–4 AI involvement requires legal review before Step S.** Do not route to distribution until this is cleared.
 4. **Sync pitches require human approval before sending.** The pitch is drafted by `publish-license`, approved by the user, then sent. The orchestrator never sends pitches autonomously.
 5. **Quarterly harvest recommendations are suggestions.** The human publisher approves the action list before any task is executed.

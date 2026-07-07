@@ -135,7 +135,14 @@ VALIDATION STATUS
 ⚠️ Optional fields missing: [list]
 ❌ Required fields missing: [list — blocks submission]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ *Advisory only — this output is administrative support, not legal or licensing advice; verify PRO/DDEX requirements before submission.*
 ```
+
+**The disclaimer line above is part of this template — it is not optional and
+is not satisfied by the Standing Disclaimer section alone. Include it
+verbatim every time this DDEX ERN packet block is emitted, even when this is
+the only packet produced (no PRO registration requested).**
 
 ---
 
