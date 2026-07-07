@@ -26,7 +26,7 @@ practice and roll up into those two releases.
 
 ## Propagate standing-disclaimer requirement to the publish bundle (fix/publish-af2-disclaimer)
 
-**Branch:** `fix/publish-af2-disclaimer` (2026-07-07)
+**Branch:** `fix/publish-af2-disclaimer` — PR #118 (2026-07-07)
 
 Wave 2 of the skill-validation eval (governance risk R-011) graded the
 `quirgs-publish` bundle for the first time and found 6 of 8 skills missing
