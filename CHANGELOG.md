@@ -26,7 +26,7 @@ practice and roll up into those two releases.
 
 ## Fix Wave 2 refix-verify findings: Blocked-gate hedge, disclaimer reliability (fix/publish-refix-round2)
 
-**Branch:** `fix/publish-refix-round2` (2026-07-08)
+**Branch:** `fix/publish-refix-round2` — PR #120 (2026-07-08)
 
 A clean-room refix-verify of PRs #118/#119 (`evals/runs/2026-07-08-wave2-refix-verify.md`)
 confirmed 7 of 9 targeted checks now hold — including the voice-clone-override
