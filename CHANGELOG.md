@@ -26,7 +26,7 @@ practice and roll up into those two releases.
 
 ## Fix Wave 2 substance defects: tier-override, Blocked-gate, field validation, dormancy gate (fix/publish-substance-defects)
 
-**Branch:** `fix/publish-substance-defects` (2026-07-07)
+**Branch:** `fix/publish-substance-defects` — PR #119 (2026-07-07)
 
 Follow-up to `fix/publish-af2-disclaimer` (PR #118): the same Wave 2 eval run
 (governance risk R-011) found four genuine substance-level defects beyond the
