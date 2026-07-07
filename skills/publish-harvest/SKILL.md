@@ -22,6 +22,20 @@ Analyzes catalog-wide performance across streaming, sync, and mechanical revenue
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not the full formatted harvest
+report — must end with this line:
+
+> ⚠️ *Advisory only — this is not financial, tax, or investment advice; verify figures against source statements.*
+
+The full boxed ADVISORY NOTICE in Step 6 replaces this short line only when
+the complete harvest report is emitted. This includes recommendations made on
+partial data (e.g., a pending sync statement) — the short line still applies.
+
+---
+
 ## Step 1 — Gather Input Data
 
 Ask the user to provide:

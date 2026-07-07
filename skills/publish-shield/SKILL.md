@@ -22,6 +22,21 @@ Pre-release compliance gate for platform content policies and AI governance docu
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not a full formatted compliance
+report or governance policy document — must end with this line:
+
+> ⚠️ *Advisory only — this is not legal advice; platform AI policies change, verify before distributing.*
+
+The full boxed ADVISORY NOTICE on the Compliance Report (Module A, Step A3)
+replaces this short line only when that complete report is emitted. Module B's
+policy document is a draft per Key Principles and still requires the short
+line on any turn that isn't the final delivered policy.
+
+---
+
 ## Module A — Pre-Release Platform Compliance Check
 
 ### Step A1 — Identify the Release and its AI Involvement Tier
