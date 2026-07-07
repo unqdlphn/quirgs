@@ -24,6 +24,51 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Propagate standing-disclaimer requirement to the publish bundle (fix/publish-af2-disclaimer)
+
+**Branch:** `fix/publish-af2-disclaimer` — PR #118 (2026-07-07)
+
+Wave 2 of the skill-validation eval (governance risk R-011) graded the
+`quirgs-publish` bundle for the first time and found 6 of 8 skills missing
+their advisory disclaimer on non-terminal turns (clarifying questions, hard-stop
+decisions, partial answers) — the same AF-2 gap Wave 1 found and fixed for the
+compliance bundle in `fix/af2-standing-disclaimer` (PR #111, "standing
+disclaimer on every turn"). That fix was never propagated to the publish
+bundle when it shipped. `publish-license` was the worst case: it had **no**
+advisory-notice block anywhere in its templates, missing on all 5 graded
+fixtures including full terminal hard-stop rulings.
+
+This is a text-only propagation of an already-approved fix, not a new policy
+decision. Substance-level defects the same eval run surfaced (publish-provenance's
+voice-clone-tier-override miscalculation, publish-workflow's Blocked-gate hedge,
+publish-broadcast's field-validation misses, publish-harvest's dormancy-gate
+miss) are tracked separately and NOT addressed in this branch — those need
+individual skill-logic fixes, scoped as a dedicated follow-up.
+
+### Changed
+- `skills/{publish-income,publish-broadcast,publish-provenance,publish-shield,
+  publish-harvest,publish-license}/SKILL.md` and their
+  `plugins/quirgs-publish/skills/<same>/SKILL.md` counterparts — added a
+  "Standing Disclaimer" section (Wave 1 PR #111 wording pattern, adapted per
+  skill's domain) requiring the short-form advisory line on every non-terminal
+  response.
+- `skills/publish-license/SKILL.md` (+ plugin copy) — additionally added a full
+  boxed ADVISORY NOTICE to the Step 3b Final Pitch Document output, matching
+  the convention already used by the other 7 skills (this skill previously had
+  no notice block at all).
+- `plugins/quirgs-publish/.claude-plugin/plugin.json` — version 1.1.0 → 1.2.0.
+
+### Notes
+- `publish-update` and `publish-workflow` were not touched: `publish-update`
+  graded PASS outright; `publish-workflow`'s AF-2 is explicitly scoped out of
+  routing-only turns by its own fixture header and was clean in the Wave 2 grade.
+- A pre-existing, unrelated lockstep drift was found (not fixed here) between
+  `publish-provenance`/`publish-shield`'s two copies — the bundle copy
+  references an external `references/ai-tool-tier-map.md` file for AI-tool
+  tier lookups; the `skills/` Gist-sync copy still has the older inline table.
+  Left untouched pending the Track 2 substance fix, which will resolve both
+  the voice-clone-override defect and this lockstep gap together.
+
 ## Link every skill to SECURITY.md — output-proximate issue reporting (feat/a8-skill-report-links)
 
 **Branch:** `feat/a8-skill-report-links` — PR #117 (2026-07-06)

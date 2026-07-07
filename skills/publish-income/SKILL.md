@@ -20,6 +20,19 @@ Compares incoming royalty statements (DSP, distributor, PRO) against an internal
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not the full formatted reconciliation
+report — must end with this line:
+
+> ⚠️ *Advisory only — this output is informational/administrative support, not accounting, tax, or legal advice; verify before acting.*
+
+The full boxed ADVISORY NOTICE in Step 5 replaces this short line only when the
+complete reconciliation report is emitted.
+
+---
+
 ## Step 1 — Identify the Statement Type
 
 Ask the user (or infer from context):

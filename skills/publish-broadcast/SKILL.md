@@ -20,6 +20,21 @@ Extracts the data required to register new releases through DDEX ERN (for digita
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not a full formatted registration
+packet — must end with this line:
+
+> ⚠️ *Advisory only — this output is administrative support, not legal or licensing advice; verify PRO/DDEX requirements before submission.*
+
+The full boxed ADVISORY NOTICE on the PRO Registration Packet (Step 4) replaces
+this short line only when that complete packet is emitted. The DDEX ERN Packet
+(Step 3) is data-format output, not a legal/licensing determination, but still
+carries the short line on any turn that doesn't emit the full PRO packet.
+
+---
+
 ## Step 1 — Identify Registration Scope
 
 Ask the user (or infer from context):

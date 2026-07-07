@@ -22,6 +22,19 @@ Documents the creative process behind a music release, assesses the degree of AI
 
 ---
 
+## Standing Disclaimer
+
+Every response this skill produces — including clarifying questions, partial or
+prose-only answers, and any output that is not the full formatted creation log —
+must end with this line:
+
+> ⚠️ *Advisory only — this is not a legal determination of copyright or authorship; consult IP counsel before relying on it.*
+
+The full boxed ADVISORY NOTICE in Step 4 replaces this short line only when the
+complete creation log is emitted.
+
+---
+
 ## Step 1 — Gather Creation Details
 
 Ask the user for the following information about the track or release. If they're unsure of specific details, note them as "undocumented" rather than leaving blank.
