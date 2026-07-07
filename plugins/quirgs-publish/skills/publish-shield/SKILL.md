@@ -49,7 +49,7 @@ Ask for or confirm:
 
 Load `references/platform-ai-policies.md` for the current policy summary per platform.
 
-**If the AI Involvement Tier is not provided:** do not assume Tier 0. Instead, ask which AI tools were used during creation. Load `publish-provenance/references/ai-tool-tier-map.md` and assign the highest tier that applies across all tools listed. If a tool is not in the map, apply the default classification rules at the bottom of that file. Proceed with the inferred tier and note it in the compliance report as "Tier [N] — inferred from tool disclosure; confirm with publish-provenance output."
+**If the AI Involvement Tier is not provided:** do not assume Tier 0. Instead, ask which AI tools were used during creation. Load `publish-provenance/references/ai-tool-tier-map.md`. **Do Step 0 in that file FIRST** — the mandatory voice-clone override check — before consulting any per-tool default tier. If Step 0 triggers, assign Tier 4 immediately regardless of any other tool used. Only after Step 0 clears, assign the highest tier that applies across all remaining tools listed in the Tool Reference Table. If a tool is not in the map, apply the default classification rules at the bottom of that file. Proceed with the inferred tier and note it in the compliance report as "Tier [N] — inferred from tool disclosure; confirm with publish-provenance output."
 
 ### Step A2 — Run the Platform Compliance Checklist
 

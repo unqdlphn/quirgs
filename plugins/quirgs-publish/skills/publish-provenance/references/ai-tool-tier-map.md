@@ -6,7 +6,31 @@ Cross-reference with `ai-involvement-tiers.md` for full tier definitions and cop
 
 ---
 
-## How to Use
+## ⚠️ STEP 0 — Voice-Clone Override Check (MANDATORY, do this BEFORE the table below)
+
+**Before looking up any tool in the Tool Reference Table, answer this question first:**
+
+> Does any tool used on this track clone or synthesize the voice of a real,
+> identifiable person, without a signed consent or licensing agreement from
+> that person?
+
+**If yes: assign Tier 4 immediately and stop.** Do not proceed to the Tool
+Reference Table for that tool, do not average it against other tools' tiers,
+and do not let a lower "default tier" shown in the table below change this —
+the table's per-tool default-tier values (e.g., ElevenLabs shows "Default
+tier: 2") describe *authorized/consensual* use only. An unauthorized voice
+clone is Tier 4 regardless of what the table's default column says, regardless
+of how minor the voice element is in the final mix, and regardless of how
+human-authored every other element of the track is. This is a hard override,
+not a factor to weigh — do not perform Provenance Triangle averaging on it.
+
+Only proceed to the Tool Reference Table below once Step 0 has confirmed "no"
+for every tool used, or for any tool whose voice-cloning use was properly
+consented/licensed.
+
+---
+
+## How to Use (after Step 0 above)
 
 1. Find the tool(s) used in the **Tool Reference Table** below.
 2. Note the **Default Tier** and any **Usage Condition** — some tools produce different tiers depending on how heavily the AI output was modified.
@@ -92,19 +116,27 @@ These tools generate musical content (melody, harmony, rhythm, audio). Tier depe
 
 ### Vocal Synthesis & Voice Cloning — Tier 2, 3, or 4
 
-These tools carry the highest compliance risk. Tier is determined primarily by **whether the voice being synthesized belongs to a real, identifiable person and whether consent was obtained**.
+**Have you completed Step 0 above for every tool in this section? If not, go
+back and do it now before reading this table.**
 
-| Tool | Use case | Default tier | Upgrade conditions |
+These tools carry the highest compliance risk. Tier is determined primarily by **whether the voice being synthesized belongs to a real, identifiable person and whether consent was obtained**. The "Default tier" column below applies ONLY when Step 0 has already confirmed the voice use is either not a real-person clone, or is a real-person clone WITH signed consent — otherwise Step 0's Tier 4 override controls and this table does not apply.
+
+| Tool | Use case | Default tier (consented/non-clone use only) | Upgrade conditions |
 |---|---|---|---|
-| ElevenLabs | Voice synthesis/cloning | 2 | → Tier 4 if cloning a real artist's voice without a signed consent/license agreement |
-| ReSemble.AI | Voice synthesis/cloning | 2 | → Tier 4 if unauthorized voice clone |
-| Kits.ai | Voice packs / voice cloning | 2 | → Tier 4 if cloning a real artist without consent |
+| ElevenLabs | Voice synthesis/cloning | 2 | → **Tier 4 (Step 0 override)** if cloning a real artist's voice without a signed consent/license agreement |
+| ReSemble.AI | Voice synthesis/cloning | 2 | → **Tier 4 (Step 0 override)** if unauthorized voice clone |
+| Kits.ai | Voice packs / voice cloning | 2 | → **Tier 4 (Step 0 override)** if cloning a real artist without consent |
 | Voicemod (AI voice effects) | Real-time voice transformation | 2 | Transforms live human input; typically Tier 1–2 |
-| Musicfy | AI voice covers | 3 | Default Tier 3 (AI cover of another artist's vocal style). → Tier 4 if voice clone without consent |
+| Musicfy | AI voice covers | 3 | Default Tier 3 (AI cover of another artist's vocal style). → **Tier 4 (Step 0 override)** if voice clone without consent |
 | So-Vits-SVC | Voice conversion | 4 | Near-exclusively used for unauthorized voice cloning; default Tier 4 |
 | RVC (Retrieval-based Voice Conversion) | Voice conversion | 4 | Same as So-Vits-SVC; default Tier 4 unless using a fully licensed/synthetic voice |
 
-**Tier 4 hard rule for voice cloning:** Any use of a tool to replicate the voice of a real, identifiable person without a signed consent or licensing agreement is automatically Tier 4, regardless of all other factors. This applies even if other elements of the track are human-authored.
+**Tier 4 hard rule for voice cloning (same rule as Step 0 — repeated here for
+visibility at the point of lookup):** Any use of a tool to replicate the voice
+of a real, identifiable person without a signed consent or licensing agreement
+is automatically Tier 4, regardless of all other factors, regardless of this
+table's "Default tier" column, and regardless of how minor the voice element
+is. This applies even if other elements of the track are human-authored.
 
 ### DAW Built-In AI Features — Tier 0 or 1
 

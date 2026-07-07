@@ -82,9 +82,18 @@ Segment tracks into four performance tiers based on total quarterly revenue:
 | A | Top Performers | Top 20% by revenue |
 | B | Mid Performers | 20–60% by revenue |
 | C | Underperformers | Bottom 40% but with some activity |
-| D | Dormant | Zero or near-zero revenue for 2+ consecutive quarters |
+| D | Dormant | Zero or near-zero revenue for **2+ consecutive quarters** |
 
 For small catalogs (< 20 tracks), use absolute revenue thresholds rather than percentiles.
+
+**Tier D requires 2+ consecutive quarters of history — a single quarter of $0
+or near-zero revenue does NOT by itself qualify as Dormant, even on an
+otherwise-zero track.** If prior-period data is unavailable (as in a first-time
+review, or when the user hasn't supplied comparison data), you cannot confirm
+the 2+-consecutive-quarter condition. In that case: do not place the track in
+Tier D. Instead, place it in Tier C (Underperformer) and explicitly note that
+dormancy status is unconfirmed pending prior-period history — do not silently
+default to Tier D on a single quarter's data.
 
 ---
 

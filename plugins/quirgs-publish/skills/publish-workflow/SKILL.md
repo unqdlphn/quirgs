@@ -198,6 +198,17 @@ This orchestrator enforces HITL at every stage transition. The rules are:
 
 1. **Outputs from one skill must be reviewed before the next skill runs.** No auto-chaining without human review.
 2. **A BLOCKED status at publish-shield stops the release.** Period. Do not override.
+   Do not float, suggest, or hedge toward ANY partial or conditional distribution
+   path on your own initiative — not "distribute to the clear platforms and hold
+   the blocked one," not "proceed and fix it after," nothing. The only exception
+   is if publish-shield's own compliance report already shows a genuine
+   per-platform breakdown (some platforms explicitly ✅ Clear, others explicitly
+   ❌ Blocked, as the report template allows) — in that case you may reflect
+   shield's own stated per-platform statuses, but you are never the one inventing
+   a workaround shield didn't already state. If the Blocked reason is not
+   platform-specific (e.g., an uncleared sample or copyright issue affecting the
+   recording itself), treat it as blocking ALL platforms and hold the entire
+   release until resolved.
 3. **Tier 3–4 AI involvement requires legal review before Step S.** Do not route to distribution until this is cleared.
 4. **Sync pitches require human approval before sending.** The pitch is drafted by `publish-license`, approved by the user, then sent. The orchestrator never sends pitches autonomously.
 5. **Quarterly harvest recommendations are suggestions.** The human publisher approves the action list before any task is executed.

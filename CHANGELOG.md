@@ -24,6 +24,92 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix Wave 2 substance defects: tier-override, Blocked-gate, field validation, dormancy gate (fix/publish-substance-defects)
+
+**Branch:** `fix/publish-substance-defects` (2026-07-07)
+
+Follow-up to `fix/publish-af2-disclaimer` (PR #118): the same Wave 2 eval run
+(governance risk R-011) found four genuine substance-level defects beyond the
+AF-2 disclaimer gap. This branch fixes all four plus resolves a pre-existing
+lockstep drift discovered while investigating the first one.
+
+### publish-provenance / publish-shield — voice-clone tier-override miscalculation
+
+The eval's own top-priority check: an unauthorized voice clone of a real
+person must force AI Involvement Tier 4 regardless of any other factor. Both
+skills correctly identified the legal red flag in prose but computed the wrong
+numeric tier. Root cause: `publish-provenance/references/ai-tool-tier-map.md`
+states the override rule clearly — twice — but the ElevenLabs table row shows
+"Default tier: 2" prominently, with the override condition in an adjacent
+column and the strongest statement of the hard rule below the entire table. A
+model doing a quick lookup can land on "2" before reaching the override
+language.
+
+Also discovered while investigating: `publish-provenance` and `publish-shield`
+were already out of lockstep between their `skills/` and
+`plugins/quirgs-publish/skills/` copies (unrelated to AF-2) — the bundle copy
+referenced the external tier-map file; the `skills/` Gist-sync copy still had
+an older inline table. Resolved as part of this fix.
+
+#### Changed
+- `plugins/quirgs-publish/skills/publish-provenance/references/ai-tool-tier-map.md`
+  — added a mandatory "Step 0" voice-clone override gate at the top of the
+  file, checked before any table lookup; added inline reinforcement at the
+  ElevenLabs/voice-cloning table rows; restated the hard rule at point of use.
+- `skills/publish-provenance/SKILL.md` + plugin copy — Step 3 now explicitly
+  instructs doing Step 0 first, before any per-tool tier lookup.
+- `skills/publish-shield/SKILL.md` + plugin copy — Step A1 same instruction;
+  also resolves the lockstep drift (both copies now reference the external
+  tier map with identical instruction text — the `skills/` copy previously
+  carried the old inline table).
+
+### publish-workflow — Blocked-gate partial-distribution hedge
+
+W-02 (the fixture's own "highest stakes" case): the orchestrator's own quoted
+rule says a Blocked publish-shield status "stops the release. Period," but the
+model floated a hedged partial-distribution workaround anyway. Fixed by
+making the rule explicit: no partial/conditional distribution path may be
+suggested on the orchestrator's own initiative; the only exception is
+reflecting a genuine per-platform breakdown publish-shield's own report
+already stated. A non-platform-specific block (e.g., an uncleared sample)
+holds the entire release.
+
+### publish-broadcast — field-validation gaps
+
+Two field-validation misses (B-01, B-03) were investigated against the raw
+outputs. B-03 is a genuine defect: P-line/C-line are correctly listed as
+required in `references/ddex-ern-fields.md`, but Step 3's validation
+instruction was too generic to reliably surface them as blocking — fixed by
+enumerating the release- and track-level required fields explicitly at the
+point of validation. **B-01 is likely a fixture-design issue, not a skill
+defect** — the skill's own SUBMISSION STATUS template only gates readiness on
+IPI and ISWC; the model's caution about missing territory/linked-recording
+data is a reasonable extension beyond the skill's own defined checklist, not
+clearly wrong. Flagged for owner/A-6 review rather than "fixed."
+
+### publish-harvest — Tier D dormancy gate
+
+H-04: the fixture built specifically to test "a single quarter of $0 ≠
+automatically Dormant" got exactly that wrong, despite the same run correctly
+asking for missing data on sibling fixtures. Fixed by making the 2+-
+consecutive-quarter requirement explicit and adding a fallback: without
+confirmed prior-period history, a $0 track goes to Tier C (Underperformer)
+with dormancy explicitly noted as unconfirmed, not silently Tier D.
+
+### Other
+
+- `plugins/quirgs-publish/.claude-plugin/plugin.json` — version 1.2.0 → 1.3.0.
+- All 5 touched skills verified byte-identical between `skills/` and
+  `plugins/quirgs-publish/skills/` copies post-fix.
+
+### Not yet done
+
+Per the eval plan, these fixes need clean-room re-run + re-grade before R-011
+can be re-rated — scoped as a separate session (this session authored/read the
+Wave 2 reference answers and grading, so it's contaminated for verification).
+Owner ruling already made (2026-07-06): publish-shield's S-03 tier-label
+consistency question — label required, not just the right practical outcome.
+
 ## Propagate standing-disclaimer requirement to the publish bundle (fix/publish-af2-disclaimer)
 
 **Branch:** `fix/publish-af2-disclaimer` — PR #118 (2026-07-07)

@@ -113,17 +113,7 @@ Rate how well-documented the AI tool usage is:
 
 Load `references/ai-involvement-tiers.md` for tier definitions and copyright implications.
 
-Cross-check each tool named in Step 1 against the following tool-to-tier rules. Use the **highest tier** across all tools. If Triangle scores and the tool rules disagree, use the higher of the two and note the discrepancy in the creation log.
-
-| If the tool… | Default tier |
-|---|---|
-| Processes existing human audio only (mastering, noise reduction, pitch correction, stem separation) — e.g., iZotope Ozone, LANDR, Auto-Tune, Moises, LALAL.AI | 1 |
-| Generates musical content (melody, chords, audio stems, lyrics) incorporated after significant human modification — e.g., Suno, Udio, AIVA, Soundraw, Beatoven.ai, ChatGPT/Claude for lyrics | 2 |
-| Generates content used near-as-is with minimal human modification | 3 |
-| Generates the complete work from prompt with no meaningful human modification | 4 |
-| Clones or synthesizes the voice of a real, identifiable person without a signed consent/license agreement — e.g., So-Vits-SVC, RVC, unauthorized ElevenLabs or Kits.ai clone | **4 — override all other factors** |
-| Not listed + generates new creative content | 2 minimum |
-| Not listed + processes existing human audio only | 1 |
+Load `references/ai-tool-tier-map.md`. **Do Step 0 in that file FIRST, before anything else in this step** — it is a mandatory voice-clone override check that must be answered before consulting any per-tool default tier. If Step 0 triggers, assign Tier 4 immediately and skip the rest of this step for that tool. Only after Step 0 clears, cross-check each remaining tool named in Step 1 against the Tool Reference Table. The tool map provides a default tier per tool and flags usage-dependent upgrades (e.g., Suno → Tier 2 if modified, Tier 4 if released as-is). Use the **highest tier** across all tools listed. If Triangle scores and tool map disagree, use the higher of the two and note the discrepancy in the log.
 
 Based on the Provenance Triangle scores, assign one of five tiers:
 

@@ -49,18 +49,7 @@ Ask for or confirm:
 
 Load `references/platform-ai-policies.md` for the current policy summary per platform.
 
-**If the AI Involvement Tier is not provided:** do not assume Tier 0. Ask which AI tools were used, then infer the tier using these rules:
-
-| If the tool… | Assign |
-|---|---|
-| Only processes existing human audio (mastering, noise reduction, pitch correction, stem separation) — e.g., iZotope Ozone, LANDR, Auto-Tune, Moises, LALAL.AI | Tier 1 |
-| Generates musical content (melody, chords, lyrics, audio stems) that appears in the final work with significant human modification — e.g., Suno, Udio, AIVA, Soundraw, ChatGPT lyrics | Tier 2 |
-| Generates content used near-as-is with minimal human modification | Tier 3 |
-| Clones or synthesizes the voice of a real, identifiable person without a signed consent/license agreement — e.g., So-Vits-SVC, RVC, unauthorized ElevenLabs clone | **Tier 4 — override all other factors** |
-| Tool not listed + generates new creative content | Tier 2 minimum |
-| Tool not listed + processes existing human audio only | Tier 1 |
-
-Assign the highest tier across all tools used. Note the inferred tier in the compliance report as "Tier [N] — inferred from tool disclosure; confirm with publish-provenance output."
+**If the AI Involvement Tier is not provided:** do not assume Tier 0. Instead, ask which AI tools were used during creation. Load `publish-provenance/references/ai-tool-tier-map.md`. **Do Step 0 in that file FIRST** — the mandatory voice-clone override check — before consulting any per-tool default tier. If Step 0 triggers, assign Tier 4 immediately regardless of any other tool used. Only after Step 0 clears, assign the highest tier that applies across all remaining tools listed in the Tool Reference Table. If a tool is not in the map, apply the default classification rules at the bottom of that file. Proceed with the inferred tier and note it in the compliance report as "Tier [N] — inferred from tool disclosure; confirm with publish-provenance output."
 
 ### Step A2 — Run the Platform Compliance Checklist
 
