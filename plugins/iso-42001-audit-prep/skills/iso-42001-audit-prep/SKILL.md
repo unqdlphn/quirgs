@@ -189,3 +189,18 @@ After presenting the gap analysis, offer:
 - **Integration opportunity** — if ISO 27001/9001 is already in place, flag integration shortcuts clearly
 - **Annex A is not optional** — organizations must select and justify Annex A controls; omissions require documented rationale
 - **Documented information is king** — ISO standards live and die by controlled documents; always specify what form evidence should take
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

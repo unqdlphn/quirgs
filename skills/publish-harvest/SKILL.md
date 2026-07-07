@@ -200,3 +200,18 @@ After delivering the report:
 - **Streaming numbers lie without context.** A track with 10,000 streams from a single niche playlist is different from one with 10,000 streams from organic discovery. Note context where known.
 - **Dormant doesn't mean dead.** Many catalog tracks earn significant sync fees years after their streaming peak. Never recommend deletion without considering sync potential.
 - **Advisory notice is mandatory.** This is a planning tool, not a financial statement.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

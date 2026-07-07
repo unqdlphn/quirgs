@@ -266,3 +266,18 @@ After presenting the report and routing summary, offer:
   (how bad it is) should be clearly distinguished; early impact assessments are often wrong
 - **This is a living document** — an incident report should be updated as the response progresses,
   not written once and filed; offer to update it as the conversation continues
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

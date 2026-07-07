@@ -252,3 +252,18 @@ After the human completes the checklist:
 - **Be concise but complete** — 8–15 checklist items is the target range. More than 20 becomes noise.
 - **Flag cross-framework conflicts** if multiple frameworks are loaded and they have contradictory requirements.
 - **Offer to save the completed gate** as a `.md` file for audit trail purposes.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

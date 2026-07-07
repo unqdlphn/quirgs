@@ -210,3 +210,18 @@ This orchestrator enforces HITL at every stage transition. The rules are:
 - **Skills are self-contained.** Each domain skill produces its own output. The orchestrator sequences and gates — it does not merge or process skill outputs.
 - **One session = one phase.** Following the Quirgs session protocol: complete one loop phase per session. Don't attempt to run the full weekly OS in a single session on a heavy week.
 - **Start with the user's most urgent need.** The triage questions exist to serve the publisher's actual priority — not to enforce a rigid order when the user has a specific task in mind.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

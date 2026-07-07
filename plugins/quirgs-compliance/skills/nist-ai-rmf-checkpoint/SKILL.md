@@ -193,3 +193,18 @@ After presenting the risk profile, offer:
 - **Surface the right questions** — when evidence is unclear, generate the question the reviewer needs to answer, not a generic placeholder
 - **Avoid false confidence** — if evidence is insufficient to assess a subcategory, mark it ⬜ and explain what's needed
 - **Plain language summary always** — the narrative in the profile should be readable by a non-technical executive
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

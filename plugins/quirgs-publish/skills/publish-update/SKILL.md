@@ -159,3 +159,18 @@ After the report, offer to output the corrected catalog as a CSV table ready to 
 - **Never overwrite a field the user confirmed as correct**, even if it fails validation (e.g., a legitimate short-duration track under 30 seconds).
 - **Flag before fixing.** Always show the user what will change before applying enrichments. No silent overwrites.
 - **Distribution-blocking errors first.** Surface hard errors before quality scoring — a track with an invalid ISRC can't go anywhere regardless of its quality score.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

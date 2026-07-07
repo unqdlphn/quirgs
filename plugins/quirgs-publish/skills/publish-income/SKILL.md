@@ -154,3 +154,18 @@ After delivering the report:
 - **ISRC is the canonical identifier.** Track title matching is a fallback only — flag title-matched rows as lower confidence.
 - **Always include the advisory notice** in the output — this is not accounting software.
 - **Disputes need human sign-off.** Draft dispute language, but require the user to review before sending.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

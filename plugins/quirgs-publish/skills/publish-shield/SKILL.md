@@ -153,3 +153,18 @@ Include a recommended review schedule (every 6 months, or on any major platform 
 - **Platform policies are volatile.** This skill's reference data is a snapshot — always verify at the platform's creator documentation before distributing.
 - **Module B is a draft, not a legal document.** The generated governance policy is a starting point for internal use. It should be reviewed by the organization's legal counsel before being formally adopted.
 - **Advisory notice applies to both modules.** AI content policies are active regulatory territory — neither module constitutes legal advice.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

@@ -24,6 +24,29 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Link every skill to SECURITY.md — output-proximate issue reporting (feat/a8-skill-report-links)
+
+**Branch:** `feat/a8-skill-report-links` — PR #117 (2026-07-06)
+
+Governance action A-8 (user feedback/error channel), step 2 of 2 — closes A-8.
+Every published skill now carries a **Reporting Issues** section pointing to
+`SECURITY.md` (the skill-output-issue lane from step 1 / PR #115), and instructs
+that every full formatted report end with a one-line report-an-issue pointer —
+the output-proximate report path IRP-001 §3 named as the gap. Applied in
+lockstep to all copies of all 15 skills (7 compliance × 3 copies + 8 publish
+× 2 copies = 37 `SKILL.md` files), block verified byte-identical via per-block
+hash. Note for eval grading (EVAL-001 AF-4): the required output format now
+includes this trailing line on full reports.
+
+### Changed
+- All 37 `SKILL.md` copies — appended the uniform **Reporting Issues** section.
+- Plugin version bumps (registry reseed required post-merge):
+  `ai-transparency-writer` 1.1.0 → 1.2.0, `eu-ai-act-classifier` 1.2.0 → 1.3.0,
+  `hitl-compliance-gate` 1.2.0 → 1.3.0, `incident-response-logger` 1.1.0 → 1.2.0,
+  `iso-42001-audit-prep` 1.2.0 → 1.3.0, `nist-ai-rmf-checkpoint` 1.1.0 → 1.2.0,
+  `pii-exposure-checker` 1.1.0 → 1.2.0, `quirgs-compliance` bundle 1.3.0 → 1.4.0,
+  `quirgs-publish` bundle 1.0.0 → 1.1.0.
+
 ## Add SECURITY.md — two-lane reporting policy (feat/security-md)
 
 **Branch:** `feat/security-md` — PR #115 (2026-07-06)

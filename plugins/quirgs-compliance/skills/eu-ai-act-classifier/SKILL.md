@@ -219,3 +219,18 @@ After classification and obligations output, offer:
 - **GPAI is additive** — GPAI obligations stack on top of any other applicable tier
 - **Jurisdictional scope** — the Act applies if the AI output is used in the EU, regardless of where the provider is based; if it genuinely is not, classify OUT OF SCOPE rather than forcing a tier
 - **Always flag legal review** for Medium/Low confidence classifications — this tool supports compliance work but is not a substitute for qualified legal advice
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*

@@ -174,3 +174,18 @@ After producing the packets:
 - **DDEX ERN is a data format, not a submission tool.** This skill produces the data; the user's distributor or direct DDEX integration handles XML generation and ingestion.
 - **Always flag split totals.** Composer splits must sum to 100% (writer side). Publisher splits must sum to 100% (publisher side). Flag if they don't.
 - **Advisory notice is mandatory.** PRO rules and DDEX schema versions change — always include the notice.
+
+---
+
+## Reporting Issues
+
+If this skill produces wrong, outdated, or misleading guidance, report it:
+[SECURITY.md](https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md) — use the
+**skill-output issue** lane (the form collects what triage needs). Security
+vulnerabilities in the platform itself follow the private-advisory lane in the
+same document.
+
+Whenever this skill emits a full formatted report or document, append this line
+after it:
+
+> *Report an issue with this output: https://github.com/unqdlphn/quirgs/blob/main/SECURITY.md*
