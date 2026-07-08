@@ -33,6 +33,8 @@ practice and roll up into those two releases.
   Gödel's incompleteness theorems and the NIST AI RMF pivot to continuous
   runtime oversight. "Skills teach governance. The gate enforces it." is
   retained as a secondary line.
+- Added a link to the "Risk Profile case study" under the demo link in the
+  footer link list.
 
 ## Add "The Quirgs AI Risk Profile" self-assessment case study (feat/ai-risk-profile-case-study)
 
