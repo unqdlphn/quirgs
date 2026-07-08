@@ -24,6 +24,20 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add Agent Skills Discovery index and RFC 9727 API catalog (feat/agent-ready-op5-op10)
+
+**Branch:** `feat/agent-ready-op5-op10` (2026-07-08)
+
+- Added `/.well-known/agent-skills/index.json` (Agent Skills Discovery RFC
+  v0.2.0) — closes OP-10 from the Cloudflare Agent Ready audit. Generated at
+  Astro build time (`src/pages/.well-known/agent-skills/index.json.ts` and
+  `[slug]/SKILL.md.ts`) directly from `skills/*/SKILL.md` via
+  `import.meta.glob`, so the `sha256:` digest of each entry can never drift
+  from the self-hosted `SKILL.md` copy it describes — no new file to keep
+  in lockstep.
+- Added `/.well-known/api-catalog` (RFC 9727, `application/linkset+json`)
+  covering `api.quirgs.com` and `gate.quirgs.com` — closes OP-05.
+
 ## Add agent-discovery Link headers and Content Signals (feat/agent-ready-link-content-signal)
 
 **Branch:** `feat/agent-ready-link-content-signal` (2026-07-07)
