@@ -24,6 +24,25 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Close direct-D1 admin bypass on hitl-gate (feat/hitl-gate-maintenance-artifact-cors)
+
+**Branch:** `feat/hitl-gate-maintenance-artifact-cors` (2026-07-08)
+
+- Widened `workers/hitl-gate`'s `ALLOWED_ORIGINS` to admit `cowork-artifact://local`
+  (Cowork's local-artifact origin) so the `quirgs-site-maintenance` ops dashboard
+  can call the Worker's `PATCH /events/:id` from the browser. Closes risk R-012
+  on the AI Risk Register: that dashboard's HITL approve/reject actions were
+  writing `quirgs-hitl-db` directly via the Cloudflare MCP D1 tool, bypassing
+  this Worker's auth check, `pending`-only state guard, and webhook fire
+  entirely. The Bearer-token check (`HITL_WRITE_TOKEN`) remains the real
+  access boundary — this only affects what the browser lets JS read back.
+- Companion change (not in this repo): `quirgs-site-maintenance` artifact
+  rebuilt to call `GET /events` / `PATCH /events/:id` with a session-scoped
+  write token instead of the Cloudflare MCP D1 tool, matching the `/review/`
+  page's token pattern (PR #70).
+- **Requires deploy** (`wrangler deploy --config workers/hitl-gate/wrangler.toml`)
+  before the artifact's queue will load — not deployed as part of this PR.
+
 ## Add Agent Skills Discovery index and RFC 9727 API catalog (feat/agent-ready-op5-op10)
 
 **Branch:** `feat/agent-ready-op5-op10` (2026-07-08)
