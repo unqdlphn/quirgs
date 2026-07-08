@@ -28,20 +28,28 @@ practice and roll up into those two releases.
 
 **Branch:** `feat/hitl-gate-maintenance-artifact-cors` (2026-07-08)
 
-- Widened `workers/hitl-gate`'s `ALLOWED_ORIGINS` to admit `cowork-artifact://local`
-  (Cowork's local-artifact origin) so the `quirgs-site-maintenance` ops dashboard
-  can call the Worker's `PATCH /events/:id` from the browser. Closes risk R-012
-  on the AI Risk Register: that dashboard's HITL approve/reject actions were
-  writing `quirgs-hitl-db` directly via the Cloudflare MCP D1 tool, bypassing
-  this Worker's auth check, `pending`-only state guard, and webhook fire
-  entirely. The Bearer-token check (`HITL_WRITE_TOKEN`) remains the real
-  access boundary — this only affects what the browser lets JS read back.
-- Companion change (not in this repo): `quirgs-site-maintenance` artifact
-  rebuilt to call `GET /events` / `PATCH /events/:id` with a session-scoped
-  write token instead of the Cloudflare MCP D1 tool, matching the `/review/`
-  page's token pattern (PR #70).
-- **Requires deploy** (`wrangler deploy --config workers/hitl-gate/wrangler.toml`)
-  before the artifact's queue will load — not deployed as part of this PR.
+- Closes risk R-012 on the AI Risk Register: `quirgs-site-maintenance` (Cowork
+  ops dashboard, not in this repo) was writing `quirgs-hitl-db` directly via
+  the Cloudflare MCP D1 tool to approve/reject HITL events, bypassing this
+  Worker's `PATCH /events/:id` auth check, `pending`-only state guard, and
+  webhook fire entirely.
+- **Attempted fix (reverted same day):** widened `ALLOWED_ORIGINS` to admit
+  `cowork-artifact://local` and then `null`, intending to rebuild the artifact
+  to call this Worker's authenticated API via `fetch()` instead. Deployed and
+  verified server-side correct (direct curl preflight matched), but the
+  artifact still failed with "Failed to fetch." A live diagnostic (fetching a
+  wildcard-CORS external test site from the same artifact) confirmed the
+  actual cause: Cowork artifacts cannot make outbound `fetch()` calls to any
+  external domain — not a CORS problem, so no `ALLOWED_ORIGINS` value could
+  have fixed it. `ALLOWED_ORIGINS` reverted to its original value; no benefit
+  to keeping it widened.
+- **Actual fix:** `quirgs-site-maintenance` rebuilt to read `quirgs-hitl-db`
+  read-only via the Cloudflare MCP D1 tool (non-mutating, so no state-machine
+  bypass) and removed its Approve/Reject buttons entirely. HITL actions now
+  happen exclusively at `quirgs.com/review/`, a real browser page that already
+  calls this Worker's authenticated `PATCH /events/:id` correctly (PR #70).
+- No Worker deploy required for the final state — `ALLOWED_ORIGINS` is back to
+  what was already live in production before this branch.
 
 ## Add Agent Skills Discovery index and RFC 9727 API catalog (feat/agent-ready-op5-op10)
 
