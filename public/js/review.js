@@ -52,6 +52,20 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
   
+  // Payload fields (item, stage, checkpoint_summary, etc.) are attacker-
+  // influenceable: any caller with the write token can POST arbitrary event
+  // payload text, and that text is interpolated into innerHTML below. Escape
+  // everything pulled from event/payload before it hits the template.
+  function escapeHtml(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function formatCreatedDate(timestampSeconds) {
     if (!timestampSeconds) return '—';
     const date = new Date(timestampSeconds * 1000);
@@ -105,21 +119,35 @@ document.addEventListener("DOMContentLoaded", () => {
         card.id = `card-${event.id}`;
         
         const payload = event.payload || {};
-        const item = payload.item || '—';
-        const stage = payload.stage || '—';
-        const frameworks = (payload.frameworks && payload.frameworks.length) ? payload.frameworks.join(', ') : '—';
-        const receivedStr = formatCreatedDate(event.created_at);
-        
+        const item = escapeHtml(payload.item || '—');
+        const stage = escapeHtml(payload.stage || '—');
+        const frameworks = escapeHtml(
+          (payload.frameworks && payload.frameworks.length) ? payload.frameworks.join(', ') : '—'
+        );
+        const receivedStr = escapeHtml(formatCreatedDate(event.created_at));
+        const type = escapeHtml(event.type || '—');
+        const idShort = escapeHtml(event.id.slice(0, 8));
+        // Mandatory sign-off questions the reviewer must actually read before
+        // approving/rejecting. Previously only visible in the raw payload
+        // (e.g. the maintenance artifact's full-payload view) — missing here
+        // meant the /review/ card didn't show what the reviewer is signing
+        // off on. Preserve line breaks (checkpoint_summary is often
+        // multi-line: "(1) GOVERN — ... (2) MAP — ...").
+        const checkpointSummary = payload.checkpoint_summary
+          ? escapeHtml(payload.checkpoint_summary).replace(/\n/g, '<br>')
+          : null;
+
         card.innerHTML = `
           <div class="line event-title-row">
-            <span>EVENT  <span class="text-bright">${event.id.slice(0, 8)}...</span></span>
+            <span>EVENT  <span class="text-bright">${idShort}...</span></span>
             <span class="status-label status-pending text-yellow">pending</span>
           </div>
-          <div class="line">Type:  <span class="text-bright">${event.type || '—'}</span></div>
+          <div class="line">Type:  <span class="text-bright">${type}</span></div>
           <div class="line">Item:  <span class="text-bright">${item}</span></div>
           <div class="line">Stage: <span class="text-bright">${stage}</span></div>
           <div class="line">Frameworks: <span class="text-bright">${frameworks}</span></div>
           <div class="line">Received: <span class="text-bright">${receivedStr}</span></div>
+          ${checkpointSummary ? `<div class="line checkpoint-summary">Sign-off: <span class="text-bright">${checkpointSummary}</span></div>` : ''}
 
           <div class="card-actions" id="actions-${event.id}">
             <button class="action-btn approve-btn" data-id="${event.id}">[ Approve ]</button>
