@@ -68,6 +68,27 @@
   Link: </.well-known/ai-catalog.json>; rel="api-catalog"
   Link: </llms.txt>; rel="service-doc"
 
+# Agent Skills Discovery index (RFC v0.2.0). Generated at build time by
+# src/pages/.well-known/agent-skills/index.json.ts and [slug]/SKILL.md.ts —
+# CORS-readable so any agent can fetch it cross-origin, mirroring the
+# ai-catalog.json pattern above.
+/.well-known/agent-skills/index.json
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/.well-known/agent-skills/*/SKILL.md
+  Access-Control-Allow-Origin: *
+  Content-Type: text/markdown; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+# RFC 9727 API catalog — linkset+json describing the two Workers APIs
+# (registry-api, hitl-gate). CORS-readable, same pattern as above.
+/.well-known/api-catalog
+  Access-Control-Allow-Origin: *
+  Content-Type: application/linkset+json
+  Cache-Control: public, max-age=3600
+
 # Legacy SEO guides (public/guides/*) are preserved verbatim and contain their
 # own inline scripts/styles that must not be modified. Detach the strict policy
 # above so the comma-join rule doesn't intersect it onto these pages (which would

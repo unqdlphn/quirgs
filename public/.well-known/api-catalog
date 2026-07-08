@@ -1,0 +1,19 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.quirgs.com/",
+      "service-doc": [
+        { "href": "https://quirgs.com/skills/" }
+      ],
+      "status": [
+        { "href": "https://api.quirgs.com/skills" }
+      ]
+    },
+    {
+      "anchor": "https://gate.quirgs.com/",
+      "service-doc": [
+        { "href": "https://quirgs.com/gate/" }
+      ]
+    }
+  ]
+}
