@@ -24,6 +24,29 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Surface checkpoint_summary on /review/ and harden card rendering (feat/review-checkpoint-summary)
+
+**Branch:** `feat/review-checkpoint-summary` (2026-07-08)
+
+- Fixes a Track A stress-test observation (`PHASE4-trackA-results-2026-07-07.md`,
+  Obs-2): the `/review/` queue card showed type/item/stage/frameworks/received
+  but not `payload.checkpoint_summary` — the mandatory sign-off questions a
+  reviewer is supposed to read before approving or rejecting. It rendered only
+  in the full-payload view (e.g. the maintenance artifact), not on the card a
+  reviewer actually acts from. Added a `Sign-off:` row that renders
+  `checkpoint_summary` when present, preserving line breaks for its typical
+  multi-line GOVERN/MAP/MEASURE/MANAGE format.
+- **Hardening while in the file:** `public/js/review.js` interpolated
+  `event.type`, `payload.item`, `payload.stage`, `payload.frameworks`, and the
+  formatted date directly into `innerHTML` with no escaping. Since any caller
+  holding the write token can POST arbitrary payload text (including through
+  `hitl-compliance-gate`'s Step 3.5, or direct curl), this was a stored-XSS
+  surface scoped to the `/review/` page itself. Added an `escapeHtml()` helper
+  and applied it to every interpolated field, including the new
+  `checkpoint_summary` row.
+- No Worker (`workers/hitl-gate/index.js`) or D1 schema change — read-side
+  fix only, uses data already returned by `GET /events`.
+
 ## Close direct-D1 admin bypass on hitl-gate (feat/hitl-gate-maintenance-artifact-cors)
 
 **Branch:** `feat/hitl-gate-maintenance-artifact-cors` (2026-07-08)
