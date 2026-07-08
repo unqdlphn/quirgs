@@ -26,7 +26,7 @@ practice and roll up into those two releases.
 
 ## Add "The Quirgs AI Risk Profile" self-assessment case study (feat/ai-risk-profile-case-study)
 
-**Branch:** `feat/ai-risk-profile-case-study` (2026-07-08)
+**Branch:** `feat/ai-risk-profile-case-study` — PR #121 (2026-07-08)
 
 Public-facing case study distilling the internal AI Risk Profile self-
 assessment (`_v2/governance/`, local-only) into a summary resource: the
