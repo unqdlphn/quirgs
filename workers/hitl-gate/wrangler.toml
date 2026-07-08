@@ -17,16 +17,20 @@ workers_dev = true
 # agents) send no Origin and are unaffected. HITL_WRITE_TOKEN is a secret —
 # set it with: wrangler secret put HITL_WRITE_TOKEN --config workers/hitl-gate/wrangler.toml
 #
-# `cowork-artifact://local` is Cowork's fixed local-artifact origin (confirmed
-# via location.origin, 2026-07-08) — not scoped to a single artifact, so this
-# admits any locally-rendered Cowork artifact's fetch() calls past the browser
-# CORS check. That is NOT the real access boundary: HITL_WRITE_TOKEN still
-# gates every read/write. Added to close risk R-012 (quirgs-site-maintenance
-# was writing quirgs-hitl-db directly via the Cloudflare MCP D1 tool, bypassing
-# this Worker's PATCH /events/:id state machine entirely). See the AI Risk
-# Register (QRG-AIMS-RR-001, R-012) before widening further.
+# 2026-07-08: briefly widened this to admit cowork-artifact://local and null
+# to let the quirgs-site-maintenance Cowork artifact call this Worker directly
+# (closing risk R-012 on the AI Risk Register the "right" way). Reverted same
+# day — confirmed via a live diagnostic that Cowork artifacts cannot make
+# outbound fetch() calls to ANY external domain (a wildcard-CORS test site
+# failed identically to this Worker), so the widening had no achievable
+# benefit and only added CORS surface (any null-origin or local-artifact page
+# would have passed the browser check — HITL_WRITE_TOKEN was always the real
+# boundary, but no reason to widen this for nothing). R-012 is closed instead
+# by removing the write path from the artifact entirely: it now reads D1
+# read-only for visibility and links to quirgs.com/review/ (a real browser
+# page) for actual approve/reject actions.
 [vars]
-ALLOWED_ORIGINS = "https://quirgs.com,https://www.quirgs.com,cowork-artifact://local"
+ALLOWED_ORIGINS = "https://quirgs.com,https://www.quirgs.com"
 
 # Daily sweep: archive events older than 30 days, then hard-delete rows archived
 # more than 60 days ago (bounded retention — see risk R-007 in the governance
