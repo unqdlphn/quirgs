@@ -23,7 +23,27 @@ import NavBlock from "../components/NavBlock.astro";
   </div>
 
   <p class="text-bright positioning-line">
+    Static guardrails are provably insufficient.
+  </p>
+  <p class="positioning-subline">
     Skills teach governance. The gate enforces it.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">WHY STATIC GUARDRAILS FAIL</h2>
+  <p>
+    Natural language is infinitely ambiguous. Guardrail rule-sets are
+    necessarily finite. An adversarial formulation capable of bypassing any
+    static, finite guardrail set will always exist — Gödel's incompleteness
+    theorems apply directly to alignment-by-rule-set. Absolute model
+    alignment is formally undecidable.
+  </p>
+  <p>
+    NIST AI RMF guidance has pivoted accordingly: point-in-time and
+    pre-deployment vetting are no longer sufficient. Compliance now demands
+    continuous runtime behavioral analytics and dynamic containment —
+    including human escalation at the point of risk, not just before it.
   </p>
 
   <div class="line">&nbsp;</div>
@@ -112,5 +132,9 @@ import NavBlock from "../components/NavBlock.astro";
     font-size: 1.25rem;
     line-height: 1.4;
     font-weight: bold;
+  }
+
+  .positioning-subline {
+    opacity: 0.7;
   }
 </style>
