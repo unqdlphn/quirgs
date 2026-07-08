@@ -24,6 +24,17 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add agent-discovery Link headers and Content Signals (feat/agent-ready-link-content-signal)
+
+**Branch:** `feat/agent-ready-link-content-signal` (2026-07-07)
+
+- Added `Link` response headers on the homepage (`public/_headers`) pointing
+  agents at the ARD catalog (`rel="api-catalog"`) and `/llms.txt`
+  (`rel="service-doc"`), per RFC 8288 — closes OP-01 from the Cloudflare
+  Agent Ready audit (`_v2/results/cf-agent-ready-results-2026-07-04.md`).
+- Added a `Content-Signal` line to `public/robots.txt` declaring
+  `search=yes, ai-input=yes, ai-train=no` — closes OP-04 from the same audit.
+
 ## Update /gate/ positioning to Gödel/NIST framing (feat/gate-godel-messaging)
 
 **Branch:** `feat/gate-godel-messaging` (2026-07-07)
