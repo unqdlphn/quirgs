@@ -24,6 +24,18 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Update /gate/ positioning to Gödel/NIST framing (feat/gate-godel-messaging)
+
+**Branch:** `feat/gate-godel-messaging` (2026-07-07)
+
+- Replaced the `/gate/` page hook with "Static guardrails are provably
+  insufficient," backed by a new "WHY STATIC GUARDRAILS FAIL" section citing
+  Gödel's incompleteness theorems and the NIST AI RMF pivot to continuous
+  runtime oversight. "Skills teach governance. The gate enforces it." is
+  retained as a secondary line.
+- Added a link to the "Risk Profile case study" under the demo link in the
+  footer link list.
+
 ## Add "The Quirgs AI Risk Profile" self-assessment case study (feat/ai-risk-profile-case-study)
 
 **Branch:** `feat/ai-risk-profile-case-study` — PR #121 (2026-07-08)
