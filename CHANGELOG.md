@@ -24,6 +24,31 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add "The Quirgs AI Risk Profile" self-assessment case study (feat/ai-risk-profile-case-study)
+
+**Branch:** `feat/ai-risk-profile-case-study` (2026-07-08)
+
+Public-facing case study distilling the internal AI Risk Profile self-
+assessment (`_v2/governance/`, local-only) into a summary resource: the
+NIST AI RMF / EU AI Act / ISO 42001 governance assessment, and both
+skill-validation eval waves (compliance bundle Wave 1, publish bundle
+Wave 2 — 15 skills, 2 bundles, 88 fixtures total). Highlights the
+blocked-release fix that failed its first re-verification and only held
+after a second, independently-verified round, and a model-drift finding
+from re-running the NIST checkpoint skill under a newer Claude model.
+Internal methodology detail (contamination rules, PR numbers, file paths,
+model version names) intentionally abstracted out — public version states
+the findings and the process, not the internal plumbing.
+
+### Added
+- `src/pages/resources/ai-risk-profile-case-study.astro` — new case-study
+  page, terminal-UI styling matching `publish-bundle-stress-test.astro`'s
+  conventions.
+
+### Changed
+- `src/pages/resources/index.astro` — registered the new case study in the
+  `caseStudies` listing (newest-first sort).
+
 ## Fix Wave 2 refix-verify findings: Blocked-gate hedge, disclaimer reliability (fix/publish-refix-round2)
 
 **Branch:** `fix/publish-refix-round2` — PR #120 (2026-07-08)

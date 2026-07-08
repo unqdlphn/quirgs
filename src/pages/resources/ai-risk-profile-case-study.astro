@@ -1,0 +1,333 @@
+---
+// src/pages/resources/ai-risk-profile-case-study.astro
+// Case study — the full Quirgs AI Risk Profile self-assessment. Terminal (TUI)
+// styling inherited from BaseLayout, mirroring the /skills/[slug] detail-page
+// structure and the publish-bundle-stress-test case study's own conventions.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
+
+const waveResults = [
+  {
+    wave: "Wave 1 — quirgs-compliance",
+    scope: "7 skills, 48 fixtures",
+    baseline: "3 / 7 clean on first run",
+    result: "7 / 7 verified clean after fixes",
+  },
+  {
+    wave: "Wave 2 — quirgs-publish",
+    scope: "8 skills, 40 fixtures",
+    baseline: "1 / 8 clean on first run",
+    result: "9 / 9 targeted defects verified clean after two fix rounds",
+  },
+];
+
+const frameworkResults = [
+  {
+    area: "NIST AI RMF (Govern / Map / Measure / Manage)",
+    finding: "Full four-function assessment against our own platform",
+    status: "Policy, risk register, incident playbook, and misuse tabletop closed the gaps found",
+  },
+  {
+    area: "EU AI Act",
+    finding: "Formal risk-tier classification of the Quirgs platform itself",
+    status: "Classified Minimal Risk — decision-support tooling, not an autonomous high-risk system",
+  },
+  {
+    area: "ISO/IEC 42001",
+    finding: "Gap analysis against the AI management system standard",
+    status: "Scoped gaps identified and tracked to closure alongside the NIST work",
+  },
+];
+---
+
+<BaseLayout
+  title="The Quirgs AI Risk Profile — Self-Assessment Case Study"
+  description="We ran NIST AI RMF, the EU AI Act, ISO 42001, and our own skill-validation harness against Quirgs itself — all 15 skills across both bundles. Here's what a governance company finds when it turns the framework on its own product."
+  terminalPath="~/resources/ai-risk-profile-case-study"
+>
+  <NavBlock currentPath="/resources/" />
+
+  <!-- Back to resources listing -->
+  <div class="line">
+    <span class="text-blue">&larr;</span>&nbsp;<a href="/resources/"
+      >back to resources</a
+    >
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/resources</span
+    ><span class="text-bright">$</span>&nbsp;cat ai-risk-profile-case-study.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <!-- Header block -->
+  <div class="detail-header">
+    <h1 class="text-bright">The Quirgs AI Risk Profile — Self-Assessment Case Study</h1>
+    <p class="tagline">
+      We ran the same frameworks and the same validation harness we sell
+      against our own platform — both skill bundles, 15 skills, 88 fixtures.
+      Most of it failed on the first pass.
+    </p>
+    <div class="badges-row">
+      <span class="badge">July 2026</span>
+      <span class="badge status-badge status-live">[15 SKILLS · 2 BUNDLES]</span>
+      <span class="badge status-badge status-live">[NIST · EU AI ACT · ISO 42001]</span>
+    </div>
+  </div>
+
+  <h2 class="text-bright">The Problem We Were Solving</h2>
+  <p>
+    Quirgs sells governance: risk classification, compliance checkpoints,
+    output validation. That premise only holds if the same rigor applies to
+    Quirgs itself. So we ran a full self-assessment — the complete NIST AI RMF
+    framework, an EU AI Act classification, an ISO 42001 gap analysis, and a
+    clean-room validation harness against every skill in both bundles. This
+    is a summary of what a governance company finds when it turns its own
+    framework on its own product.
+  </p>
+
+  <h2 class="text-bright">The Governance Assessment</h2>
+  <p>
+    Before testing individual skill outputs, we assessed the platform itself
+    against the three frameworks our skills evaluate for customers.
+  </p>
+
+  <div class="results-table">
+    <div class="results-header">
+      <span class="col-test text-bright">FRAMEWORK</span>
+      <span class="col-result text-bright">OUTCOME</span>
+    </div>
+    <div class="divider-row"><span class="divider-line"></span></div>
+    {
+      frameworkResults.map((row) => (
+        <div class="result-row">
+          <span class="col-test">{row.area}</span>
+          <span class="col-result">
+            {row.finding} — {row.status}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+
+  <p>
+    The NIST assessment surfaced real gaps at baseline: no formal risk
+    register, no incident response plan, no structured process for thinking
+    through how a correct-looking-but-wrong output could cause harm. Each of
+    those became a governance artifact — a risk register with specific,
+    scored entries; an incident playbook with defined severity tiers; a
+    misuse tabletop that walked through the actual failure modes and fed
+    findings back into the register. None of this was theoretical. Every
+    finding below traces back to a line in that register.
+  </p>
+
+  <h2 class="text-bright">The Skill-by-Skill Validation — Two Waves</h2>
+  <p>
+    Governance frameworks establish structure. They don't tell you whether a
+    specific skill produces a correct answer. For that, we built a
+    clean-room evaluation harness: fixture inputs with no answer key attached
+    are handed to a fresh session that has never seen the reference answer;
+    a separate pass grades the raw output against a rubric with defined
+    automatic-failure conditions. The session that writes the reference
+    answers never grades against them. That separation is the point — it's
+    the difference between a real test and a company grading its own
+    homework.
+  </p>
+  <p>We ran that harness against both bundles, in two waves.</p>
+
+  <div class="results-table">
+    <div class="results-header">
+      <span class="col-test text-bright">WAVE</span>
+      <span class="col-result text-bright">RESULT</span>
+    </div>
+    <div class="divider-row"><span class="divider-line"></span></div>
+    {
+      waveResults.map((row) => (
+        <div class="result-row">
+          <span class="col-test">
+            {row.wave}
+            <br />
+            <span class="col-scope">{row.scope}</span>
+          </span>
+          <span class="col-result">
+            Baseline: {row.baseline}
+            <br />
+            {row.result}
+          </span>
+        </div>
+      ))
+    }
+  </div>
+
+  <p>
+    The defects found were not formatting nitpicks. Wave 1 surfaced a
+    regulatory-substance error — a skill failed to correctly classify a
+    prohibited-practice scenario — alongside a systemic gap where the
+    advisory disclaimer didn't appear on every response, only the final
+    formatted output. Wave 2, run against the newer publish bundle, found an
+    AI-involvement classifier that computed the wrong risk tier for an
+    unauthorized voice clone (a case where the reasoning was correct but the
+    number wasn't), an orchestrator that hedged around its own hard-stop rule
+    for blocked releases, a required copyright field that wasn't actually
+    enforced as blocking, and a dormancy calculation that fired one quarter
+    too early. Six of the eight publish skills were missing the advisory
+    disclaimer on non-final responses; one had no disclaimer infrastructure
+    at all.
+  </p>
+
+  <h2 class="text-bright">The Fix That Didn't Hold — And How We Caught It</h2>
+  <p>
+    One finding is worth telling in detail, because the first fix looked
+    complete and wasn't.
+  </p>
+  <p>
+    The publish-bundle orchestrator has a hard rule: if a release is blocked
+    pending resolution of a compliance issue, it stops — no partial
+    workaround, no "ship to the clear platforms and fix the rest later." The
+    baseline run found the skill stating that rule and then floating exactly
+    that kind of workaround anyway. The first fix added explicit language
+    forbidding it, with one narrow exception for cases where a genuine
+    per-platform status breakdown already existed elsewhere in the
+    conversation.
+  </p>
+  <p>
+    On independent re-verification, the exception clause turned out to be the
+    loophole. Given a description that merely sounded platform-specific — no
+    actual breakdown present — the model used the exception as license to
+    construct one anyway and suggest the workaround. Same defect, new
+    phrasing, one fix cycle later.
+  </p>
+  <p>
+    The second fix removed the exception entirely. No inferred breakdowns,
+    ever — only a verbatim status already stated elsewhere. Re-verified
+    independently a second time, against the same input that had broken it
+    twice before. It held.
+  </p>
+
+  <h2 class="text-bright">A Second Kind of Finding: Model Drift</h2>
+  <p>
+    Not every finding was a skill defect. Re-running the NIST assessment
+    skill under a newer model produced a different, subtly wrong result on
+    the same input that a prior model handled correctly — the newer model
+    marked several subcategories as confidently failing where the correct
+    answer, given no evidence either way, was "insufficient information."
+    The skill's own text hadn't changed. The underlying model had. We
+    verified this with a controlled comparison (identical skill definition,
+    two model versions) before concluding it was drift rather than a defect,
+    and it's now a monitored, logged risk rather than an assumption. This is
+    a different category of finding than a code bug — it's evidence that
+    "we tested it once" isn't the same claim as "it stays correct."
+  </p>
+
+  <h2 class="text-bright">What This Demonstrates</h2>
+  <p>Three things worth noting for anyone deciding whether to trust this process:</p>
+  <p>
+    <span class="text-bright">The methodology is repeatable, across the whole
+    platform.</span> Clean-room validation isn't a one-time audit of one
+    bundle — it's a harness we've now run against both, and it caught
+    something different in each: a regulatory-substance error, a disclaimer
+    gap, a hard-stop rule with a hedge built into it, and a model-drift
+    instance that had nothing to do with our own code at all.
+  </p>
+  <p>
+    <span class="text-bright">A fix that looks complete isn't verified until
+    it's re-run.</span> The blocked-release case is the whole argument for
+    re-verification as a distinct step from fixing. A team that ships a fix
+    and calls it done, without checking again, would have missed this.
+  </p>
+  <p>
+    <span class="text-bright">The defects were real, and they were ours.</span>
+    Every finding above came from our own shipped product, found by our own
+    methodology, in places that would have mattered to a real user relying on
+    the output. A governance practice that only ever finds other people's
+    problems isn't one you should trust with yours.
+  </p>
+
+  <div class="detail-footer">
+    <p><span class="label">PUBLISHED:</span> July 2026</p>
+    <p><span class="label">SCOPE:</span> 15 skills across 2 bundles, 88 fixtures, 2 eval waves</p>
+    <p><span class="label">FRAMEWORKS:</span> NIST AI RMF · EU AI Act (Minimal Risk) · ISO/IEC 42001</p>
+    <p>
+      <span class="label">BUNDLES:</span>
+      <a href="/bundles/">quirgs-compliance &amp; quirgs-publish</a>
+    </p>
+  </div>
+
+  <p class="signoff text-main">Quirgs · Governance first. Build accordingly.</p>
+</BaseLayout>
+
+<style>
+  .results-table {
+    width: 100%;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    margin: 12px 0 24px;
+  }
+
+  .results-header,
+  .result-row {
+    display: grid;
+    grid-template-columns: 32% 1fr;
+    gap: 0 16px;
+    align-items: baseline;
+  }
+
+  .results-header {
+    margin-bottom: 2px;
+  }
+
+  .divider-row {
+    margin-bottom: 6px;
+  }
+
+  .divider-line {
+    display: block;
+    height: 1px;
+    background: var(--term-border);
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .result-row {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--term-border);
+  }
+
+  .result-row:last-child {
+    border-bottom: none;
+  }
+
+  .col-test {
+    color: var(--text-bright);
+  }
+
+  .col-scope {
+    color: var(--text-main);
+    opacity: 0.75;
+    font-size: 0.82rem;
+  }
+
+  .signoff {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--term-border);
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 600px) {
+    .results-header,
+    .result-row {
+      grid-template-columns: 1fr;
+    }
+
+    .results-header .col-result {
+      display: none;
+    }
+
+    .col-result {
+      margin-top: 4px;
+    }
+  }
+</style>
