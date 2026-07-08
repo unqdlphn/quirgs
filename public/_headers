@@ -62,6 +62,12 @@
   Content-Type: application/json
   Cache-Control: public, max-age=3600
 
+# Agent discovery Link headers (RFC 8288) on the homepage — points agents at
+# the ARD catalog and the agent-facing site map without requiring a page fetch.
+/
+  Link: </.well-known/ai-catalog.json>; rel="api-catalog"
+  Link: </llms.txt>; rel="service-doc"
+
 # Legacy SEO guides (public/guides/*) are preserved verbatim and contain their
 # own inline scripts/styles that must not be modified. Detach the strict policy
 # above so the comma-join rule doesn't intersect it onto these pages (which would

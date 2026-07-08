@@ -12,4 +12,10 @@ Allow: /
 # Deferred / non-public routes — keep them out of the index.
 Disallow: /keystatic/
 
+# Content Signals (contentsignals.org) — declares AI usage preferences
+# alongside the crawl allow/disallow rules above. Governance-first stance:
+# agents may read and act on this content (search, ai-input), but it is not
+# offered for unlicensed model-training corpora (ai-train).
+Content-Signal: search=yes, ai-input=yes, ai-train=no
+
 Sitemap: https://quirgs.com/sitemap-index.xml
