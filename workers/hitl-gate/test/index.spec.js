@@ -533,6 +533,179 @@ describe('GET /health', () => {
   });
 });
 
+// --- Email notification tests ---
+describe('POST /events — email fire', () => {
+  it('sends email when EMAIL binding and GATE_NOTIFY_TO are set', async () => {
+    const sendMock = vi.fn().mockResolvedValue({ messageId: 'test-id' });
+    const ctx = createExecutionContext();
+    const res = await worker.fetch(
+      new Request('https://gate/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer test-token',
+        },
+        body: JSON.stringify({
+          type: 'test.event',
+          payload: { item: 'foo', stage: 'draft' },
+        }),
+      }),
+      {
+        HITL_DB: env.HITL_DB,
+        HITL_WRITE_TOKEN: 'test-token',
+        EMAIL: { send: sendMock },
+        GATE_NOTIFY_TO: 'reviewer@example.com',
+      },
+      ctx,
+    );
+    expect(res.status).toBe(201);
+    await waitOnExecutionContext(ctx);
+    expect(sendMock).toHaveBeenCalledTimes(1);
+    const call = sendMock.mock.calls[0][0];
+    expect(call.to).toBe('reviewer@example.com');
+    expect(call.from).toBe('gate@notify.quirgs.com');
+    expect(call.subject).toContain('foo');
+    expect(call.text).toContain('draft');
+  });
+
+  it('strips CRLF and caps length on payload fields to prevent email header injection', async () => {
+    const sendMock = vi.fn().mockResolvedValue({ messageId: 'test-id' });
+    const ctx = createExecutionContext();
+    const maliciousItem = 'attack\r\nInject: yes\n' + 'a'.repeat(200);
+    const res = await worker.fetch(
+      new Request('https://gate/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer test-token',
+        },
+        body: JSON.stringify({
+          type: 'test.event',
+          payload: { item: maliciousItem, stage: 'draft\r\nInject: yes' },
+        }),
+      }),
+      {
+        HITL_DB: env.HITL_DB,
+        HITL_WRITE_TOKEN: 'test-token',
+        EMAIL: { send: sendMock },
+        GATE_NOTIFY_TO: 'reviewer@example.com',
+      },
+      ctx,
+    );
+    expect(res.status).toBe(201);
+    await waitOnExecutionContext(ctx);
+    expect(sendMock).toHaveBeenCalledTimes(1);
+    const call = sendMock.mock.calls[0][0];
+    expect(call.subject).not.toContain('\r');
+    expect(call.subject).not.toContain('\n');
+    expect(call.subject.length).toBeLessThan(200); // 150 cap + subject prefix length
+    expect(call.text).toContain('attack Inject: yes');
+  });
+
+  it('returns 201 with no email attempt when EMAIL binding absent', async () => {
+    const ctx = createExecutionContext();
+    const res = await worker.fetch(
+      new Request('https://gate/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer test-token',
+        },
+        body: JSON.stringify({ type: 'test.event', payload: { item: 'bar' } }),
+      }),
+      {
+        HITL_DB: env.HITL_DB,
+        HITL_WRITE_TOKEN: 'test-token',
+        GATE_NOTIFY_TO: 'reviewer@example.com',
+      }, // no EMAIL
+      ctx,
+    );
+    expect(res.status).toBe(201);
+    await waitOnExecutionContext(ctx);
+  });
+
+  it('returns 201 with no email attempt when GATE_NOTIFY_TO absent', async () => {
+    const sendMock = vi.fn().mockResolvedValue({ messageId: 'test-id' });
+    const ctx = createExecutionContext();
+    const res = await worker.fetch(
+      new Request('https://gate/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer test-token',
+        },
+        body: JSON.stringify({ type: 'test.event', payload: { item: 'baz' } }),
+      }),
+      {
+        HITL_DB: env.HITL_DB,
+        HITL_WRITE_TOKEN: 'test-token',
+        EMAIL: { send: sendMock },
+      }, // no GATE_NOTIFY_TO
+      ctx,
+    );
+    expect(res.status).toBe(201);
+    await waitOnExecutionContext(ctx);
+    expect(sendMock).not.toHaveBeenCalled();
+  });
+
+  it('returns 201 when EMAIL.send() rejects — error does not surface', async () => {
+    const sendMock = vi.fn().mockRejectedValue(new Error('send failed'));
+    const ctx = createExecutionContext();
+    const res = await worker.fetch(
+      new Request('https://gate/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer test-token',
+        },
+        body: JSON.stringify({ type: 'test.event', payload: { item: 'qux' } }),
+      }),
+      {
+        HITL_DB: env.HITL_DB,
+        HITL_WRITE_TOKEN: 'test-token',
+        EMAIL: { send: sendMock },
+        GATE_NOTIFY_TO: 'reviewer@example.com',
+      },
+      ctx,
+    );
+    expect(res.status).toBe(201);
+    await waitOnExecutionContext(ctx);
+  });
+
+  it('both WEBHOOK_URL and EMAIL fire independently when both are configured', async () => {
+    const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(new Response('ok', { status: 200 }));
+    const sendMock = vi.fn().mockResolvedValue({ messageId: 'test-id' });
+    const ctx = createExecutionContext();
+
+    const res = await worker.fetch(
+      new Request('https://gate/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer test-token',
+        },
+        body: JSON.stringify({
+          type: 'test.event',
+          payload: { item: 'both-channels' },
+        }),
+      }),
+      {
+        HITL_DB: env.HITL_DB,
+        HITL_WRITE_TOKEN: 'test-token',
+        WEBHOOK_URL: 'https://webhook.example.com/hook',
+        EMAIL: { send: sendMock },
+        GATE_NOTIFY_TO: 'reviewer@example.com',
+      },
+      ctx,
+    );
+    expect(res.status).toBe(201);
+    await waitOnExecutionContext(ctx);
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+    expect(sendMock).toHaveBeenCalledTimes(1);
+    fetchSpy.mockRestore();
+  });
+});
+
 describe('routing', () => {
   it('returns 404 for unknown paths', async () => {
     const res = await request('/nope');
