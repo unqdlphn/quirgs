@@ -43,3 +43,10 @@ binding = "HITL_DB"
 database_name = "quirgs-hitl-db"
 database_id = "11d74f61-cffe-4830-9ca2-f8f6bb5e1c68"
 migrations_dir = "migrations"
+
+# Cloudflare Email Service — sends via the notify.quirgs.com subdomain (see
+# DNS setup, 2026-07-09). Apex quirgs.com keeps its null-mail hardening;
+# this binding only ever sends from notify.quirgs.com addresses.
+[[send_email]]
+name = "EMAIL"
+

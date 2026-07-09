@@ -86,6 +86,47 @@ function serializeEvent(row) {
   };
 }
 
+function parseNotificationFields(payload) {
+  const rawItem = payload?.item ?? null;
+  const rawStage = payload?.stage ?? null;
+  const rawFrameworks = payload?.frameworks ?? null;
+
+  // Clean strings for email/subject (CRLF stripping + capping length)
+  const clean = (val, max) => {
+    if (val === undefined || val === null) return '';
+    const str = String(val).replace(/[\r\n]+/g, ' ').trim();
+    return str.length > max ? str.slice(0, max - 3) + '...' : str;
+  };
+
+  const emailItem = clean(rawItem, 150) || '(no item)';
+  const emailStage = clean(rawStage, 50) || 'n/a';
+
+  let emailFrameworks = 'n/a';
+  if (Array.isArray(rawFrameworks)) {
+    emailFrameworks = rawFrameworks
+      .map((f) => clean(f, 30))
+      .filter(Boolean)
+      .join(', ');
+    if (!emailFrameworks) emailFrameworks = 'n/a';
+  } else if (rawFrameworks !== null) {
+    emailFrameworks = clean(rawFrameworks, 100) || 'n/a';
+  }
+
+  return {
+    raw: {
+      item: rawItem,
+      stage: rawStage,
+      frameworks: rawFrameworks,
+    },
+    email: {
+      item: emailItem,
+      stage: emailStage,
+      frameworks: emailFrameworks,
+    },
+  };
+}
+
+
 export default {
   async fetch(request, env, ctx) {
     const cors = corsHeaders(request, env);
@@ -183,6 +224,8 @@ export default {
           "INSERT INTO events (id, type, payload, status, created_at, updated_at) VALUES (?, ?, ?, 'pending', ?, ?)"
         ).bind(id, body.type, payloadStr, now, now).run();
 
+        const notification = parseNotificationFields(body.payload);
+
         // Fire webhook notification if configured (non-blocking)
         const webhookUrl = env.WEBHOOK_URL;
         if (webhookUrl) {
@@ -193,14 +236,37 @@ export default {
               body: JSON.stringify({
                 event_id: id,
                 type: body.type,
-                item: body.payload?.item ?? null,
-                stage: body.payload?.stage ?? null,
-                frameworks: body.payload?.frameworks ?? null,
+                item: notification.raw.item,
+                stage: notification.raw.stage,
+                frameworks: notification.raw.frameworks,
                 status: 'pending',
                 review_url: `${url.origin}/events/${id}`,
                 timestamp: now,
               }),
             }).catch(() => {}) // fire-and-forget — webhook errors must not fail the event POST
+          );
+        }
+
+        // Fire email notification if configured (non-blocking). Separate from the
+        // webhook above — this is a Quirgs-operated channel via Cloudflare Email
+        // Service, not part of the generic self-host webhook path.
+        if (env.EMAIL && typeof env.EMAIL.send === 'function' && env.GATE_NOTIFY_TO) {
+          const reviewUrl = `${url.origin}/events/${id}`;
+          ctx.waitUntil(
+            env.EMAIL.send({
+              to: env.GATE_NOTIFY_TO,
+              from: env.GATE_NOTIFY_FROM || 'gate@notify.quirgs.com',
+              subject: `HITL Gate — pending: ${notification.email.item}`,
+              text:
+                `A new event is pending review.\n\n` +
+                `Type: ${body.type}\n` +
+                `Item: ${notification.email.item}\n` +
+                `Stage: ${notification.email.stage}\n` +
+                `Frameworks: ${notification.email.frameworks}\n` +
+                `Event ID: ${id}\n\n` +
+                `Review and approve/reject at https://quirgs.com/review/\n` +
+                `Raw event: ${reviewUrl}`,
+            }).catch(() => {}) // fire-and-forget — email errors must not fail the event POST
           );
         }
 

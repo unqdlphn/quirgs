@@ -24,6 +24,16 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add email notification to HITL Gate Worker via Cloudflare Email Service (feat/hitl-gate-email-notify)
+
+**Branch:** `feat/hitl-gate-email-notify` (2026-07-09)
+
+- HITL Gate Worker now sends an email notification on every successful `POST /events`, via Cloudflare Email Service. Configurable via the `EMAIL` send_email binding and `GATE_NOTIFY_TO` secret/var.
+- Sent from a dedicated `notify.quirgs.com` subdomain — scoped DNS records only, apex `quirgs.com` null-mail hardening unaffected.
+- Additive to the existing `WEBHOOK_URL` path, not a replacement. Non-blocking; email errors do not affect event creation.
+- Added comprehensive Vitest test coverage for the email notification path.
+- Updated `quirgs.com/security/` documentation to reflect the new isolated subdomain configuration.
+
 ## Surface checkpoint_summary on /review/ and harden card rendering (feat/review-checkpoint-summary)
 
 **Branch:** `feat/review-checkpoint-summary` (2026-07-08)

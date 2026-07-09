@@ -61,10 +61,13 @@ import NavBlock from "../components/NavBlock.astro";
   <h2 class="text-bright">Email Authentication</h2>
   <div class="line">&nbsp;</div>
   <p>
-    The quirgs.com domain publishes a strict anti-spoofing configuration: a
-    null-MX record (the domain sends and receives no mail), an SPF record that
-    authorizes no senders, a reject-mode DMARC policy, and a DKIM record that
-    refuses all keys. Nobody can send mail that appears to come from quirgs.com.
+    The quirgs.com apex domain publishes a strict anti-spoofing configuration:
+    a null-MX record, an SPF record that authorizes no senders, a reject-mode
+    DMARC policy, and a DKIM record that refuses all keys. Nobody can send mail
+    that appears to come from quirgs.com itself. A single dedicated subdomain,
+    notify.quirgs.com, is provisioned separately with its own SPF, DKIM, and
+    DMARC records to send automated gate notifications — it is fully isolated
+    from the apex configuration above.
   </p>
 
   <div class="line">&nbsp;</div>
