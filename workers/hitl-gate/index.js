@@ -253,20 +253,26 @@ export default {
         if (env.EMAIL && typeof env.EMAIL.send === 'function' && env.GATE_NOTIFY_TO) {
           const reviewUrl = `${url.origin}/events/${id}`;
           ctx.waitUntil(
-            env.EMAIL.send({
-              to: env.GATE_NOTIFY_TO,
-              from: env.GATE_NOTIFY_FROM || 'gate@notify.quirgs.com',
-              subject: `HITL Gate — pending: ${notification.email.item}`,
-              text:
-                `A new event is pending review.\n\n` +
-                `Type: ${body.type}\n` +
-                `Item: ${notification.email.item}\n` +
-                `Stage: ${notification.email.stage}\n` +
-                `Frameworks: ${notification.email.frameworks}\n` +
-                `Event ID: ${id}\n\n` +
-                `Review and approve/reject at https://quirgs.com/review/\n` +
-                `Raw event: ${reviewUrl}`,
-            }).catch(() => {}) // fire-and-forget — email errors must not fail the event POST
+            (async () => {
+              try {
+                await env.EMAIL.send({
+                  to: env.GATE_NOTIFY_TO,
+                  from: env.GATE_NOTIFY_FROM || 'gate@notify.quirgs.com',
+                  subject: `HITL Gate — pending: ${notification.email.item}`,
+                  text:
+                    `A new event is pending review.\n\n` +
+                    `Type: ${body.type}\n` +
+                    `Item: ${notification.email.item}\n` +
+                    `Stage: ${notification.email.stage}\n` +
+                    `Frameworks: ${notification.email.frameworks}\n` +
+                    `Event ID: ${id}\n\n` +
+                    `Review and approve/reject at https://quirgs.com/review/\n` +
+                    `Raw event: ${reviewUrl}`,
+                });
+              } catch (err) {
+                // Safely ignore email transmission failures
+              }
+            })()
           );
         }
 
