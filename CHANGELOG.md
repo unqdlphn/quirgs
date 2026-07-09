@@ -24,6 +24,26 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix low-contrast text in shared nav/menu/footer components (feat/a11y-funnel-contrast)
+
+**Branch:** `feat/a11y-funnel-contrast` (2026-07-09)
+
+- Fixes a Track B stress-test finding (`PHASE4-trackB-results-2026-07-09.md`,
+  Lighthouse accessibility 95/100 on `/gate/`, `/hitl/`, `/demo/`): several
+  shared components used a hardcoded `#71717a` for real, meaningful text
+  (`NavBlock.astro` tab-key hint and `[+N more]` trigger, `HelpModal.astro`
+  title/close button, `SiteMenu.astro` title/close button/route descriptions)
+  — 4.12:1 / 3.67:1 contrast against the theme's two backgrounds, both below
+  the WCAG AA 4.5:1 body-text bar. Swapped to the existing `--text-main`
+  design token (`#a1a1aa`, 6.91:1–7.76:1) instead of introducing a new color.
+- A second hardcoded gray, `#3f3f46` (`Footer.astro` `.footer-sep` middle-dot
+  separators, `SiteMenu.astro` `.menu-branch` ASCII tree-drawing connectors),
+  failed far worse (1.91:1 / 1.70:1) but is purely decorative glyphs with no
+  semantic content — marked `aria-hidden="true"` on those spans instead of
+  recoloring, preserving the intentionally faint tree-diagram aesthetic.
+- No inline `<script>` bytes touched — CSS/markup only — so the CSP hashes
+  pinned in `public/_headers` are unaffected.
+
 ## Add email notification to HITL Gate Worker via Cloudflare Email Service (feat/hitl-gate-email-notify)
 
 **Branch:** `feat/hitl-gate-email-notify` (2026-07-09)
