@@ -85,7 +85,7 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
           return (
             <>
               <div class="menu-line menu-tree">
-                <span class="menu-branch">{groupBranch}</span>
+                <span class="menu-branch" aria-hidden="true">{groupBranch}</span>
                 <span class="menu-group">{g.group}</span>
               </div>
               {g.routes.map((r, ri) => {
@@ -94,7 +94,7 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
                 const isCurrent = r.path === currentPath;
                 return (
                   <div class="menu-line menu-tree">
-                    <span class="menu-branch">{branch}</span>
+                    <span class="menu-branch" aria-hidden="true">{branch}</span>
                     {isCurrent ? (
                       <span class="menu-current" aria-current="page">
                         {r.label}
@@ -177,7 +177,7 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
   .menu-title {
     flex-grow: 1;
     text-align: center;
-    color: #71717a;
+    color: var(--text-main);
     font-size: 0.85rem;
     font-family: "JetBrains Mono", "Courier New", Courier, monospace;
   }
@@ -185,7 +185,7 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
   .menu-close {
     background: transparent;
     border: 1px solid var(--term-border);
-    color: #71717a;
+    color: var(--text-main);
     font-family: "JetBrains Mono", "Courier New", Courier, monospace;
     font-size: 0.8rem;
     padding: 2px 6px;
@@ -238,7 +238,7 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
   }
 
   .menu-desc {
-    color: #71717a;
+    color: var(--text-main);
   }
 
   .menu-body .prompt {
