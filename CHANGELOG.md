@@ -41,6 +41,13 @@ practice and roll up into those two releases.
   color-contrast failure across the funnel (PR #129).
 - Added to the `/resources/` index and cross-linked from `/gate/`'s early-
   access section.
+- `/gate/`'s "HOW IT WORKS" list ended at "Agent reads the decision and
+  proceeds" — reads as automatic resumption, but the actual mechanism is
+  conversational (the agent's turn ends after posting; a human relays the
+  reviewer's decision back to resume it — no polling, no webhook-to-agent
+  callback today). Added a `[RESUMPTION]` callout clarifying this, linked to
+  `/hitl/`'s already-precise "WIRE IT TO AN AGENT" six-step breakdown (added
+  an anchor id there to support the deep link).
 
 ## Fix low-contrast text in shared nav/menu/footer components (feat/a11y-funnel-contrast)
 
