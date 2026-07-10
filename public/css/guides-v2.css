@@ -19,7 +19,6 @@
     --blue: #60a5fa;
     --red: #f87171;
     --yellow: #facc15;
-    --purple: #a78bfa;
 
     --code-bg: #0d0d10;
     --code-text: #a1a1aa;
@@ -28,7 +27,12 @@
     --radius-lg: 10px;
     --max-w: 860px;
 
-    --font-mono: 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    /* Aligned to lead with the same primary mono face as the terminal UI
+       (src/layouts/BaseLayout.astro --font-mono). Neither is loaded via a
+       web font import here, so both currently fall back to system
+       monospace — this keeps the declared stack consistent in case a
+       font import is added later. */
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
     --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
