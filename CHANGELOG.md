@@ -24,6 +24,18 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add dev validation program early-access section to README (feat/readme-dev-program)
+
+**Branch:** `feat/readme-dev-program` (2026-07-09)
+
+- New `## Dev validation program — early access` README section after the
+  install instructions: the 25/25 stress-test result and measured ~10s
+  integration test (both traced to Case Study Zero), the three recruitment
+  scenarios (compliance sign-off · publish gate · incident escalation),
+  program terms, and entry points (`/gate/` or a repo issue). Phase 4
+  checkpoint 6 outreach deliverable, copy HITL-approved 2026-07-09. No
+  plugin/bundle version changes.
+
 ## Sync README with hitl-gate email notification and current test counts (docs/readme-email-notify-tests)
 
 **Branch:** `docs/readme-email-notify-tests` (2026-07-09)

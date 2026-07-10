@@ -75,6 +75,34 @@ a Gist cannot deliver a Skill's `references/` directory.
 
 ---
 
+## Dev validation program — early access
+
+The HITL gate is production-validated: 25/25 stress-test checks green across
+the full gate loop and the dev onboarding funnel, run against live
+infrastructure — methodology and results in
+[Case Study Zero](https://quirgs.com/resources/case-study-zero/). The
+90-second integration test at [quirgs.com/hitl/](https://quirgs.com/hitl/)
+measured ~10 seconds to first successful POST.
+
+We're recruiting **three developers for three production scenarios**:
+
+| Scenario | You are | The workflow |
+| --- | --- | --- |
+| Compliance sign-off | Governance / team lead | An agent's EU AI Act classification held for recorded human approval via `hitl-compliance-gate` |
+| Publish gate | AI engineer (content/docs) | AI-generated output gated behind PATCH approval before it ships |
+| Incident escalation | AI engineer (prod agents) | Incident events routed through the gate; a human approves or rejects escalation |
+
+The terms: your real workflow, your own gate Worker (self-hosted from
+[workers/hitl-gate/](workers/hitl-gate/) — the shared gate is demo-only), at
+least one week of active use, and an exit interview. In return: early access
+to the skill line, optional named participation in a published case study,
+and direct input into what ships next.
+
+Start at [quirgs.com/gate/](https://quirgs.com/gate/), or open an issue on
+this repo to raise a hand.
+
+---
+
 ## Stack
 
 | Layer | Choice |
