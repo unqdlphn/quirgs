@@ -1,0 +1,363 @@
+---
+// src/pages/resources/case-study-zero.astro
+// Case study — Phase 4 production stress test ("Case Study Zero"). Terminal
+// (TUI) styling inherited from BaseLayout, mirroring the /skills/[slug]
+// detail-page structure and the other resources/ case studies' conventions.
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import NavBlock from "../../components/NavBlock.astro";
+
+const trackA = [
+  { check: "GET /health", result: "PASS — 200, no auth required" },
+  { check: "Unauthenticated read", result: "PASS — 401 without Bearer" },
+  {
+    check: "Authenticated read + pagination",
+    result: "PASS — limit/before paging, no overlap",
+  },
+  { check: "Skill → gate POST", result: "PASS — event lands pending" },
+  {
+    check: "Shared-gate warning",
+    result: "PASS — explicit confirmation required",
+  },
+  {
+    check: "Status stripping",
+    result: "PASS — client-supplied status stripped",
+  },
+  { check: "Webhook out", result: "PASS — full event summary delivered" },
+  { check: "/review/ auth", result: "PASS — Cloudflare Access challenge" },
+  { check: "Queue render", result: "PASS — full context visible" },
+  { check: "Approve", result: "PASS — PATCH → approved, timestamped" },
+  {
+    check: "Agent resume",
+    result: "PASS — verified server-side, not reviewer say-so",
+  },
+  { check: "Reject path", result: "PASS — agent halts, double-PATCH guarded" },
+  { check: "Graceful degradation", result: "PASS — unset env vars, no crash" },
+  { check: "CORS", result: "PASS — disallowed origins never reflected" },
+];
+
+const trackB = [
+  { check: "Landing", result: "PASS — boot sequence, zero CSP violations" },
+  { check: "/gate/", result: "PASS — all sections incl. Gödel/NIST messaging" },
+  {
+    check: "/hitl/ 90-second test",
+    result: "PASS — ~10s to first successful POST",
+  },
+  { check: "Copy buttons", result: "PASS — clipboard write, CSP hash intact" },
+  { check: "/demo/", result: "PASS — 3 events, zero Worker calls on load" },
+  {
+    check: "Funnel links",
+    result: "PASS — gate → hitl → demo → skills cross-links intact",
+  },
+  {
+    check: "Mobile",
+    result: "PASS — /hitl/, /review/, /demo/ usable at mobile widths",
+  },
+  {
+    check: "Lighthouse",
+    result: "PASS — 100/100 all four categories, all three pages",
+  },
+  { check: "Plumbing", result: "PASS — sitemap, 404, _redirects all correct" },
+  {
+    check: "CSP sweep",
+    result: "PASS — zero blocked scripts across the funnel",
+  },
+  {
+    check: "Live metadata integrity",
+    result: "PASS — registry matches plugin manifests, CI green",
+  },
+];
+---
+
+<BaseLayout
+  title="Case Study Zero — Phase 4 Production Stress Test | Quirgs"
+  description="25 checks against live production — the full HITL gate loop and the dev onboarding funnel. Three real bugs found and fixed, one caught the same day it shipped."
+  terminalPath="~/resources/case-study-zero"
+>
+  <NavBlock currentPath="/resources/" />
+
+  <!-- Back to resources listing -->
+  <div class="line">
+    <span class="text-blue">&larr;</span>&nbsp;<a href="/resources/"
+      >back to resources</a
+    >
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <div class="line">
+    <span class="prompt">admin@quirgs</span><span class="path">~/resources</span
+    ><span class="text-bright">$</span>&nbsp;cat case-study-zero.md
+  </div>
+  <div class="line">&nbsp;</div>
+
+  <!-- Header block -->
+  <div class="detail-header">
+    <h1 class="text-bright">
+      Case Study Zero — Phase 4 Production Stress Test
+    </h1>
+    <p class="tagline">
+      Before we recruited a single outside developer, we ran the product against
+      itself — live production, no staging, 25 checks across the full gate loop
+      and the dev onboarding funnel.
+    </p>
+    <div class="badges-row">
+      <span class="badge">July 9, 2026</span>
+      <span class="badge status-badge status-live">[25/25 PASS]</span>
+      <span class="badge status-badge status-live">[3 BUGS FOUND, 3 FIXED]</span
+      >
+    </div>
+  </div>
+
+  <h2 class="text-bright">The Problem We Were Solving</h2>
+  <p>
+    Quirgs sells a claim: a compliance checkpoint an AI agent can be wired into,
+    with a human on the other end of the approval. That claim is only real if
+    the path a developer actually walks — skill install, gate POST, human
+    review, agent resume, onboarding funnel, docs — works against live
+    infrastructure, not a demo environment. Before recruiting the first outside
+    developer, we needed evidence, not a claim.
+  </p>
+  <p>
+    "Case Study Zero" is that evidence. It is also the origin of its own name:
+    it's the run before the run — the stress test that has to pass before any
+    developers are asked to trust the product with real workflows.
+  </p>
+
+  <h2 class="text-bright">What We Tested</h2>
+  <p>
+    Two tracks, both against live production — <code>quirgs.com</code> and <code
+      >gate.quirgs.com</code
+    > — not a preview or staging environment.
+  </p>
+  <h3>Track A — the full gate loop</h3>
+  <p>
+    The chain the product claim rests on: skill fires → POST lands pending →
+    webhook notifies → human reviews → PATCH approves or rejects → agent reads
+    the decision and proceeds or halts. 14 checks, executed 2026-07-07,
+    independently re-verified the next day against the live worker, D1 event
+    statuses, and worker source.
+  </p>
+  <h3>Track B — the dev onboarding funnel</h3>
+  <p>
+    The path a recruited developer actually walks before ever touching the gate:
+    landing page, <code>/gate/</code> overview, the <code>/hitl/</code>
+    90-second integration test, the <code>/demo/</code> sandbox queue, cross-links,
+    mobile usability, Lighthouse, and CSP integrity. 11 checks, executed 2026-07-09.
+    If this breaks, recruitment fails before the gate is ever exercised.
+  </p>
+
+  <h2 class="text-bright">Track A Results — 14 / 14 PASS</h2>
+  <div class="results-table">
+    <div class="results-header">
+      <span class="col-test text-bright">CHECK</span>
+      <span class="col-result text-bright">RESULT</span>
+    </div>
+    <div class="divider-row"><span class="divider-line"></span></div>
+    {
+      trackA.map((row) => (
+        <div class="result-row">
+          <span class="col-test">{row.check}</span>
+          <span class="col-result text-green">{row.result}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <h2 class="text-bright">Track B Results — 11 / 11 PASS</h2>
+  <div class="results-table">
+    <div class="results-header">
+      <span class="col-test text-bright">CHECK</span>
+      <span class="col-result text-bright">RESULT</span>
+    </div>
+    <div class="divider-row"><span class="divider-line"></span></div>
+    {
+      trackB.map((row) => (
+        <div class="result-row">
+          <span class="col-test">{row.check}</span>
+          <span class="col-result text-green">{row.result}</span>
+        </div>
+      ))
+    }
+  </div>
+
+  <h2 class="text-bright">The 90-Second Test</h2>
+  <p>
+    <code>/hitl/</code> makes a specific, checkable claim: a developer can wire an
+    agent to the gate and see it work — three curl commands, copy-paste, no SDK —
+    in under 90 seconds. We ran it verbatim, with a stopwatch, against live production.
+    <span class="text-bright"
+      >First successful POST landed in roughly 10 seconds</span
+    > — pending status confirmed, email notification fired and received. The claim
+    holds with more than 8x margin.
+  </p>
+
+  <h2 class="text-bright">The Gaps Found and Closed</h2>
+  <p>
+    25/25 PASS does not mean nothing was found. Three real issues surfaced
+    across the two tracks — none were check failures against the stated pass
+    conditions, but each was a genuine gap closed before this case study was
+    written.
+  </p>
+  <p>
+    <span class="text-bright"
+      >1. checkpoint_summary missing from the review card.</span>
+  </p>
+  <p>
+    Track A observation: the <code>/review/</code> queue card showed type/item/stage/frameworks
+    but not the mandatory sign-off questions a reviewer is supposed to read before
+    approving. Fixed same week (<code>feat/review-checkpoint-summary</code>) —
+    the sign-off row was added, and while in the file, every interpolated card
+    field was HTML-escaped, closing a stored-XSS surface on <code>/review/</code
+    > at the same time.
+  </p>
+  <p>
+    <span class="text-bright"
+      >2. No notification path after the throwaway test webhook expired.</span>
+  </p>
+  <p>
+    Track A used a temporary webhook.site target for delivery verification; it
+    was deleted after the run, leaving the gate with no notification path. Fixed
+    via <code>feat/hitl-gate-email-notify</code> — every successful <code
+      >POST /events</code
+    > now fires an email through Cloudflare Email Service from a dedicated sending
+    subdomain, additive to the existing webhook path. A synchronous throw inside the
+    email send could have surfaced as a 500 to the caller; caught and fixed in the
+    same branch before merge.
+  </p>
+  <p>
+    <span class="text-bright"
+      >3. Color-contrast failure across the funnel.</span>
+  </p>
+  <p>
+    Track B's Lighthouse pass came back 95/100 on accessibility for
+    <code>/gate/</code>, <code>/hitl/</code>, and <code>/demo/</code> — every other
+    category was 100. Two hardcoded grays in shared components (nav hints, modal titles,
+    close buttons, route descriptions) fell below the WCAG AA 4.5:1 contrast bar.
+    Fixed same day (<code>feat/a11y-funnel-contrast</code>) by routing that text
+    through the theme's existing <code>--text-main</code> token instead of introducing
+    a new color, and marking two purely decorative glyph spans (a footer separator,
+    ASCII tree connectors) <code>aria-hidden</code>
+    instead of recoloring them. Re-validated on the Cloudflare preview: 100/100 across
+    all four categories, all three pages.
+  </p>
+
+  <h2 class="text-bright">What This Demonstrates</h2>
+  <p>
+    <span class="text-bright">The claim was tested, not asserted.</span> Every number
+    in this page came from running the actual commands against the actual production
+    infrastructure a developer would use — not a changelog description of intended
+    behavior.
+  </p>
+  <p>
+    <span class="text-bright"
+      >The gaps found were real and were closed before publication.</span
+    > None of them were style nitpicks manufactured to make the report look thorough.
+    A stored-XSS surface, a silent notification gap, and a genuine accessibility failure
+    are the kind of issues that would otherwise surface first in front of a recruited
+    developer, not a reviewer.
+  </p>
+  <p>
+    <span class="text-bright">The 90-second claim has real margin.</span> A number
+    on a landing page is a promise. Measuring it with a stopwatch against live infrastructure,
+    and finding an 8x margin rather than a number that barely clears the bar, is what
+    makes it safe to keep making that promise to a developer who has never used the
+    product before.
+  </p>
+  <p>
+    This is the same governance discipline Quirgs sells applied to Quirgs
+    itself. The companion case study,
+    <a href="/resources/ai-risk-profile-case-study/"
+      >The Quirgs AI Risk Profile</a
+    >, covers the NIST AI RMF, EU AI Act, and ISO 42001 self-assessment that
+    sits underneath this stress test. Together they are the governance record
+    for the platform, not just the marketing claim about it.
+  </p>
+
+  <div class="detail-footer">
+    <p><span class="label">PUBLISHED:</span> July 9, 2026</p>
+    <p><span class="label">TRACK A:</span> 14 / 14 — live gate loop</p>
+    <p><span class="label">TRACK B:</span> 11 / 11 — dev onboarding funnel</p>
+    <p>
+      <span class="label">FIXES SHIPPED:</span> 3 — all merged and independently re-verified
+    </p>
+    <p>
+      <span class="label">SEE ALSO:</span>
+      <a href="/resources/ai-risk-profile-case-study/"
+        >AI Risk Profile case study</a
+      >
+      · <a href="/gate/">/gate/</a> · <a href="/hitl/">/hitl/</a> · <a
+        href="/demo/">/demo/</a
+      >
+    </p>
+  </div>
+
+  <p class="signoff text-main">Quirgs · Governance first. Build accordingly.</p>
+</BaseLayout>
+
+<style>
+  .results-table {
+    width: 100%;
+    font-size: 0.86rem;
+    line-height: 1.6;
+    margin: 12px 0 24px;
+  }
+
+  .results-header,
+  .result-row {
+    display: grid;
+    grid-template-columns: 40% 1fr;
+    gap: 0 16px;
+    align-items: baseline;
+  }
+
+  .results-header {
+    margin-bottom: 2px;
+  }
+
+  .divider-row {
+    margin-bottom: 6px;
+  }
+
+  .divider-line {
+    display: block;
+    height: 1px;
+    background: var(--term-border);
+    width: 100%;
+    grid-column: 1 / -1;
+  }
+
+  .result-row {
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--term-border);
+  }
+
+  .result-row:last-child {
+    border-bottom: none;
+  }
+
+  .col-test {
+    color: var(--text-bright);
+  }
+
+  .signoff {
+    margin-top: 32px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--term-border);
+    font-size: 0.85rem;
+    opacity: 0.8;
+  }
+
+  @media (max-width: 600px) {
+    .results-header,
+    .result-row {
+      grid-template-columns: 1fr;
+    }
+
+    .results-header .col-result {
+      display: none;
+    }
+
+    .col-result {
+      margin-top: 4px;
+    }
+  }
+</style>

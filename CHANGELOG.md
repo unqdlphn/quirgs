@@ -24,6 +24,31 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add Case Study Zero — Phase 4 production stress test writeup (feat/case-study-zero)
+
+**Branch:** `feat/case-study-zero` (2026-07-09)
+
+- New `/resources/case-study-zero/` page: publishes the full Phase 4
+  production stress test — Track A (14/14, full HITL gate loop) and Track B
+  (11/11, dev onboarding funnel), both run against live production
+  (`quirgs.com`, `gate.quirgs.com`), not staging. Source data:
+  `PHASE4-trackA-results-2026-07-07.md`, `PHASE4-trackB-results-2026-07-09.md`.
+- Covers the measured `/hitl/` 90-second integration test (~10s to first
+  successful POST) and the three real issues found and fixed during the
+  run: missing `checkpoint_summary` on `/review/` (+ stored-XSS hardening,
+  PR #127), the notification gap after the test webhook expired (email
+  notification via Cloudflare Email Service, PR #128), and a WCAG AA
+  color-contrast failure across the funnel (PR #129).
+- Added to the `/resources/` index and cross-linked from `/gate/`'s early-
+  access section.
+- `/gate/`'s "HOW IT WORKS" list ended at "Agent reads the decision and
+  proceeds" — reads as automatic resumption, but the actual mechanism is
+  conversational (the agent's turn ends after posting; a human relays the
+  reviewer's decision back to resume it — no polling, no webhook-to-agent
+  callback today). Added a `[RESUMPTION]` callout clarifying this, linked to
+  `/hitl/`'s already-precise "WIRE IT TO AN AGENT" six-step breakdown (added
+  an anchor id there to support the deep link).
+
 ## Fix low-contrast text in shared nav/menu/footer components (feat/a11y-funnel-contrast)
 
 **Branch:** `feat/a11y-funnel-contrast` (2026-07-09)

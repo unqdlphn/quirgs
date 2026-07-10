@@ -25,9 +25,7 @@ import NavBlock from "../components/NavBlock.astro";
   <p class="text-bright positioning-line">
     Static guardrails are provably insufficient.
   </p>
-  <p class="positioning-subline">
-    Skills teach governance. The gate enforces it.
-  </p>
+  <p>Skills teach governance. The gate enforces it.</p>
 
   <div class="line">&nbsp;</div>
 
@@ -36,14 +34,14 @@ import NavBlock from "../components/NavBlock.astro";
     Natural language is infinitely ambiguous. Guardrail rule-sets are
     necessarily finite. An adversarial formulation capable of bypassing any
     static, finite guardrail set will always exist — Gödel's incompleteness
-    theorems apply directly to alignment-by-rule-set. Absolute model
-    alignment is formally undecidable.
+    theorems apply directly to alignment-by-rule-set. Absolute model alignment
+    is formally undecidable.
   </p>
   <p>
     NIST AI RMF guidance has pivoted accordingly: point-in-time and
     pre-deployment vetting are no longer sufficient. Compliance now demands
-    continuous runtime behavioral analytics and dynamic containment —
-    including human escalation at the point of risk, not just before it.
+    continuous runtime behavioral analytics and dynamic containment — including
+    human escalation at the point of risk, not just before it.
   </p>
 
   <div class="line">&nbsp;</div>
@@ -82,8 +80,25 @@ import NavBlock from "../components/NavBlock.astro";
     <li>AI agent POSTs a pending event to the gate</li>
     <li>Reviewer sees it at <a href="/review/">quirgs.com/review</a></li>
     <li>Reviewer approves or rejects</li>
-    <li>Agent reads the decision and proceeds</li>
+    <li>Reviewer tells the agent the outcome and the agent proceeds</li>
   </ol>
+
+  <div class="token-block">
+    <div class="line"><span class="text-yellow">[RESUMPTION]</span></div>
+    <div class="line">
+      Step 4 is conversational, not automatic. The agent's turn ends after
+      posting — it does not poll the gate for a decision. Once a reviewer
+      approves or rejects, you (or your orchestration layer) tell the agent the
+      outcome to resume it.
+    </div>
+    <div class="line text-bright">
+      No built-in webhook-to-agent callback ships today. Full six-step pattern:
+    </div>
+    <div class="line">
+      <a href="/hitl/#wire-it-to-an-agent">WIRE IT TO AN AGENT</a>
+    </div>
+  </div>
+
   <p>
     No vendor lock-in. No dashboard fees.<br />
     Runs on Cloudflare. Bearer token auth. Open source.
@@ -98,7 +113,7 @@ import NavBlock from "../components/NavBlock.astro";
   <div class="line">Subject line: HITL Gate — early access request</div>
 
   <div class="line">&nbsp;</div>
-  <p>
+  <p class="text-bright">
     Or self-host and deploy your own instance from the <a
       href="https://github.com/unqdlphn/quirgs"
       target="_blank"
@@ -121,7 +136,14 @@ import NavBlock from "../components/NavBlock.astro";
   </div>
   <div>&nbsp;</div>
   <div>
-    &rarr; <a href="/resources/ai-risk-profile-case-study/">Risk Profile case study</a>
+    &rarr; <a href="/resources/ai-risk-profile-case-study/"
+      >Risk Profile case study</a
+    >
+  </div>
+  <div>&nbsp;</div>
+  <div>
+    &rarr; <a href="/resources/case-study-zero/">Case Study Zero</a> — 25 checks,
+    live production, three real bugs found and fixed
   </div>
 
   <div class="line">&nbsp;</div>
@@ -136,9 +158,5 @@ import NavBlock from "../components/NavBlock.astro";
     font-size: 1.25rem;
     line-height: 1.4;
     font-weight: bold;
-  }
-
-  .positioning-subline {
-    opacity: 0.7;
   }
 </style>
