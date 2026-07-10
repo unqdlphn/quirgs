@@ -24,6 +24,35 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Close remaining brand style-guide UI audit findings (fix/ui-audit-cleanup-round2)
+
+**Branch:** `fix/ui-audit-cleanup-round2` (2026-07-10)
+
+Closes the 3 findings left open after the round-2 extended audit (see
+`fix/ui-audit-cleanup`, PR #16, 2026-05-25, and the round-2 additions):
+the dead `slug` frontmatter, the `guides-v2.css` font-mono ordering, and
+the undocumented `--purple` token.
+
+### Removed
+- `src/content/skills/*.mdx` (all 15 files) — removed the redundant
+  `slug: "..."` frontmatter line. The `slug` field is optional in
+  `content.config.ts`/`keystatic.config.ts` (required there only so
+  Keystatic's `slugField: 'slug'` mechanism has a field to bind to — see
+  `CLAUDE.md`), but the value itself is never read by any template
+  (canonical slug is `entry.id`) and Keystatic strips it from frontmatter
+  on every save regardless. Schema fields are unchanged — do not
+  re-require `slug`, per the existing `content.config.ts` comment.
+- `public/css/guides-v2.css` — removed the unused `--purple: #a78bfa`
+  custom property. Confirmed zero references anywhere in `public/`.
+
+### Changed
+- `public/css/guides-v2.css` — `--font-mono` now leads with
+  `'JetBrains Mono'` (matching the terminal UI's primary mono face in
+  `src/layouts/BaseLayout.astro`), falling back to the previous
+  `'Fira Code'` and the rest of the original stack. Neither face is
+  loaded via a web font import today, so both currently render as system
+  monospace — this only matters once a font import is added.
+
 ## Move /review/ into the resources group in the site menu (fix/sitemenu-review-in-resources)
 
 **Branch:** `fix/sitemenu-review-in-resources` (2026-07-10)
