@@ -24,6 +24,19 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix mobile text wrapping in terminal `.line` blocks (fix/line-prewrap-mobile-wrap)
+
+**Branch:** `fix/line-prewrap-mobile-wrap` (2026-07-09)
+
+- `src/layouts/BaseLayout.astro`: removed `white-space: pre-wrap` from the
+  `.line` class. It's a CSS-inherited property, so any prose sitting inside a
+  `.line` div (directly or via a nested `<p>`) preserved the literal newline
+  characters from the `.astro` source file's line-wrapping as forced line
+  breaks — correct-looking on wide desktop viewports, ragged and
+  mid-sentence-broken on mobile. Affected `/gate/` (RESUMPTION block) and
+  `/hitl/` (WHO IT'S FOR / RUN YOUR OWN GATE list items). No markup changes
+  needed — text now reflows normally per viewport width.
+
 ## Add Case Study Zero — Phase 4 production stress test writeup (feat/case-study-zero)
 
 **Branch:** `feat/case-study-zero` (2026-07-09)
