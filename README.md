@@ -210,8 +210,8 @@ quirgs/
 | `/guides/[slug]/` | [src/pages/guides/[slug].astro](src/pages/guides/[slug].astro) | Per-guide detail page rendered from the `guides` MDX collection (Keystatic-managed). Clean URLs — no collision with the legacy `.html` archive. |
 | `/gate/` | [src/pages/gate.astro](src/pages/gate.astro) | HITL Gate stakeholder pitch — the case for human oversight infrastructure between an AI agent and any action it cannot take autonomously. |
 | `/demo/` | [src/pages/demo.astro](src/pages/demo.astro) | Fully static HITL Gate demo queue. No Worker/D1 dependency — three events hardcoded in [public/demo.js](public/demo.js), rendered client-side. Approve/Reject fire a demo-mode message only, never a fetch. |
-| `/hitl/` | [src/pages/hitl.astro](src/pages/hitl.astro) | HITL Gate docs + 90-second test. Backed by the `hitl-gate` Worker. |
 | `/review/` | [src/pages/review.astro](src/pages/review.astro) | HITL Gate review queue — loads pending events, Approve/Reject. Write token entered per session. |
+| `/hitl/` | [src/pages/hitl.astro](src/pages/hitl.astro) | HITL Gate docs + 90-second test. Backed by the `hitl-gate` Worker. |
 | `/resources/` | [src/pages/resources/index.astro](src/pages/resources/index.astro) | Resource pages. |
 | `/about/` | [src/pages/about.astro](src/pages/about.astro) | What Quirgs is, the governance-first thesis, who builds it, and how the platform is operated. |
 | `/security/` | [src/pages/security.astro](src/pages/security.astro) | Security & trust posture — CSP, data handling, skill distribution, vulnerability reporting, and the governance controls applied to the platform itself. |
