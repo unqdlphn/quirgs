@@ -24,6 +24,16 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Move /review/ into the resources group in the site menu (fix/sitemenu-review-in-resources)
+
+**Branch:** `fix/sitemenu-review-in-resources` (2026-07-10)
+
+- `/review/` was grouped under `site` in [src/data/routes.ts](src/data/routes.ts),
+  landing it in the sitemap overlay ([SiteMenu.astro](src/components/SiteMenu.astro))
+  next to `/support/`, `/privacy/`, and `/terms/` instead of its fellow HITL Gate
+  pages. Regrouped it under `resources`, alongside `/gate/` and `/demo/`. README
+  `Routes` table row order updated to match.
+
 ## Add dev validation program early-access section to README (feat/readme-dev-program)
 
 **Branch:** `feat/readme-dev-program` (2026-07-09)
