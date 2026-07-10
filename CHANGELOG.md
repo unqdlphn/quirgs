@@ -24,6 +24,18 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Sync README with hitl-gate email notification and current test counts (docs/readme-email-notify-tests)
+
+**Branch:** `docs/readme-email-notify-tests` (2026-07-09)
+
+- `README.md` backend-workers section still described the hitl-gate Worker's
+  outbound notification as webhook-only; documented the email notification
+  path added in PR #128 (`EMAIL` send_email binding → `GATE_NOTIFY_TO`, sent
+  from `notify.quirgs.com`, CRLF-stripped fields, additive to `WEBHOOK_URL`).
+- Updated the Vitest counts (61 → 67: 15 registry-api + 52 hitl-gate) to
+  include the email-notification suite added in PR #128.
+- Docs-only — no code, site, or Worker changes.
+
 ## Fix mobile text wrapping in terminal `.line` blocks (fix/line-prewrap-mobile-wrap)
 
 **Branch:** `fix/line-prewrap-mobile-wrap` (2026-07-09)

@@ -323,11 +323,18 @@ is paginated (`?limit=`, `?before=` keyset cursor). A daily cron archives
 events after ~30 days and hard-deletes archived rows 60 days later (~90-day
 total lifecycle). CORS reflects an allow-listed `Origin` only.
 
-On every successful `POST /events` it also fires an outbound webhook to the
-`WEBHOOK_URL` Worker secret (if set), carrying the event id, type, item, stage,
-frameworks, status, and a `review_url`. The webhook is non-blocking
-(`ctx.waitUntil`) and fire-and-forget — a webhook failure never fails the event
-POST.
+On every successful `POST /events` it also fires two outbound notifications,
+both non-blocking (`ctx.waitUntil`) and fire-and-forget — a notification
+failure never fails the event POST:
+
+- **Webhook** to the `WEBHOOK_URL` Worker secret (if set), carrying the event
+  id, type, item, stage, frameworks, status, and a `review_url`.
+- **Email** via Cloudflare Email Service (the `EMAIL` `send_email` binding, to
+  `GATE_NOTIFY_TO`), sent from the dedicated `notify.quirgs.com` subdomain —
+  the apex `quirgs.com` null-mail hardening is unaffected. Interpolated event
+  fields are CRLF-stripped and length-capped before they reach the message
+  (SMTP header-injection guard). Additive to the webhook path, not a
+  replacement.
 
 Both workers are plain ES modules (`index.js`) with CORS preflight and JSON
 response helpers, covered by the Vitest suites below.
@@ -379,8 +386,9 @@ Workers are developed and deployed from their own subdirectories with the
 
 ### Tests
 
-The Workers are covered by [Vitest](https://vitest.dev) (61 tests: 15
-registry-api + 46 hitl-gate). Run them before opening a Worker PR:
+The Workers are covered by [Vitest](https://vitest.dev) (67 tests: 15
+registry-api + 52 hitl-gate, including the email-notification path). Run them
+before opening a Worker PR:
 
 ```bash
 npm test              # both Worker suites
