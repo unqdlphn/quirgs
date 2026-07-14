@@ -24,6 +24,15 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix guides page listing spacing (fix/guides-page-spacing)
+
+**Branch:** `fix/guides-page-spacing` (2026-07-14)
+
+### Fixed
+- `src/pages/guides/index.astro` — corrected inconsistent spacing between the
+  `drwxr-xr-x`/`-rw-r--r--` file-mode markers and the filename links in the
+  `[GUIDES]` and `[ARCHIVE]` listings by adding explicit `&nbsp;` separators.
+
 ## Add metrics-api Worker for live Cloudflare monitoring (feat/metrics-api)
 
 **Branch:** `feat/metrics-api` (2026-07-14)
