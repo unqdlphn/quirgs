@@ -48,6 +48,35 @@ rather than the guides archive.
   landing terminal boot script (bundled bytes changed with the copy
   update above); the other 6 pinned hashes are unchanged.
 
+## Add real Open Graph / Twitter card images ahead of outreach (feat/og-images)
+
+**Branch:** `feat/og-images` (2026-07-13)
+
+`src/components/Seo.astro` previously pointed `og:image`/`twitter:image` at
+`favicon.svg` — a poor social-preview asset, and SVG isn't reliably rendered
+by Facebook/Twitter/LinkedIn/Slack crawlers anyway.
+
+### Added
+- `public/og-image.png` (1200x630) and `public/og-image-square.png`
+  (1080x1080) — the standard landscape OG size plus a square fallback for
+  clients that prefer it.
+
+### Changed
+- `src/components/Seo.astro` — `og:image` now emits both the landscape and
+  square PNGs (OG spec allows repeated `og:image` blocks; each carries its
+  own `og:image:width`/`height`/`type`/`alt`). `twitter:card` upgraded from
+  `summary` to `summary_large_image` to match the landscape asset.
+  `twitter:image` now points at the landscape PNG.
+
+Note: Cloudflare Hotlink Protection (enabled 2026-07-13) only blocks image
+requests whose `Referer` is a *different* domain — requests with no
+`Referer` (how Facebook/Twitter/Slack/LinkedIn crawlers typically fetch
+`og:image`) are allowed through, so this should not block social previews.
+Worth spot-checking with each platform's card-debugger tool after the
+Cloudflare branch preview goes live.
+
+## Close remaining brand style-guide UI audit findings (fix/ui-audit-cleanup-round2)
+
 **Branch:** `fix/ui-audit-cleanup-round2` (2026-07-10)
 
 Closes the 3 findings left open after the round-2 extended audit (see
