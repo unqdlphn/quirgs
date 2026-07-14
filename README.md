@@ -111,7 +111,7 @@ this repo to raise a hand.
 | Adapter | `@astrojs/cloudflare` → Cloudflare Workers |
 | Content | Astro Content Collections + MDX, edited via [Keystatic](https://keystatic.com) (Keystatic **Cloud** storage) at `/keystatic/` |
 | Hosting | Cloudflare (production domain: `quirgs.com`) |
-| Backend services | Cloudflare Workers — KV + D1 (`api.quirgs.com`, `gate.quirgs.com`) |
+| Backend services | Cloudflare Workers — KV + D1 (`api.quirgs.com`, `gate.quirgs.com`) + read-only GraphQL Analytics proxy (`metrics.quirgs.com`) |
 | CI | GitHub Actions (`sync-gists.yml`, `live-integrity.yml`) |
 | Node | `>=22.12.0` (see [package.json](package.json)) |
 
@@ -173,7 +173,8 @@ quirgs/
 │   └── .well-known/            # ai-catalog.json (ARD), provenance.json, security.txt
 ├── workers/
 │   ├── registry-api/           # KV-backed skill catalog API — api.quirgs.com
-│   └── hitl-gate/              # D1-backed HITL review event log — gate.quirgs.com
+│   ├── hitl-gate/              # D1-backed HITL review event log — gate.quirgs.com
+│   └── metrics-api/            # Read-only Cloudflare Analytics proxy — metrics.quirgs.com
 ├── skills/                     # DISTRIBUTION pipeline — SKILL.md sources synced to Gists
 │   └── gist-map.json           # slug → Gist id map (auto-updated by sync-gists)
 ├── scripts/
@@ -330,10 +331,10 @@ In addition to the steps above:
 
 ## Backend workers
 
-Two Cloudflare Workers run alongside the site as independent services. Each has
-its own `wrangler.toml` under [workers/](workers/) and is deployed separately
-from the Astro build. Both are bound to first-party custom domains (with their
-`*.workers.dev` hostnames kept alive alongside).
+Three Cloudflare Workers run alongside the site as independent services. Each
+has its own `wrangler.toml` under [workers/](workers/) and is deployed
+separately from the Astro build. All three are bound to first-party custom
+domains (with their `*.workers.dev` hostnames kept alive alongside).
 
 ### `workers/registry-api` — `api.quirgs.com`
 KV-backed (`QUIRGS_REGISTRY`) read API for the skill catalog. Exposes the skill
@@ -364,8 +365,60 @@ failure never fails the event POST:
   (SMTP header-injection guard). Additive to the webhook path, not a
   replacement.
 
-Both workers are plain ES modules (`index.js`) with CORS preflight and JSON
-response helpers, covered by the Vitest suites below.
+### `workers/metrics-api` — `metrics.quirgs.com`
+Read-only proxy in front of Cloudflare's GraphQL Analytics API, built for the
+Cloudflare live-metrics Cowork artifact (`quirgs-cloudflare-metrics`), refreshed
+by a daily scheduled task rather than called directly — Cowork artifacts can't
+make outbound `fetch()` calls to external domains, sandbox restriction, not
+CORS. Holds the Cloudflare API token as a Worker secret (`CF_API_TOKEN`,
+Analytics/Firewall/Workers-read scopes only) so it never reaches the client.
+Exposes `GET /traffic`, `/security`, `/ai-bots`, `/workers` — all Bearer-token
+gated on a separate, low-value `METRICS_READ_TOKEN` secret — plus an
+unauthenticated `GET /health`. `/traffic` includes a top-15 requested-paths
+breakdown (`topPaths`). `/workers` reports `registry-api`, `hitl-gate`, and
+`quirgs` (the main site Worker). `/ai-bots` classifies traffic to `/skills*`
+and `/guides/*` against a known AI-crawler user-agent list (GPTBot, ClaudeBot,
+Claude-User, PerplexityBot, CCBot, Google-Extended, Googlebot, Applebot,
+FacebookBot, MistralAI-User, etc. — expanded 2026-07-14 from Cloudflare's own
+bot-traffic dashboard) and returns both matched bots and top unmatched user
+agents, so the list can be extended as new crawlers show up. All routes
+accept `?hours=` (default 24, max 168) to widen the window. Storage metrics
+(D1/KV/R2) are **not** served by this Worker — the artifact reads those
+directly via the Cloudflare connector's existing MCP tools, which need no
+proxy.
+
+**Sampling caveat:** `httpRequestsAdaptiveGroups` (the `/traffic` dataset) is
+sampled/extrapolated, not an exact tally. Confirmed 2026-07-14: a snapshot
+reported 2,058 phantom "504" errors that didn't exist in Cloudflare's own
+Analytics & Logs → Traffic report for the same window — a handful of real
+events on the still-low-traffic `metrics.quirgs.com` hostname got extrapolated
+into a large false count. Treat any single large status-code spike as a
+hypothesis to verify in the dashboard, not a fact — the artifact's "Worth
+Checking" panel surfaces this caveat inline on its 5xx check.
+
+**WAF skip rule — token-gated for this hostname (tightened 2026-07-14).**
+`metrics.quirgs.com` gets hit by routine internet background-noise scanning
+(confirmed 2026-07-14: 206 requests in 24h, all 401s, all `.env`-file probing
+paths, from disposable VPS ASNs — not a targeted attack, just the normal
+result of a new hostname's TLS cert appearing in Certificate Transparency
+logs). The zone's Super Bot Fight Mode skip rule — the one that also covers
+`api.quirgs.com`/`gate.quirgs.com` unconditionally by hostname, since those
+have legitimate unauthenticated traffic — now only skips SBFM for
+`metrics.quirgs.com` when the request's `Authorization` header matches the
+real `METRICS_READ_TOKEN`:
+```
+(http.host eq "api.quirgs.com") or
+(http.host eq "gate.quirgs.com") or
+(http.host eq "metrics.quirgs.com" and http.request.headers["authorization"][0] eq "Bearer <METRICS_READ_TOKEN>")
+```
+Dashboard-only change (Security → WAF → Custom rules), not reflected in this
+repo's code. **If `METRICS_READ_TOKEN` is ever rotated via `wrangler secret
+put`, this rule's literal token value must be updated to match, or the
+scheduled task starts getting Managed-Challenged again** — the two aren't
+linked automatically.
+
+All three workers are plain ES modules (`index.js`) with CORS preflight and
+JSON response helpers, covered by the Vitest suites below.
 
 ---
 
@@ -414,14 +467,17 @@ Workers are developed and deployed from their own subdirectories with the
 
 ### Tests
 
-The Workers are covered by [Vitest](https://vitest.dev) (67 tests: 15
-registry-api + 52 hitl-gate, including the email-notification path). Run them
-before opening a Worker PR:
+The Workers are covered by [Vitest](https://vitest.dev) (83 tests: 15
+registry-api + 52 hitl-gate, including the email-notification path, + 16
+metrics-api covering routing/auth/CORS — the GraphQL-dependent routes need
+live Cloudflare credentials and are verified manually via `wrangler dev`, not
+in the suite). Run them before opening a Worker PR:
 
 ```bash
-npm test              # both Worker suites
+npm test              # all three Worker suites
 npm run test:registry # registry-api only
 npm run test:hitl     # hitl-gate only
+npm run test:metrics  # metrics-api only
 ```
 
 There are no tests for the Astro site itself — the suites cover the two Workers.

@@ -24,6 +24,100 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add metrics-api Worker for live Cloudflare monitoring (feat/metrics-api)
+
+**Branch:** `feat/metrics-api` (2026-07-14)
+
+Adds a third standalone Worker, `workers/metrics-api/` (`metrics.quirgs.com`),
+so a Cowork artifact (`quirgs-cloudflare-metrics`) can display zone traffic,
+security/firewall events, AI-crawler traffic to `/skills*` and `/guides/*`,
+and registry-api/hitl-gate health — without ever putting a full-scope
+Cloudflare API token client-side. The Worker holds a read-only,
+Analytics/Firewall/Workers-scoped `CF_API_TOKEN` as a secret and proxies to
+Cloudflare's GraphQL Analytics API; callers authenticate with a separate,
+low-value `METRICS_READ_TOKEN`. D1/KV/R2 storage metrics are read directly by
+the artifact via the Cloudflare connector's existing MCP tools — no proxy
+needed there.
+
+Cowork artifacts cannot make outbound `fetch()` calls to external domains
+(sandbox restriction, not CORS), so the artifact doesn't call this Worker
+directly — a daily scheduled task (`quirgs-cloudflare-metrics-refresh`, 6:08
+AM local) calls it from a real shell and bakes the result into the artifact's
+HTML via `update_artifact`. A manual "Refresh Now" button in the artifact
+triggers the same task on demand.
+
+### Added
+- `workers/metrics-api/index.js` — `GET /traffic`, `/security`, `/ai-bots`,
+  `/workers`, `/health`. `/ai-bots` classifies `/skills*` + `/guides/*` traffic
+  against a known AI-crawler user-agent list (GPTBot, ClaudeBot, PerplexityBot,
+  CCBot, Google-Extended, etc.) and returns matched bots plus top unmatched
+  agents so the list can be extended. All authenticated routes accept
+  `?hours=` (default 24, max 168).
+- `workers/metrics-api/wrangler.toml`, `.dev.vars`, `vitest.config.js`,
+  `test/index.spec.js` — 16 tests covering routing, auth, CORS, and the
+  misconfiguration guard (GraphQL-dependent routes need live Cloudflare
+  credentials and are verified manually via `wrangler dev`, not in the suite).
+- `npm run test:metrics` script; `npm test` now runs all three Worker suites
+  (83 tests total).
+
+### Changed
+- `README.md` — Stack table, repo tree, "Backend workers" section, and Tests
+  section updated for the third Worker.
+- `CLAUDE.md` — "three deploy units" framing, Workers-are-independent list,
+  and the stale "no test scripts" line corrected.
+
+### Fixed (after first live run, 2026-07-14)
+- `/traffic` — dropped `uniq { uniques }`; not a valid field on
+  `httpRequestsAdaptiveGroups`. /traffic no longer reports unique visitors.
+- `/workers` — dataset is `workersInvocationsAdaptive`, not
+  `workersInvocationsAdaptiveGroups` (the latter doesn't exist).
+- `metrics.quirgs.com` had to be added to the zone's existing Super Bot Fight
+  Mode WAF skip rule (the one already covering `api.quirgs.com`/
+  `gate.quirgs.com`) — without it, non-browser callers (curl, the scheduled
+  task) get Managed-Challenged before reaching the Worker. Dashboard-only
+  change, not in this diff.
+
+### Added (same session, after first live run)
+- `/traffic` — top-15 requested-paths breakdown (`topPaths`).
+- `/workers` — now also reports the main site Worker (`quirgs`), alongside
+  `registry-api` and `hitl-gate`.
+- AI-bot user-agent list expanded from a screenshot of Cloudflare's own
+  bot-traffic dashboard: `Applebot`, `Claude-User`, `Claude-SearchBot`,
+  `DuckAssistBot`, `FacebookBot`, `MistralAI-User`, `Googlebot`,
+  `Google-CloudVertexBot`.
+- Artifact: new "Worth Checking" panel (operational anomalies only — 5xx
+  spikes, 401 spikes, low cache-hit-ratio, Worker errors, CPU tail latency,
+  day-over-day traffic/5xx swings via a `history` array the scheduled task
+  now maintains, capped at 14 entries). Deliberately excludes security/threat
+  signals, which Cloudflare's own notifications already cover.
+- Artifact: sampling-caveat footnote, added after `httpRequestsAdaptiveGroups`
+  produced a phantom 2,058-count "504" spike absent from Cloudflare's own
+  dashboard for the same window (root cause: Adaptive datasets are sampled/
+  extrapolated, unreliable for rare events on a low-traffic hostname).
+- Removed the "Unique visitors" card — not available on this dataset
+  (`uniq` isn't a real field; see Fixed above). Page views/unique visitors
+  would require Cloudflare Web Analytics (a separate RUM/beacon product with
+  its own site token), deliberately not pursued — confirm with the user
+  first if that's wanted later.
+
+### Security (dashboard-only, not in this diff)
+- Tightened the zone's Super Bot Fight Mode WAF skip rule for
+  `metrics.quirgs.com`: previously an unconditional hostname skip (matching
+  `api.quirgs.com`/`gate.quirgs.com`), now requires the request's
+  `Authorization` header to match the real `METRICS_READ_TOKEN` value.
+  Triggered by 206 `.env`-file-scanning 401s in 24h — confirmed via a
+  Cloudflare Traffic report filtered to 401s to be routine Certificate-
+  Transparency-driven background scanning, not a targeted attack, but the
+  user wanted the noise filtered at the edge rather than reaching the
+  Worker's own auth check. `api.quirgs.com`/`gate.quirgs.com` keep their
+  unconditional skip (legitimate unauthenticated traffic on those hosts).
+  Rotating `METRICS_READ_TOKEN` requires updating this rule's literal token
+  value by hand — not automated.
+
+`httpRequestsAdaptiveGroups` and `firewallEventsAdaptiveGroups` field names
+verified correct against live production data — no further changes needed
+there.
+
 ## Align landing page with HITL Gate outreach campaign (feat/landing-gate-feature)
 
 **Branch:** `feat/landing-gate-feature` (2026-07-13)
