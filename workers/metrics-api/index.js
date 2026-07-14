@@ -141,6 +141,14 @@ const TRAFFIC_QUERY = `
           sum { edgeResponseBytes }
           dimensions { cacheStatus }
         }
+        topPaths: httpRequestsAdaptiveGroups(
+          filter: { datetime_geq: $start, datetime_leq: $end }
+          limit: 15
+          orderBy: [count_DESC]
+        ) {
+          count
+          dimensions { clientRequestPath }
+        }
       }
     }
   }
@@ -221,6 +229,13 @@ const WORKERS_QUERY = `
         }
         hitlGate: workersInvocationsAdaptive(
           filter: { scriptName: "quirgs-hitl-gate", datetime_geq: $start, datetime_leq: $end }
+          limit: 1
+        ) {
+          sum { requests errors subrequests }
+          quantiles { cpuTimeP50 cpuTimeP99 }
+        }
+        mainSite: workersInvocationsAdaptive(
+          filter: { scriptName: "quirgs", datetime_geq: $start, datetime_leq: $end }
           limit: 1
         ) {
           sum { requests errors subrequests }
@@ -341,6 +356,7 @@ export default {
           window_hours: hours,
           'registry-api': account.registryApi?.[0] || null,
           'hitl-gate': account.hitlGate?.[0] || null,
+          quirgs: account.mainSite?.[0] || null,
         },
         200,
         { 'Cache-Control': 'max-age=60' }

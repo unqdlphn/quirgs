@@ -367,18 +367,55 @@ failure never fails the event POST:
 
 ### `workers/metrics-api` — `metrics.quirgs.com`
 Read-only proxy in front of Cloudflare's GraphQL Analytics API, built for the
-Cloudflare live-metrics Cowork artifact. Holds the Cloudflare API token as a
-Worker secret (`CF_API_TOKEN`, Analytics/Firewall/Workers-read scopes only)
-so it never reaches the client. Exposes `GET /traffic`, `/security`,
-`/ai-bots`, `/workers` — all Bearer-token gated on a separate, low-value
-`METRICS_READ_TOKEN` secret — plus an unauthenticated `GET /health`. `/ai-bots`
-classifies traffic to `/skills*` and `/guides/*` against a known AI-crawler
-user-agent list (GPTBot, ClaudeBot, PerplexityBot, CCBot, Google-Extended,
-etc.) and returns both matched bots and top unmatched user agents, so the
-list can be extended as new crawlers show up. All routes accept `?hours=`
-(default 24, max 168) to widen the window. Storage metrics (D1/KV/R2) are
-**not** served by this Worker — the artifact reads those directly via the
-Cloudflare connector's existing MCP tools, which need no proxy.
+Cloudflare live-metrics Cowork artifact (`quirgs-cloudflare-metrics`), refreshed
+by a daily scheduled task rather than called directly — Cowork artifacts can't
+make outbound `fetch()` calls to external domains, sandbox restriction, not
+CORS. Holds the Cloudflare API token as a Worker secret (`CF_API_TOKEN`,
+Analytics/Firewall/Workers-read scopes only) so it never reaches the client.
+Exposes `GET /traffic`, `/security`, `/ai-bots`, `/workers` — all Bearer-token
+gated on a separate, low-value `METRICS_READ_TOKEN` secret — plus an
+unauthenticated `GET /health`. `/traffic` includes a top-15 requested-paths
+breakdown (`topPaths`). `/workers` reports `registry-api`, `hitl-gate`, and
+`quirgs` (the main site Worker). `/ai-bots` classifies traffic to `/skills*`
+and `/guides/*` against a known AI-crawler user-agent list (GPTBot, ClaudeBot,
+Claude-User, PerplexityBot, CCBot, Google-Extended, Googlebot, Applebot,
+FacebookBot, MistralAI-User, etc. — expanded 2026-07-14 from Cloudflare's own
+bot-traffic dashboard) and returns both matched bots and top unmatched user
+agents, so the list can be extended as new crawlers show up. All routes
+accept `?hours=` (default 24, max 168) to widen the window. Storage metrics
+(D1/KV/R2) are **not** served by this Worker — the artifact reads those
+directly via the Cloudflare connector's existing MCP tools, which need no
+proxy.
+
+**Sampling caveat:** `httpRequestsAdaptiveGroups` (the `/traffic` dataset) is
+sampled/extrapolated, not an exact tally. Confirmed 2026-07-14: a snapshot
+reported 2,058 phantom "504" errors that didn't exist in Cloudflare's own
+Analytics & Logs → Traffic report for the same window — a handful of real
+events on the still-low-traffic `metrics.quirgs.com` hostname got extrapolated
+into a large false count. Treat any single large status-code spike as a
+hypothesis to verify in the dashboard, not a fact — the artifact's "Worth
+Checking" panel surfaces this caveat inline on its 5xx check.
+
+**WAF skip rule — token-gated for this hostname (tightened 2026-07-14).**
+`metrics.quirgs.com` gets hit by routine internet background-noise scanning
+(confirmed 2026-07-14: 206 requests in 24h, all 401s, all `.env`-file probing
+paths, from disposable VPS ASNs — not a targeted attack, just the normal
+result of a new hostname's TLS cert appearing in Certificate Transparency
+logs). The zone's Super Bot Fight Mode skip rule — the one that also covers
+`api.quirgs.com`/`gate.quirgs.com` unconditionally by hostname, since those
+have legitimate unauthenticated traffic — now only skips SBFM for
+`metrics.quirgs.com` when the request's `Authorization` header matches the
+real `METRICS_READ_TOKEN`:
+```
+(http.host eq "api.quirgs.com") or
+(http.host eq "gate.quirgs.com") or
+(http.host eq "metrics.quirgs.com" and http.request.headers["authorization"][0] eq "Bearer <METRICS_READ_TOKEN>")
+```
+Dashboard-only change (Security → WAF → Custom rules), not reflected in this
+repo's code. **If `METRICS_READ_TOKEN` is ever rotated via `wrangler secret
+put`, this rule's literal token value must be updated to match, or the
+scheduled task starts getting Managed-Challenged again** — the two aren't
+linked automatically.
 
 All three workers are plain ES modules (`index.js`) with CORS preflight and
 JSON response helpers, covered by the Vitest suites below.

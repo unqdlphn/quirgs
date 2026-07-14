@@ -77,6 +77,43 @@ triggers the same task on demand.
   task) get Managed-Challenged before reaching the Worker. Dashboard-only
   change, not in this diff.
 
+### Added (same session, after first live run)
+- `/traffic` — top-15 requested-paths breakdown (`topPaths`).
+- `/workers` — now also reports the main site Worker (`quirgs`), alongside
+  `registry-api` and `hitl-gate`.
+- AI-bot user-agent list expanded from a screenshot of Cloudflare's own
+  bot-traffic dashboard: `Applebot`, `Claude-User`, `Claude-SearchBot`,
+  `DuckAssistBot`, `FacebookBot`, `MistralAI-User`, `Googlebot`,
+  `Google-CloudVertexBot`.
+- Artifact: new "Worth Checking" panel (operational anomalies only — 5xx
+  spikes, 401 spikes, low cache-hit-ratio, Worker errors, CPU tail latency,
+  day-over-day traffic/5xx swings via a `history` array the scheduled task
+  now maintains, capped at 14 entries). Deliberately excludes security/threat
+  signals, which Cloudflare's own notifications already cover.
+- Artifact: sampling-caveat footnote, added after `httpRequestsAdaptiveGroups`
+  produced a phantom 2,058-count "504" spike absent from Cloudflare's own
+  dashboard for the same window (root cause: Adaptive datasets are sampled/
+  extrapolated, unreliable for rare events on a low-traffic hostname).
+- Removed the "Unique visitors" card — not available on this dataset
+  (`uniq` isn't a real field; see Fixed above). Page views/unique visitors
+  would require Cloudflare Web Analytics (a separate RUM/beacon product with
+  its own site token), deliberately not pursued — confirm with the user
+  first if that's wanted later.
+
+### Security (dashboard-only, not in this diff)
+- Tightened the zone's Super Bot Fight Mode WAF skip rule for
+  `metrics.quirgs.com`: previously an unconditional hostname skip (matching
+  `api.quirgs.com`/`gate.quirgs.com`), now requires the request's
+  `Authorization` header to match the real `METRICS_READ_TOKEN` value.
+  Triggered by 206 `.env`-file-scanning 401s in 24h — confirmed via a
+  Cloudflare Traffic report filtered to 401s to be routine Certificate-
+  Transparency-driven background scanning, not a targeted attack, but the
+  user wanted the noise filtered at the edge rather than reaching the
+  Worker's own auth check. `api.quirgs.com`/`gate.quirgs.com` keep their
+  unconditional skip (legitimate unauthenticated traffic on those hosts).
+  Rotating `METRICS_READ_TOKEN` requires updating this rule's literal token
+  value by hand — not automated.
+
 `httpRequestsAdaptiveGroups` and `firewallEventsAdaptiveGroups` field names
 verified correct against live production data — no further changes needed
 there.
