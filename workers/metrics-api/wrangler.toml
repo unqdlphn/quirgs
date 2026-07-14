@@ -15,8 +15,8 @@ workers_dev = true
 # Non-secret account/zone identifiers (find both at the Cloudflare dashboard
 # domain Overview page, or via `wrangler whoami`). Fill these in before deploy.
 [vars]
-CF_ACCOUNT_ID = "REPLACE_WITH_ACCOUNT_ID"
-CF_ZONE_ID = "REPLACE_WITH_QUIRGS_COM_ZONE_ID"
+CF_ACCOUNT_ID = "d6a9a1de5d6b8911841b7827278729c0"
+CF_ZONE_ID = "4d856253af6612c5db3c68a0bba0eb3f"
 
 # Secrets — never committed. Set with:
 #   wrangler secret put CF_API_TOKEN --config workers/metrics-api/wrangler.toml

@@ -29,14 +29,22 @@ practice and roll up into those two releases.
 **Branch:** `feat/metrics-api` (2026-07-14)
 
 Adds a third standalone Worker, `workers/metrics-api/` (`metrics.quirgs.com`),
-so a Cowork live artifact can display zone traffic, security/firewall events,
-AI-crawler traffic to `/skills*` and `/guides/*`, and registry-api/hitl-gate
-health — without ever putting a full-scope Cloudflare API token client-side.
-The Worker holds a read-only, Analytics/Firewall/Workers-scoped `CF_API_TOKEN`
-as a secret and proxies to Cloudflare's GraphQL Analytics API; callers
-authenticate with a separate, low-value `METRICS_READ_TOKEN`. D1/KV/R2 storage
-metrics are read directly by the artifact via the Cloudflare connector's
-existing MCP tools — no proxy needed there.
+so a Cowork artifact (`quirgs-cloudflare-metrics`) can display zone traffic,
+security/firewall events, AI-crawler traffic to `/skills*` and `/guides/*`,
+and registry-api/hitl-gate health — without ever putting a full-scope
+Cloudflare API token client-side. The Worker holds a read-only,
+Analytics/Firewall/Workers-scoped `CF_API_TOKEN` as a secret and proxies to
+Cloudflare's GraphQL Analytics API; callers authenticate with a separate,
+low-value `METRICS_READ_TOKEN`. D1/KV/R2 storage metrics are read directly by
+the artifact via the Cloudflare connector's existing MCP tools — no proxy
+needed there.
+
+Cowork artifacts cannot make outbound `fetch()` calls to external domains
+(sandbox restriction, not CORS), so the artifact doesn't call this Worker
+directly — a daily scheduled task (`quirgs-cloudflare-metrics-refresh`, 6:08
+AM local) calls it from a real shell and bakes the result into the artifact's
+HTML via `update_artifact`. A manual "Refresh Now" button in the artifact
+triggers the same task on demand.
 
 ### Added
 - `workers/metrics-api/index.js` — `GET /traffic`, `/security`, `/ai-bots`,
@@ -58,12 +66,20 @@ existing MCP tools — no proxy needed there.
 - `CLAUDE.md` — "three deploy units" framing, Workers-are-independent list,
   and the stale "no test scripts" line corrected.
 
-### Note
-GraphQL field names (`httpRequestsAdaptiveGroups`, `firewallEventsAdaptiveGroups`,
-`workersInvocationsAdaptiveGroups`) were not validated against a live
-introspection query — no zone/account credentials were available at write
-time. Verify against Cloudflare's current schema on first `wrangler dev` run
-before relying on the artifact's numbers.
+### Fixed (after first live run, 2026-07-14)
+- `/traffic` — dropped `uniq { uniques }`; not a valid field on
+  `httpRequestsAdaptiveGroups`. /traffic no longer reports unique visitors.
+- `/workers` — dataset is `workersInvocationsAdaptive`, not
+  `workersInvocationsAdaptiveGroups` (the latter doesn't exist).
+- `metrics.quirgs.com` had to be added to the zone's existing Super Bot Fight
+  Mode WAF skip rule (the one already covering `api.quirgs.com`/
+  `gate.quirgs.com`) — without it, non-browser callers (curl, the scheduled
+  task) get Managed-Challenged before reaching the Worker. Dashboard-only
+  change, not in this diff.
+
+`httpRequestsAdaptiveGroups` and `firewallEventsAdaptiveGroups` field names
+verified correct against live production data — no further changes needed
+there.
 
 ## Align landing page with HITL Gate outreach campaign (feat/landing-gate-feature)
 

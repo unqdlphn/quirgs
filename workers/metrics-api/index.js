@@ -11,14 +11,15 @@
  * only — unlike CF_API_TOKEN it grants no Cloudflare account access on its
  * own, even if it leaks out of a client-side artifact.
  *
- * NOTE ON FIELD NAMES: the GraphQL Analytics API schema (httpRequestsAdaptiveGroups,
- * firewallEventsAdaptiveGroups, workersInvocationsAdaptiveGroups) evolves over
- * time. The field names below are correct as of this Worker's authoring date,
- * but were not validated against a live introspection query (no zone/account
- * credentials available at write time). Run `wrangler dev` and hit each route
- * once after setting secrets, before first production deploy — a schema
- * mismatch surfaces as a GraphQL `errors` array in the JSON response, not a
- * crash.
+ * NOTE ON FIELD NAMES: the GraphQL Analytics API schema evolves over time.
+ * A schema mismatch surfaces as a GraphQL `errors` array in the JSON
+ * response, not a crash — the Worker returns it as-is (502) rather than
+ * masking it. Verified live against production data on 2026-07-14:
+ * httpRequestsAdaptiveGroups and firewallEventsAdaptiveGroups are correct
+ * as written. Two corrections made after the first live run: `uniq { uniques }`
+ * is not a valid field on httpRequestsAdaptiveGroups (removed — unique
+ * visitors just isn't reported by /traffic), and the Workers dataset is
+ * `workersInvocationsAdaptive`, not `workersInvocationsAdaptiveGroups` (fixed).
  */
 
 const CORS_HEADERS = {
@@ -114,7 +115,6 @@ const TRAFFIC_QUERY = `
         ) {
           count
           sum { edgeResponseBytes }
-          uniq { uniques }
         }
         byStatus: httpRequestsAdaptiveGroups(
           filter: { datetime_geq: $start, datetime_leq: $end }
@@ -204,14 +204,14 @@ const WORKERS_QUERY = `
   query WorkersHealth($accountTag: string!, $start: Time!, $end: Time!) {
     viewer {
       accounts(filter: { accountTag: $accountTag }) {
-        registryApi: workersInvocationsAdaptiveGroups(
+        registryApi: workersInvocationsAdaptive(
           filter: { scriptName: "quirgs-registry-api", datetime_geq: $start, datetime_leq: $end }
           limit: 1
         ) {
           sum { requests errors subrequests }
           quantiles { cpuTimeP50 cpuTimeP99 }
         }
-        hitlGate: workersInvocationsAdaptiveGroups(
+        hitlGate: workersInvocationsAdaptive(
           filter: { scriptName: "quirgs-hitl-gate", datetime_geq: $start, datetime_leq: $end }
           limit: 1
         ) {
