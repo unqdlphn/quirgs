@@ -8,9 +8,7 @@ import NavBlock from "../../components/NavBlock.astro";
 // separately, above the legacy .html archive. Drafts are excluded; newest first.
 const currentGuides = (await getCollection("guides"))
   .filter((entry) => entry.data.status !== "draft")
-  .sort(
-    (a, b) => b.data.lastUpdated.valueOf() - a.data.lastUpdated.valueOf(),
-  );
+  .sort((a, b) => b.data.lastUpdated.valueOf() - a.data.lastUpdated.valueOf());
 
 const legacyGuides = [
   { file: "ai_prompt_engineering.html", name: "AI Prompt Engineering" },
@@ -40,15 +38,16 @@ const legacyGuides = [
     currentGuides.length > 0 && (
       <>
         <div class="line">
-          <span class="text-green">[GUIDES]</span> Current
+          <span class="text-green">[GUIDES]&nbsp;</span> Current
         </div>
         <div class="line">&nbsp;</div>
         {currentGuides.map((guide) => {
           const dir = `${guide.id}/`;
           return (
             <div class="line">
-              <span>drwxr-xr-x guides </span>
-              <a href={`/guides/${guide.id}/`}>{dir}</a>
+              &nbsp;
+              <span>drwxr-xr-x guides </span>&nbsp;
+              <a href={`/guides/${guide.id}/`}>{dir}</a>&nbsp;
               <span>{" ".repeat(Math.max(1, 34 - dir.length))}</span>
               <span>{guide.data.title}</span>
             </div>
@@ -60,14 +59,15 @@ const legacyGuides = [
   }
 
   <div class="line">
-    <span class="text-yellow">[ARCHIVE]</span> Legacy reference guides
+    <span class="text-yellow">[ARCHIVE]&nbsp;</span> Legacy reference guides
   </div>
   <div class="line">&nbsp;</div>
   {
     legacyGuides.map((guide) => (
       <div class="line">
-        <span>-rw-r--r-- guides </span>
-        <a href={`/guides/${guide.file}`}>{guide.file}</a>
+        &nbsp;
+        <span>-rw-r--r-- guides </span>&nbsp;
+        <a href={`/guides/${guide.file}`}>{guide.file}</a>&nbsp;
         <span>{" ".repeat(Math.max(1, 34 - guide.file.length))}</span>
         <span>{guide.name}</span>
       </div>
