@@ -35,8 +35,7 @@ by Facebook/Twitter/LinkedIn/Slack crawlers anyway.
 ### Added
 - `public/og-image.png` (1200x630) and `public/og-image-square.png`
   (1080x1080) — the standard landscape OG size plus a square fallback for
-  clients that prefer it. `public/og-image.svg` / `og-image-square.svg` also
-  added for future use; not currently referenced by any meta tag.
+  clients that prefer it.
 
 ### Changed
 - `src/components/Seo.astro` — `og:image` now emits both the landscape and
