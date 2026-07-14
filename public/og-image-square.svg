@@ -1,0 +1,46 @@
+<svg width="1080" height="1080" viewBox="0 0 1080 1080" xmlns="http://www.w3.org/2000/svg">
+  <!-- Page background -->
+  <rect width="1080" height="1080" fill="#09090b"/>
+
+  <!-- Terminal window -->
+  <rect x="60" y="130" width="960" height="790" rx="10" fill="#18181b" stroke="#27272a" stroke-width="2"/>
+
+  <!-- Title bar (matches site .terminal-header) -->
+  <path d="M 70 130 h 940 a 10 10 0 0 1 10 10 v 42 H 60 v -42 a 10 10 0 0 1 10 -10 z" fill="#09090b"/>
+  <line x1="61" y1="182" x2="1019" y2="182" stroke="#27272a" stroke-width="1.5"/>
+  <circle cx="96" cy="156" r="9" fill="#ff5f56"/>
+  <circle cx="124" cy="156" r="9" fill="#ffbd2e"/>
+  <circle cx="152" cy="156" r="9" fill="#27c93f"/>
+  <text x="540" y="163" font-family="JetBrains Mono" font-size="20" fill="#a1a1aa" text-anchor="middle">admin@quirgs: ~</text>
+  <text x="990" y="163" font-family="JetBrains Mono" font-size="20" fill="#a1a1aa" text-anchor="end">[&#8801;] [?]</text>
+
+  <!-- Prompt line 1 -->
+  <text x="104" y="256" font-family="JetBrains Mono" font-size="24">
+    <tspan fill="#4ade80">admin@quirgs</tspan><tspan fill="#60a5fa"> ~/system</tspan><tspan fill="#f4f4f5"> $ cat README.md</tspan>
+  </text>
+
+  <!-- Wordmark -->
+  <text x="104" y="376" font-family="JetBrains Mono" font-weight="bold" font-size="84" fill="#f4f4f5">Quirgs</text>
+
+  <!-- Tagline (two lines for square crop safety) -->
+  <text x="104" y="452" font-family="JetBrains Mono" font-weight="bold" font-size="36" fill="#4ade80">Governance first.</text>
+  <text x="104" y="502" font-family="JetBrains Mono" font-weight="bold" font-size="36" fill="#4ade80">Build accordingly.</text>
+
+  <!-- Description (two lines) -->
+  <text x="104" y="572" font-family="JetBrains Mono" font-size="24" fill="#a1a1aa">AI governance skills for teams</text>
+  <text x="104" y="608" font-family="JetBrains Mono" font-size="24" fill="#a1a1aa">building responsibly.</text>
+
+  <!-- Bundle line -->
+  <text x="104" y="690" font-family="JetBrains Mono" font-size="24">
+    <tspan fill="#facc15">[BUNDLE]</tspan><tspan fill="#a1a1aa"> quirgs-compliance  </tspan><tspan fill="#f4f4f5">7 skills</tspan>
+  </text>
+
+  <!-- Prompt line with cursor -->
+  <text x="104" y="850" font-family="JetBrains Mono" font-size="24">
+    <tspan fill="#4ade80">admin@quirgs</tspan><tspan fill="#60a5fa"> ~/system</tspan><tspan fill="#f4f4f5"> $ </tspan>
+  </text>
+  <rect x="464" y="830" width="14" height="26" fill="#f4f4f5"/>
+
+  <!-- URL below terminal -->
+  <text x="540" y="990" font-family="JetBrains Mono" font-size="22" fill="#a1a1aa" text-anchor="middle">quirgs.com</text>
+</svg>
