@@ -1,0 +1,32 @@
+name = "quirgs-metrics-api"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+# Custom domain — Cloudflare auto-provisions the DNS record and TLS cert on deploy.
+routes = [
+  { pattern = "metrics.quirgs.com", custom_domain = true }
+]
+
+# Keep the *.workers.dev hostname live alongside the custom domain — matches
+# registry-api/hitl-gate convention (adding a custom_domain route otherwise
+# disables workers.dev by default).
+workers_dev = true
+
+# Non-secret account/zone identifiers (find both at the Cloudflare dashboard
+# domain Overview page, or via `wrangler whoami`). Fill these in before deploy.
+[vars]
+CF_ACCOUNT_ID = "REPLACE_WITH_ACCOUNT_ID"
+CF_ZONE_ID = "REPLACE_WITH_QUIRGS_COM_ZONE_ID"
+
+# Secrets — never committed. Set with:
+#   wrangler secret put CF_API_TOKEN --config workers/metrics-api/wrangler.toml
+#   wrangler secret put METRICS_READ_TOKEN --config workers/metrics-api/wrangler.toml
+#
+# CF_API_TOKEN: create at Cloudflare dashboard > My Profile > API Tokens,
+# scoped to read-only: Account.Account Analytics:Read, Zone.Analytics:Read,
+# Zone.Firewall Services:Read, Account.Workers Scripts:Read. No write/delete
+# permissions anywhere.
+#
+# METRICS_READ_TOKEN: a random shared secret the calling artifact sends as
+# `Authorization: Bearer <token>`. Low-value/rotatable — grants access to this
+# Worker's read-only aggregate endpoints only, no Cloudflare account access.

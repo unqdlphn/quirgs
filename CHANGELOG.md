@@ -24,6 +24,47 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Add metrics-api Worker for live Cloudflare monitoring (feat/metrics-api)
+
+**Branch:** `feat/metrics-api` (2026-07-14)
+
+Adds a third standalone Worker, `workers/metrics-api/` (`metrics.quirgs.com`),
+so a Cowork live artifact can display zone traffic, security/firewall events,
+AI-crawler traffic to `/skills*` and `/guides/*`, and registry-api/hitl-gate
+health — without ever putting a full-scope Cloudflare API token client-side.
+The Worker holds a read-only, Analytics/Firewall/Workers-scoped `CF_API_TOKEN`
+as a secret and proxies to Cloudflare's GraphQL Analytics API; callers
+authenticate with a separate, low-value `METRICS_READ_TOKEN`. D1/KV/R2 storage
+metrics are read directly by the artifact via the Cloudflare connector's
+existing MCP tools — no proxy needed there.
+
+### Added
+- `workers/metrics-api/index.js` — `GET /traffic`, `/security`, `/ai-bots`,
+  `/workers`, `/health`. `/ai-bots` classifies `/skills*` + `/guides/*` traffic
+  against a known AI-crawler user-agent list (GPTBot, ClaudeBot, PerplexityBot,
+  CCBot, Google-Extended, etc.) and returns matched bots plus top unmatched
+  agents so the list can be extended. All authenticated routes accept
+  `?hours=` (default 24, max 168).
+- `workers/metrics-api/wrangler.toml`, `.dev.vars`, `vitest.config.js`,
+  `test/index.spec.js` — 16 tests covering routing, auth, CORS, and the
+  misconfiguration guard (GraphQL-dependent routes need live Cloudflare
+  credentials and are verified manually via `wrangler dev`, not in the suite).
+- `npm run test:metrics` script; `npm test` now runs all three Worker suites
+  (83 tests total).
+
+### Changed
+- `README.md` — Stack table, repo tree, "Backend workers" section, and Tests
+  section updated for the third Worker.
+- `CLAUDE.md` — "three deploy units" framing, Workers-are-independent list,
+  and the stale "no test scripts" line corrected.
+
+### Note
+GraphQL field names (`httpRequestsAdaptiveGroups`, `firewallEventsAdaptiveGroups`,
+`workersInvocationsAdaptiveGroups`) were not validated against a live
+introspection query — no zone/account credentials were available at write
+time. Verify against Cloudflare's current schema on first `wrangler dev` run
+before relying on the artifact's numbers.
+
 ## Align landing page with HITL Gate outreach campaign (feat/landing-gate-feature)
 
 **Branch:** `feat/landing-gate-feature` (2026-07-13)

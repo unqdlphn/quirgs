@@ -11,9 +11,10 @@
     "preview": "astro preview",
     "astro": "astro",
     "postinstall": "patch-package",
-    "test": "npm run test:registry && npm run test:hitl",
+    "test": "npm run test:registry && npm run test:hitl && npm run test:metrics",
     "test:registry": "vitest run --config workers/registry-api/vitest.config.js",
     "test:hitl": "vitest run --config workers/hitl-gate/vitest.config.js",
+    "test:metrics": "vitest run --config workers/metrics-api/vitest.config.js",
     "seed:registry": "node scripts/seed-registry.mjs",
     "check:integrity": "node scripts/check-live-integrity.mjs"
   },
