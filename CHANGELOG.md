@@ -24,6 +24,30 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Align landing page with HITL Gate outreach campaign (feat/landing-gate-feature)
+
+**Branch:** `feat/landing-gate-feature` (2026-07-13)
+
+Realigns the landing page's "Featuring" content and primary navigation
+with the "Dev validation program" outreach campaign (see README.md
+"Dev validation program — early access"), which pitches the HITL Gate
+rather than the guides archive.
+
+### Changed
+- `src/pages/index.astro` — boot-sequence "Featuring" block: replaced the
+  `[GUIDES]` line with a `[CASE STUDY]` line citing the Case Study Zero
+  stress-test result (25/25 checks, ~10s to first approval), linking to
+  `/resources/case-study-zero/`. `[BUNDLE]` line unchanged.
+- `src/data/routes.ts` — NavBlock primary row now surfaces `demo/` (dropped
+  `bundles/` and `gate/` from the compact row); moved `hitl/` into the
+  `resources` group for consistency with `demo/`/`gate/`/`review/`; moved
+  the `/resources/` case-studies route into the `docs` group so its
+  section header in the `[≡]` site menu no longer duplicates its own
+  label (`resources` group containing a `resources/` entry).
+- `public/_headers` — recomputed the CSP `script-src` hash for the
+  landing terminal boot script (bundled bytes changed with the copy
+  update above); the other 6 pinned hashes are unchanged.
+
 ## Add real Open Graph / Twitter card images ahead of outreach (feat/og-images)
 
 **Branch:** `feat/og-images` (2026-07-13)
