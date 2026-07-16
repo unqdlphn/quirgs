@@ -24,6 +24,20 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Regulatory claim hotfix — EU AI Act Article 73 numbering + notification deadlines, NIST/ISO label fixes (fix/a6-hotfix)
+
+**Branch:** `fix/a6-hotfix` (2026-07-16)
+
+### Fixed
+- **Compliance Bundle 1.4.0 → 1.5.0**
+- `incident-response-logger` **1.2.0 → 1.3.0** — corrected all EU AI Act serious-incident citations from Article 62 (proposal-stage numbering) to Article 73 (Regulation (EU) 2024/1689 adopted numbering) across SKILL.md (all three copies), the plugin manifest description, both reference files, and the site MDX entry; renamed `references/article-62-thresholds.md` → `article-73-thresholds.md`. Corrected the notification deadlines to Article 73(2)–(4)'s actual tiers — 15 days (general), 10 days (death of a person), 2 days (widespread infringement or serious and irreversible critical-infrastructure disruption) — previously misstated as "15 working days (2 days for death/serious harm)".
+- `ai-transparency-writer` **1.2.0 → 1.3.0** — model-card template: removed the incorrect "GOVERN 6.1 (transparency policies)" mapping (GV-6.1 concerns third-party/supply-chain risk); now cites GOVERN 1.1 and GOVERN 1.2 with their correct subcategory descriptions. Final mapping flagged for SME confirmation under A-6.
+- `hitl-compliance-gate` **1.3.0 → 1.4.0** — ISO 42001 reference: corrected Annex A objective labels — A.8 now reads "Information for interested parties of AI systems" (was "Information security"); A.9 now reads "Use of AI systems" (was "Responsible AI principles").
+- `iso-42001-audit-prep` **1.3.0 → 1.4.0** — Annex A reference: A.8 heading aligned to official wording "Information for interested parties of AI systems" (was the near-miss "Information for Users of AI Systems").
+
+### Notes
+- Remediates the AF-1 accuracy failures confirmed during A-6 pre-SME verification (claims register rows INC-02/INC-03, ATW-06, HITL-06; AIMS-03 backlog item closed). Companion updates to internal governance docs (EVAL-001 grader allowance removed, IR fixture expectations updated, IMP-001 S5 deadline phrasing corrected) live in local `_v2/` and are not part of this repo's diff.
+
 ## Fix guides page listing spacing (fix/guides-page-spacing)
 
 **Branch:** `fix/guides-page-spacing` (2026-07-14)

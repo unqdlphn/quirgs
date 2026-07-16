@@ -90,7 +90,7 @@ Before auditors review Annex A controls, they will ask for the SoA:
 
 ---
 
-### A.8 — Information for Users of AI Systems
+### A.8 — Information for interested parties of AI systems
 
 | Control | Requirement                                                                      | Evidence needed                  |
 | ------- | -------------------------------------------------------------------------------- | -------------------------------- |

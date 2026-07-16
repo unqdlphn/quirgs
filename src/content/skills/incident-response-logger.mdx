@@ -1,46 +1,46 @@
 ---
 title: "Incident Response Logger"
-tagline: "Structure AI incident reports aligned to NIST SP 800-61 and EU AI Act Article 62"
+tagline: "Structure AI incident reports aligned to NIST SP 800-61 and EU AI Act Article 73"
 bundle: "compliance"
 pillar: "Checkpoints"
-framework: ["NIST SP 800-61", "EU AI Act", "Article 62"]
+framework: ["NIST SP 800-61", "EU AI Act", "Article 73"]
 interoperates_with:
   - "hitl-compliance-gate"
   - "eu-ai-act-classifier"
 triggers:
   - "log an AI incident"
   - "report AI failure"
-  - "Article 62"
+  - "Article 73"
   - "serious incident report"
   - "post-incident review"
   - "something went wrong with our AI"
   - "AI incident debrief"
 example_prompts:
   - "Log an AI incident — our CV screening model produced biased outputs affecting ~300 applicants."
-  - "Does this incident meet the EU AI Act Article 62 serious incident threshold?"
+  - "Does this incident meet the EU AI Act Article 73 serious incident threshold?"
   - "Structure a post-incident review for our AI model failure from last week."
 status: live
 gistUrl: "https://gist.github.com/unqdlphn/4708e63f8e0761964a899f68b65f7fdd"
 marketplaceCmd: "/plugin marketplace add unqdlphn/quirgs"
 installCmd: "/plugin install incident-response-logger@quirgs"
-lastUpdated: 2026-05-21
-tags: ["incident response", "NIST", "Article 62", "serious incident", "reporting"]
+lastUpdated: 2026-07-16
+tags: ["incident response", "NIST", "Article 73", "serious incident", "reporting"]
 ---
 
 ## What it does
 
-The Incident Response Logger takes a description of an AI system failure, unexpected output, or harm event and structures it into a complete incident report aligned to the NIST SP 800-61 incident response lifecycle and EU AI Act Article 62 serious incident reporting requirements. It determines whether the incident meets the Article 62 serious incident threshold, identifies the required notification timeline and recipients (internal, national market surveillance authority, the Commission), and produces a pre-filled report ready for legal sign-off and, where required, regulatory submission.
+The Incident Response Logger takes a description of an AI system failure, unexpected output, or harm event and structures it into a complete incident report aligned to the NIST SP 800-61 incident response lifecycle and EU AI Act Article 73 serious incident reporting requirements. It determines whether the incident meets the Article 73 serious incident threshold, identifies the required notification timeline and recipients (internal, national market surveillance authority, the Commission), and produces a pre-filled report ready for legal sign-off and, where required, regulatory submission.
 
 ## Frameworks covered
 
 - NIST SP 800-61 Rev. 2 — Computer Security Incident Handling Guide (four-phase lifecycle)
-- EU AI Act Article 62 — reporting of serious incidents by providers of high-risk AI systems
+- EU AI Act Article 73 — reporting of serious incidents by providers of high-risk AI systems
 - EU AI Act Recital 97 — serious incident definition and proportionality
 - ISO/IEC 42001:2023 Clause 10 — continual improvement and nonconformity handling
 
 ## When to use it
 
-Reach for this skill the moment an AI system produces an output that causes or could cause harm to a person, a group, or critical infrastructure — or when a system behaves in a way that is materially outside its documented intended purpose. In the EU, providers of high-risk AI systems must report serious incidents to the national market surveillance authority without undue delay and within 15 days of becoming aware (EU AI Act Article 62). This skill ensures the right information is captured in the right structure before the clock runs out. It also supports post-incident reviews, where the structured log becomes the basis for root-cause analysis and AIMS corrective action.
+Reach for this skill the moment an AI system produces an output that causes or could cause harm to a person, a group, or critical infrastructure — or when a system behaves in a way that is materially outside its documented intended purpose. In the EU, providers of high-risk AI systems must report serious incidents to the national market surveillance authority without undue delay and within 15 days of becoming aware (EU AI Act Article 73). This skill ensures the right information is captured in the right structure before the clock runs out. It also supports post-incident reviews, where the structured log becomes the basis for root-cause analysis and AIMS corrective action.
 
 ## Example output (abbreviated)
 
@@ -60,7 +60,7 @@ SEVERITY ASSESSMENT
   Nature of harm: Discriminatory outcome — applicants with non-Western name formats
                   disproportionately rejected at automated pre-screen stage
 
-EU AI ACT ARTICLE 62 THRESHOLD
+EU AI ACT ARTICLE 73 THRESHOLD
   Determination: SERIOUS INCIDENT — meets threshold
   Basis: Harm to fundamental rights (non-discrimination); system is Annex III
          high-risk (recruitment use case, Point 4(a))
@@ -75,6 +75,6 @@ NIST SP 800-61 PHASE: DETECTION AND ANALYSIS
 IMMEDIATE NEXT ACTION
   Suspend automated pre-screen for affected pipeline pending root-cause confirmation.
   Notify legal counsel and DPO within 24 hours.
-  Prepare Article 62 notification draft — due 2026-06-03.
+  Prepare Article 73 notification draft — due 2026-06-03.
 ```
 

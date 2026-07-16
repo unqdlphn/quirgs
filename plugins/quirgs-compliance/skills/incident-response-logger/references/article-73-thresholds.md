@@ -1,15 +1,15 @@
-# EU AI Act Article 62 — Serious Incident Reporting
+# EU AI Act Article 73 — Serious Incident Reporting
 
 ## Overview
 
-Article 62 of EU Regulation 2024/1689 requires providers of high-risk AI systems placed
+Article 73 of EU Regulation 2024/1689 requires providers of high-risk AI systems placed
 on the EU market to report serious incidents to the relevant national market surveillance
 authority. This obligation is distinct from GDPR breach notification and may run in parallel.
 
 **Who it applies to:**
 - **Providers** of high-risk AI systems (Annex III + Article 6)
 - Providers of GPAI models with systemic risk (Article 55)
-- Importers and distributors have notification obligations to the provider (Article 62(2))
+- Importers and distributors have notification obligations to the provider (Article 73(2))
 - Deployers must notify the provider when they identify a serious incident (Article 73(4))
 
 **Who it does NOT apply to:**
@@ -19,7 +19,7 @@ authority. This obligation is distinct from GDPR breach notification and may run
 
 ---
 
-## Article 62 Serious Incident Definition
+## Article 73 Serious Incident Definition
 
 A **serious incident** means any incident or malfunction of an AI system that directly or
 indirectly leads to any of the following:
@@ -70,15 +70,18 @@ Material damage to physical property or environmental harm resulting from AI sys
 
 ---
 
-## Article 62 Notification Requirements
+## Article 73 Notification Requirements
 
-### Timeline
-- **15 working days** from when the provider becomes aware of a serious incident
-- For incidents involving death or serious harm to health: notify immediately (as soon as
-  technically possible, and no later than 2 working days after awareness)
-- The 15-day clock starts at **awareness**, not at occurrence — document when awareness occurred
+### Timeline (Article 73(2)–(4) tiers)
+- **15 days** from when the provider becomes aware of the serious incident (general case)
+- **10 days** from awareness where the serious incident is, or may be, the **death of a person**
+- **2 days** from awareness for a **widespread infringement** or a **serious and irreversible
+  disruption of the management or operation of critical infrastructure**
+- In every tier the report is due immediately once the causal link (or its reasonable
+  likelihood) is established — the day counts are outer limits, not targets
+- The clock starts at **awareness**, not at occurrence — document when awareness occurred
 
-### Content of Notification (Article 62(1))
+### Content of Notification (Article 73(1))
 The notification must include:
 
 1. **Description of the incident** — what happened, when, in what context
@@ -111,7 +114,7 @@ is required once the investigation is complete.
 
 | Obligation | Trigger | Authority | Timeline |
 |---|---|---|---|
-| EU AI Act Article 62 | Serious incident (death, serious harm, fundamental rights breach) | National market surveillance authority | 15 working days (2 days for death/serious harm) |
+| EU AI Act Article 73 | Serious incident (death, serious harm, fundamental rights breach) | National market surveillance authority | 15 days (10 days for death; 2 days for widespread infringement or critical-infrastructure disruption) |
 | GDPR Article 33 | Personal data breach | National DPA (e.g., ICO, CNIL, BfDI) | 72 hours of awareness |
 | GDPR Article 34 | High-risk data breach requiring individual notification | Affected individuals | Without undue delay |
 | NIS2 Directive | Significant cybersecurity incident | National CSIRT + competent authority | 24 hours (early warning), 72 hours (notification), 1 month (full report) |
@@ -122,7 +125,7 @@ Identify all applicable obligations at the point of triage (Step 1 of this skill
 
 ---
 
-## Article 62 Threshold Assessment Checklist
+## Article 73 Threshold Assessment Checklist
 
 Use this checklist during incident triage. If ANY item is checked Yes, treat as potential
 serious incident and escalate to legal immediately:
@@ -140,8 +143,8 @@ serious incident and escalate to legal immediately:
 [ ] Did the AI system failure cause serious damage to property or the environment?
 [ ] Is this a high-risk AI system under Annex III or a GPAI model with systemic risk?
 
-If all boxes are unchecked: likely NOT a serious incident under Article 62.
+If all boxes are unchecked: likely NOT a serious incident under Article 73.
 Assess under standard incident classification (NIST SP 800-61 severity table).
 
-Legal confirmation required before concluding no Article 62 obligation exists.
+Legal confirmation required before concluding no Article 73 obligation exists.
 ```
