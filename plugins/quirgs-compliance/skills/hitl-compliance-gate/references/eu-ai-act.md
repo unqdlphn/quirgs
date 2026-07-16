@@ -19,6 +19,8 @@ It classifies AI systems into four tiers and assigns obligations accordingly.
 
 ## Key Obligations by Stage
 
+> **Scope note — intentionally framework-level, non-dated.** The obligations below are organized by lifecycle stage, not by applicability date, so this gate checklist stays valid as EU AI Act deadlines shift. For current applicability dates — which obligations are in force, and when — use the **eu-ai-act-classifier** skill, whose high-risk reference tracks the post-Omnibus timeline. Treat those dates as provisional until the Digital Omnibus amending the Act is published in the Official Journal: the European Parliament adopted it 16 June 2026 and the Council 29 June 2026, but as of mid-July 2026 OJ publication (expected before 2 August 2026) is still pending.
+
 ### Design / Development Stage
 - Conduct a **Fundamental Rights Impact Assessment** for high-risk systems
 - Establish data governance policies (Article 10): training data must be relevant, representative, and free of errors

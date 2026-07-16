@@ -182,7 +182,7 @@ PLATFORM TRANSPARENCY REQUIREMENT
 ────────────────────────────────────
 ☐ Tier 0–1: No platform disclosure required at most DSPs
 ☐ Tier 2: Disclosure recommended; required by some platforms (TikTok, YouTube)
-☐ Tier 3–4: Disclosure required by most major platforms as of 2024–2025 policies
+☐ Tier 3–4: Disclose per platform — TikTok label required, YouTube auto-labels, Spotify AI Credits / Apple Transparency Tags voluntary (mid-2026)
 
 SUPPORTING EVIDENCE
 ───────────────────

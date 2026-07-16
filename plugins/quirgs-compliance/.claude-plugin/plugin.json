@@ -1,7 +1,7 @@
 {
   "name": "quirgs-compliance",
   "description": "Seven governance-first AI compliance skills for Claude: EU AI Act classification, NIST AI RMF checkpoints, ISO 42001 audit prep, HITL gating, PII exposure checks, incident response logging, and AI transparency writing. Each skill ships with its full reference material.",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "author": {
     "name": "Quirgs",
     "url": "https://quirgs.com"

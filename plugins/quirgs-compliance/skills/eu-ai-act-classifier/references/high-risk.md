@@ -3,12 +3,12 @@
 High-risk AI systems are permitted but subject to the most extensive obligations in the Act.
 There are **two pathways** to a high-risk classification.
 
-**Applicability dates (post-EU AI Act Omnibus — finalised May 2026):**
+**Applicability dates (post-EU AI Act Digital Omnibus — adopted June 2026):**
 - **2 August 2026** — Deployer chatbot and biometric disclosure obligations (Article 50, Limited Risk) — **ACTIVE**
 - **2 December 2027** — Standalone high-risk AI (Annex III: employment, credit, education, biometrics, etc.) — delayed 16 months
 - **2 August 2028** — AI embedded as safety components in Annex I products (medical devices, aviation, machinery) — delayed 12 months
 
-> **Omnibus note:** The EU AI Act "Digital Omnibus" provisional agreement (May 2026) split the original single August 2026 HRAIS deadline into two tracks. Deployer disclosure obligations under Article 50 remain unchanged at August 2026. Provider/deployer technical compliance for high-risk systems is now tiered by Annex track.
+> **Omnibus note:** The EU AI Act "Digital Omnibus" split the original single August 2026 HRAIS deadline into two tracks. Deployer disclosure obligations under Article 50 remain unchanged at August 2026. Provider/deployer technical compliance for high-risk systems is now tiered by Annex track. Adoption is final — European Parliament 16 June 2026, Council 29 June 2026 — but as of mid-July 2026 the amending act has not yet been published in the Official Journal (publication expected before 2 August 2026); the dates above are provisional until it is.
 
 ---
 
@@ -19,7 +19,7 @@ EU harmonisation legislation listed in Annex I, AND the product is subject to th
 conformity assessment.
 
 **Annex I product categories include:**
-- Machinery (Regulation 2023/1230) — **Exemption (Omnibus, May 2026):** AI in machinery covered solely by EU Machinery Regulation 2023/1230 is no longer automatically classified as a High-Risk AI System. The "double regulation" overlap has been removed. Assess on Article 6(1) merits — the exemption does not apply if the system independently qualifies under Annex III.
+- Machinery (Regulation 2023/1230) — **Exemption (Omnibus, adopted June 2026):** AI in machinery covered solely by EU Machinery Regulation 2023/1230 is no longer automatically classified as a High-Risk AI System. The "double regulation" overlap has been removed. Assess on Article 6(1) merits — the exemption does not apply if the system independently qualifies under Annex III.
 - Medical devices (Regulation 2017/745)
 - In vitro diagnostic medical devices (Regulation 2017/746)
 - Radio equipment (Directive 2014/53/EU)

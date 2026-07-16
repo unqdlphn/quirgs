@@ -17,7 +17,7 @@ Five-tier classification of AI's role in music creation, with copyright implicat
 
 **Copyright status:** Full copyright protection under current US, EU, and international law. No special disclosures required for copyright registration.
 
-**Platform requirements:** No AI disclosure required by any major DSP or social platform as of 2025.
+**Platform requirements:** No AI disclosure required by any major DSP or social platform as of mid-2026.
 
 ---
 
@@ -66,7 +66,7 @@ Five-tier classification of AI's role in music creation, with copyright implicat
 
 **Copyright status:** Uncertain under current law. The Copyright Office's AI authorship guidance (as of 2024) does not recognize copyright in AI-generated content itself; copyright may attach to the human's creative arrangement of AI-generated elements if the selection and arrangement constitutes original expression. Legal review recommended before registering or licensing commercially.
 
-**Platform requirements:** Disclosure required by most major platforms. Spotify, Apple Music, YouTube, and TikTok all have AI content policies requiring labeling of AI-generated music as of 2024–2025. Failure to disclose may result in removal.
+**Platform requirements:** Every major platform now has an AI-disclosure mechanism, but mandates vary (as of mid-2026). TikTok requires its AI-generated content label for realistic AI content. YouTube applies automatic AI-detection and labeling (rolled out May–June 2026) on top of its synthetic-media disclosure rules. Spotify accepts AI-involvement metadata through AI Credits (DDEX-based, voluntary beta since April 2026, submitted via distributors). Apple Music accepts Transparency Tags (announced March 2026) — optional and self-declared by labels/distributors. Failure to disclose where labeling is mandatory may result in removal.
 
 ---
 
@@ -80,7 +80,7 @@ Five-tier classification of AI's role in music creation, with copyright implicat
 
 **Copyright status:** No copyright protection under current US law per Copyright Office guidance. The EU AI Act and emerging regulations do not create copyright where none exists. The work may still be commercially released and licensed, but the publisher/creator cannot register or assert copyright in the AI-generated portions.
 
-**Platform requirements:** Disclosure required. Some platforms restrict or prohibit AI-generated music in certain categories (e.g., children's content, classical music sections). Review platform-specific policies before distribution. Failure to disclose AI-generated content may result in content removal or account suspension.
+**Platform requirements:** Disclosure required by TikTok (label) and applied automatically by YouTube (AI-detection labeling); supported as voluntary structured metadata at Spotify (AI Credits) and Apple Music (Transparency Tags). Some platforms restrict or prohibit AI-generated music in certain categories (e.g., children's content, classical music sections). Review platform-specific policies before distribution. Failure to disclose AI-generated content may result in content removal or account suspension.
 
 ---
 
@@ -98,15 +98,15 @@ Note: Copyright law in this area is rapidly evolving. The above reflects the sta
 
 ---
 
-## Tier and Platform Policy Crosswalk (as of 2025)
+## Tier and Platform Policy Crosswalk (as of mid-2026)
 
 | Platform | Tier 0–1 | Tier 2 | Tier 3–4 |
 |---|---|---|---|
-| Spotify | No disclosure | Disclose via metadata flag | Disclose; policy evolving |
-| Apple Music | No disclosure | Disclose | Disclose; review policy |
-| YouTube | No disclosure | Disclosure in some cases | Required: "Made with AI" label |
-| TikTok | No disclosure | Required label | Required label |
-| DistroKid | No disclosure | Checkbox in upload | Checkbox required |
+| Spotify | No disclosure | AI Credits metadata (voluntary, via distributor) | AI Credits metadata (voluntary DDEX beta since Apr 2026) |
+| Apple Music | No disclosure | Transparency Tags (optional) | Transparency Tags (optional, self-declared) |
+| YouTube | No disclosure | Disclosure in some cases | Auto-detected + labeled by platform; disclose realistic synthetic media |
+| TikTok | No disclosure | Required label | Required label (backed by C2PA auto-detection) |
+| DistroKid | No disclosure | Checkbox in upload | Checkbox required (feeds Spotify AI Credits) |
 | SoundCloud | No disclosure | No disclosure currently | No current requirement |
 
 Platform policies change frequently. Always verify the current policy at each platform's creator documentation before distributing.
