@@ -126,7 +126,7 @@ A deployer becomes a provider (with full provider obligations) if they:
 
 ## EU AI Act Timeline for High-Risk
 
-> **Updated post-EU AI Act Omnibus (May 2026).** The original single August 2026 HRAIS deadline has been split into two tracks. Deployer disclosure obligations remain at August 2026; provider/deployer technical compliance for high-risk systems is now tiered.
+> **Updated post-EU AI Act Digital Omnibus (adopted June 2026 — Parliament 16 June, Council 29 June).** The original single August 2026 HRAIS deadline has been split into two tracks. Deployer disclosure obligations remain at August 2026; provider/deployer technical compliance for high-risk systems is now tiered. Dates are provisional until the amending act is published in the Official Journal (pending as of mid-July 2026).
 
 | Date | What applies | Status |
 |---|---|---|

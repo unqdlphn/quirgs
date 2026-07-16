@@ -24,6 +24,20 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## A-6 R2 backlog closeout — hitl gate temporal-scope note, platform AI-policy refresh, Omnibus adoption status (fix/a6-r2-backlog)
+
+**Branch:** `fix/a6-r2-backlog` (2026-07-16)
+
+### Fixed
+- **Compliance Bundle 1.5.0 → 1.5.1**; **PUBLISH Bundle 1.4.0 → 1.4.1**
+- `hitl-compliance-gate` **1.4.0 → 1.4.1** — `references/eu-ai-act.md` (both copies): added a scope note before "Key Obligations by Stage" stating the obligations table is intentionally framework-level and non-dated, directing readers to the eu-ai-act-classifier skill for current applicability dates and flagging those dates as provisional pending Official Journal publication of the Digital Omnibus. Closes claims-register row HITL-03 (cross-skill consistency flag) — the file is intentionally non-dated, not stale, and now says so.
+- `eu-ai-act-classifier` **1.3.0 → 1.3.1** — `references/high-risk.md` and `references/obligations-high-risk.md` (both copies): Omnibus status updated from "provisional agreement (May 2026)" to final adoption (European Parliament 16 June 2026, Council 29 June 2026), with dates marked provisional until OJ publication (pending as of mid-July 2026). Keeps the classifier's status at least as current as the new hitl-compliance-gate note pointing to it.
+- `publish-provenance` (bundle-versioned, PUB-000) — `references/ai-involvement-tiers.md` and SKILL.md checklist line (both copies): replaced stale "as of 2024–2025" platform-disclosure claims with verified mid-2026 state — Spotify AI Credits (DDEX metadata, voluntary beta since 2026-04-16), Apple Music Transparency Tags (announced 2026-03-04, optional/self-declared), YouTube automatic AI-detection + labeling (May–June 2026), TikTok required label backed by C2PA detection; crosswalk table refreshed. Closes register row PV-07 (platform-policy portion; copyright-guidance citations left as-extracted for SME).
+- `publish-shield` (bundle-versioned, PUB-000) — `references/platform-ai-policies.md`: re-dated to July 2026 and refreshed per-platform — Spotify AI Credits program (voluntary, DistroKid first partner, Believe/CD Baby/FUGA/IDOL/Amuse/Empire onboarding), Apple Music Transparency Tags four-category framework (optional, not a delivery mandate despite "required" headlines), YouTube's shift from self-disclosure to automatic detection with a single simplified label (no monetization impact), TikTok C2PA-backed auto-labeling note. Amazon Music and distributor sections verified unchanged. Closes register row PS-08.
+
+### Notes
+- Closes the A-6 R2 backlog (register rows HITL-03, PV-07, PS-08) ahead of the SME review package. All platform and legislative claims re-verified against live sources 2026-07-16; the A-6 verification doc's "Apple tags became a delivery requirement" claim did **not** verify and was not adopted. Post-merge: `npm run seed:registry` (A-9 CI goes red until reseeded — by design), confirm Gist sync ran for `publish-provenance`, and check the Pillar 1 AI Inventory artifact (four version bumps).
+
 ## Regulatory claim hotfix — EU AI Act Article 73 numbering + notification deadlines, NIST/ISO label fixes (fix/a6-hotfix)
 
 **Branch:** `fix/a6-hotfix` (2026-07-16)

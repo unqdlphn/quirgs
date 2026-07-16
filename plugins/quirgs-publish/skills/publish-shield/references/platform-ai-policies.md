@@ -1,24 +1,24 @@
 # Platform AI Content Policies
 
-Summary of major platform policies on AI-generated and AI-assisted music content. As of mid-2025. Verify at each platform's current documentation before distributing.
+Summary of major platform policies on AI-generated and AI-assisted music content. As of July 2026. Verify at each platform's current documentation before distributing.
 
 ---
 
 ## Policy Evolution Context
 
-Platform policies on AI-generated music are among the fastest-changing areas in music industry compliance. The period 2023–2025 saw most major platforms move from no policy to active disclosure requirements and, in some cases, content restrictions. Expect continued change through 2026 and beyond as regulatory frameworks (EU AI Act, US state laws) pressure platforms to formalize their positions.
+Platform policies on AI-generated music are among the fastest-changing areas in music industry compliance. The period 2023–2025 saw most major platforms move from no policy to active disclosure requirements and, in some cases, content restrictions. In 2026 the shift has been toward **structured, standardized disclosure**: Spotify's DDEX-based AI Credits metadata (April 2026), Apple Music's Transparency Tags (March 2026), and YouTube's move to automatic AI-detection and labeling (May–June 2026). Expect continued change as regulatory frameworks (EU AI Act, US state laws) pressure platforms to formalize their positions.
 
 ---
 
 ## Spotify
 
-**Policy name:** Not officially named; enforced via distribution partner agreements and content moderation.
+**Policy name:** AI Credits (DDEX metadata extension), plus distribution partner agreements and content moderation.
 
-**AI disclosure:** Spotify has worked with distributors to add a metadata flag for AI-generated vocal content. As of 2024–2025, distributors are required to flag content that contains AI-generated vocals.
+**AI disclosure:** Spotify's **AI Credits** program (voluntary beta since 16 April 2026) lets labels and distributors submit per-track AI-involvement metadata using the DDEX standard's AI disclosure fields. DistroKid was the first distribution partner; additional distributors (Believe, CD Baby, FUGA, IDOL, Amuse, Empire) are onboarding. Participation is **not mandatory** — it is a structured disclosure channel, not a delivery requirement. Distributor-level AI flags for AI-generated vocal content continue to apply.
 
 **What's required:**
 - AI-generated **vocals**: must be disclosed via distributor flag; Spotify may restrict or remove undisclosed AI vocals
-- AI-generated **instrumentals**: no formal disclosure requirement currently
+- AI-involvement metadata generally: voluntary via AI Credits (DDEX); recommended for Tier 2+ releases
 - **Deepfakes**: Strictly prohibited. AI-generated content that mimics a specific real artist's voice without authorization is subject to immediate removal.
 
 **Distribution restriction:** Spotify does not accept "functional" music (white noise, sleep sounds, etc.) generated purely algorithmically regardless of AI involvement. This is a separate policy from AI content rules.
@@ -29,14 +29,14 @@ Platform policies on AI-generated music are among the fastest-changing areas in 
 
 ## Apple Music
 
-**Policy:** Apple has not published a specific AI music policy as of mid-2025 but has stated through distributor communications that AI-generated content must be disclosed.
+**Policy name:** Transparency Tags (announced 4 March 2026 via partner communications).
 
 **What's required:**
-- Distributors are asked to flag releases containing AI-generated content at upload
+- Labels and distributors can declare AI involvement per release across four categories: **Artwork, Track, Composition, Music Video**
+- The tags are **optional and self-declared** as of July 2026 — Apple applies no detection or cross-verification, and if no tag is supplied, no AI involvement is assumed. Despite some industry reporting framing them as "required," they are not a delivery mandate.
 - Content that mimics a real artist's voice without authorization is prohibited
-- Generally aligns with Spotify's approach but with less public documentation
 
-**Watch:** Apple has historically moved slower on explicit policy publication but has acted quickly on enforcement (particularly voice cloning of known artists).
+**Watch:** the tags create the metadata rails for a future mandate — if Apple flips them to required-at-delivery, undisclosed back-catalog AI content becomes a compliance gap. Declare accurately now.
 
 **Reference:** Apple Music for Artists documentation; distributor-specific communications
 
@@ -44,11 +44,11 @@ Platform policies on AI-generated music are among the fastest-changing areas in 
 
 ## YouTube / YouTube Music
 
-**Policy name:** YouTube's "Synthetic and Manipulated Media" policy + AI-generated content labeling requirements
+**Policy name:** YouTube's "Synthetic and Manipulated Media" policy + AI content labeling (now detection-backed)
 
 **What's required:**
 - Content created with "realistic-looking" AI must be labeled — this includes AI-generated music videos
-- AI-generated music itself: YouTube has introduced a "Made with AI" label for music uploaded through YouTube Music and YouTube Studio
+- **Shift to automatic detection (May–June 2026):** YouTube moved from pure creator self-disclosure to **automatic AI-detection plus platform-applied labeling**, with a simplified single label shown beneath long-form videos and as an overlay on Shorts. Self-disclosure at upload still exists, but YouTube may label content it detects as AI-generated regardless. The label does **not** affect monetization.
 - **Content ID:** Fully AI-generated content (no human-authored underlying work) has unclear Content ID eligibility. YouTube has not published a definitive statement; in practice, Content ID claims for AI-generated music have been inconsistent.
 
 **Voice cloning / deepfake music:**
@@ -69,7 +69,7 @@ Platform policies on AI-generated music are among the fastest-changing areas in 
 - This includes AI music used in videos and AI-generated music uploaded directly to TikTok's music library
 - TikTok's SoundOn distribution service requires an AI content declaration at upload
 
-**Enforcement:** TikTok has been among the most aggressive in enforcement, particularly around voice cloning. Several major labels have successfully removed AI-generated music that mimicked their artists.
+**Enforcement:** TikTok has been among the most aggressive in enforcement, particularly around voice cloning. Several major labels have successfully removed AI-generated music that mimicked their artists. The required label is now backed by **automated detection** — TikTok reads C2PA Content Credentials (adopted January 2025) and auto-labels AI content carrying them, so relying on non-disclosure is not viable.
 
 **Universal Music Group agreement (2025):** TikTok and UMG reached an agreement that included AI protections; this agreement shapes platform-level AI content standards that affect all publishers, not just UMG artists.
 
@@ -79,7 +79,7 @@ Platform policies on AI-generated music are among the fastest-changing areas in 
 
 ## Amazon Music
 
-**Policy:** Amazon has not published a standalone AI music policy as of mid-2025. Music distributed through DistroKid, TuneCore, or other partners is subject to those distributors' AI disclosure requirements, which Amazon receives as part of the metadata.
+**Policy:** Amazon has not published a standalone AI music policy as of mid-2026. Music distributed through DistroKid, TuneCore, or other partners is subject to those distributors' AI disclosure requirements, which Amazon receives as part of the metadata.
 
 **Reference:** Amazon Music for Artists developer documentation (search AI content)
 
