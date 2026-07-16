@@ -10,13 +10,15 @@ import NavBlock from "../../components/NavBlock.astro";
 
 export async function getStaticPaths() {
   const guides = await getCollection("guides");
-  return guides
-    // Drafts never get a built page.
-    .filter((entry) => entry.data.status !== "draft")
-    .map((entry) => ({
-      params: { slug: entry.id },
-      props: { entry },
-    }));
+  return (
+    guides
+      // Drafts never get a built page.
+      .filter((entry) => entry.data.status !== "draft")
+      .map((entry) => ({
+        params: { slug: entry.id },
+        props: { entry },
+      }))
+  );
 }
 
 const { entry } = Astro.props;
@@ -44,7 +46,7 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
   <!-- cat command -->
   <div class="line">
     <span class="prompt">admin@quirgs</span><span class="path">~/guides</span
-    ><span class="text-bright">$</span> cat {entry.id}.md
+    ><span class="text-bright">$</span>&nbsp;cat {entry.id}.md
   </div>
   <div class="line">&nbsp;</div>
 
@@ -68,7 +70,9 @@ const lastUpdatedFormatted = entry.data.lastUpdated.toISOString().split("T")[0];
   <div class="detail-footer">
     {
       entry.data.tags.length > 0 && (
-        <p><span class="label">TAGS:</span> {entry.data.tags.join(", ")}</p>
+        <p>
+          <span class="label">TAGS:</span> {entry.data.tags.join(", ")}
+        </p>
       )
     }
     <p><span class="label">LAST UPDATED:</span> {lastUpdatedFormatted}</p>
