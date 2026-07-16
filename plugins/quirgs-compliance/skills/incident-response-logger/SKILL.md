@@ -2,23 +2,23 @@
 name: incident-response-logger
 description: >
   Structures AI incident reports aligned to NIST SP 800-61 incident response phases
-  and EU AI Act Article 62 serious incident reporting obligations. Use whenever someone
+  and EU AI Act Article 73 serious incident reporting obligations. Use whenever someone
   says "log an AI incident", "report an AI failure", "document this incident", "file an
   incident report", "something went wrong with our AI", "we had an AI bias incident",
-  "our model produced harmful output", "Article 62 report", "serious incident report",
+  "our model produced harmful output", "Article 73 report", "serious incident report",
   "EU AI Act incident", "post-incident review", or "AI incident debrief". Also trigger
   when someone describes an AI system failure, unexpected output, harm to a user, or
   regulatory notification requirement — even if they don't use the word "incident".
   Produces a structured, pre-filled incident report ready for internal review, legal
   sign-off, and where required, submission to a national market surveillance authority.
-  Identifies whether the incident meets the Article 62 serious incident threshold and
+  Identifies whether the incident meets the Article 73 serious incident threshold and
   routes to the right stakeholders automatically.
 ---
 
 # Incident Response Logger
 
 Structures AI incident reports to align with NIST SP 800-61 response phases and EU AI
-Act Article 62 serious incident reporting obligations. Produces a completed report ready
+Act Article 73 serious incident reporting obligations. Produces a completed report ready
 for internal review, legal sign-off, and regulatory submission where required.
 
 ---
@@ -50,8 +50,8 @@ Infer from conversation where possible; ask only for what's genuinely missing.
 
 **Severity screen — ask these immediately:**
 
-Load `references/article-62-thresholds.md` and check whether the incident meets the
-**EU AI Act Article 62 serious incident** threshold:
+Load `references/article-73-thresholds.md` and check whether the incident meets the
+**EU AI Act Article 73 serious incident** threshold:
 
 - Did the incident result in death or serious harm to health?
 - Did it result in serious and irreversible disruption to critical infrastructure?
@@ -60,8 +60,10 @@ Load `references/article-62-thresholds.md` and check whether the incident meets 
 - Is the system a high-risk AI system under Annex III?
 
 If ANY serious incident threshold is met → flag immediately and proceed to Step 2
-with URGENT status. Article 62 notification to the national market surveillance
-authority may be required within 15 working days.
+with URGENT status. Article 73 notification to the national market surveillance
+authority may be required within 15 days of awareness — 10 days where the incident is
+or may be the death of a person, 2 days for a widespread infringement or a serious and
+irreversible disruption of critical infrastructure.
 
 ---
 
@@ -72,7 +74,7 @@ Load the appropriate reference files based on severity and applicable frameworks
 | Condition | Load |
 |---|---|
 | Always | `references/nist-800-61-phases.md` |
-| EU high-risk AI system involved | `references/article-62-thresholds.md` |
+| EU high-risk AI system involved | `references/article-73-thresholds.md` |
 | Both | Both files |
 
 ---
@@ -154,12 +156,12 @@ Immediate actions:
 Containment status:    [ Contained / Partially contained / Ongoing ]
 Containment confirmed: [ to be confirmed — Engineering Lead ]
 
-SECTION 5 — EU AI ACT ARTICLE 62 ASSESSMENT
+SECTION 5 — EU AI ACT ARTICLE 73 ASSESSMENT
 ──────────────────────────────────────────────
 System risk tier:          [ High-risk (Annex III) / GPAI / Other / Unconfirmed ]
 Serious incident threshold met: [ Yes / No / Under assessment ]
-Threshold basis:           [ see references/article-62-thresholds.md ]
-Regulatory notification required: [ Yes — due within 15 working days /
+Threshold basis:           [ see references/article-73-thresholds.md ]
+Regulatory notification required: [ Yes — due within 15 days (10-/2-day tiers may apply) /
                                     No / Under assessment — Legal to confirm ]
 Notification authority:    [ to be confirmed — Legal ]
 Notification due date:     [ to be confirmed — Legal ]
@@ -169,7 +171,7 @@ GDPR breach notification required: [ Yes / No / Under assessment — DPO to conf
 SECTION 6 — STAKEHOLDER ROUTING
 ──────────────────────────────────
 [ ] Engineering Lead — root cause investigation
-[ ] Legal / Compliance — Article 62 assessment and notification
+[ ] Legal / Compliance — Article 73 assessment and notification
 [ ] DPO — data breach assessment (if personal data involved)
 [ ] Communications — user/public notification (if required)
 [ ] Executive sponsor — awareness (if serious incident)
@@ -225,7 +227,7 @@ After generating the report, produce a brief routing note:
 📋 ROUTING SUMMARY
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Severity:              [🔴 URGENT / 🟡 ELEVATED / 🟢 STANDARD]
-Article 62 triggered:  [Yes / No / Under assessment]
+Article 73 triggered:  [Yes / No / Under assessment]
 Regulatory deadline:   [date or "N/A"]
 GDPR breach notif.:    [Required / Not required / Under assessment]
 Immediate actions needed:
@@ -253,8 +255,10 @@ After presenting the report and routing summary, offer:
 ## Key Principles
 
 - **Advisory only** — All outputs produced by this skill are for informational and governance support purposes only. They do not constitute legal advice, regulatory advice, or a formal compliance determination. No output from this skill should be relied upon as a substitute for advice from qualified legal counsel, a licensed compliance professional, or a certified auditor with jurisdiction-specific expertise.
-- **Speed matters for Article 62** — the 15 working day clock starts from when the provider
-  becomes aware of a serious incident. Start the report immediately; refine as facts emerge
+- **Speed matters for Article 73** — the 15-day clock (10 days for death; 2 days for
+  widespread infringement or critical-infrastructure disruption) starts from when the
+  provider becomes aware of a serious incident. Start the report immediately; refine as
+  facts emerge
 - **Pre-fill aggressively** — a report with `[ to be confirmed ]` placeholders naming specific
   owners is far more useful than a blank template; it creates accountability without waiting for
   complete information

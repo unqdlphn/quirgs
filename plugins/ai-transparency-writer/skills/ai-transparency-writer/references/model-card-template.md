@@ -7,8 +7,9 @@ performance, and limitations. They support the NIST AI RMF GOVERN function by
 making AI system characteristics transparent to deployers, affected individuals,
 oversight bodies, and other stakeholders.
 
-Reference: NIST AI RMF 1.0, GOVERN 1.1 (policies for AI risk), GOVERN 6.1 (transparency
-policies), and the broader AI RMF Playbook actions GV-1.1-001 through GV-1.1-005.
+Reference: NIST AI RMF 1.0, GOVERN 1.1 (policies for AI risk) and GOVERN 1.2 (trustworthy
+AI characteristics integrated into organizational policies and procedures), and the broader
+AI RMF Playbook actions GV-1.1-001 through GV-1.1-005.
 
 ---
 

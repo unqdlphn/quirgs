@@ -15,7 +15,7 @@ Preparation happens before incidents occur. For AI systems, preparation includes
 **Incident response plan elements:**
 - Defined incident classification criteria (what constitutes an AI incident vs. normal variability)
 - Designated incident response team with clear roles (incident commander, technical lead, legal, DPO, communications)
-- Pre-agreed escalation paths (who decides if an incident is "serious" under Article 62)
+- Pre-agreed escalation paths (who decides if an incident is "serious" under Article 73)
 - Contact list for national market surveillance authorities (for EU high-risk AI systems)
 - Logging and monitoring in place to detect incidents (Article 12 EU AI Act: logs must enable post-hoc review)
 - Template incident reports (this skill) ready for immediate use
@@ -50,7 +50,7 @@ Preparation happens before incidents occur. For AI systems, preparation includes
    - Data poisoning or adversarial attack
 3. **Scope the impact** — how many individuals, what decisions, what downstream effects
 4. **Preserve evidence** — log the triggering inputs and outputs; snapshot model version and configuration
-5. **Initial severity assessment** — apply Article 62 threshold check (see `references/article-62-thresholds.md`)
+5. **Initial severity assessment** — apply Article 73 threshold check (see `references/article-73-thresholds.md`)
 
 **Evidence to collect and preserve:**
 - Input that triggered the failure (text, image, structured data)
@@ -79,7 +79,7 @@ Prevent the incident from causing further harm while the investigation continues
 - Severity and ongoing risk of harm
 - Operational impact of suspension
 - Whether the failure is reproducible or appears to be a one-time event
-- Regulatory obligations (Article 62 serious incidents may require suspension)
+- Regulatory obligations (Article 73 serious incidents may require suspension)
 
 ### Eradication
 Address the root cause so the incident cannot recur.
@@ -142,7 +142,7 @@ Use this table to determine initial severity and response urgency:
 
 | Severity | Criteria | Response timeline |
 |---|---|---|
-| 🔴 **CRITICAL** | Death or serious physical harm; serious fundamental rights breach; Article 62 serious incident threshold met | Immediate response; legal notified within hours; regulatory notification within 15 working days |
+| 🔴 **CRITICAL** | Death or serious physical harm; serious fundamental rights breach; Article 73 serious incident threshold met | Immediate response; legal notified within hours; regulatory notification within 15 days (10 days for death; 2 days for widespread infringement or critical-infrastructure disruption) |
 | 🔴 **URGENT** | Significant harm to individuals; ongoing failure affecting many users; GDPR breach likely | Response within 24 hours; legal notified same day |
 | 🟡 **ELEVATED** | Limited harm; isolated failure; no ongoing risk; potential compliance issue | Response within 72 hours; legal informed |
 | 🟢 **STANDARD** | No harm; performance degradation; process failure without external impact | Response within 5 working days; tracked in incident log |

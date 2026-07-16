@@ -1,7 +1,7 @@
 {
   "name": "ai-transparency-writer",
   "description": "Draft EU AI Act Article 13 transparency disclosures, user-facing AI notices, and model cards. Ships with disclosure examples and a model card template.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "author": {
     "name": "Quirgs",
     "url": "https://quirgs.com"
