@@ -24,6 +24,44 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Feature — Guides Track 2 bulk migration (feat/guides-track2-bulk)
+
+**Branch:** `feat/guides-track2-bulk` — (2026-07-17)
+
+Migrates the four remaining low-traffic legacy guides to managed MDX (Option B:
+MDX + 301), after `git-workflow-reference` confirmed a clean indexed outcome in
+Search Console. `ollama_anythingllm_guide.html` stays a literal `.html` (top earner,
+live external backlink — see `_v2/_v3/guides-keystatic-migration-plan.md`).
+
+### Added
+- Managed MDX guides: `ai-prompt-engineering`, `copilot-commands-reference`,
+  `gemma-vs-gemini-guide`, `taco-marketing-strategy` (content preserved; legacy
+  chrome dropped, tables → GFM, BaseLayout shell). Taco retains its author
+  attribution.
+- 301 redirects in `public/_redirects` for all four — both the `.html` and
+  extensionless forms → the new `/guides/<slug>/` URLs.
+- Overflow hardening in `BaseLayout.astro` for long-form guide content: wide
+  tables scroll inside their own box (`display:block` + `width:max-content` +
+  `overflow-x:auto`); long inline commands/URLs and prose wrap
+  (`overflow-wrap`). CSS-only, no CSP impact.
+
+### Removed
+- `public/guides/{ai_prompt_engineering,copilot_commands_reference,gemma_vs_gemini_guide,taco_marketing_strategy}.html`
+  — replaced by the MDX guides (intentional, sanctioned migration exception).
+  Their per-path canonical `Link` headers in `public/_headers` are dropped; the
+  MDX pages self-reference via BaseLayout `<head>`. Only `ollama`'s canonical remains.
+
+### Changed
+- `src/pages/guides/index.astro` — `[ARCHIVE]` now lists only `ollama`; the four
+  migrated guides surface in `[GUIDES] Current` from the collection.
+
+### Notes
+- The `/guides/*` `! Content-Security-Policy` wildcard in `public/_headers` is
+  left as-is (deferred): with `ollama` staying literal it still needs detachment,
+  but it also leaves the MDX guides without CSP. Follow-up: narrow it to just
+  `ollama_anythingllm_guide.html` so all MDX guides fall under the strict `/*` CSP
+  (own PR — CSP-sensitive, validate on preview).
+
 ## A-6 R2 backlog closeout — hitl gate temporal-scope note, platform AI-policy refresh, Omnibus adoption status (fix/a6-r2-backlog)
 
 **Branch:** `fix/a6-r2-backlog` (2026-07-16)
