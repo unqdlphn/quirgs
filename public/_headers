@@ -90,16 +90,24 @@
   Cache-Control: public, max-age=3600
 
 # The one remaining legacy guide (ollama) is preserved verbatim with its own inline
-# scripts/styles that must not be modified — so detach the strict /* CSP for THIS
-# path only (the `!` prefix removes the /*-inherited header). This was a /guides/*
-# wildcard until Track 2 migrated every other guide to managed MDX; those pages now
-# correctly fall under the strict /* CSP (same BaseLayout inline-script surface as
-# skills pages, all hash-pinned — MDX body content has no inline script/style).
+# scripts/styles that must not be modified — so detach the strict /* CSP for it (the
+# `!` prefix removes the /*-inherited header). This was a /guides/* wildcard until
+# Track 2 migrated every other guide to managed MDX; those pages now correctly fall
+# under the strict /* CSP (same BaseLayout inline-script surface as skills pages, all
+# hash-pinned — MDX body content has no inline script/style).
+#
+# The pattern MUST be a prefix wildcard, not the exact `.html` path: Cloudflare serves
+# this asset at BOTH /guides/ollama_anythingllm_guide.html AND the extensionless
+# /guides/ollama_anythingllm_guide (auto .html resolution), plus ?utm= query forms.
+# An exact-`.html` rule missed the extensionless URL, so the strict /* CSP applied
+# there and blocked ollama's legacy inline scripts (regression fixed here). The
+# trailing `*` covers every form; no MDX guide starts with this name, so they're
+# unaffected.
 #
 # The Link line is a self-referencing canonical. Without it Google deduped the page
-# against chatgpt.com and credited that domain. A <head> <link rel=canonical> now
-# also lives in the .html (feat #144); this HTTP header stays as a fallback. Both
-# point at the clean URL. ollama stays a literal .html (top earner — migration plan).
-/guides/ollama_anythingllm_guide.html
+# against chatgpt.com and credited that domain. A <head> <link rel=canonical> also
+# lives in the .html (feat #144); this HTTP header stays as a fallback. Both point at
+# the clean URL. ollama stays a literal .html (top earner — migration plan).
+/guides/ollama_anythingllm_guide*
   ! Content-Security-Policy
   Link: <https://quirgs.com/guides/ollama_anythingllm_guide.html>; rel="canonical"
