@@ -588,6 +588,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         font-size: 0.9em;
         border: 1px solid var(--term-border);
         font-family: inherit;
+        /* Long inline commands/URLs wrap instead of overflowing the body. */
+        overflow-wrap: anywhere;
+      }
+
+      /* Long unbroken strings in prose (URLs, paths) wrap rather than push   */
+      /* the terminal body wider than the viewport on mobile.                 */
+      .terminal-body p,
+      .terminal-body li {
+        overflow-wrap: break-word;
       }
 
       .terminal-body pre {
@@ -610,8 +619,14 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
       /* MDX tables (e.g. command-reference guides). Skills don't use tables;    */
       /* guides are the first MDX content that does, so these live here.         */
+      /* `display:block` + `width:max-content` + `overflow-x:auto` is the        */
+      /* responsive-table pattern: a wide table scrolls inside its own box       */
+      /* instead of pushing the terminal body past the viewport on mobile.       */
       .terminal-body table {
-        width: 100%;
+        display: block;
+        width: max-content;
+        max-width: 100%;
+        overflow-x: auto;
         border-collapse: collapse;
         margin: 16px 0;
         font-size: 0.9rem;

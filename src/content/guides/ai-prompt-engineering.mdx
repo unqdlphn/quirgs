@@ -1,0 +1,126 @@
+---
+title: AI Prompt Engineering Guide
+description: Principles and techniques for crafting effective prompts for LLMs — clarity, context, zero/few-shot, chain-of-thought, role and constraint prompting, and tuning parameters.
+status: live
+lastUpdated: 2026-07-17
+tags:
+  - prompt engineering
+  - LLM
+  - AI
+  - reference
+---
+
+AI and Large Language Models (LLMs) have transformed how we interact with
+technology, but crafting effective prompts is key to harnessing their full
+potential. Prompt engineering is the art and science of writing prompts that get
+an LLM to produce the output you want — communicating clearly and strategically
+with the model.
+
+The success of a model's response depends largely on how well the prompt is
+constructed: it needs clear, contextually rich cues for accurate interpretation.
+*Vibe coding* specifically refers to adjusting your phrasing to match emotional
+tones — humor, urgency, empathy — to better align with user expectations.
+
+## Key Principles for Effective Prompt Engineering
+
+Understanding the fundamentals significantly improves your interactions with AI
+models. How you structure and phrase a prompt directly impacts the quality and
+relevance of the response.
+
+### Clarity & conciseness
+
+Clear language is paramount. Aim for conciseness while maintaining clarity, so you
+don't confuse the model with excessive or vague instructions. The more relevant
+detail you provide, the better the AI understands your intent.
+
+- **Define the role:** tell the AI *who* it is. "You are a seasoned marketing copywriter…" is far more effective than "Write an ad."
+- **Set the format:** specify the desired output (e.g., "Write a bulleted list," "Generate a JSON object," "Compose a poem").
+- **Provide context:** give the necessary background. Don't assume it knows everything.
+- **Iterate & refine:** don't expect perfection on the first try. Experiment with phrasing and parameters.
+
+### Contextual information
+
+Extra context helps the model understand what you're asking for. Instead of merely
+"Tell me a joke," provide specific cues:
+
+- "A funny roast about cats"
+- "Lighthearted dad jokes"
+- "A dry joke about coffee"
+
+The model then generates responses shaped by the context you've provided.
+
+## Prompting Techniques
+
+Different techniques produce different kinds of responses. Knowing when and how to
+use each is essential.
+
+### Zero-shot prompting
+
+Asking the AI to perform a task without any examples.
+
+> **Example:** "Translate 'Hello' to Spanish."
+
+### Few-shot prompting
+
+Providing a few examples to guide the AI.
+
+> **Example:** "Translate the following English phrases to French: 'Hello' → 'Bonjour', 'Goodbye' → 'Au revoir'. Now translate 'Thank you'."
+
+### Chain-of-thought prompting
+
+Encourage the AI to explain its reasoning step by step. Particularly useful for
+complex tasks.
+
+> **Example:** "Let's think step by step. I need to write a short story about a lost dog. First, describe the dog…"
+
+### Role prompting
+
+Assigning a specific role or persona to guide responses.
+
+> **Example:** "You are a helpful and knowledgeable historian…"
+
+### Constraint prompting
+
+Setting specific limitations on the response.
+
+> **Example:** "Write a haiku about autumn, using only words with one syllable."
+
+## Advanced Techniques
+
+Beyond the basics, several parameters fine-tune AI responses for specific use cases.
+
+### Temperature
+
+Controls randomness. Lower values (e.g., 0.2) produce more predictable, focused
+responses; higher values (e.g., 0.8) lead to more creative but potentially less
+coherent results.
+
+### Top-P (nucleus sampling)
+
+Another way to control randomness, focusing on the most probable tokens — it
+determines how many of the most likely next tokens to consider at each step.
+
+### Frequency & presence penalties
+
+These discourage the model from repeating itself. Frequency penalty reduces the
+likelihood of repeated tokens based on how often they've appeared; presence penalty
+reduces the likelihood of any token that has appeared before, regardless of count.
+
+## Vibe Coding
+
+Vibe coding is a trend in software development that leverages AI and LLMs to build
+applications and write code. It centers the interaction between developer and AI,
+emphasizing effective communication and prompt engineering.
+
+It isn't just about writing code — it's about creating a collaborative environment
+where developer and AI work together to produce high-quality software, letting the
+developer focus on higher-level tasks while the AI handles the more mundane parts.
+Used well, it increases productivity and encourages experimentation, freeing you to
+explore ideas without getting bogged down in technical detail.
+
+## Conclusion
+
+Mastering prompt engineering takes practice — you learn how different models respond
+and use those insights to craft better prompts. The more you experiment, the more
+effective your prompts become. Not every technique works for every situation or
+model, so stay open to new approaches and keep refining. Happy prompting!

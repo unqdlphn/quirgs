@@ -10,15 +10,11 @@ const currentGuides = (await getCollection("guides"))
   .filter((entry) => entry.data.status !== "draft")
   .sort((a, b) => b.data.lastUpdated.valueOf() - a.data.lastUpdated.valueOf());
 
+// Only ollama_anythingllm_guide remains a literal .html (top earner, kept on its
+// original URL per the migration plan). The rest are now managed MDX in the
+// `guides` collection and surface in [GUIDES] Current above.
 const legacyGuides = [
-  { file: "ai_prompt_engineering.html", name: "AI Prompt Engineering" },
-  {
-    file: "copilot_commands_reference.html",
-    name: "Copilot Commands Reference",
-  },
-  { file: "gemma_vs_gemini_guide.html", name: "Gemma vs Gemini" },
   { file: "ollama_anythingllm_guide.html", name: "Ollama + AnythingLLM" },
-  { file: "taco_marketing_strategy.html", name: "T.A.C.O Marketing Strategy" },
 ];
 ---
 

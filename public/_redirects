@@ -5,3 +5,11 @@
 # Cover both the indexed .html form and the extensionless variant (crawlers strip .html).
 /guides/git_workflow_reference        /guides/git-workflow-reference/   301
 /guides/git_workflow_reference.html   /guides/git-workflow-reference/   301
+/guides/ai_prompt_engineering         /guides/ai-prompt-engineering/    301
+/guides/ai_prompt_engineering.html    /guides/ai-prompt-engineering/    301
+/guides/copilot_commands_reference        /guides/copilot-commands-reference/   301
+/guides/copilot_commands_reference.html   /guides/copilot-commands-reference/   301
+/guides/gemma_vs_gemini_guide         /guides/gemma-vs-gemini-guide/    301
+/guides/gemma_vs_gemini_guide.html    /guides/gemma-vs-gemini-guide/    301
+/guides/taco_marketing_strategy       /guides/taco-marketing-strategy/  301
+/guides/taco_marketing_strategy.html  /guides/taco-marketing-strategy/  301

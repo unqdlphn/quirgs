@@ -1,0 +1,86 @@
+---
+title: GitHub Copilot Commands Reference
+description: Quick reference for GitHub Copilot — slash commands, context/workspace references, intent commands, prompt best practices, and interface-specific shortcuts.
+status: live
+lastUpdated: 2026-07-17
+tags:
+  - GitHub Copilot
+  - AI
+  - developer tools
+  - reference
+---
+
+A quick reference for working with GitHub Copilot: the slash commands, context
+references, and intent patterns that get the most out of it, plus prompt best
+practices and interface-specific shortcuts.
+
+## Slash Commands
+
+| Command | Description | Example |
+| --- | --- | --- |
+| `/fix` | Ask Copilot to fix issues in your code | `/fix This code has a bug where it doesn't handle empty arrays` |
+| `/explain` | Request an explanation of selected code | `/explain What does this regex pattern do?` |
+| `/tests` | Generate tests for selected code | `/tests Generate unit tests for this function` |
+| `/doc` | Generate documentation for selected code | `/doc Create JSDoc for this function` |
+| `/optimize` | Suggest optimizations for your code | `/optimize This function is slow with large inputs` |
+| `/clear` | Clear the current conversation | `/clear` |
+
+## Context & Workspace Commands
+
+| Command | Description | Example |
+| --- | --- | --- |
+| `@workspace` | Reference your entire workspace | `How do I use the User class from @workspace?` |
+| `@file:<path>` | Reference a specific file | `Help me understand @file:src/utils/helpers.js` |
+| `@selection` | Reference currently selected code | `Refactor @selection to use async/await` |
+| `@clipboard` | Reference content in the clipboard | `Create tests for @clipboard` |
+| `#<n>` | Reference a specific message | `Can you elaborate on what you meant in #2?` |
+
+## Intent Commands
+
+| Intent | Description | Example prompt |
+| --- | --- | --- |
+| Generate | Create new code from scratch | `Generate a React component for a navigation bar` |
+| Complete | Finish partially written code | `Complete this function to parse CSV data` |
+| Transform | Convert code from one form to another | `Convert this JavaScript function to TypeScript` |
+| Refactor | Restructure existing code | `Refactor this to use the strategy pattern` |
+| Debug | Find and fix issues in code | `Debug why this function throws on empty input` |
+| Explain | Understand what code does | `Explain this recursive algorithm` |
+
+## Best Practices for Prompts
+
+1. **Be specific** — include language, framework, and expected behavior.
+   - **Good:** `Generate a Python function using pandas that cleans CSV data by removing duplicates`
+   - **Bad:** `Write a function to process data`
+2. **Provide context** — mention relevant information about your codebase.
+   - **Good:** `Our app uses Express for routing. Add an endpoint to handle user registration`
+   - **Bad:** `Add a signup endpoint`
+3. **Use formatting** in prompts for clarity — backticks for inline code, triple backticks for fenced code blocks, and bullets/numbers for lists of requirements.
+4. **Include examples** of expected inputs/outputs — e.g. `The function should convert "2023-01-15" to "Jan 15, 2023"`.
+5. **Request iterations** when needed — e.g. `Let's refine this further by adding error handling`.
+6. **Specify constraints** — e.g. `Generate a solution that doesn't use external libraries` or `This needs to be compatible with Python 3.8+`.
+
+## Advanced Usage & Command Combinations
+
+- Chain intents: `Refactor this function to use async/await, then optimize it for performance`
+- Mix commands: `/explain this code, then @workspace how it integrates with our authentication system`
+- Specify output format: `Generate a function and provide example usage as comments`
+- Request iterations: `Let's refine this further by adding error handling`
+
+## Interface-Specific Commands
+
+### VS Code
+
+- **Inline suggestions:** press `Tab` to accept a suggestion.
+- **Chat panel:** `Ctrl+I` (Windows/Linux) or `Cmd+I` (Mac).
+- **Quick chat:** `Alt+/` (Windows/Linux) or `Option+/` (Mac).
+
+### GitHub.com
+
+- **Copilot in pull requests:** `@github-copilot` in PR comments.
+- **Explain tab:** use in code view to explain code sections.
+
+## Troubleshooting
+
+- If Copilot seems confused, try `/clear` to start fresh.
+- For large-codebase questions, be specific about which parts you need help with.
+- If complex suggestions are cut off, ask Copilot to continue or break the solution into steps.

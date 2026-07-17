@@ -96,18 +96,11 @@
 /guides/*
   ! Content-Security-Policy
 
-# Self-referencing canonicals for legacy guides.
-# Without these, Google deduped them against chatgpt.com and credited that
-# domain as the original. An HTTP Link header is honored like <link rel=canonical>
-# and keeps public/guides/*.html unmodified (hard rule: never edit those files).
-# Per-path entries are required — a wildcard can't self-reference each URL.
-/guides/ai_prompt_engineering.html
-  Link: <https://quirgs.com/guides/ai_prompt_engineering.html>; rel="canonical"
-/guides/copilot_commands_reference.html
-  Link: <https://quirgs.com/guides/copilot_commands_reference.html>; rel="canonical"
-/guides/gemma_vs_gemini_guide.html
-  Link: <https://quirgs.com/guides/gemma_vs_gemini_guide.html>; rel="canonical"
+# Self-referencing canonical for the one remaining legacy guide.
+# Without it, Google deduped it against chatgpt.com and credited that domain as
+# the original. An HTTP Link header is honored like <link rel=canonical> and keeps
+# the .html unmodified. The other five guides are now managed MDX (Track 2) and
+# self-reference via BaseLayout's <head> canonical, so their entries were removed.
+# ollama_anythingllm_guide stays a literal .html (top earner — see migration plan).
 /guides/ollama_anythingllm_guide.html
   Link: <https://quirgs.com/guides/ollama_anythingllm_guide.html>; rel="canonical"
-/guides/taco_marketing_strategy.html
-  Link: <https://quirgs.com/guides/taco_marketing_strategy.html>; rel="canonical"
