@@ -24,6 +24,21 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — Narrow the guides CSP detachment to ollama only (feat/guides-csp-narrow)
+
+**Branch:** `feat/guides-csp-narrow` — (2026-07-17)
+
+### Changed
+- `public/_headers`: the `/guides/*` `! Content-Security-Policy` wildcard is
+  narrowed to just `/guides/ollama_anythingllm_guide.html`. Now that Track 2
+  migrated every other guide to managed MDX, the MDX guide pages (and the
+  `/guides/` index) fall under the strict `/*` CSP — they share the same
+  hash-pinned BaseLayout inline-script surface as skills detail pages, and their
+  MDX body content has no inline `style=`/`<script>`. Only `ollama` (kept a literal
+  `.html` with unhashed legacy inline scripts) still needs the detachment, folded
+  into its existing canonical block. Verified in the build: 0 inline `style=` across
+  all guide pages + index; guide pages carry the same 4 inline scripts as skills.
+
 ## Feature — Guides Track 2 bulk migration (feat/guides-track2-bulk)
 
 **Branch:** `feat/guides-track2-bulk` — (2026-07-17)
