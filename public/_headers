@@ -89,18 +89,17 @@
   Content-Type: application/linkset+json
   Cache-Control: public, max-age=3600
 
-# Legacy SEO guides (public/guides/*) are preserved verbatim and contain their
-# own inline scripts/styles that must not be modified. Detach the strict policy
-# above so the comma-join rule doesn't intersect it onto these pages (which would
-# break them). They keep their pre-existing no-CSP status quo.
-/guides/*
-  ! Content-Security-Policy
-
-# Self-referencing canonical for the one remaining legacy guide.
-# Without it, Google deduped it against chatgpt.com and credited that domain as
-# the original. An HTTP Link header is honored like <link rel=canonical> and keeps
-# the .html unmodified. The other five guides are now managed MDX (Track 2) and
-# self-reference via BaseLayout's <head> canonical, so their entries were removed.
-# ollama_anythingllm_guide stays a literal .html (top earner — see migration plan).
+# The one remaining legacy guide (ollama) is preserved verbatim with its own inline
+# scripts/styles that must not be modified — so detach the strict /* CSP for THIS
+# path only (the `!` prefix removes the /*-inherited header). This was a /guides/*
+# wildcard until Track 2 migrated every other guide to managed MDX; those pages now
+# correctly fall under the strict /* CSP (same BaseLayout inline-script surface as
+# skills pages, all hash-pinned — MDX body content has no inline script/style).
+#
+# The Link line is a self-referencing canonical. Without it Google deduped the page
+# against chatgpt.com and credited that domain. A <head> <link rel=canonical> now
+# also lives in the .html (feat #144); this HTTP header stays as a fallback. Both
+# point at the clean URL. ollama stays a literal .html (top earner — migration plan).
 /guides/ollama_anythingllm_guide.html
+  ! Content-Security-Policy
   Link: <https://quirgs.com/guides/ollama_anythingllm_guide.html>; rel="canonical"
