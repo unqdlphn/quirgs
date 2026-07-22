@@ -24,6 +24,19 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — enable invocation logs sub-toggle on hitl-gate and registry-api (fix/worker-observability-logs-nested)
+
+**Branch:** `fix/worker-observability-logs-nested` — (2026-07-22)
+
+Follow-up to `feat/worker-observability`: the top-level `[observability]`
+block enables the feature but not the invocation-logs sub-toggle. Added a
+nested `[observability.logs]` table (`enabled = true`, `invocation_logs =
+true`) to both Workers' `wrangler.toml` so invocation logs are actually
+captured, not just the observability feature switched on.
+
+### Added
+- `[observability.logs]` nested config in both Workers' `wrangler.toml`.
+
 ## Feat — enable Workers Logs observability on hitl-gate and registry-api (feat/worker-observability)
 
 **Branch:** `feat/worker-observability` — (2026-07-22)
