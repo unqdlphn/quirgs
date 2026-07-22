@@ -39,7 +39,8 @@ import NavBlock from "../components/NavBlock.astro";
     no server-side database of visitors. The site is statically rendered and
     served from the edge. Aggregate, privacy-preserving analytics (Cloudflare
     Web Analytics and Google Analytics 4) record traffic patterns only — no
-    advertising or cross-site tracking cookies are set. Full detail is on the
+    advertising or cross-site tracking cookies are set. Full detail is on
+    the&nbsp;
     <a href="/privacy/">privacy policy</a>.
   </p>
 
@@ -49,11 +50,12 @@ import NavBlock from "../components/NavBlock.astro";
   <div class="line">&nbsp;</div>
   <p>
     Every page ships a strict Content-Security-Policy with no
-    <code>'unsafe-inline'</code> for scripts or styles. The only inline scripts
-    permitted are pinned individually by SHA-256 hash; everything else loads
-    from <code>'self'</code>. Framing is denied (<code>frame-ancestors 'none'</code>),
-    the base URI is locked, and HTTP is upgraded to HTTPS. This closes the most
-    common injection and clickjacking vectors at the browser level.
+    <code>'unsafe-inline'</code> for scripts or styles. The only inline scripts permitted
+    are pinned individually by SHA-256 hash; everything else loads from <code
+      >'self'</code
+    >. Framing is denied (<code>frame-ancestors 'none'</code>), the base URI is
+    locked, and HTTP is upgraded to HTTPS. This closes the most common injection
+    and clickjacking vectors at the browser level.
   </p>
 
   <div class="line">&nbsp;</div>
@@ -61,8 +63,8 @@ import NavBlock from "../components/NavBlock.astro";
   <h2 class="text-bright">Email Authentication</h2>
   <div class="line">&nbsp;</div>
   <p>
-    The quirgs.com apex domain publishes a strict anti-spoofing configuration:
-    a null-MX record, an SPF record that authorizes no senders, a reject-mode
+    The quirgs.com apex domain publishes a strict anti-spoofing configuration: a
+    null-MX record, an SPF record that authorizes no senders, a reject-mode
     DMARC policy, and a DKIM record that refuses all keys. Nobody can send mail
     that appears to come from quirgs.com itself. A single dedicated subdomain,
     notify.quirgs.com, is provisioned separately with its own SPF, DKIM, and
@@ -78,9 +80,9 @@ import NavBlock from "../components/NavBlock.astro";
     Skills are distributed as open, inspectable source — not opaque binaries.
     Each skill's full instruction text is viewable as a public GitHub Gist
     before you install it. Installing a skill loads its instructions into your
-    agent's context, so review the source first; the
-    <a href="/transparency/">transparency notice</a> and each skill page link
-    directly to that source.
+    agent's context, so review the source first; the&nbsp;
+    <a href="/transparency/">transparency notice</a> and each skill page link directly
+    to that source.
   </p>
   <div class="line">&nbsp;</div>
   <p>
@@ -97,7 +99,7 @@ import NavBlock from "../components/NavBlock.astro";
     No code or content reaches quirgs.com without explicit human sign-off at a
     defined checkpoint. Every change is reviewed on a feature branch and merged
     by pull request — production is never written to directly. AI assistance
-    used in building the platform is disclosed in full on the
+    used in building the platform is disclosed in full on the&nbsp;
     <a href="/transparency/">transparency notice</a>.
   </p>
 
@@ -106,9 +108,9 @@ import NavBlock from "../components/NavBlock.astro";
   <h2 class="text-bright">Reporting a Vulnerability</h2>
   <div class="line">&nbsp;</div>
   <p>
-    Quirgs publishes a machine-readable security contact under RFC 9116 at
-    <a href="/.well-known/security.txt">/.well-known/security.txt</a>. To
-    report a security issue, open a private advisory:
+    Quirgs publishes a machine-readable security contact under RFC 9116 at&nbsp;
+    <a href="/.well-known/security.txt">/.well-known/security.txt</a>. To report
+    a security issue, open a private advisory:
   </p>
   <div class="line">&nbsp;</div>
   <div>
