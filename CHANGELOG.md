@@ -24,6 +24,15 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — word-spacing/wrapping cleanup across terminal-UI pages (fix/text-word-spacing)
+
+**Branch:** `fix/text-word-spacing` — (2026-07-22)
+
+Whitespace/line-wrap refactor across `about.astro`, `demo.astro`,
+`gate.astro`, `hitl.astro`, `resources/case-study-zero.astro`, and
+`security.astro` — no content or behavior changes, prose reflow and
+`&nbsp;` fixes only.
+
 ## Fix — `astro dev` crash from a split Vite version across the Cloudflare/React plugins (fix/astro-dev-vite-moduletype-crash)
 
 **Branch:** `fix/astro-dev-vite-moduletype-crash` — (2026-07-22)

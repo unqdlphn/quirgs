@@ -97,17 +97,15 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
   PATCH  /events/:id  — reviewer approves or rejects</code></pre>
   <p>
     A shared demonstration Worker is live at:<br />
-    <a
-      href="https://gate.quirgs.com"
-      target="_blank"
-      rel="noopener">https://gate.quirgs.com</a
+    <a href="https://gate.quirgs.com" target="_blank" rel="noopener"
+      >https://gate.quirgs.com</a
     >
   </p>
   <p>
     Use it to run the 90-second test below. For any real workflow, run your own
-    copy of the Worker and point <code>HITL_GATE_URL</code> at it — see
-    <a href="#run-your-own">RUN YOUR OWN GATE</a>. Your events never touch Quirgs
-    infrastructure.
+    copy of the Worker and point <code>HITL_GATE_URL</code> at it — see&nbsp;
+    <a href="#run-your-own">RUN YOUR OWN GATE</a>. Your events never touch
+    Quirgs infrastructure.
   </p>
 
   <div class="line">&nbsp;</div>
@@ -125,12 +123,11 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
   <p>
     Every example below reads two environment variables —
     <code>HITL_GATE_URL</code> (the gate endpoint) and
-    <code>HITL_GATE_TOKEN</code> (your write token). The gate endpoint is never
-    hard-coded; it is whatever you point <code>HITL_GATE_URL</code> at. Set the
-    pair once and the commands — and the <code>hitl-compliance-gate</code> skill,
-    which reads the same two variables — all target the same gate. Point them at
-    the shared demo Worker to take the test, or at your own deployment for real
-    work.
+    <code>HITL_GATE_TOKEN</code> (your write token). The gate endpoint is never hard-coded;
+    it is whatever you point <code>HITL_GATE_URL</code> at. Set the pair once and
+    the commands — and the <code>hitl-compliance-gate</code> skill, which reads the
+    same two variables — all target the same gate. Point them at the shared demo Worker
+    to take the test, or at your own deployment for real work.
   </p>
   <div class="line">&nbsp;</div>
   <div class="line">
@@ -138,9 +135,7 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
     <button class="copy-btn" data-copy={demoSetupCommand}>Copy</button>
   </div>
   <pre><code>{demoSetupCommand}</code></pre>
-  <div class="line">
-    Replace 'write-token' with the token you received.
-  </div>
+  <div class="line">Replace 'write-token' with the token you received.</div>
 
   <div class="line">&nbsp;</div>
 
@@ -190,18 +185,22 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
 
   <h2 id="run-your-own" class="text-bright">RUN YOUR OWN GATE</h2>
   <p>
-    The shared Worker above is a demonstration queue. Its data store is public to
-    anyone holding a token — do not put production, customer, or PII-bearing
+    The shared Worker above is a demonstration queue. Its data store is public
+    to anyone holding a token — do not put production, customer, or PII-bearing
     events through it. For real work, run your own copy. The Worker is open
     source: it is a single D1-backed Cloudflare Worker with no external
     dependencies.
   </p>
-  <div class="line">1. Clone the Worker source from <code>workers/hitl-gate</code></div>
+  <div class="line">
+    1. Clone the Worker source from <code>workers/hitl-gate</code>
+  </div>
   <div class="line">
     2. Create a D1 database and bind it as <code>HITL_DB</code> in
     <code>wrangler.toml</code>
   </div>
-  <div class="line">3. Set a write token secret and <code>wrangler deploy</code></div>
+  <div class="line">
+    3. Set a write token secret and <code>wrangler deploy</code>
+  </div>
   <div class="line">
     4. Point <code>HITL_GATE_URL</code> at your own
     <code>*.workers.dev</code> (or custom) hostname
@@ -213,9 +212,9 @@ const step3Command = `curl -s -X PATCH $HITL_GATE_URL/events/<event-id> \\
   </div>
   <pre><code>{ownSetupCommand}</code></pre>
   <p>
-    Because the skill and the commands both read <code>HITL_GATE_URL</code>, this
-    is the only change required — nothing else points at Quirgs. Every event
-    your agents post stays inside your own Cloudflare account.
+    Because the skill and the commands both read <code>HITL_GATE_URL</code>,
+    this is the only change required — nothing else points at Quirgs. Every
+    event your agents post stays inside your own Cloudflare account.
   </p>
 
   <div class="line">&nbsp;</div>
