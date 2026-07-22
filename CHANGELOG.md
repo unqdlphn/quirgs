@@ -24,6 +24,39 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — dev-server cascade reload/crash on Keystatic module discovery (fix/keystatic-dev-server-cascade-reload)
+
+**Branch:** `fix/keystatic-dev-server-cascade-reload` — (2026-07-22)
+
+Another straggler from the Astro 6→7 upgrade cascade (PR #147 → #149):
+`npm run dev` crashed with `The file does not exist at ".../node_modules/.vite/deps_ssr/route-cache-*.js" ... in the optimize deps directory` shortly after boot, at
+`workers/runner-worker/index.js:107`. Preceding log lines showed the real
+trigger — `@keystatic/astro/internal/keystatic-api.js` gets discovered
+as a new SSR dependency mid-session (not during the initial cold-start
+scan), which forces a Vite "optimized dependencies changed, reloading"
+cycle that races the workerd runner-worker's already-loaded module
+graph and invalidates a chunk it still holds a reference to.
+
+This is a currently open, unfixed upstream bug:
+[withastro/astro#16248](https://github.com/withastro/astro/issues/16248)
+— the Cloudflare adapter's dev SSR environment doesn't pre-bundle every
+runtime-discovered dependency. A fix PR exists but isn't merged/released
+(only an unofficial `pkg.pr.new` preview build, not appropriate to pin
+in production). The documented workaround: manually add the triggering
+module to `optimizeDeps.include` so it's bundled at cold start instead
+of discovered lazily.
+
+### Fixed
+- `astro.config.mjs` — added `@keystatic/astro/internal/keystatic-api.js`
+  to `vite.optimizeDeps.include`, alongside the existing
+  `virtual:keystatic-config` exclude.
+
+Verified: `npm run dev` boots clean across repeated cold starts (cache
+cleared each time) with no "dependency optimized"/"program reload"
+lines; `/`, `/keystatic/`, `/skills/` all 200. Build clean, CSP coverage
+exact, all 3 Worker Vitest suites green (83 tests), `astro check` 0
+errors, `npm audit` 0 vulnerabilities.
+
 ## Fix — word-spacing/wrapping cleanup across terminal-UI pages (fix/text-word-spacing)
 
 **Branch:** `fix/text-word-spacing` — (2026-07-22)
