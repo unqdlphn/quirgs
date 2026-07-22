@@ -24,6 +24,31 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — Close the sharp/libvips CVE without downgrading the Cloudflare adapter (fix/sharp-libvips-cve)
+
+**Branch:** `fix/sharp-libvips-cve` — (2026-07-22)
+
+Follow-up to PR #147: [Dependabot alert #17](https://github.com/unqdlphn/quirgs/security/dependabot/17) flagged `sharp <0.35.0` (GHSA-f88m-g3jw-g9cj,
+CVE-2026-33327/33328/35590/35591, high). This wasn't newly introduced by that
+merge — it's the `sharp`/`miniflare`/`wrangler` chain called out and
+deliberately deferred there. `npm audit fix --force` "fixes" it by downgrading
+`@astrojs/cloudflare` 14.1.4→12.6.13 and `wrangler` 4.103.0→4.15.2 (undoing the
+upgrade just shipped) while introducing fresh high-severity `undici`/`ws`
+CVEs in the process — rejected. The real blocker: `miniflare` (latest published,
+`4.20260721.0`) hard-pins `sharp` to an exact `0.34.5`, not a range, so no
+non-breaking bump exists upstream yet.
+
+### Fixed
+- `package.json` — added `"sharp": "^0.35.0"` to `overrides` (alongside the
+  existing `esbuild` override). Astro's own `sharp` dependency already accepts
+  `^0.34.0 || ^0.35.0`, so this just forces the deduped tree-wide copy to the
+  patched `0.35.3` without touching `@astrojs/cloudflare`, `wrangler`, or
+  `miniflare` themselves. `npm audit` → 0 vulnerabilities.
+
+Verified: `npm run build` clean, CSP script coverage still exact (this path
+touches the Cloudflare Images build-time processing), all 3 Worker Vitest
+suites green (83 tests), `npx astro check` 0 errors.
+
 ## Fix — Astro 6→7 / Vite 8 upgrade build break + CSP resync (dependabot/npm_and_yarn/multi-8b378e8c39)
 
 **Branch:** `dependabot/npm_and_yarn/multi-8b378e8c39` — PR #147 (2026-07-21)
