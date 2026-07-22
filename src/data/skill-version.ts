@@ -26,9 +26,19 @@ interface PluginManifest {
 }
 
 // Eagerly inlined at build time by Vite. Key = file path, value = parsed JSON.
+//
+// `exhaustive: true` is required here (Vite 8+, pulled in by the Astro 7 /
+// @astrojs/cloudflare 14 upgrade in PR #147). Vite 8 added an `exhaustive`
+// glob option, defaulting to `false`, that silently excludes any path
+// passing through a dot-prefixed directory segment — which every plugin
+// manifest does (`.claude-plugin/plugin.json`). Without it this glob
+// resolves to an empty object with no warning, and every resolveSkillVersion
+// / resolveBundleVersion call throws "no ... plugin.json version was found"
+// at prerender time. Confirmed by isolated repro against vite@8.1.5 while
+// diagnosing the PR #147 build failure — do not remove.
 const manifests = import.meta.glob<PluginManifest>(
   '../../plugins/*/.claude-plugin/plugin.json',
-  { eager: true, import: 'default' }
+  { eager: true, import: 'default', exhaustive: true }
 );
 
 // Build a plugin-name → version map. Prefer the manifest's own `name`; fall back

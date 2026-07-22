@@ -24,6 +24,50 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — Astro 6→7 / Vite 8 upgrade build break + CSP resync (dependabot/npm_and_yarn/multi-8b378e8c39)
+
+**Branch:** `dependabot/npm_and_yarn/multi-8b378e8c39` — PR #147 (2026-07-21)
+
+Dependabot's grouped bump of `astro` (6.4.7→7.1.3), `@astrojs/cloudflare`
+(13.7.0→14.1.4), `@astrojs/mdx` (5.0.6→7.0.3), and `@keystatic/astro`
+(5.1.0→5.2.0) failed CI: `resolveBundleVersion`/`resolveSkillVersion`
+(`src/data/skill-version.ts`) threw at prerender because their
+`import.meta.glob('.../.claude-plugin/plugin.json', ...)` resolved to zero
+matches. Root cause: Vite 8 (pulled in transitively via the new
+`@astrojs/cloudflare`) added an `exhaustive` glob option, default `false`,
+that now silently excludes any path through a dot-prefixed directory
+segment — `.claude-plugin` — with no build-time warning. Confirmed via an
+isolated repro against `vite@8.1.5` before touching the fix.
+
+### Fixed
+- `src/data/skill-version.ts` — pass `exhaustive: true` to the plugin-manifest
+  glob so it matches through `.claude-plugin/` again. Verified the resolved
+  versions on `/bundles` match the real `plugin.json` values (`quirgs-compliance`
+  1.5.1, `quirgs-publish` 1.4.1), not just that the glob is non-empty.
+- `public/_headers` — regenerated all 7 CSP `script-src` SHA-256 hashes against
+  the post-upgrade `dist/client` output. The Astro/Vite bump changed the
+  inlined-script wrapper bytes for 6 of 7 (only the static JSON-LD block was
+  unchanged), which builds clean but silently CSP-blocks the boot animation,
+  copy-to-clipboard, HelpModal, SiteMenu, and the skills/bundles tab switchers
+  in production — exactly the failure mode the regen note at the top of
+  `_headers` warns about. Verified with a full script-tag sweep of the built
+  output: 0 missing, 0 stale.
+- `patches/@keystatic+astro+5.1.0.patch` → `@keystatic+astro+5.2.0.patch` —
+  regenerated (content identical) to clear the patch-package version-mismatch
+  warning now that `@keystatic/astro` is on 5.2.0.
+- `package-lock.json` — additionally ran `npm audit fix` (non-breaking) to
+  close `brace-expansion`, `fast-uri`, `js-yaml`, `svgo`, and the `yaml` chain
+  under `@astrojs/language-server`. Landing this bump also removes 4 real
+  high-severity Astro CVEs (reflected XSS, authorization bypass) present on
+  `astro@6.4.7`. Remaining: a `sharp`/`miniflare`/`wrangler` advisory chain
+  that only clears via `npm audit fix --force` (bumps
+  `@cloudflare/vitest-pool-workers` to 0.8.30, a breaking change to the
+  Workers test runner) — left for a separate, dedicated PR so it can be
+  validated against all three Worker test suites on its own.
+
+Verified: `npm run build` clean, all 3 Worker Vitest suites green (15+52+16),
+`npx astro check` 0 errors.
+
 ## Fix — Narrow the guides CSP detachment to ollama only (feat/guides-csp-narrow)
 
 **Branch:** `feat/guides-csp-narrow` — (2026-07-17)
