@@ -24,6 +24,44 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — `astro dev` crash from a split Vite version across the Cloudflare/React plugins (fix/astro-dev-vite-moduletype-crash)
+
+**Branch:** `fix/astro-dev-vite-moduletype-crash` — (2026-07-22)
+
+`npm run dev` crashed on startup after PR #147's Astro 6→7 upgrade with
+`Missing field \`moduleType\`` (from `@cloudflare/vite-plugin`'s bundled
+`workers/runner-worker`), swallowed behind Astro 7's new detached
+background dev-server process — the terminal only showed a generic "Dev
+server process exited before becoming ready"; the real error is written
+to `.astro/dev.log`. `npm run build` was unaffected (that crash path is
+serve-only). Confirmed as a regression by running `dev` against the
+pre-#147 commit (Astro 6.4.7), where it worked cleanly.
+
+### Root cause
+`astro@7.1.3` now depends on `vite: ^8.0.13` directly, but
+`@cloudflare/vite-plugin@1.46.0` and `@astrojs/react`'s
+`@vitejs/plugin-react` both resolved a separate nested `vite@7.3.5`
+instead of deduping to Astro's own `8.1.5` — the same class of
+Vite-version-split bug as [withastro/astro#16229](https://github.com/withastro/astro/issues/16229),
+just surfacing through the Cloudflare adapter's dev runner instead of
+the React refresh wrapper. Both `@astrojs/cloudflare` (14.1.4) and
+`@cloudflare/vite-plugin` (1.46.0) are already the latest published
+versions — no upstream patch exists yet.
+
+### Fixed
+- `package.json` — bumped `wrangler` devDependency `^4.103.0` → `^4.113.0`
+  to satisfy `@cloudflare/vite-plugin`'s peer requirement (was forcing a
+  second, older nested `wrangler`/`miniflare` copy alongside the one
+  bundled with `@astrojs/cloudflare`).
+- `package.json` — added `"vite": "^8.0.13"` to `overrides`, forcing a
+  single deduped Vite 8 instance across `astro`, `@cloudflare/vite-plugin`,
+  and `@vitejs/plugin-react` instead of a 7/8 split.
+
+Verified: `npm run dev` boots and serves `/`, `/skills/`, `/about/`,
+`/transparency/` (200s) across repeated clean restarts; `npm run build`
+clean; CSP script coverage exact; all 3 Worker Vitest suites green (83
+tests); `npx astro check` 0 errors; `npm audit` 0 vulnerabilities.
+
 ## Fix — Close the sharp/libvips CVE without downgrading the Cloudflare adapter (fix/sharp-libvips-cve)
 
 **Branch:** `fix/sharp-libvips-cve` — (2026-07-22)
