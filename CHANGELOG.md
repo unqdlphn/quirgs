@@ -28,7 +28,7 @@ practice and roll up into those two releases.
 
 **Branch:** `fix/sharp-libvips-cve` — (2026-07-22)
 
-Follow-up to PR #147: Dependabot alert #17 flagged `sharp <0.35.0` (GHSA-f88m-g3jw-g9cj,
+Follow-up to PR #147: [Dependabot alert #17](https://github.com/unqdlphn/quirgs/security/dependabot/17) flagged `sharp <0.35.0` (GHSA-f88m-g3jw-g9cj,
 CVE-2026-33327/33328/35590/35591, high). This wasn't newly introduced by that
 merge — it's the `sharp`/`miniflare`/`wrangler` chain called out and
 deliberately deferred there. `npm audit fix --force` "fixes" it by downgrading
