@@ -31,6 +31,14 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       exclude: ['virtual:keystatic-config'],
+      // @astrojs/cloudflare's dev SSR environment doesn't pre-bundle every
+      // runtime-discovered dependency (withastro/astro#16248, unfixed as of
+      // Astro 7.1.3/@astrojs/cloudflare 14.1.4): mid-session discovery of
+      // this module triggers a Vite "optimized dependencies changed, reloading"
+      // cycle that races the workerd runner-worker's already-loaded module
+      // graph, crashing with "The file does not exist ... in the optimize
+      // deps directory". Pre-including it forces cold-start bundling instead.
+      include: ['@keystatic/astro/internal/keystatic-api.js'],
     },
     build: {
       chunkSizeWarningLimit: 3000,
