@@ -24,6 +24,20 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Feat — enable Workers Logs observability on hitl-gate and registry-api (feat/worker-observability)
+
+**Branch:** `feat/worker-observability` — (2026-07-22)
+
+Added an `[observability]` block (`enabled = true`, `head_sampling_rate = 1`)
+to both `workers/hitl-gate/wrangler.toml` and
+`workers/registry-api/wrangler.toml`. Observability is deploy config, not a
+dashboard-only toggle — keeping it in `wrangler.toml` means `wrangler dev`
+and `wrangler deploy` stay in sync instead of the dashboard setting silently
+drifting from what's checked in.
+
+### Added
+- `[observability]` config in both Workers' `wrangler.toml`.
+
 ## Fix — dev-server cascade reload/crash on Keystatic module discovery (fix/keystatic-dev-server-cascade-reload)
 
 **Branch:** `fix/keystatic-dev-server-cascade-reload` — (2026-07-22)
