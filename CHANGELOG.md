@@ -24,6 +24,45 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Fix — dev-server PARSE_ERROR on TypeScript syntax in inline `<script>` blocks (fix/vite8-oxc-inline-script-ts-syntax)
+
+**Branch:** `fix/vite8-oxc-inline-script-ts-syntax` — (2026-07-23)
+
+`npm run dev` crashed with `[PARSE_ERROR] Type assertion expressions can only
+be used in TypeScript files` on the landing page, and identically on any page
+rendering `SiteMenu`/`BaseLayout`/`/skills/`/`/bundles/` — i.e. nearly
+everywhere. Root cause: Vite 8's dev-only oxc-based transform (surfaced via
+`@cloudflare/vite-plugin`'s local `workerd` emulation environment —
+`EnvironmentPluginContainer.transform` → `transformWithOxc`) doesn't honor
+Astro's `lang.ts` query hint on non-inline `<script>` virtual modules, so it
+parses them as plain JS and rejects any TS syntax (`as X` assertions, `<T>`
+generics, typed params). No fixed Vite/Astro version exists yet (8.1.5 is
+latest stable) — see
+[vitejs/vite#21941](https://github.com/vitejs/vite/discussions/21941) and the
+related [withastro/astro#16258](https://github.com/withastro/astro/issues/16258).
+
+Confirmed dev-only: `npm run build` succeeds unmodified on the original code
+— production's static asset pipeline never spins up the workerd dev runner
+where the bug lives.
+
+### Fixed
+- Stripped all TypeScript-only syntax (type assertions, generics,
+  parameter/variable type annotations) from the five non-inline `<script>`
+  blocks affected: `src/pages/index.astro`, `src/components/SiteMenu.astro`,
+  `src/layouts/BaseLayout.astro`, `src/pages/skills/index.astro`,
+  `src/pages/bundles/index.astro`. Runtime behavior is unchanged — type
+  annotations are compile-time only.
+
+### Notes
+- CSP `script-src` hashes in `public/_headers` are unaffected — verified
+  byte-identical output for all 7 pinned hashes before/after (type
+  annotations are stripped during the production build's minify step either
+  way, so emitted JS bytes don't change).
+- `npx astro check` now reports 22 new diagnostics (implicit-any params,
+  `Element` vs `HTMLElement` property access) across these five files. Not
+  wired into the default build/CI flow, so nothing blocks — accepted
+  trade-off, confirmed with the user, in exchange for a working `npm run dev`.
+
 ## Docs — Add "The AI Governance Glossary" guide (docs/ai-governance-glossary)
 
 **Branch:** `docs/ai-governance-glossary` — (2026-07-23)

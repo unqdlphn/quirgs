@@ -300,9 +300,9 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
   const backdrop = document.getElementById("site-menu-backdrop");
   const closeBtn = document.getElementById("site-menu-close");
 
-  let lastTrigger: HTMLElement | null = null;
+  let lastTrigger = null;
 
-  function openMenu(trigger: HTMLElement) {
+  function openMenu(trigger) {
     lastTrigger = trigger;
     backdrop?.classList.add("open");
     backdrop?.removeAttribute("aria-hidden");
@@ -317,8 +317,8 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
 
   // Delegated open — any .menu-trigger (header [≡], NavBlock [+N more]).
   document.addEventListener("click", (event) => {
-    const target = event.target as HTMLElement;
-    const trigger = target.closest<HTMLElement>(".menu-trigger");
+    const target = event.target;
+    const trigger = target.closest(".menu-trigger");
     if (trigger) openMenu(trigger);
   });
 

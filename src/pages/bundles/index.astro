@@ -333,10 +333,8 @@ const publishSkills = skills
 </style>
 
 <script>
-  const tabs = document.querySelectorAll<HTMLButtonElement>(
-    ".tab-btn[data-panel]",
-  );
-  const panels = document.querySelectorAll<HTMLElement>(".bundle-panel");
+  const tabs = document.querySelectorAll(".tab-btn[data-panel]");
+  const panels = document.querySelectorAll(".bundle-panel");
 
   tabs.forEach((tab) => {
     tab.addEventListener("click", () => {
