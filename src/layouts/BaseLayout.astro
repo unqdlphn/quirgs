@@ -709,8 +709,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       // Replaces inline onclick handlers so the CSP needs no 'unsafe-inline'
       // / 'unsafe-hashes' for script-src.
       document.addEventListener("click", (event) => {
-        const target = event.target as HTMLElement;
-        const btn = target.closest<HTMLButtonElement>(".copy-btn[data-copy]");
+        const target = event.target;
+        const btn = target.closest(".copy-btn[data-copy]");
         if (!btn) return;
         const text = btn.dataset.copy ?? "";
         navigator.clipboard.writeText(text);

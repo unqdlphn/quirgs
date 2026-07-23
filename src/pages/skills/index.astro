@@ -362,8 +362,8 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
 
 <script>
   // Tab + pillar filter logic — runs client-side
-  const rows = document.querySelectorAll<HTMLElement>(".skill-row");
-  const noResults = document.querySelector<HTMLElement>(".no-results");
+  const rows = document.querySelectorAll(".skill-row");
+  const noResults = document.querySelector(".no-results");
   let activeBundle = "all";
   let activePillar = "all";
 
@@ -387,7 +387,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   }
 
   // Tab buttons
-  document.querySelectorAll<HTMLButtonElement>(".tab-btn").forEach((btn) => {
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".tab-btn").forEach((b) => {
         b.classList.remove("active");
@@ -401,9 +401,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   });
 
   // Pillar dropdown
-  const pillarSelect = document.getElementById(
-    "pillar-select",
-  ) as HTMLSelectElement | null;
+  const pillarSelect = document.getElementById("pillar-select");
   pillarSelect?.addEventListener("change", () => {
     activePillar = pillarSelect.value;
     applyFilter();

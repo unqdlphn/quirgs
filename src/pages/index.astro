@@ -359,15 +359,15 @@ const pageDescription =
         { type: "prompt-only" },
       ];
 
-      const terminal = document.getElementById("terminal") as HTMLElement;
+      const terminal = document.getElementById("terminal");
       let currentStep = 0;
 
       function getPromptHTML() {
         return `<span class="prompt">admin@quirgs</span><span class="path">~/system</span><span class="text-bright">$&nbsp;</span>`;
       }
 
-      async function typeText(element: HTMLElement, text: string, speed = 30) {
-        return new Promise<void>((resolve) => {
+      async function typeText(element, text, speed = 30) {
+        return new Promise((resolve) => {
           let i = 0;
           // Temporarily remove HTML tags for typing effect, or just insert HTML directly if it contains tags
           if (text.includes("<span") || text.includes("<a")) {
