@@ -1,0 +1,3 @@
+## 2024-11-20 - Adding `aria-live` to dynamic queue updates
+**Learning:** For dynamic pages like the HITL Review Queue, where JS heavily modifies the DOM asynchronously (loading lists of elements, updating statuses in response to inputs), standard HTML tags or ARIA labels aren't enough. When a user submits an action and the queue updates dynamically, screen readers don't natively announce those DOM mutations without a live region.
+**Action:** When implementing dynamically loaded lists or status indicator text areas (like token statuses or queue blocks), always wrap or augment the container with `aria-live="polite"` (or `"assertive"` for critical alerts) so screen readers can announce the update to the user.
