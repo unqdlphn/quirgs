@@ -24,6 +24,37 @@ practice and roll up into those two releases.
 
 ## [Unreleased]
 
+## Docs — Add "The AI Governance Glossary" guide (docs/ai-governance-glossary)
+
+**Branch:** `docs/ai-governance-glossary` — (2026-07-23)
+
+New beginner-level glossary covering the entities, frameworks, acronyms, and
+terms behind EU AI Act / NIST AI RMF / ISO 42001 governance work. Drafted by
+Cowork Sonnet 5, run through `hitl-compliance-gate`, and independently
+fact-checked against primary sources before publication — see
+`_v2/results/complaince-gate-ai-govenance-glossary.md` for the gate report.
+
+### Added
+- `src/content/guides/ai-governance-glossary.mdx` — new `guides` collection
+  entry, terminal-UI rendering at `/guides/ai-governance-glossary/`.
+- A "Digital Omnibus (on AI)" glossary entry — the draft was otherwise silent
+  on the largest EU AI Act development of 2026 (Parliament/Council final
+  approval June 2026, amending act signed 2026-07-08, Official Journal
+  publication still pending), which the compliance gate flagged as a currency
+  risk.
+
+### Fixed
+- Corrected em-dash mojibake (`â` in place of `—`) present in the drafted
+  content before it entered the repo.
+
+### Notes
+- The one specific legal citation in the glossary (EU AI Act Article 73,
+  serious incidents) was verified against current primary text and against
+  this repo's own prior correction of that citation (`fix/a6-hotfix`,
+  2026-07-16). No other article numbers are cited in the body.
+- Torrey Adams is the named accountable owner for future accuracy review
+  (compliance gate mandatory sign-off item).
+
 ## Fix — enable invocation logs sub-toggle on hitl-gate and registry-api (fix/worker-observability-logs-nested)
 
 **Branch:** `fix/worker-observability-logs-nested` — (2026-07-22)
