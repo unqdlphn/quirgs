@@ -17,12 +17,41 @@ since the last release. Historical entries are never rewritten.
 
 Release tagging began July 2026: a retroactive `v2.0.0` baseline tag marks the
 V2 launch (2026-05-27), and the first CalVer release, `2026.07`, covers
-everything merged since. All entries below `[Unreleased]` predate the tagging
-practice and roll up into those two releases.
+everything merged since. Entries written before the tagging practice existed
+were left exactly as they were; only the two release headers were added around
+them to mark the boundaries.
 
 ---
 
 ## [Unreleased]
+
+## Release — cut `2026.07`, the first CalVer release (feat/release-2026-07)
+
+**Branch:** `feat/release-2026-07` — (2026-08-03)
+
+Phase C of the release plan. No product code changes — changelog structure and
+release provenance only.
+
+### Changed
+
+- `## [Unreleased]` retitled to `## [2026.07] — 2026-08-03`, covering PRs
+  #22–#155 (2026-05-28 → 2026-07-23). A fresh empty `## [Unreleased]` heads the
+  file.
+- A `## [v2.0.0] — 2026-05-27` header was inserted immediately above
+  `## V2 Goes Live` to mark where the baseline release ends and `2026.07`
+  begins. Purely additive — no existing entry text was altered.
+- Header note updated to describe how the two retroactive boundaries were
+  drawn.
+
+### Notes
+- Tag applied 2026-08-03, three days after the planned end-of-July cut. CalVer
+  month reflects when the work landed, not when the tag was pushed.
+- Plugin/bundle SemVer is *not* rolled up here — the plugin marketplace did not
+  exist at `v2.0.0` (introduced 2026-05-31, PR #45), so every manifest version
+  is new in this window. Current versions are listed in the GitHub Release
+  notes.
+
+## [2026.07] — 2026-08-03
 
 ## Fix — dev-server PARSE_ERROR on TypeScript syntax in inline `<script>` blocks (fix/vite8-oxc-inline-script-ts-syntax)
 
@@ -2129,6 +2158,13 @@ Post-launch smoke-test cleanup, Safari font handling, Lighthouse improvements, a
 - Project docs updated — deployment workflow, validation rules, and branching strategy.
 
 ---
+
+## [v2.0.0] — 2026-05-27
+
+Baseline release. Retroactive tag on `de0ebe3` (the launch-day
+`assets.directory` fix — the first commit where production actually served),
+applied 2026-07-06. Everything below this header is the V2 build-out that
+shipped at launch.
 
 ## V2 Goes Live
 
