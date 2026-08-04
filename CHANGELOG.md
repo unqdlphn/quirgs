@@ -25,6 +25,50 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Feat — CSP script-src hash verifier + pre-merge CI gate (feat/csp-hash-verifier)
+
+**Branch:** `feat/csp-hash-verifier` — (2026-08-03)
+
+The SHA-256 `script-src` pins in `public/_headers` are the one part of the build
+that can break with **no signal at all**: the build succeeds, nothing appears in
+a diff, and the only symptom is that the affected inline scripts get CSP-blocked
+in the browser — a dead boot animation, dead copy buttons, dead site menu, dead
+`/skills/` and `/bundles/` filters. Regenerating the pins was a manual
+`openssl dgst` loop over hand-extracted script bodies. This makes it a command,
+and makes a stale pin fail CI before it can reach production.
+
+### Added
+- **`scripts/check-csp-hashes.mjs`** — hashes every inline `<script>` in
+  `dist/client` and asserts the emitted set equals the pinned set. Two outcomes,
+  weighted differently: *unpinned* (emitted but not in `_headers` — will be
+  blocked in production) always fails; *stale* (pinned but no longer emitted —
+  harmless, but a reliable sign a regeneration was missed) warns, and fails
+  under `--strict`.
+  - `--write` rewrites stale pins in place, but only when the substitution is
+    unambiguously 1:1. If scripts were added or removed rather than changed, it
+    refuses rather than guessing which pin maps to which.
+  - Pages whose CSP is deliberately detached (`! Content-Security-Policy` —
+    currently the legacy ollama guide) are **discovered by parsing `_headers`**,
+    not hardcoded, so the exclusion stays correct if that list changes.
+- **`npm run check:csp`** wired to the above.
+- **`.github/workflows/csp-hashes.yml`** — builds and verifies on every
+  `pull_request`, plus push to `main` and manual dispatch.
+
+### Changed
+- The regeneration notes at the top of `public/_headers` now point at the script
+  instead of the manual `openssl` procedure. Hand-editing still works — the
+  check only cares that the two sets match.
+
+### Notes
+- Deliberately **not** folded into `live-integrity.yml`. That workflow is a
+  post-deploy check of the live site (governance action A-9, MS-2.8 / MS-4.2) and
+  runs on push/cron without a build step. A CSP pin check needs `dist/client` and
+  is only useful *before* merge, so it gets its own workflow rather than
+  broadening A-9's scope.
+- Verified end-to-end: passes on a clean tree; detects a corrupted pin and exits
+  1; `--write` repairs it byte-identically to the original; and the ambiguity
+  guard correctly refuses a 0-stale/1-unpinned case.
+
 ## Fix — restore type safety in inline scripts after the Vite 8 TS strip (fix/astro-check-type-errors)
 
 **Branch:** `fix/astro-check-type-errors` — (2026-08-03)
