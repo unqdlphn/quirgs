@@ -50,6 +50,23 @@ on it; #116 is closed as superseded and its remaining value is folded in here.
   thinner "carry their own semantic versions" sentence from #158.
 
 ### Fixed
+- **Glued words at inline-element boundaries, site-wide.** In `.astro`
+  templates a newline between text and an inline element (`<a>`, `<code>`,
+  `<span>`) collapses to *nothing*, not to a space — JSX whitespace semantics,
+  not HTML's. Prettier's wrap-on-save routinely puts a break exactly there, so
+  the defect reappears whenever a paragraph reflows. A scan of every `<p>`/`<li>`
+  in the built site found four occurrences:
+  - `transparency.astro` — "The eight`quirgs-publish` skills"
+  - `hitl.astro` — "and`HITL_GATE_TOKEN`"
+  - `resources/case-study-zero.astro` — "`aria-hidden`instead"
+  - `resources/publish-bundle-stress-test.astro` — "and`publish-provenance`"
+
+  Fixed with the JSX explicit-space expression `{" "}` at the wrap point, which
+  survives reformatting and emits a **normal breakable space** — unlike
+  `&nbsp;`, which pins the words together and risks mobile overflow next to
+  long tokens (cf. PR #131, PR #150). Four more instances in the
+  `/transparency/` Release Provenance and Validation copy were fixed by the
+  owner with `&nbsp;` and left as-is; they render correctly.
 - Retired the legacy "Claude Cowork" product name in the AI-Assisted Platform
   Development paragraph — now "Claude and Claude Code". This was the last
   `Cowork` occurrence in `src/`; the `index.astro` one named in the deferred
