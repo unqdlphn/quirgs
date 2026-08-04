@@ -58,7 +58,7 @@ import { RELEASE, RELEASES_URL } from "../data/release";
   <div class="line">&nbsp;</div>
   <p>
     The quirgs.com site and the skills it distributes were built with AI coding
-    assistance. Development tools include Claude Cowork and Claude Code (prompt
+    assistance. Development tools include Claude and Claude Code (prompt
     assistance, component and logic generation, bug fixes, integration
     assistance), Gemini via Antigravity (scaffolding and integration), and Jules
     (build validation). All structural decisions — architecture, component
@@ -149,8 +149,17 @@ import { RELEASE, RELEASES_URL } from "../data/release";
     notes describing what changed. Current release:
     <span class="text-bright">{RELEASE}</span>. The full history is public at
     <a href={RELEASES_URL} rel="noopener">github.com/unqdlphn/quirgs/releases</a>.
-    Skills and bundles carry their own semantic versions, called out in each
-    release's notes.
+    Each release compiles the changelog entries for everything merged that
+    month, including skill and bundle version bumps — nothing ships untracked.
+  </p>
+  <div class="line">&nbsp;</div>
+  <p>
+    The skill and bundle versions shown on <a href="/skills/">/skills/</a> are
+    not hand-maintained. They derive at build time from the same plugin
+    manifests the install commands fetch, and a scheduled integrity check
+    verifies the live site and registry against those manifests daily. Releases
+    close that loop: the version you see, the version you install, and the
+    version in the release notes are the same number by construction.
   </p>
 
   <div class="line">&nbsp;</div>
