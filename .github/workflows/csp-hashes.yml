@@ -1,0 +1,41 @@
+name: CSP Script Hashes
+
+# Assert that the SHA-256 script-src pins in public/_headers still match the
+# inline <script> bodies the build actually emits into dist/client.
+#
+# These pins break SILENTLY: the build succeeds either way, and the only symptom
+# is that the affected scripts get CSP-blocked in the browser (boot animation,
+# site menu, copy buttons, /skills/ and /bundles/ filters). Nothing else in CI
+# catches it, and it is not visible in a diff — a bundled-script edit or an
+# Astro/Vite bump that changes the inlined module wrapper is enough to do it.
+#
+# Runs on pull_request rather than post-deploy, because the point is to catch a
+# stale pin BEFORE it reaches production. This is the pre-merge counterpart to
+# live-integrity.yml, which checks the deployed site after the fact.
+#
+# To fix a failure: npm run build && npm run check:csp -- --write
+# See scripts/check-csp-hashes.mjs and the notes at the top of public/_headers.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: csp-hashes-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Check CSP script-src pins against dist/client
+        run: npm run check:csp

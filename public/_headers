@@ -31,8 +31,13 @@
 # in dist/client after `npm run build`. If you change any bundled script (or bump
 # Astro/Vite, which can change the inlined wrapper), recompute and update them.
 #   npm run build
-#   # then hash each unique inline <script> body, e.g.:
-#   printf '%s' '<exact script body>' | openssl dgst -sha256 -binary | openssl base64
+#   npm run check:csp             # verify — reports unpinned and stale pins
+#   npm run check:csp -- --write  # rewrite the stale pins in place
+#
+# scripts/check-csp-hashes.mjs does the hashing; .github/workflows/csp-hashes.yml
+# runs the verify step on every PR, so a stale pin fails CI instead of silently
+# shipping a blocked script. Editing the hashes by hand still works — the check
+# only cares that the pinned set equals the emitted set.
 /*
   Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-0luhRzwYBCNWM+bAZHyYyfEmlrY4A7B/kihyfIeWxMc=' 'sha256-2WCJa/BvdxjZDJt6usI1Y2HcBi+GF/F/rIlFcWhBfv4=' 'sha256-p+pCs/kSXMmVB0N2Y9ec3q+Y1cQXkpCl49taATJ9CYQ=' 'sha256-GWysuNdy0CQ++S+DSIEuQ05L9fqI1LygpNIxK8BNWBs=' 'sha256-CnhHH8xeree/dUDghJysovW9tHNQPhP7bAUwvyF47g4=' 'sha256-1dLaCwpU4OnTCPnEgprj0GHRioYZPaO1z25t8Jlm+Nc=' 'sha256-qvk32emmap5k5in6RsUpB6TH1EEPjkeX94s5Q0i8cvg=' https://static.cloudflareinsights.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://gate.quirgs.com https://quirgs-hitl-gate.elbrigante9.workers.dev; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
 
