@@ -25,6 +25,54 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Fix — salvage version-integrity copy and retire "Cowork" from /transparency/ (fix/transparency-provenance-salvage)
+
+**Branch:** `fix/transparency-provenance-salvage` — (2026-08-03)
+
+Recovers the two pieces of PR #116 (`feat/transparency-releases-link`, open
+since 2026-07-06) that were better than what shipped in PR #158. #158
+implemented the same Release Provenance section without checking for open work
+on it; #116 is closed as superseded and its remaining value is folded in here.
+
+### Added
+- The version-integrity chain is now stated on `/transparency/`: skill and
+  bundle versions on `/skills/` derive at build time from the same plugin
+  manifests the install commands fetch, and the Live Published-Metadata
+  Integrity check verifies the live site and registry against those manifests
+  daily — so the version displayed, the version installed, and the version in
+  the release notes are the same number by construction. Wording adapted from
+  #116; "daily" verified against `.github/workflows/live-integrity.yml`
+  (`schedule: cron '17 13 * * *'`, plus on push to `main`).
+
+### Changed
+- The Release Provenance paragraph now notes that each release compiles that
+  month's changelog entries including skill/bundle version bumps, replacing the
+  thinner "carry their own semantic versions" sentence from #158.
+
+### Fixed
+- **Glued words at inline-element boundaries, site-wide.** In `.astro`
+  templates a newline between text and an inline element (`<a>`, `<code>`,
+  `<span>`) collapses to *nothing*, not to a space — JSX whitespace semantics,
+  not HTML's. Prettier's wrap-on-save routinely puts a break exactly there, so
+  the defect reappears whenever a paragraph reflows. A scan of every `<p>`/`<li>`
+  in the built site found four occurrences:
+  - `transparency.astro` — "The eight`quirgs-publish` skills"
+  - `hitl.astro` — "and`HITL_GATE_TOKEN`"
+  - `resources/case-study-zero.astro` — "`aria-hidden`instead"
+  - `resources/publish-bundle-stress-test.astro` — "and`publish-provenance`"
+
+  Fixed with the JSX explicit-space expression `{" "}` at the wrap point, which
+  survives reformatting and emits a **normal breakable space** — unlike
+  `&nbsp;`, which pins the words together and risks mobile overflow next to
+  long tokens (cf. PR #131, PR #150). Four more instances in the
+  `/transparency/` Release Provenance and Validation copy were fixed by the
+  owner with `&nbsp;` and left as-is; they render correctly.
+- Retired the legacy "Claude Cowork" product name in the AI-Assisted Platform
+  Development paragraph — now "Claude and Claude Code". This was the last
+  `Cowork` occurrence in `src/`; the `index.astro` one named in the deferred
+  sweep no longer exists, having been replaced by the boot-sequence rewrite in
+  #158.
+
 ## Feat — landing copy precision pass + release provenance surfacing (feat/landing-copy-2026-08)
 
 **Branch:** `feat/landing-copy-2026-08` — (2026-08-03)
