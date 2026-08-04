@@ -25,6 +25,55 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Fix — restore type safety in inline scripts after the Vite 8 TS strip (fix/astro-check-type-errors)
+
+**Branch:** `fix/astro-check-type-errors` — (2026-08-03)
+
+`npx astro check` reported **22 errors**, all of them fallout from PR #155
+(`fix/vite8-oxc-inline-script-ts-syntax`). That PR stripped TS syntax out of the
+bundled inline `<script>` blocks to stop Vite 8's dev-only oxc transform from
+crashing `npm run dev` — but removing the type assertions and typed parameters
+left the same expressions unchecked, so `querySelectorAll` results narrowed no
+further than `Element` and `getElementById` results stayed nullable. The build
+was never affected; `astro check` is not wired into CI, so this went unnoticed.
+
+Type annotations cannot simply be added back — that would re-break the dev
+server — and JSDoc types don't help either, because Astro parses these blocks as
+TS, where JSDoc annotations are ignored. The fix instead uses **runtime
+narrowing**, which is valid plain JS and which TypeScript honours.
+
+### Fixed
+- 22 → **0** `astro check` errors, across five files:
+  - `src/pages/index.astro` (9) — the boot sequence now early-returns when the
+    terminal element is missing, `resolve()` passes an explicit `undefined`, and
+    `typeText` derives its parameter types from inert defaults.
+  - `src/components/SiteMenu.astro` (5) — delegated click handler narrows the
+    event target before `closest()`; `openMenu()` no longer takes an untypeable
+    parameter, with the trigger recorded at the call site instead.
+  - `src/pages/skills/index.astro` (5) — `instanceof HTMLElement` before
+    `dataset`/`style` access, `instanceof HTMLSelectElement` before `.value`.
+  - `src/layouts/BaseLayout.astro` (2) — copy-to-clipboard delegation narrows
+    both the event target and the resolved button.
+  - `src/pages/bundles/index.astro` (1) — tab switcher narrows before `dataset`.
+
+### Changed
+- **Five of the seven pinned CSP `script-src` hashes in `public/_headers` were
+  regenerated.** The narrowing guards are real runtime code, so the bundled
+  inline script bytes changed. The two unaffected pins (HelpModal, JSON-LD) are
+  untouched. Verified programmatically after rebuild: 7 pinned, 7 emitted, no
+  stale pins and no unpinned scripts outside the intentionally CSP-detached
+  ollama guide.
+
+### Notes
+- The landing boot sequence is unchanged in behaviour — still JS-injected and
+  `setTimeout`-sequenced, no fade/slide transitions. Confirmed against the
+  minified output: the guard compiles to `if(e)for(...)`, and the 1s
+  `setTimeout(runSequence, 1000)` entry point is intact.
+- Every `instanceof` guard was checked against the real markup first — the
+  elements involved are `<div>`, `<button>` and `<select>`, so no guard can
+  short-circuit in practice.
+- All 83 Worker tests still pass; `npm run build` clean.
+
 ## Fix — salvage version-integrity copy and retire "Cowork" from /transparency/ (fix/transparency-provenance-salvage)
 
 **Branch:** `fix/transparency-provenance-salvage` — (2026-08-03)

@@ -370,6 +370,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   function applyFilter() {
     let visible = 0;
     rows.forEach((row) => {
+      if (!(row instanceof HTMLElement)) return;
       const rowBundle = row.dataset.bundle ?? "";
       const rowPillar = row.dataset.pillar ?? "";
       const bundleMatch = activeBundle === "all" || rowBundle === activeBundle;
@@ -381,7 +382,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
         row.classList.add("hidden");
       }
     });
-    if (noResults) {
+    if (noResults instanceof HTMLElement) {
       noResults.style.display = visible === 0 ? "block" : "none";
     }
   }
@@ -395,6 +396,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
       });
       btn.classList.add("active");
       btn.setAttribute("aria-selected", "true");
+      if (!(btn instanceof HTMLElement)) return;
       activeBundle = btn.dataset.bundle ?? "all";
       applyFilter();
     });
@@ -403,6 +405,7 @@ const pillars = ["Inventory", "Checkpoints", "Standards Alignment"];
   // Pillar dropdown
   const pillarSelect = document.getElementById("pillar-select");
   pillarSelect?.addEventListener("change", () => {
+    if (!(pillarSelect instanceof HTMLSelectElement)) return;
     activePillar = pillarSelect.value;
     applyFilter();
   });
