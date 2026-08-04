@@ -74,6 +74,40 @@ narrowing**, which is valid plain JS and which TypeScript honours.
   short-circuit in practice.
 - All 83 Worker tests still pass; `npm run build` clean.
 
+## Fix — close HIGH-severity brace-expansion advisory (fix/dependabot-brace-expansion-high)
+
+**Branch:** `fix/dependabot-brace-expansion-high` — (2026-08-03)
+
+Clears Dependabot alert #18, a HIGH-severity (CVSS 7.5) denial-of-service in
+`brace-expansion` reachable through `@keystatic/core → minimatch@9.0.9`.
+Dependabot raised the alert but never opened a PR for it, so the bump is made
+by hand here.
+
+### Security
+- `brace-expansion` 2.1.2 → **2.1.4**, closing GHSA-mh99-v99m-4gvg (unbounded
+  expansion length causing an out-of-memory process crash) and
+  GHSA-rgw5-rvv9-x895 (unbounded intermediate arrays bypassing the first
+  advisory's mitigation). 2.1.4 stays inside minimatch's `^2.0.1` range, so
+  this is a lockfile-only change with no dependency-graph movement.
+- `fast-uri` 3.1.4 → **3.1.5**, closing GHSA-7p8r-x3mc-p8w7 (host confusion via
+  backslash authority introducer, HIGH). Not separately alerted by Dependabot;
+  picked up in the same pass.
+- `postcss` → **8.5.25**, closing GHSA-fxqj-rqcc-2cmp (moderate — attacker-
+  controlled `sourceMappingURL` reads arbitrary `.map` files when `from` is
+  unset).
+
+### Notes
+- **Deliberately not fixed:** the remaining `undici` advisories (HIGH) reach the
+  tree only through `wrangler`/`miniflare`/`@cloudflare/vitest-pool-workers` —
+  build- and test-time tooling that never ships to the Worker runtime. `npm
+  audit fix --force` would resolve them by downgrading
+  `@cloudflare/vitest-pool-workers` 0.16.18 → 0.8.71, a breaking change to the
+  Worker test suites. Left in place pending an upstream non-breaking release.
+- Verified after the bump: `npm run build` clean, all 83 Worker tests passing
+  (registry 15, hitl-gate 52, metrics 16), all 7 pinned CSP `script-src` hashes
+  still byte-matching the built inline scripts, and the `@keystatic/astro`
+  `postinstall` patch still applied.
+
 ## Fix — salvage version-integrity copy and retire "Cowork" from /transparency/ (fix/transparency-provenance-salvage)
 
 **Branch:** `fix/transparency-provenance-salvage` — (2026-08-03)
