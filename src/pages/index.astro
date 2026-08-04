@@ -400,7 +400,12 @@ const pageDescription =
         return `<span class="prompt">admin@quirgs</span><span class="path">~/system</span><span class="text-bright">$&nbsp;</span>`;
       }
 
-      async function typeText(element, text, speed = 30) {
+      // `element`/`text` carry defaults purely so TypeScript can infer their
+      // types. Inline <script> blocks must stay free of TS syntax (PR #155 —
+      // Vite 8's dev-only oxc transform rejects annotations here), and JSDoc
+      // types are ignored because Astro parses these blocks as TS. Both call
+      // sites always pass both arguments, so the defaults are never applied.
+      async function typeText(element = document.body, text = "", speed = 30) {
         return new Promise((resolve) => {
           let i = 0;
           // Temporarily remove HTML tags for typing effect, or just insert HTML directly if it contains tags
@@ -414,7 +419,7 @@ const pageDescription =
                 i++;
                 setTimeout(type, speed);
               } else {
-                resolve();
+                resolve(undefined);
               }
             }
             type();
@@ -423,6 +428,7 @@ const pageDescription =
       }
 
       async function runSequence() {
+        if (!terminal) return;
         for (const step of sequence) {
           const line = document.createElement("div");
           line.className = "line";

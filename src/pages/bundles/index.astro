@@ -346,6 +346,7 @@ const publishSkills = skills
 
       tab.classList.add("active");
       tab.setAttribute("aria-selected", "true");
+      if (!(tab instanceof HTMLElement)) return;
       const panelId = "panel-" + (tab.dataset.panel ?? "");
       document.getElementById(panelId)?.removeAttribute("hidden");
     });
