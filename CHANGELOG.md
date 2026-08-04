@@ -25,6 +25,65 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Feat — landing copy precision pass + release provenance surfacing (feat/landing-copy-2026-08)
+
+**Branch:** `feat/landing-copy-2026-08` — (2026-08-03)
+
+Brand-copy pass ahead of the SME review and the three-developer validation
+round. The site was claiming a level of validation the AIMS record does not
+support; this corrects the claims, surfaces the actual posture where it belongs,
+and points the landing funnel at the campaign that is actually running.
+
+### Fixed
+- **Overclaim swept.** "Production-validated" was applied to the *skills* in
+  three places. Case Study Zero validated the **gate** (25/25 checks); it did
+  not validate the skills' regulatory assertions, and the 8 `quirgs-publish`
+  skills are formally unevaluated (R-011, deferred to 2026-09-30). `/skills/`
+  claimed "15 production-validated skills", 8 of which the governance record
+  lists as unevaluated. Replaced with "installable" in `index.astro`,
+  `skills/index.astro`, and `bundles/index.astro`. `README.md` already scoped
+  the phrase correctly to the gate and is unchanged.
+- The landing `[CASE STUDY]` line is now explicitly scoped — "HITL Gate: 25/25
+  checks in production" — so the result cannot be read as a claim about the
+  skills.
+
+### Added
+- `src/data/release.ts` — single source of truth for the CalVer release
+  (`RELEASE`, `RELEASES_URL`), following the `routes.ts` pattern.
+- `[OPEN]` line in the landing boot sequence for the dev validation program
+  (3 seats, 3 scenarios), linking to `/gate/`. The campaign previously existed
+  in `README.md` and nowhere on the landing page.
+- `/transparency/` — a **Validation** subsection under Platform Governance
+  Posture stating plainly that the posture is self-assessed, that independent
+  counsel review is scheduled for Q3 2026, and that the publish bundle is
+  registered unevaluated; plus a **Release Provenance** section linking the
+  public GitHub Releases feed (the trust-surfacing follow-up from
+  `_v2/docs/RELEASE_PLAN.md`).
+
+### Changed
+- The landing hero reads `Quirgs <RELEASE>` instead of the hardcoded
+  `Quirgs v2`. The version is rendered into a `data-release` attribute on the
+  terminal element and read by the boot script via `dataset.release` — it is
+  **not** written into the script body, so future release bumps no longer
+  invalidate the pinned CSP hash. Verified in the build output: the emitted
+  script contains `dataset.release`, not the literal version.
+- `index.astro` gained the `@media (min-width: 1280px)` 16:9 block that
+  `BaseLayout.astro` already had. The landing page was the only terminal page
+  still capped at 800px on desktop; it now sizes identically to every other
+  page, which also gives the boot sequence room to grow.
+
+### Notes
+- CSP `script-src`: exactly one pinned hash rotated, the landing boot script
+  (`6EI3EJ…` → `LnBP1gEP…`). All six others verified byte-identical by hashing
+  every inline `<script>` across all 42 built pages and diffing against the
+  pinned set. Purge the Cloudflare cache after deploy.
+- `npx astro check` still reports 22 errors — unchanged from the baseline
+  accepted in `fix/vite8-oxc-inline-script-ts-syntax`. No new diagnostics.
+- Deliberately **not** on the landing page: the `quirgs-publish` bundle
+  (promoting an unevaluated bundle in the hero would contradict the pitch) and
+  a `[STATUS]` validation line (posture is documented on `/transparency/`
+  instead).
+
 ## Release — cut `2026.07`, the first CalVer release (feat/release-2026-07)
 
 **Branch:** `feat/release-2026-07` — (2026-08-03)

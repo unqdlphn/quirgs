@@ -2,6 +2,7 @@
 // src/pages/transparency.astro
 import BaseLayout from "../layouts/BaseLayout.astro";
 import NavBlock from "../components/NavBlock.astro";
+import { RELEASE, RELEASES_URL } from "../data/release";
 ---
 
 <BaseLayout
@@ -119,6 +120,37 @@ import NavBlock from "../components/NavBlock.astro";
     under the EU AI Act, NIST AI RMF, and ISO/IEC 42001 and applies relevant controls
     to its own operations. The compliance bundle distributed by Quirgs was used in
     building and governing this platform.
+  </p>
+  <div class="line">&nbsp;</div>
+  <p>
+    <span class="text-bright">Validation.</span> The governance posture above is
+    <span class="text-bright">self-assessed</span>. Quirgs has run its own compliance
+    skills against itself and published the results, but the regulatory assertions
+    those skills make have not yet been reviewed by independent qualified counsel.
+    That review is scheduled for Q3 2026. Until it closes, treat the standards
+    mappings here as a documented internal assessment, not an external attestation.
+  </p>
+  <div class="line">&nbsp;</div>
+  <p>
+    What <em>has</em> been validated is the human-in-the-loop Gate itself: 25 of 25
+    stress-test checks green across the full gate loop and the dev onboarding funnel,
+    run against live infrastructure. Methodology and results are published in
+    <a href="/resources/case-study-zero/">Case Study Zero</a>. The eight
+    <code>quirgs-publish</code> skills are registered as unevaluated pending the same
+    Q3 2026 review cycle.
+  </p>
+
+  <div class="line">&nbsp;</div>
+
+  <h2 class="text-bright">Release Provenance</h2>
+  <div class="line">&nbsp;</div>
+  <p>
+    The site is versioned with CalVer and every release is tagged, with published
+    notes describing what changed. Current release:
+    <span class="text-bright">{RELEASE}</span>. The full history is public at
+    <a href={RELEASES_URL} rel="noopener">github.com/unqdlphn/quirgs/releases</a>.
+    Skills and bundles carry their own semantic versions, called out in each
+    release's notes.
   </p>
 
   <div class="line">&nbsp;</div>

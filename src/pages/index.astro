@@ -5,6 +5,7 @@ import SiteMenu from "../components/SiteMenu.astro";
 import Footer from "../components/Footer.astro";
 import NavBlock from "../components/NavBlock.astro";
 import Seo from "../components/Seo.astro";
+import { RELEASE } from "../data/release";
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const pageDescription =
@@ -266,6 +267,28 @@ const pageDescription =
           opacity: 0;
         }
       }
+
+      /* ── Large-screen 16:9 layout ───────────────────────────────── */
+      /* Mirrors the same block in BaseLayout.astro so the landing page  */
+      /* sizes identically to every other terminal page. At ≥1280px the  */
+      /* window grows to 1280px wide and locks to 16:9; the boot         */
+      /* sequence scrolls inside terminal-body exactly as before.        */
+      @media (min-width: 1280px) {
+        .main-wrapper {
+          max-width: 1280px;
+        }
+
+        .site-bottom-row {
+          max-width: 1280px;
+        }
+
+        .terminal-container {
+          max-width: 1280px;
+          aspect-ratio: 16 / 9;
+          /* max-height still applies; at 1280px wide 16:9 = 720px which   */
+          /* is well within calc(100dvh - 120px) on any modern display.   */
+        }
+      }
     </style>
   </head>
 
@@ -291,7 +314,7 @@ const pageDescription =
             title="How Quirgs works">[?]</button
           >
         </div>
-        <div class="terminal-body" id="terminal">
+        <div class="terminal-body" id="terminal" data-release={RELEASE}>
           <NavBlock currentPath="/" />
           <!-- Content will be injected by JavaScript -->
         </div>
@@ -307,13 +330,21 @@ const pageDescription =
     <SiteMenu currentPath="/" />
 
     <script>
+      // The CalVer release is read from the terminal element's `data-release`
+      // attribute (rendered server-side from src/data/release.ts) rather than
+      // written into this script. This script's exact bytes are pinned by
+      // SHA-256 in public/_headers, so keeping the version out of it means a
+      // release bump never invalidates the CSP hash.
+      const terminal = document.getElementById("terminal");
+      const release = terminal?.dataset.release || "";
+
       // Terminal text sequence
       const sequence = [
         { type: "input", text: "cat README.md" },
         { type: "blank", delay: 200 },
         {
           type: "output",
-          text: '<span class="text-bright">Quirgs v2</span>',
+          text: `<span class="text-bright">Quirgs ${release}</span>`,
           delay: 400,
         },
         {
@@ -324,7 +355,7 @@ const pageDescription =
         { type: "blank", delay: 200 },
         {
           type: "output",
-          text: "• Production-validated compliance skills for AI governance in the Anthropic ecosystem.",
+          text: "• Installable governance skills for teams building with AI in the Anthropic ecosystem.",
           delay: 400,
         },
         {
@@ -351,16 +382,19 @@ const pageDescription =
         { type: "blank", delay: 400 },
         {
           type: "output",
-          text: '<span class="text-green">[CASE STUDY]&nbsp;</span>Live production, 25 checks,<span class="text-yellow">&nbsp;first approval in ~10s</span>&nbsp;<a href="/resources/case-study-zero/">View Case Study Zero &rarr;</a>',
+          text: '<span class="text-green">[CASE STUDY]&nbsp;</span>HITL Gate:&nbsp;25/25 checks in production,<span class="text-yellow">&nbsp;first approval in ~10s</span>&nbsp;<a href="/resources/case-study-zero/">View Case Study Zero &rarr;</a>',
+          delay: 400,
+        },
+        { type: "blank", delay: 400 },
+        {
+          type: "output",
+          text: '<span class="text-blue">[OPEN]&nbsp;</span>Dev validation program —&nbsp;<span class="text-bright">3 seats, 3 scenarios</span>&nbsp;<a href="/gate/">Join the program &rarr;</a>',
           delay: 0,
         },
         { type: "blank", delay: 500 },
 
         { type: "prompt-only" },
       ];
-
-      const terminal = document.getElementById("terminal");
-      let currentStep = 0;
 
       function getPromptHTML() {
         return `<span class="prompt">admin@quirgs</span><span class="path">~/system</span><span class="text-bright">$&nbsp;</span>`;
