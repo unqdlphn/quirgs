@@ -25,6 +25,34 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Fix — Accessible labels and live regions on the review queue (palette-a11y-review-queue)
+
+**Branch:** `palette-a11y-review-queue-9656142001710354358` — PR #156 (2026-08-13)
+
+`/review/` is the most JS-driven page on the site: the token field gates access,
+and the queue below it is fetched and re-rendered entirely client-side by
+`public/js/review.js`. Both of those updates were silent to screen readers — the
+status line and the queue container swapped their contents with nothing to
+announce the change, and the token input had no accessible name at all (a bare
+`type="password"` with only a `placeholder`, which is not a label).
+
+### Fixed
+- **`aria-label` on the token input** — gives the field an accessible name
+  independent of the placeholder, which is not exposed as a label and disappears
+  on input.
+- **`aria-live="polite"` on `#token-status-line`** — the token set/clear result
+  is now announced instead of changing silently.
+- **`aria-live="polite"` on `#queue-container`** — queue fetches, empty states,
+  and post-action re-renders are announced as they land.
+
+Markup-only — no inline scripts were touched, so the pinned `script-src` hashes
+in `public/_headers` are unaffected (`npm run check:csp` clean).
+
+### Added
+- **`.jules/palette.md`** — running log of accessibility learnings, starting with
+  the live-region rule this branch established: containers that JS mutates
+  asynchronously need a live region, not just correct static markup.
+
 ## Feat — CSP script-src hash verifier + pre-merge CI gate (feat/csp-hash-verifier)
 
 **Branch:** `feat/csp-hash-verifier` — (2026-08-03)

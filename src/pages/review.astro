@@ -39,11 +39,11 @@ const gateUrl =
     <div class="line">Token is held in sessionStorage for this browser session only.</div>
     <div class="line">&nbsp;</div>
     <div class="line token-input-row">
-      <input type="password" id="token-input" placeholder="Enter token..." class="terminal-input" />
+      <input type="password" id="token-input" placeholder="Enter token..." class="terminal-input" aria-label="HITL Gate write token" />
       <button id="set-token-btn" class="terminal-btn">[Set Token]</button>
     </div>
     <div class="line">&nbsp;</div>
-    <div class="line" id="token-status-line">Status: <span class="text-yellow">○ No token set</span></div>
+    <div class="line" id="token-status-line" aria-live="polite">Status: <span class="text-yellow">○ No token set</span></div>
   </div>
 
   <div class="line">&nbsp;</div>
@@ -51,7 +51,7 @@ const gateUrl =
   <div class="queue-block">
     <div class="line"><span class="text-bright">[QUEUE]</span></div>
     <div class="line divider">─────────────</div>
-    <div id="queue-container" data-gate-url={gateUrl}>
+    <div id="queue-container" data-gate-url={gateUrl} aria-live="polite">
       <div class="line">Fetching queue...</div>
     </div>
   </div>
