@@ -710,8 +710,9 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       // / 'unsafe-hashes' for script-src.
       document.addEventListener("click", (event) => {
         const target = event.target;
+        if (!(target instanceof Element)) return;
         const btn = target.closest(".copy-btn[data-copy]");
-        if (!btn) return;
+        if (!(btn instanceof HTMLElement)) return;
         const text = btn.dataset.copy ?? "";
         navigator.clipboard.writeText(text);
         const original = btn.textContent;

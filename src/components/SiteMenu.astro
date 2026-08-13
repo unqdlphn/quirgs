@@ -300,10 +300,14 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
   const backdrop = document.getElementById("site-menu-backdrop");
   const closeBtn = document.getElementById("site-menu-close");
 
-  let lastTrigger = null;
+  // Seeded from a getElementById result so TypeScript infers HTMLElement|null,
+  // then reset to its real initial value. A bare `null` initializer can't be
+  // inferred through the read inside closeMenu(), and inline <script> blocks
+  // must stay free of TS syntax (see PR #155).
+  let lastTrigger = closeBtn;
+  lastTrigger = null;
 
-  function openMenu(trigger) {
-    lastTrigger = trigger;
+  function openMenu() {
     backdrop?.classList.add("open");
     backdrop?.removeAttribute("aria-hidden");
     closeBtn?.focus();
@@ -318,8 +322,11 @@ const pad = (label: string) => " ".repeat(maxLabel + 2 - label.length);
   // Delegated open — any .menu-trigger (header [≡], NavBlock [+N more]).
   document.addEventListener("click", (event) => {
     const target = event.target;
+    if (!(target instanceof Element)) return;
     const trigger = target.closest(".menu-trigger");
-    if (trigger) openMenu(trigger);
+    if (!(trigger instanceof HTMLElement)) return;
+    lastTrigger = trigger;
+    openMenu();
   });
 
   closeBtn?.addEventListener("click", closeMenu);

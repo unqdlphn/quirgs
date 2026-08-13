@@ -17,12 +17,275 @@ since the last release. Historical entries are never rewritten.
 
 Release tagging began July 2026: a retroactive `v2.0.0` baseline tag marks the
 V2 launch (2026-05-27), and the first CalVer release, `2026.07`, covers
-everything merged since. All entries below `[Unreleased]` predate the tagging
-practice and roll up into those two releases.
+everything merged since. Entries written before the tagging practice existed
+were left exactly as they were; only the two release headers were added around
+them to mark the boundaries.
 
 ---
 
 ## [Unreleased]
+
+## Feat — CSP script-src hash verifier + pre-merge CI gate (feat/csp-hash-verifier)
+
+**Branch:** `feat/csp-hash-verifier` — (2026-08-03)
+
+The SHA-256 `script-src` pins in `public/_headers` are the one part of the build
+that can break with **no signal at all**: the build succeeds, nothing appears in
+a diff, and the only symptom is that the affected inline scripts get CSP-blocked
+in the browser — a dead boot animation, dead copy buttons, dead site menu, dead
+`/skills/` and `/bundles/` filters. Regenerating the pins was a manual
+`openssl dgst` loop over hand-extracted script bodies. This makes it a command,
+and makes a stale pin fail CI before it can reach production.
+
+### Added
+- **`scripts/check-csp-hashes.mjs`** — hashes every inline `<script>` in
+  `dist/client` and asserts the emitted set equals the pinned set. Two outcomes,
+  weighted differently: *unpinned* (emitted but not in `_headers` — will be
+  blocked in production) always fails; *stale* (pinned but no longer emitted —
+  harmless, but a reliable sign a regeneration was missed) warns, and fails
+  under `--strict`.
+  - `--write` rewrites stale pins in place, but only when the substitution is
+    unambiguously 1:1. If scripts were added or removed rather than changed, it
+    refuses rather than guessing which pin maps to which.
+  - Pages whose CSP is deliberately detached (`! Content-Security-Policy` —
+    currently the legacy ollama guide) are **discovered by parsing `_headers`**,
+    not hardcoded, so the exclusion stays correct if that list changes.
+- **`npm run check:csp`** wired to the above.
+- **`.github/workflows/csp-hashes.yml`** — builds and verifies on every
+  `pull_request`, plus push to `main` and manual dispatch.
+
+### Changed
+- The regeneration notes at the top of `public/_headers` now point at the script
+  instead of the manual `openssl` procedure. Hand-editing still works — the
+  check only cares that the two sets match.
+
+### Notes
+- Deliberately **not** folded into `live-integrity.yml`. That workflow is a
+  post-deploy check of the live site (governance action A-9, MS-2.8 / MS-4.2) and
+  runs on push/cron without a build step. A CSP pin check needs `dist/client` and
+  is only useful *before* merge, so it gets its own workflow rather than
+  broadening A-9's scope.
+- Verified end-to-end: passes on a clean tree; detects a corrupted pin and exits
+  1; `--write` repairs it byte-identically to the original; and the ambiguity
+  guard correctly refuses a 0-stale/1-unpinned case.
+
+## Fix — restore type safety in inline scripts after the Vite 8 TS strip (fix/astro-check-type-errors)
+
+**Branch:** `fix/astro-check-type-errors` — (2026-08-03)
+
+`npx astro check` reported **22 errors**, all of them fallout from PR #155
+(`fix/vite8-oxc-inline-script-ts-syntax`). That PR stripped TS syntax out of the
+bundled inline `<script>` blocks to stop Vite 8's dev-only oxc transform from
+crashing `npm run dev` — but removing the type assertions and typed parameters
+left the same expressions unchecked, so `querySelectorAll` results narrowed no
+further than `Element` and `getElementById` results stayed nullable. The build
+was never affected; `astro check` is not wired into CI, so this went unnoticed.
+
+Type annotations cannot simply be added back — that would re-break the dev
+server — and JSDoc types don't help either, because Astro parses these blocks as
+TS, where JSDoc annotations are ignored. The fix instead uses **runtime
+narrowing**, which is valid plain JS and which TypeScript honours.
+
+### Fixed
+- 22 → **0** `astro check` errors, across five files:
+  - `src/pages/index.astro` (9) — the boot sequence now early-returns when the
+    terminal element is missing, `resolve()` passes an explicit `undefined`, and
+    `typeText` derives its parameter types from inert defaults.
+  - `src/components/SiteMenu.astro` (5) — delegated click handler narrows the
+    event target before `closest()`; `openMenu()` no longer takes an untypeable
+    parameter, with the trigger recorded at the call site instead.
+  - `src/pages/skills/index.astro` (5) — `instanceof HTMLElement` before
+    `dataset`/`style` access, `instanceof HTMLSelectElement` before `.value`.
+  - `src/layouts/BaseLayout.astro` (2) — copy-to-clipboard delegation narrows
+    both the event target and the resolved button.
+  - `src/pages/bundles/index.astro` (1) — tab switcher narrows before `dataset`.
+
+### Changed
+- **Five of the seven pinned CSP `script-src` hashes in `public/_headers` were
+  regenerated.** The narrowing guards are real runtime code, so the bundled
+  inline script bytes changed. The two unaffected pins (HelpModal, JSON-LD) are
+  untouched. Verified programmatically after rebuild: 7 pinned, 7 emitted, no
+  stale pins and no unpinned scripts outside the intentionally CSP-detached
+  ollama guide.
+
+### Notes
+- The landing boot sequence is unchanged in behaviour — still JS-injected and
+  `setTimeout`-sequenced, no fade/slide transitions. Confirmed against the
+  minified output: the guard compiles to `if(e)for(...)`, and the 1s
+  `setTimeout(runSequence, 1000)` entry point is intact.
+- Every `instanceof` guard was checked against the real markup first — the
+  elements involved are `<div>`, `<button>` and `<select>`, so no guard can
+  short-circuit in practice.
+- All 83 Worker tests still pass; `npm run build` clean.
+
+## Fix — close HIGH-severity brace-expansion advisory (fix/dependabot-brace-expansion-high)
+
+**Branch:** `fix/dependabot-brace-expansion-high` — (2026-08-03)
+
+Clears Dependabot alert #18, a HIGH-severity (CVSS 7.5) denial-of-service in
+`brace-expansion` reachable through `@keystatic/core → minimatch@9.0.9`.
+Dependabot raised the alert but never opened a PR for it, so the bump is made
+by hand here.
+
+### Security
+- `brace-expansion` 2.1.2 → **2.1.4**, closing GHSA-mh99-v99m-4gvg (unbounded
+  expansion length causing an out-of-memory process crash) and
+  GHSA-rgw5-rvv9-x895 (unbounded intermediate arrays bypassing the first
+  advisory's mitigation). 2.1.4 stays inside minimatch's `^2.0.1` range, so
+  this is a lockfile-only change with no dependency-graph movement.
+- `fast-uri` 3.1.4 → **3.1.5**, closing GHSA-7p8r-x3mc-p8w7 (host confusion via
+  backslash authority introducer, HIGH). Not separately alerted by Dependabot;
+  picked up in the same pass.
+- `postcss` → **8.5.25**, closing GHSA-fxqj-rqcc-2cmp (moderate — attacker-
+  controlled `sourceMappingURL` reads arbitrary `.map` files when `from` is
+  unset).
+
+### Notes
+- **Deliberately not fixed:** the remaining `undici` advisories (HIGH) reach the
+  tree only through `wrangler`/`miniflare`/`@cloudflare/vitest-pool-workers` —
+  build- and test-time tooling that never ships to the Worker runtime. `npm
+  audit fix --force` would resolve them by downgrading
+  `@cloudflare/vitest-pool-workers` 0.16.18 → 0.8.71, a breaking change to the
+  Worker test suites. Left in place pending an upstream non-breaking release.
+- Verified after the bump: `npm run build` clean, all 83 Worker tests passing
+  (registry 15, hitl-gate 52, metrics 16), all 7 pinned CSP `script-src` hashes
+  still byte-matching the built inline scripts, and the `@keystatic/astro`
+  `postinstall` patch still applied.
+
+## Fix — salvage version-integrity copy and retire "Cowork" from /transparency/ (fix/transparency-provenance-salvage)
+
+**Branch:** `fix/transparency-provenance-salvage` — (2026-08-03)
+
+Recovers the two pieces of PR #116 (`feat/transparency-releases-link`, open
+since 2026-07-06) that were better than what shipped in PR #158. #158
+implemented the same Release Provenance section without checking for open work
+on it; #116 is closed as superseded and its remaining value is folded in here.
+
+### Added
+- The version-integrity chain is now stated on `/transparency/`: skill and
+  bundle versions on `/skills/` derive at build time from the same plugin
+  manifests the install commands fetch, and the Live Published-Metadata
+  Integrity check verifies the live site and registry against those manifests
+  daily — so the version displayed, the version installed, and the version in
+  the release notes are the same number by construction. Wording adapted from
+  #116; "daily" verified against `.github/workflows/live-integrity.yml`
+  (`schedule: cron '17 13 * * *'`, plus on push to `main`).
+
+### Changed
+- The Release Provenance paragraph now notes that each release compiles that
+  month's changelog entries including skill/bundle version bumps, replacing the
+  thinner "carry their own semantic versions" sentence from #158.
+
+### Fixed
+- **Glued words at inline-element boundaries, site-wide.** In `.astro`
+  templates a newline between text and an inline element (`<a>`, `<code>`,
+  `<span>`) collapses to *nothing*, not to a space — JSX whitespace semantics,
+  not HTML's. Prettier's wrap-on-save routinely puts a break exactly there, so
+  the defect reappears whenever a paragraph reflows. A scan of every `<p>`/`<li>`
+  in the built site found four occurrences:
+  - `transparency.astro` — "The eight`quirgs-publish` skills"
+  - `hitl.astro` — "and`HITL_GATE_TOKEN`"
+  - `resources/case-study-zero.astro` — "`aria-hidden`instead"
+  - `resources/publish-bundle-stress-test.astro` — "and`publish-provenance`"
+
+  Fixed with the JSX explicit-space expression `{" "}` at the wrap point, which
+  survives reformatting and emits a **normal breakable space** — unlike
+  `&nbsp;`, which pins the words together and risks mobile overflow next to
+  long tokens (cf. PR #131, PR #150). Four more instances in the
+  `/transparency/` Release Provenance and Validation copy were fixed by the
+  owner with `&nbsp;` and left as-is; they render correctly.
+- Retired the legacy "Claude Cowork" product name in the AI-Assisted Platform
+  Development paragraph — now "Claude and Claude Code". This was the last
+  `Cowork` occurrence in `src/`; the `index.astro` one named in the deferred
+  sweep no longer exists, having been replaced by the boot-sequence rewrite in
+  #158.
+
+## Feat — landing copy precision pass + release provenance surfacing (feat/landing-copy-2026-08)
+
+**Branch:** `feat/landing-copy-2026-08` — (2026-08-03)
+
+Brand-copy pass ahead of the SME review and the three-developer validation
+round. The site was claiming a level of validation the AIMS record does not
+support; this corrects the claims, surfaces the actual posture where it belongs,
+and points the landing funnel at the campaign that is actually running.
+
+### Fixed
+- **Overclaim swept.** "Production-validated" was applied to the *skills* in
+  three places. Case Study Zero validated the **gate** (25/25 checks); it did
+  not validate the skills' regulatory assertions, and the 8 `quirgs-publish`
+  skills are formally unevaluated (R-011, deferred to 2026-09-30). `/skills/`
+  claimed "15 production-validated skills", 8 of which the governance record
+  lists as unevaluated. Replaced with "installable" in `index.astro`,
+  `skills/index.astro`, and `bundles/index.astro`. `README.md` already scoped
+  the phrase correctly to the gate and is unchanged.
+- The landing `[CASE STUDY]` line is now explicitly scoped — "HITL Gate: 25/25
+  checks in production" — so the result cannot be read as a claim about the
+  skills.
+
+### Added
+- `src/data/release.ts` — single source of truth for the CalVer release
+  (`RELEASE`, `RELEASES_URL`), following the `routes.ts` pattern.
+- `[OPEN]` line in the landing boot sequence for the dev validation program
+  (3 seats, 3 scenarios), linking to `/gate/`. The campaign previously existed
+  in `README.md` and nowhere on the landing page.
+- `/transparency/` — a **Validation** subsection under Platform Governance
+  Posture stating plainly that the posture is self-assessed, that independent
+  counsel review is scheduled for Q3 2026, and that the publish bundle is
+  registered unevaluated; plus a **Release Provenance** section linking the
+  public GitHub Releases feed (the trust-surfacing follow-up from
+  `_v2/docs/RELEASE_PLAN.md`).
+
+### Changed
+- The landing hero reads `Quirgs <RELEASE>` instead of the hardcoded
+  `Quirgs v2`. The version is rendered into a `data-release` attribute on the
+  terminal element and read by the boot script via `dataset.release` — it is
+  **not** written into the script body, so future release bumps no longer
+  invalidate the pinned CSP hash. Verified in the build output: the emitted
+  script contains `dataset.release`, not the literal version.
+- `index.astro` gained the `@media (min-width: 1280px)` 16:9 block that
+  `BaseLayout.astro` already had. The landing page was the only terminal page
+  still capped at 800px on desktop; it now sizes identically to every other
+  page, which also gives the boot sequence room to grow.
+
+### Notes
+- CSP `script-src`: exactly one pinned hash rotated, the landing boot script
+  (`6EI3EJ…` → `LnBP1gEP…`). All six others verified byte-identical by hashing
+  every inline `<script>` across all 42 built pages and diffing against the
+  pinned set. Purge the Cloudflare cache after deploy.
+- `npx astro check` still reports 22 errors — unchanged from the baseline
+  accepted in `fix/vite8-oxc-inline-script-ts-syntax`. No new diagnostics.
+- Deliberately **not** on the landing page: the `quirgs-publish` bundle
+  (promoting an unevaluated bundle in the hero would contradict the pitch) and
+  a `[STATUS]` validation line (posture is documented on `/transparency/`
+  instead).
+
+## Release — cut `2026.07`, the first CalVer release (feat/release-2026-07)
+
+**Branch:** `feat/release-2026-07` — (2026-08-03)
+
+Phase C of the release plan. No product code changes — changelog structure and
+release provenance only.
+
+### Changed
+
+- `## [Unreleased]` retitled to `## [2026.07] — 2026-08-03`, covering PRs
+  #22–#155 (2026-05-28 → 2026-07-23). A fresh empty `## [Unreleased]` heads the
+  file.
+- A `## [v2.0.0] — 2026-05-27` header was inserted immediately above
+  `## V2 Goes Live` to mark where the baseline release ends and `2026.07`
+  begins. Purely additive — no existing entry text was altered.
+- Header note updated to describe how the two retroactive boundaries were
+  drawn.
+
+### Notes
+- Tag applied 2026-08-03, three days after the planned end-of-July cut. CalVer
+  month reflects when the work landed, not when the tag was pushed.
+- Plugin/bundle SemVer is *not* rolled up here — the plugin marketplace did not
+  exist at `v2.0.0` (introduced 2026-05-31, PR #45), so every manifest version
+  is new in this window. Current versions are listed in the GitHub Release
+  notes.
+
+## [2026.07] — 2026-08-03
 
 ## Fix — dev-server PARSE_ERROR on TypeScript syntax in inline `<script>` blocks (fix/vite8-oxc-inline-script-ts-syntax)
 
@@ -2129,6 +2392,13 @@ Post-launch smoke-test cleanup, Safari font handling, Lighthouse improvements, a
 - Project docs updated — deployment workflow, validation rules, and branching strategy.
 
 ---
+
+## [v2.0.0] — 2026-05-27
+
+Baseline release. Retroactive tag on `de0ebe3` (the launch-day
+`assets.directory` fix — the first commit where production actually served),
+applied 2026-07-06. Everything below this header is the V2 build-out that
+shipped at launch.
 
 ## V2 Goes Live
 

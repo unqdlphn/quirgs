@@ -51,7 +51,7 @@ const publishSkills = skills
 
 <BaseLayout
   title="Quirgs Bundles | AI Governance + Music Publishing Skills"
-  description="Two production-validated skill bundles for Claude Code: Compliance (EU AI Act, NIST, ISO 42001) and Publish (royalty reconciliation, catalog hygiene, sync licensing, AI provenance)."
+  description="Two installable skill bundles for Claude Code: Compliance (EU AI Act, NIST, ISO 42001) and Publish (royalty reconciliation, catalog hygiene, sync licensing, AI provenance)."
   terminalPath="~/install"
 >
   <NavBlock currentPath="/bundles/" />
@@ -346,6 +346,7 @@ const publishSkills = skills
 
       tab.classList.add("active");
       tab.setAttribute("aria-selected", "true");
+      if (!(tab instanceof HTMLElement)) return;
       const panelId = "panel-" + (tab.dataset.panel ?? "");
       document.getElementById(panelId)?.removeAttribute("hidden");
     });
