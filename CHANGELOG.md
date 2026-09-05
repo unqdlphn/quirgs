@@ -25,6 +25,73 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Fix — close HIGH-severity browserslist advisories (dependabot/browserslist-4.28.8)
+
+**Branch:** `dependabot/npm_and_yarn/browserslist-4.28.8` — PR #165 (2026-09-05)
+
+Clears Dependabot alerts #32 and #33, both HIGH (CVSS 7.5), in `browserslist`.
+The package enters the tree on one path only — `@astrojs/react →
+@vitejs/plugin-react → @babel/core → @babel/helper-compilation-targets` — the
+Babel target-resolution step, which runs at build time and never reaches the
+Worker runtime.
+
+### Security
+- `browserslist` 4.28.2 → **4.28.8**, closing GHSA-73wf-gq98-2v4g /
+  CVE-2026-73088 (uncaught crash and prototype write via untrusted
+  `browserslist-stats.json` custom stats in `normalizeStats`) and
+  GHSA-c83g-rgw3-j3cx / CVE-2026-73089 (unbounded memory growth — the query
+  result cache has no eviction, so distinct queries grow it until OOM). Both are
+  patched in 4.28.7; 4.28.8 is the current release.
+- Companion data packages moved in the same lockfile pass: `caniuse-lite`
+  1.0.30001793 → **1.0.30001810**, `electron-to-chromium` 1.5.363 → **1.5.421**,
+  `node-releases` 2.0.46 → **2.0.54**, `baseline-browser-mapping` 2.10.32 →
+  **2.11.21**, `update-browserslist-db` 1.2.3 → **1.3.2**.
+
+### Notes
+- **Neither advisory was reachable here.** The crash path needs an
+  attacker-supplied `browserslist-stats.json`, which this repo does not have, and
+  the cache-growth path needs a long-lived process issuing distinct queries, not a
+  one-shot `astro build`. `browserslist` and `caniuse-lite` are absent from
+  `dist/` entirely.
+- Lockfile-only — no `package.json` change, no dependency-graph movement.
+- With this merged the repo is at **zero open Dependabot alerts**. The `undici`
+  and `nanoid` advisories are closed as *dismissed*, not fixed, for the reasons
+  recorded in earlier entries — they are build/test tooling that tree-shakes out
+  of `dist/`, and fixing them upstream still means a breaking downgrade.
+- Verified after the bump: `npm run build` clean, all 83 Worker tests passing
+  (registry 15, hitl-gate 52, metrics 16), and all 7 pinned CSP `script-src`
+  hashes still byte-matching the built inline scripts (`npm run check:csp` clean).
+
+## Fix — close HIGH-severity fast-uri advisories (dependabot/fast-uri-3.1.7)
+
+**Branch:** `dependabot/npm_and_yarn/fast-uri-3.1.7` — PR #164 (2026-09-04)
+
+Clears Dependabot alerts #28–#31, four HIGH (CVSS 7.5) URI-parsing advisories
+filed against `fast-uri` on 2026-09-03. Development scope: the package enters the
+tree on exactly one path — `@astrojs/check → @astrojs/language-server →
+volar-service-yaml → yaml-language-server → ajv` — where it serves as ajv's URI
+parser for `$schema` / `$ref` resolution during local type checking.
+
+### Security
+- `fast-uri` 3.1.5 → **3.1.7** (patched in 3.1.6), closing:
+  - GHSA-jqff-g426-hqxp / CVE-2026-76172 — host confusion via percent-encoded
+    scheme normalization.
+  - GHSA-f65p-4m7j-42xc / CVE-2026-75975 — server-side request forgery via
+    malformed IPv6 normalization.
+  - GHSA-fph4-wmhf-6fwf / CVE-2026-75899 — server-side request forgery via
+    repeated hostname percent-decoding.
+  - GHSA-5jgf-p345-68v8 / CVE-2026-75931 — host confusion via skipped IDN
+    canonicalization on scheme-relative references.
+
+### Notes
+- **No production exposure.** This advisory class bites when untrusted URIs are
+  parsed and then fetched. On this path ajv only ever sees `$schema` / `$ref`
+  strings from YAML schemas during `astro check`, and issues no request from the
+  parsed result. Confirmed `fast-uri` and `ajv` are both absent from `dist/`, and
+  neither appears anywhere under `workers/` — those Workers carry no
+  `package.json` or lockfile of their own.
+- Lockfile-only, dev scope.
+
 ## Fix — Accessible labels and live regions on the review queue (palette-a11y-review-queue)
 
 **Branch:** `palette-a11y-review-queue-9656142001710354358` — PR #156 (2026-08-13)
@@ -52,6 +119,31 @@ in `public/_headers` are unaffected (`npm run check:csp` clean).
 - **`.jules/palette.md`** — running log of accessibility learnings, starting with
   the live-region rule this branch established: containers that JS mutates
   asynchronously need a live region, not just correct static markup.
+
+## Fix — close HIGH-severity js-yaml advisory (dependabot/js-yaml-4.3.1)
+
+**Branch:** `dependabot/npm_and_yarn/js-yaml-4.3.1` — PR #163 (2026-08-13)
+
+Clears Dependabot alert #25, a HIGH-severity (CVSS 7.5) quadratic-CPU
+denial-of-service in `js-yaml`.
+
+### Security
+- `js-yaml` 4.3.0 → **4.3.1**, closing GHSA-5p4m-2wfm-xmqj (quadratic CPU
+  consumption in `!!omap` resolution; the CVE-2026-59870 fix was never backported
+  to the 4.x line). Lockfile-only — every consumer already ranged onto 4.3.1.
+
+### Notes
+- **This one is actually shipped**, unlike the other dependency advisories closed
+  in this window. `js-yaml` reaches the tree through `astro`,
+  `@astrojs/cloudflare`, `@astrojs/mdx` and `@astrojs/react` (all via
+  `@astrojs/internal-helpers`, all build-time) **and** through `@keystatic/core`,
+  which bundles it into the client chunk for the admin route —
+  `dist/client/_astro/keystatic-page.*.js`. The vulnerable resolver survives
+  tree-shaking: `tag:yaml.org,2002:omap` is present in the built bundle.
+- Practical risk stays low — that parser only sees frontmatter from the repo's own
+  content entries, behind Keystatic Cloud auth — but it is shipped code reachable
+  from a browser, which makes this the one bump in the series with real runtime
+  reach. Nothing in `dist/server/` carries `js-yaml`.
 
 ## Feat — CSP script-src hash verifier + pre-merge CI gate (feat/csp-hash-verifier)
 
