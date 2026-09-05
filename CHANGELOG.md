@@ -64,10 +64,10 @@ Worker runtime.
 
 ## Fix — close HIGH-severity fast-uri advisories (dependabot/fast-uri-3.1.7)
 
-**Branch:** `dependabot/npm_and_yarn/fast-uri-3.1.7` — PR #164 (2026-09-04)
+**Branch:** `dependabot/npm_and_yarn/fast-uri-3.1.7` — PR #164 (2026-09-03)
 
 Clears Dependabot alerts #28–#31, four HIGH (CVSS 7.5) URI-parsing advisories
-filed against `fast-uri` on 2026-09-03. Development scope: the package enters the
+filed against `fast-uri` on 2026-09-02/03. Development scope: the package enters the
 tree on exactly one path — `@astrojs/check → @astrojs/language-server →
 volar-service-yaml → yaml-language-server → ajv` — where it serves as ajv's URI
 parser for `$schema` / `$ref` resolution during local type checking.
@@ -147,7 +147,7 @@ denial-of-service in `js-yaml`.
 
 ## Feat — CSP script-src hash verifier + pre-merge CI gate (feat/csp-hash-verifier)
 
-**Branch:** `feat/csp-hash-verifier` — (2026-08-03)
+**Branch:** `feat/csp-hash-verifier` — PR #162 (2026-08-03)
 
 The SHA-256 `script-src` pins in `public/_headers` are the one part of the build
 that can break with **no signal at all**: the build succeeds, nothing appears in
@@ -191,7 +191,7 @@ and makes a stale pin fail CI before it can reach production.
 
 ## Fix — restore type safety in inline scripts after the Vite 8 TS strip (fix/astro-check-type-errors)
 
-**Branch:** `fix/astro-check-type-errors` — (2026-08-03)
+**Branch:** `fix/astro-check-type-errors` — PR #161 (2026-08-03)
 
 `npx astro check` reported **22 errors**, all of them fallout from PR #155
 (`fix/vite8-oxc-inline-script-ts-syntax`). That PR stripped TS syntax out of the
@@ -240,7 +240,7 @@ narrowing**, which is valid plain JS and which TypeScript honours.
 
 ## Fix — close HIGH-severity brace-expansion advisory (fix/dependabot-brace-expansion-high)
 
-**Branch:** `fix/dependabot-brace-expansion-high` — (2026-08-03)
+**Branch:** `fix/dependabot-brace-expansion-high` — PR #160 (2026-08-03)
 
 Clears Dependabot alert #18, a HIGH-severity (CVSS 7.5) denial-of-service in
 `brace-expansion` reachable through `@keystatic/core → minimatch@9.0.9`.
@@ -274,7 +274,7 @@ by hand here.
 
 ## Fix — salvage version-integrity copy and retire "Cowork" from /transparency/ (fix/transparency-provenance-salvage)
 
-**Branch:** `fix/transparency-provenance-salvage` — (2026-08-03)
+**Branch:** `fix/transparency-provenance-salvage` — PR #159 (2026-08-03)
 
 Recovers the two pieces of PR #116 (`feat/transparency-releases-link`, open
 since 2026-07-06) that were better than what shipped in PR #158. #158
@@ -322,7 +322,7 @@ on it; #116 is closed as superseded and its remaining value is folded in here.
 
 ## Feat — landing copy precision pass + release provenance surfacing (feat/landing-copy-2026-08)
 
-**Branch:** `feat/landing-copy-2026-08` — (2026-08-03)
+**Branch:** `feat/landing-copy-2026-08` — PR #158 (2026-08-03)
 
 Brand-copy pass ahead of the SME review and the three-developer validation
 round. The site was claiming a level of validation the AIMS record does not
@@ -381,7 +381,7 @@ and points the landing funnel at the campaign that is actually running.
 
 ## Release — cut `2026.07`, the first CalVer release (feat/release-2026-07)
 
-**Branch:** `feat/release-2026-07` — (2026-08-03)
+**Branch:** `feat/release-2026-07` — PR #157 (2026-08-03)
 
 Phase C of the release plan. No product code changes — changelog structure and
 release provenance only.
