@@ -25,6 +25,70 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Feat — AI asset inventory coverage gate (feat/inventory-coverage-gate)
+
+**Branch:** `feat/inventory-coverage-gate` — PR #174 (2026-09-10)
+
+Turns the Pillar 1 Shadow AI Rule from a remembered rule into a checked one, for
+the class of asset this repo can actually see. Pillar 1 declares that anything not
+registered there is ungoverned; enforcement was manual and failed three times in a
+row — `claude-fable-5` (caught 2026-07-05), `quirgs-publish` (2026-07-06), and
+`claude-opus-5` / `claude-fable-5-1` (2026-09-10). Each time the asset was already
+in use and a late sync check found out afterwards.
+
+The structural cause: the inventory is a local HTML artifact outside this repo, so
+nothing in CI could read it. This adds a committed projection of the registered
+asset IDs and asserts coverage against it — the same move that closed the CSP-pin
+and published-metadata gaps (`check:csp`, `check:integrity`).
+
+### Added
+- [governance/ai-asset-index.json](governance/ai-asset-index.json) — committed
+  projection of the Pillar 1 registered asset IDs (15 skills, 2 bundles, 3 Workers,
+  3 Worker bindings), each carrying the artifact section it appears in.
+- [scripts/check-inventory-coverage.mjs](scripts/check-inventory-coverage.mjs) +
+  `npm run check:inventory` — enumerates every AI asset derivable from the repo and
+  compares it against that index.
+- [.github/workflows/inventory-coverage.yml](.github/workflows/inventory-coverage.yml)
+  — runs it on every PR and on push to `main`.
+
+### Three failure modes, deliberately weighted
+- **UNREGISTERED** (fatal) — in the repo, absent from the index. The Shadow AI gap
+  itself. A new plugin or Worker can no longer merge unregistered, the same way a
+  new inline script can no longer merge unpinned.
+- **UNLISTED** (fatal) — a plugin in `plugins/` missing from
+  `.claude-plugin/marketplace.json`, or the reverse. A distinct recurring bug: the
+  plugin ships but cannot be installed.
+- **ORPHANED** (warn; fatal under `--strict`) — in the index but no longer in the
+  repo. Mirrors the stale-pin semantics in `check:csp`.
+
+### Notes
+- **The index is not a second registry.** The Pillar 1 artifact stays authoritative
+  for all governance content — risk tiers, scope of action, regulatory mapping, eval
+  status. The index records one narrow fact per asset: that it *has* been registered,
+  and in which section. Both the file's own header and the checker's failure output
+  say so explicitly, and the required `section` value is what makes a bare
+  "add it to the index to silence CI" visibly incomplete.
+- **Everything is derived from the repo, never hardcoded in the checker** — skills
+  from `src/content/skills/*.mdx`, plugins from `plugins/*/.claude-plugin/plugin.json`,
+  bundles as plugin names that are not also skill slugs, Workers and bindings from
+  `workers/*/wrangler.toml`. Adding a bundle needs no change to the checker.
+- **Dependency-free** (`node:fs`/`node:path` only) and needs neither a build nor the
+  network, so the workflow skips `npm ci` and runs in seconds. That is why it is a
+  separate workflow rather than folded into `csp-hashes.yml` (needs `dist/client`)
+  or `live-integrity.yml` (needs the live site).
+- Its TOML reader tracks the current table rather than scanning for bare keys —
+  the same positional-table trap that hid dead `routes`/`workers_dev` keys in two
+  Worker configs until PR #173.
+- **Verified by deliberately breaking it**, not just by passing: an unregistered
+  skill, an unregistered Worker binding, a `marketplace.json` omission, and an
+  orphaned index entry each produce the expected exit code, and the checker
+  reproduces the historical `quirgs-publish` gap (8 skills + the bundle) when those
+  entries are removed.
+- **Scope limit, stated in the code and the workflow:** foundation-model versions
+  are out of reach here. They change outside the repo with no commit to hang a check
+  on, which is why two of the three gaps were model versions. That class needs a
+  recurring probe instead, tracked in `_v2/docs` as Class B.
+
 ## Fix — `routes`/`workers_dev` silently swallowed into `[observability.logs]` (fix/worker-toml-table-scoping)
 
 **Branch:** `fix/worker-toml-table-scoping` — PR #173 (2026-09-10)
