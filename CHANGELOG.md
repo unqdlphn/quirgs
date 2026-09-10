@@ -25,6 +25,156 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Fix — close HIGH-severity sharp/libheif advisory (fix/sharp-libheif-advisory)
+
+**Branch:** `fix/sharp-libheif-advisory` — PR #172 (2026-09-09)
+
+Clears Dependabot alert #39 (HIGH) in `sharp`, the last of the seven-alert
+advisory wave that surfaced on 2026-09-09. Handled by hand because Dependabot
+never opened a PR for it: `sharp` is an *optional* transitive dependency of
+`astro`, and three `miniflare` copies pin it at exact versions (`0.34.5`,
+`0.35.2`) that conflict with any single hoisted version, so the resolver had no
+clean bump to offer. A root `npm update sharp` resolves it.
+
+### Security
+- `sharp` 0.35.3 → **0.35.4**, closing GHSA-rgj7-g3m4-5g8c — a pass-through of
+  two upstream libheif advisories, GHSA-g89c-p67h-r497 and
+  GHSA-2jg2-4ch7-h545.
+- Platform binaries moved in the same pass: all `@img/sharp-*` packages
+  0.35.3 → **0.35.4** and all `@img/sharp-libvips-*` packages 1.3.2 → **1.3.3**
+  (the latter is where the patched libheif actually lives).
+
+### Notes
+- **Not reachable, and not in the deployed bundle.** `sharp` enters the tree on
+  two build/dev paths only — `astro`'s `optionalDependencies` (build-time image
+  optimization, which this site never invokes) and `miniflare` (test/dev). Every
+  `heif` string in `dist/` is either a MIME-type table or the pure-JS
+  `image-size` header sniffer; `sharp:"♯"` in the Keystatic chunk is an HTML
+  entity and `csharp` in the Keystatic page bundle is Prism syntax
+  highlighting. No libheif native binding reaches the Worker.
+- Lockfile-only — no `package.json` change.
+- Verified after the bump: `npm run build` clean, `npm run check:csp` 7/7 pinned
+  with no stale pins, `npx astro check` 0 errors, all three Worker suites green
+  (15 + 52 + 16 = 83 tests).
+
+## Fix — close MEDIUM-severity vitest path-traversal advisory (dependabot/multi-vitest-4.1.11)
+
+**Branch:** `dependabot/npm_and_yarn/multi-d0c2d048a7` — PR #171 (2026-09-09)
+
+Clears Dependabot alerts #36 and #37 (both MEDIUM), which are the same advisory
+reported against `vitest` and its bundled `@vitest/mocker`.
+
+### Security
+- `vitest` and `@vitest/mocker` 4.1.8 → **4.1.11**, closing
+  GHSA-82fw-gwwq-j7x9 / CVE-2026-84373 (path traversal / arbitrary file read
+  via a `@vitest/mocker` redirect mock).
+
+### Notes
+- **Development scope only.** `vitest` is a `devDependency` used solely by the
+  three Worker test suites; it is absent from `dist/` and from every deployed
+  Worker. Exploitation requires untrusted test files inside this repo.
+- Supersedes PR #169, the solo `vitest` bump, which was closed in favour of this
+  combined one — the advisory covers both packages and they must move together.
+- `@cloudflare/vitest-pool-workers` (peer `^4.1.0`) is unaffected by the bump;
+  all 83 tests pass on 4.1.11.
+
+## Fix — close HIGH-severity js-yaml CPU-exhaustion advisory (dependabot/js-yaml-4.3.2)
+
+**Branch:** `dependabot/npm_and_yarn/js-yaml-4.3.2` — PR #170 (2026-09-09)
+
+Clears Dependabot alert #38 (HIGH). This is a second `js-yaml` advisory on top
+of the one closed by PR #163 — 4.3.1 patched that one, and this needs 4.3.2.
+
+### Security
+- `js-yaml` 4.3.1 → **4.3.2**, closing GHSA-2883-xcg3-v3hh / CVE-2026-84375
+  (`maxTotalMergeKeys` does not limit CPU use when merge sources are empty, so
+  the existing guard can be bypassed for a denial of service).
+
+### Notes
+- **Build-time only.** `js-yaml` reaches the tree via
+  `@astrojs/internal-helpers`, `astro`, and `@keystatic/core`. It is absent from
+  the Worker bundle: six minification-surviving literals
+  (`tag:yaml.org,2002:`, `YAMLException`, `maxTotalMergeKeys`, and three
+  others) return zero matches across all of `dist/server`. Keystatic Cloud
+  performs content parsing client- and cloud-side, so the Worker's
+  `keystatic-api` chunk carries no YAML engine at all.
+- The only YAML this parses is repo-controlled frontmatter, not attacker input.
+
+## Fix — close CRITICAL Astro AVIF RCE and base-path bypass (dependabot/astro-7.3.2)
+
+**Branch:** `dependabot/npm_and_yarn/astro-7.3.2` — PR #168 (2026-09-09)
+
+Clears Dependabot alerts #41 (CRITICAL) and #40 (MEDIUM). The only entry in
+this wave that moves `package.json` and the dependency graph rather than just
+the lockfile, and the only one validated against a Cloudflare branch preview
+before merge.
+
+### Security
+- `astro` 7.1.3 → **7.3.2** (`package.json` range `^7.1.3` → `^7.3.2`), closing
+  GHSA-26w7-cxv4-gfx2 (remote code execution through AVIF image optimization)
+  and GHSA-376h-93r7-7g6f / CVE-2026-84376 (authorization bypass from a missing
+  path-segment boundary check when stripping the configured `base`).
+
+### Notes
+- **Neither advisory was reachable.** The RCE needs the image-optimization
+  pipeline: there is no `astro:assets`, `<Image>`, `<Picture>` or `getImage`
+  usage anywhere in `src/`, and no `image` config. The `/_image` route that does
+  exist in the Worker manifest resolves to `@astrojs/cloudflare`'s
+  `image-transform-endpoint.js`, which delegates to the Cloudflare `IMAGES`
+  binding rather than decoding locally. The base-path bypass needs a configured
+  `base`, and `astro.config.mjs` has no `base` key.
+- **Two minors of dependency movement**, including a new markdown engine
+  (`@astrojs/markdown-satteri`) and a new
+  `@astrojs/compiler-binding-wasm32-wasi` path.
+- **The CSP hashes survived**, which is the trap this bump would normally
+  spring. An Astro/Vite bump can silently change the inlined module wrapper and
+  stale every pin in `public/_headers`. It did not here: `npm run check:csp`
+  reports 7 pinned / 7 emitted with no stale pins, on both the PR build and
+  `main`. No `--write` pass was needed.
+- **`style-src` was checked separately**, because `check:csp` only validates
+  `script-src`. The new markdown engine could have reintroduced the inline
+  `style=` attributes that `markdown.syntaxHighlight: false` exists to
+  suppress. It did not — zero inline `style=` attributes across the landing
+  page, `/skills/`, `/bundles/`, `/transparency/`, the `/guides/` index and two
+  MDX guides.
+- **Preview validation** (`dependabot-npm-and-yarn-astro-7-3-2-quirgs.elbrigante9.workers.dev`):
+  all 15 skill pages 200, the Keystatic SSR route 200 with no
+  `locals.runtime.env` 500 (the `patch-package` patch still holds under Astro
+  7.3.2), legacy `/guides/*` still CSP-detached, and the build-time-derived
+  skill and bundle versions still resolving correctly from
+  `plugins/*/.claude-plugin/plugin.json`.
+
+## Fix — close HIGH-severity smol-toml DoS advisory (dependabot/smol-toml-1.8.0)
+
+**Branch:** `dependabot/npm_and_yarn/smol-toml-1.8.0` — PR #167 (2026-09-09)
+
+Clears Dependabot alert #42 (HIGH).
+
+### Security
+- `smol-toml` 1.6.1 → **1.8.0**, closing GHSA-7w5x-hrqm-74c2 / CVE-2026-85730
+  (denial of service via malformed TOML documents). Patched in 1.7.1; 1.8.0 is
+  the current release and satisfies the `^1.6.0` range its dependents declare.
+
+### Notes
+- **Build-time only.** `smol-toml` reaches the tree through
+  `@astrojs/internal-helpers` and `astro`, where it parses repo-controlled TOML
+  during the build. No `TomlError` or `smol-toml` marker appears anywhere in
+  `dist/server`.
+
+### Context — the 2026-09-09 advisory wave
+
+All seven alerts (#36–#42) were created within two minutes of each other at
+19:52 UTC on 2026-09-09, roughly 90 seconds after the `svgo` 4.0.2 → 4.1.0
+merge (PR #166) landed. **The `svgo` bump did not introduce any of them.** The
+underlying GHSAs were published on 2026-09-08 and 2026-09-09, *before* that
+merge, and `svgo`'s entire transitive closure — 17 packages, all in the
+`css-select` / `css-what` / `domutils` family — has zero overlap with the
+affected packages. Merging a lockfile change to `main` simply triggered a
+Dependabot rescan, which then reported a disclosure wave that was already
+pending. Recording this because the coincidence is convincing and the wrong
+conclusion (that a routine SVG-optimizer bump pulled in a critical RCE) would
+have been an expensive thing to chase.
+
 ## Fix — close HIGH-severity browserslist advisories (dependabot/browserslist-4.28.8)
 
 **Branch:** `dependabot/npm_and_yarn/browserslist-4.28.8` — PR #165 (2026-09-05)
