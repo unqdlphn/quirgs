@@ -1,0 +1,47 @@
+name: AI Asset Inventory Coverage
+
+# Assert that every AI asset derivable from this repo — skill, bundle, Worker,
+# Worker binding — is registered in the Pillar 1 AI System Inventory.
+#
+# Pillar 1 declares its own Shadow AI Rule: anything not registered there is
+# ungoverned. That rule was enforced by memory and failed three times in a row
+# (claude-fable-5 2026-07-05, quirgs-publish 2026-07-06, claude-opus-5 /
+# claude-fable-5-1 2026-09-10) — each time the asset was already in use and a
+# late manual sync check found out afterwards. The inventory is a local HTML
+# artifact outside this repo, so nothing in CI could read it; governance/
+# ai-asset-index.json is a committed projection of the registered asset IDs that
+# closes that gap for repo-derivable assets.
+#
+# Deliberately separate from the other two checks, matching their split:
+#   csp-hashes.yml     needs a build (dist/client) — pre-merge only
+#   live-integrity.yml needs the network (live site + registry) — post-deploy
+#   this one           needs neither — no build, no network, runs in seconds
+#
+# Foundation-model versions are out of scope: they change outside the repo with
+# no commit to hang a check on, which is why two of the three gaps above were
+# model versions. That class needs a recurring probe, tracked separately.
+#
+# To fix a failure: register the asset in the Pillar 1 artifact first (it is
+# authoritative), then record it in governance/ai-asset-index.json with the
+# section it appears in. See scripts/check-inventory-coverage.mjs.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: inventory-coverage-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check AI asset inventory coverage
+        run: npm run check:inventory

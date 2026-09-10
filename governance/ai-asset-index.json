@@ -1,0 +1,60 @@
+{
+  "$comment": [
+    "Committed projection of the Pillar 1 AI System Inventory's registered asset IDs.",
+    "",
+    "THIS IS NOT A SECOND REGISTRY. The Pillar 1 artifact remains authoritative for all",
+    "governance content — risk tiers, scope of action, regulatory mapping, eval status.",
+    "This file records one narrow fact per asset: that it HAS been registered there, and",
+    "in which section. It exists because the artifact is a local HTML file outside this",
+    "repo (~/Documents/Claude/Artifacts/quirgs-pillar-1-ai-inventory/index.html), so no",
+    "automated check can read it — which is the structural reason three Shadow AI Rule",
+    "gaps in a row were caught by a late manual sync check instead of by CI.",
+    "",
+    "Enforced by scripts/check-inventory-coverage.mjs (npm run check:inventory), which",
+    "fails when this repo contains a skill, bundle, Worker, or Worker binding that is",
+    "absent here.",
+    "",
+    "ADDING AN ENTRY HERE IS NOT THE REGISTRATION. It records a registration you have",
+    "already made in the artifact. The `section` value is the artifact section the asset",
+    "appears in — if you cannot name one, the asset is not registered yet and adding it",
+    "here only hides that. Bump `lastReconciled` and `artifactVersion` when you reconcile."
+  ],
+  "artifact": "~/Documents/Claude/Artifacts/quirgs-pillar-1-ai-inventory/index.html",
+  "artifactVersion": "v1.4",
+  "lastReconciled": "2026-09-10",
+
+  "skills": {
+    "ai-transparency-writer": { "section": "2.1" },
+    "eu-ai-act-classifier": { "section": "2.1" },
+    "hitl-compliance-gate": { "section": "2.1" },
+    "incident-response-logger": { "section": "2.1" },
+    "iso-42001-audit-prep": { "section": "2.1" },
+    "nist-ai-rmf-checkpoint": { "section": "2.1" },
+    "pii-exposure-checker": { "section": "2.1" },
+    "publish-broadcast": { "section": "2.2" },
+    "publish-harvest": { "section": "2.2" },
+    "publish-income": { "section": "2.2" },
+    "publish-license": { "section": "2.2" },
+    "publish-provenance": { "section": "2.2" },
+    "publish-shield": { "section": "2.2" },
+    "publish-update": { "section": "2.2" },
+    "publish-workflow": { "section": "2.2" }
+  },
+
+  "bundles": {
+    "quirgs-compliance": { "section": "2.1" },
+    "quirgs-publish": { "section": "2.2", "registered": "2026-07-06" }
+  },
+
+  "workers": {
+    "quirgs-registry-api": { "section": "3,4" },
+    "quirgs-hitl-gate": { "section": "3,4" },
+    "quirgs-metrics-api": { "section": "3,4", "registered": "2026-09-10" }
+  },
+
+  "bindings": {
+    "quirgs-registry-api:QUIRGS_REGISTRY": { "section": "3,4", "kind": "kv_namespaces" },
+    "quirgs-hitl-gate:HITL_DB": { "section": "3,4", "kind": "d1_databases" },
+    "quirgs-hitl-gate:EMAIL": { "section": "4", "kind": "send_email" }
+  }
+}
