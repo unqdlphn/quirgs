@@ -2,13 +2,14 @@ name = "quirgs-hitl-gate"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
-[observability]
-enabled = true
-head_sampling_rate = 1
-
-[observability.logs]
-enabled = true
-invocation_logs = true
+# NOTE — keep `routes` and `workers_dev` ABOVE the first [table] header.
+# TOML tables are positional: every bare key after a [table] belongs to that
+# table until the next header. These two sat after [observability.logs] and were
+# silently parsed as observability.logs.routes / observability.logs.workers_dev
+# (wrangler: "Unexpected fields found in observability field"), so neither was
+# applied as top-level config. gate.quirgs.com kept working only because
+# Cloudflare retains an already-provisioned custom domain. Do not move these
+# below a [table] header again.
 
 # Custom domain — Cloudflare auto-provisions the DNS record and TLS cert on deploy.
 routes = [
@@ -20,6 +21,14 @@ routes = [
 # would kill the live shared demo gate (quirgs-hitl-gate.*.workers.dev) still
 # referenced on main until #98 merges.
 workers_dev = true
+
+[observability]
+enabled = true
+head_sampling_rate = 1
+
+[observability.logs]
+enabled = true
+invocation_logs = true
 
 # Browser origins permitted to call the gate. Server-to-server callers (curl,
 # agents) send no Origin and are unaffected. HITL_WRITE_TOKEN is a secret —

@@ -25,6 +25,44 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Fix — `routes`/`workers_dev` silently swallowed into `[observability.logs]` (fix/worker-toml-table-scoping)
+
+**Branch:** `fix/worker-toml-table-scoping` — PR #173 (2026-09-10)
+
+`hitl-gate` and `registry-api` each declared `routes` and `workers_dev` *after*
+the `[observability.logs]` table header. TOML tables are positional — every bare
+key following a `[table]` belongs to that table until the next header — so both
+keys were parsed as `observability.logs.routes` and
+`observability.logs.workers_dev` and **never applied as top-level config**.
+`metrics-api` was unaffected: it declares both before its first table header.
+
+### Fixed
+- Moved `routes` and `workers_dev` above the `[observability]` block in
+  [workers/hitl-gate/wrangler.toml](workers/hitl-gate/wrangler.toml) and
+  [workers/registry-api/wrangler.toml](workers/registry-api/wrangler.toml), with a
+  comment in each explaining why they must stay there.
+
+### Notes
+- **The symptom was visible but easy to read past.** Every `wrangler` invocation
+  against either config printed `Unexpected fields found in observability field:
+  "routes","workers_dev"` — including on every `npm test` run — and nothing else
+  failed, so it looked like noise rather than dead configuration.
+- **Nothing was broken in production, and that is why it survived.**
+  `gate.quirgs.com` and `api.quirgs.com` both keep resolving because Cloudflare
+  retains a custom domain once provisioned; the binding was established by an
+  earlier deploy and no later deploy removed it. The exposure was forward-looking:
+  a future `wrangler deploy` would not reassert either key, and losing
+  `workers_dev = true` is precisely the hard cutover the existing comment in both
+  files warns about (adding a `custom_domain` route makes wrangler disable
+  `workers.dev` by default).
+- Verified by parsing all three configs with a real TOML parser: `routes` and
+  `workers_dev` now resolve at top level in each, with nothing leaking into
+  `observability.logs`. `wrangler deploy --dry-run` is warning-free for all three,
+  and all 83 Worker tests pass (15 + 52 + 16).
+- **Config-only — no Worker code changed, so no redeploy is required for
+  correctness.** The fix takes effect on the next deploy of each Worker, which
+  will then assert the custom domain and `workers.dev` settings as intended.
+
 ## Fix — close HIGH-severity sharp/libheif advisory (fix/sharp-libheif-advisory)
 
 **Branch:** `fix/sharp-libheif-advisory` — PR #172 (2026-09-09)
