@@ -17,11 +17,30 @@
     "ADDING AN ENTRY HERE IS NOT THE REGISTRATION. It records a registration you have",
     "already made in the artifact. The `section` value is the artifact section the asset",
     "appears in — if you cannot name one, the asset is not registered yet and adding it",
-    "here only hides that. Bump `lastReconciled` and `artifactVersion` when you reconcile."
+    "here only hides that. Bump `lastReconciled` and `artifactVersion` when you reconcile.",
+    "",
+    "`models` IS NOT ENFORCED BY check:inventory, unlike every other key here. There is no",
+    "repo-derivable source for a foundation-model version — models change outside the repo",
+    "with no commit to check, which is how claude-fable-5 (2026-07-05) and claude-opus-5 /",
+    "claude-fable-5-1 (2026-09-10) both ended up in active use while unregistered. The list",
+    "exists so a recurring probe can diff against it: any Claude session knows which model",
+    "it is running as, so the daily maintenance task self-reports its model and flags an",
+    "unregistered one. Anthropic only — Google models are registered in the artifact §1.2",
+    "but are out of scope for a Claude session's self-report. Keys are model IDs exactly as",
+    "a session reports them."
   ],
   "artifact": "~/Documents/Claude/Artifacts/quirgs-pillar-1-ai-inventory/index.html",
   "artifactVersion": "v1.4",
   "lastReconciled": "2026-09-10",
+
+  "models": {
+    "claude-opus-5": { "section": "1.1", "registered": "2026-09-10" },
+    "claude-opus-4-8": { "section": "1.1" },
+    "claude-sonnet-5": { "section": "1.1" },
+    "claude-haiku-4-5-20251001": { "section": "1.1" },
+    "claude-fable-5-1": { "section": "1.1", "registered": "2026-09-10" },
+    "claude-fable-5": { "section": "1.1" }
+  },
 
   "skills": {
     "ai-transparency-writer": { "section": "2.1" },

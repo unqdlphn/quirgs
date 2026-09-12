@@ -39,6 +39,11 @@
 //                  (it claims an asset that is gone) but a reliable signal a
 //                  reconcile was missed. Warns; fails under --strict.
 //
+// The index also carries a `models` key, which this deliberately does NOT check —
+// there is no repo-derivable source for a model version. It is there for the daily
+// maintenance task's model probe (a session self-reports its model and diffs against
+// that list). Its absence from the checks below is intentional, not an oversight.
+//
 // Sources of truth, all read from the repo — never hardcoded here:
 //   skills   -> src/content/skills/*.mdx           (slug = filename)
 //   plugins  -> plugins/*/.claude-plugin/plugin.json ("name")
