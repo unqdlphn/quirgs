@@ -25,6 +25,38 @@ them to mark the boundaries.
 
 ## [Unreleased]
 
+## Feat — `models` key in the AI asset index, for the Class B model probe (feat/inventory-index-models)
+
+**Branch:** `feat/inventory-index-models` — PR #175 (2026-09-12)
+
+Groundwork for the Class B half of the Shadow AI gate. PR #174 closed the repo-derivable
+half; foundation-model versions stayed uncovered because they change outside the repo with
+no commit to check — which is how `claude-fable-5` (2026-07-05) and `claude-opus-5` /
+`claude-fable-5-1` (2026-09-10) both reached active use unregistered.
+
+### Added
+- `models` key in [governance/ai-asset-index.json](governance/ai-asset-index.json) mirroring
+  Pillar 1 §1.1: `claude-opus-5`, `claude-opus-4-8`, `claude-sonnet-5`,
+  `claude-haiku-4-5-20251001`, `claude-fable-5-1`, `claude-fable-5`.
+
+### Notes
+- **Deliberately NOT enforced by `check:inventory`**, unlike every other key in the file.
+  There is no repo-derivable source for a model version, so there is nothing to compare
+  against at CI time. Both the index's own `$comment` and the checker's header comment say
+  this explicitly, so its absence from the checks reads as intentional rather than as an
+  oversight.
+- **It exists to be diffed by a recurring probe.** Any Claude session knows which model it
+  is running as, so the daily maintenance scheduled task self-reports its model and flags an
+  unregistered one. The probe reads this file from a local checkout when the task runs inside
+  the repo, and otherwise fetches it from `raw.githubusercontent.com` (verified reachable).
+- Anthropic IDs only. Google models are registered in the artifact §1.2 but are out of scope
+  for a Claude session's self-report.
+- Probe verified against this list before commit, including a replay of the real 2026-09-10
+  miss: with `claude-opus-5` removed from the key, a session reporting `claude-opus-5` is
+  correctly flagged as a Shadow AI gap.
+- The probe block and the full scheduled-task change set live in
+  `_v2/session_prompts/` (local-only).
+
 ## Feat — AI asset inventory coverage gate (feat/inventory-coverage-gate)
 
 **Branch:** `feat/inventory-coverage-gate` — PR #174 (2026-09-10)
